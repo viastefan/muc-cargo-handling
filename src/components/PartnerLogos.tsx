@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { media } from "@/lib/media";
 
@@ -9,27 +12,30 @@ export function PartnerLogos({
   title?: string;
   description?: string;
 }) {
+  const [vkError, setVkError] = useState(false);
+
   return (
-    <div className="bg-[var(--surface)] p-6 md:p-10">
-      <p className="text-[11px] font-normal uppercase tracking-[0.1em] text-[var(--muted-light)]">
-        {title}
-      </p>
-      {description && (
-        <p className="prose-muted mt-3 max-w-md text-[14px]">{description}</p>
-      )}
-      <div className="mt-8 flex flex-col items-center justify-center gap-8 sm:flex-row sm:gap-10">
-        <BrandLogo className="h-10 w-auto" width={180} height={50} />
-        <span className="hidden h-10 w-px bg-[var(--border)] sm:block" aria-hidden />
-        <div className="relative h-12 w-[200px] shrink-0">
-          <Image
-            src={media.partnerVk}
-            alt="VK Freight Management"
-            fill
-            className="object-contain object-center"
-            sizes="200px"
-          />
-        </div>
+    <aside className="partner-logos" aria-label={title}>
+      <p className="partner-logos__eyebrow">{title}</p>
+      {description ? <p className="partner-logos__description">{description}</p> : null}
+      <div className="partner-logos__row">
+        <BrandLogo className="partner-logos__brand h-9 w-auto sm:h-10" width={180} height={50} />
+        <span className="partner-logos__divider" aria-hidden="true" />
+        {vkError ? (
+          <p className="partner-logos__vk-fallback">VK Freight Management</p>
+        ) : (
+          <div className="partner-logos__vk">
+            <Image
+              src={media.partnerVk}
+              alt="VK Freight Management"
+              fill
+              className="object-contain object-left"
+              sizes="(max-width: 640px) 45vw, 200px"
+              onError={() => setVkError(true)}
+            />
+          </div>
+        )}
       </div>
-    </div>
+    </aside>
   );
 }
