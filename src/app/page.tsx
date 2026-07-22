@@ -131,12 +131,11 @@ export default function HomePage() {
             <ServiceCapabilityGrid items={HOME_CAPABILITY_AREAS} />
           </div>
         </ScrollReveal>
-        <ScrollReveal delay={180} duration={1100}>
-          <div className="section-header-gap">
-            <SecurityOverview items={SECURITY_METHODS} />
-          </div>
-        </ScrollReveal>
       </PageSection>
+
+      <ScrollReveal variant="fade" duration={1100}>
+        <SecurityOverview items={SECURITY_METHODS} />
+      </ScrollReveal>
 
       <PageSection id="downloads">
         <ScrollReveal duration={1000}>
