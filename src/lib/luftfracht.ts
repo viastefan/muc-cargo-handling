@@ -50,29 +50,6 @@ export const LUFTFRACHT_EXPORT_FLOW = [
   },
 ] as const;
 
-export const LUFTFRACHT_END_TO_END = [
-  {
-    step: "01",
-    title: "Annahme & Erfassung",
-    text: "Sendung wird erfasst, dokumentiert und für die weitere Abwicklung vorbereitet.",
-  },
-  {
-    step: "02",
-    title: "Sicherheitskontrolle",
-    text: "Röntgen und ergänzende Verfahren nach Luftsicherheitsvorgaben – regelkonform und nachvollziehbar.",
-  },
-  {
-    step: "03",
-    title: "Dokumentation",
-    text: "Vollständige Unterlagen für Airline, Spedition und Behörden – transparent und prüfbar.",
-  },
-  {
-    step: "04",
-    title: "Übergabe & Freigabe",
-    text: "Koordinierte Übergabe in den Flugbetrieb oder an den Empfänger – termingerecht und sicher.",
-  },
-] as const;
-
 export const LUFTFRACHT_SERVICES = [
   {
     image: "/images/luftfracht/service-1.jpg",
