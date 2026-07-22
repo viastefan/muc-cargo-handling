@@ -103,7 +103,7 @@ export default function HomePage() {
         />
       </ScrollReveal>
 
-      <PageSection muted id="leistungen">
+      <PageSection id="leistungen">
         <ScrollReveal variant="fade" duration={1000}>
           <SectionHeader
             eyebrow={HOME_TEAM_INTRO.eyebrow}
