@@ -1762,6 +1762,10 @@ a {
   max-width: 20rem;
 }
 
+.intro-split-band__cta {
+  margin-top: 1.5rem;
+}
+
 .intro-split-band__description {
   max-width: 36rem;
   font-size: clamp(0.9375rem, 1.5vw, 1rem);
@@ -1871,6 +1875,265 @@ a {
   font-size: 14px;
   line-height: 1.55;
   color: var(--muted);
+}
+
+/* Flow tracks — Import / Export side by side */
+.flow-tracks-intro {
+  max-width: 44rem;
+}
+
+.flow-tracks-intro__title {
+  font-size: clamp(1.5rem, 3.5vw, 2.375rem);
+  line-height: 1.22;
+  letter-spacing: -0.024em;
+}
+
+.flow-tracks-intro__description {
+  margin-top: 1.25rem;
+  max-width: 40rem;
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  line-height: 1.7;
+}
+
+.flow-tracks {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+@media (min-width: 1024px) {
+  .flow-tracks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 3vw, 2.5rem);
+  }
+}
+
+.flow-track {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: clamp(1.5rem, 3vw, 2rem);
+}
+
+.flow-track__header {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.flow-track__eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.flow-track__label {
+  margin-top: 0.375rem;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.flow-track__list {
+  margin: 0;
+  padding: 1.5rem 0 0;
+  list-style: none;
+}
+
+.flow-step {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0 1rem;
+}
+
+.flow-step + .flow-step {
+  margin-top: 1.5rem;
+}
+
+.flow-step__rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flow-step__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted-accent);
+}
+
+.flow-step__line {
+  flex: 1;
+  width: 1px;
+  min-height: 1.25rem;
+  margin-top: 0.5rem;
+  background: var(--border);
+}
+
+.flow-step__title {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.flow-step__text {
+  margin-top: 0.375rem;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Process timeline — horizontal end-to-end */
+.process-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.process-timeline__header {
+  max-width: 40rem;
+}
+
+.process-timeline__eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.process-timeline__title {
+  margin-top: 0.5rem;
+  font-size: clamp(1.5rem, 3.5vw, 2.375rem);
+  line-height: 1.22;
+  letter-spacing: -0.024em;
+}
+
+.process-timeline__description {
+  margin-top: 1.25rem;
+  max-width: 38rem;
+  font-size: clamp(0.9375rem, 1.5vw, 1rem);
+  line-height: 1.7;
+}
+
+.process-timeline {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .process-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .process-timeline {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+    background: var(--border);
+  }
+}
+
+.process-timeline__step {
+  display: flex;
+  flex-direction: column;
+  min-height: 11rem;
+  background: #ffffff;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+@media (min-width: 1024px) {
+  .process-timeline__step:hover {
+    position: relative;
+    z-index: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgb(0 0 0 / 0.06);
+  }
+}
+
+.process-timeline__step-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.process-timeline__step-number {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--muted-accent);
+}
+
+.process-timeline__connector {
+  display: none;
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+@media (min-width: 1024px) {
+  .process-timeline__connector {
+    display: block;
+  }
+}
+
+.process-timeline__step-title {
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.process-timeline__step-text {
+  margin-top: 0.5rem;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Luftfracht CTA band */
+.luftfracht-cta-band {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: clamp(2rem, 4vw, 2.5rem);
+  border-bottom: 1px solid var(--border);
+}
+
+@media (min-width: 768px) {
+  .luftfracht-cta-band {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
+
+.luftfracht-cta-band__copy {
+  max-width: 36rem;
+}
+
+.luftfracht-cta-band__actions {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 /* Image CTA band */
