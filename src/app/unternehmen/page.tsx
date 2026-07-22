@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { InternationalGlobeSection } from "@/components/InternationalGlobeSection";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { PageSection } from "@/components/PageSection";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
-import { GlobeIcon, MailIcon, PhoneIcon } from "@/components/ArrowIcon";
+import { MailIcon, PhoneIcon } from "@/components/ArrowIcon";
 
 export const metadata: Metadata = {
   title: "Unternehmen",
@@ -142,7 +143,7 @@ export default function UnternehmenPage() {
           />
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <StatCard
             value="20+"
             label="Jahre Erfahrung"
@@ -165,12 +166,9 @@ export default function UnternehmenPage() {
               </>
             }
           />
-          <StatCard
-            label="International"
-            icon={<GlobeIcon className="h-7 w-7 stroke-[1.4]" />}
-            footer="Professionelle Abwicklung von Import- & Exportsendungen"
-          />
         </div>
+
+        <InternationalGlobeSection />
       </PageSection>
 
       <FooterCta title="Gemeinsam für sichere und effiziente Luftfrachtprozesse." />

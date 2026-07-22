@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { PartnerLogos } from "@/components/PartnerLogos";
 import {
   FeatureCard,
   PageSection,
@@ -90,27 +90,13 @@ export default function RoentgenPage() {
       </PageSection>
 
       <PageSection borderTop>
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12">
           <SectionHeader
             dark="Unsere Zusammenarbeit"
-            light="mit STI"
-            description="Am Flughafen München kooperieren wir mit etablierten Partnern wie STI, um Sicherheits- und Handling-Prozesse effizient zu verzahnen. So entstehen kurze Wege und klare Verantwortlichkeiten."
+            light="mit Partnern am Standort"
+            description="Am Flughafen München arbeiten wir mit erfahrenen Partnern wie VK Freight Management zusammen – für effiziente Sicherheits- und Handling-Prozesse mit kurzen Wegen und klaren Verantwortlichkeiten."
           />
-          <div className="flex items-center gap-8 bg-[var(--surface)] p-8 md:p-10">
-            <Image
-              src="/images/shared/logo.svg"
-              alt="MUC Cargo Handling"
-              width={160}
-              height={44}
-            />
-            <div className="h-10 w-px bg-[var(--border)]" />
-            <p className="text-[13px] font-medium text-[var(--muted)]">
-              STI Partner
-              <span className="mt-1 block text-[12px] font-normal text-[var(--muted-light)]">
-                Logo: public/images/shared/sti-logo.png
-              </span>
-            </p>
-          </div>
+          <PartnerLogos />
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">

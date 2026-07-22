@@ -1,63 +1,72 @@
 # Bilder für die Website
 
-Kopiere hier deine Bilder hinein (auf dem Mac: diesen Ordner öffnen und Dateien ersetzen).
+Kopiere deine Bilder in die passenden Ordner. **Dateinamen exakt einhalten.**
 
-## Wichtig
-- Dateinamen **genau so behalten**, sonst greifen die Platzhalter weiter.
-- Empfohlen: JPG oder WebP, ca. 1920px Breite für Hero-Bilder.
-- Nach dem Ersetzen: Website neu laden / neu deployen.
+## Shared (`shared/`) — Logo & Grafiken
 
-## Startseite (`home/`)
 | Datei | Verwendung |
 |-------|------------|
-| `hero.jpg` | Großes Hero-Bild (Fracht/Flugzeug) |
+| **`logo.png`** | MUC Cargo Handling Logo (Header, Partner-Bereich) |
+| `logo.svg` | Fallback, falls PNG fehlt |
+| **`weltkugel.png`** | Rote Weltkugel — letzter Abschnitt auf „Unternehmen“ |
+| **`partner-vk-freight.png`** | VK Freight Management Logo (Röntgen-Seite) |
+
+> Falls deine Dateien anders heißen: im Finder umbenennen oder in `src/lib/media.ts` anpassen.
+
+## Startseite (`home/`)
+
+| Datei | Verwendung |
+|-------|------------|
+| `hero.jpg` | Hero (z. B. Frachtflugzeug) |
 | `service-roentgen.jpg` | Kachel Röntgenkontrolle |
 | `service-sichtkontrolle.jpg` | Kachel Sichtkontrolle |
 | `service-handdurchsuchung.jpg` | Kachel Handdurchsuchung |
-| `service-etd.jpg` | Kachel Sprengstoff-Spurendetektion |
+| `service-etd.jpg` | Kachel ETD |
 
 ## Unternehmen (`unternehmen/`)
-| Datei | Verwendung |
-|-------|------------|
-| `hero.jpg` | Hero „Über MUC Cargo Handling“ |
-| `stats.jpg` | Bild über den Statistik-Zeilen |
 
-## Team (`team/`)
 | Datei | Verwendung |
 |-------|------------|
-| `person-1.jpg` … `person-4.jpg` | Team-Fotos (optional) |
+| `hero.jpg` | Hero „Über MUC Cargo Handling“ (Team/Büro) |
+| `stats.jpg` | Großes Bild über den Statistik-Kacheln |
 
 ## Luftfracht (`luftfracht/`)
+
 | Datei | Verwendung |
 |-------|------------|
-| `hero.jpg` | Hero Luftfracht Import/Export |
+| `hero.jpg` | Hero Luftfracht |
 | `service-1.jpg` … `service-4.jpg` | Service-Kacheln |
 
 ## Airline Handling (`airline-handling/`)
+
 | Datei | Verwendung |
 |-------|------------|
-| `hero.jpg` | Hero Cargo-Hold |
-| `import-export.jpg` | Import & Export Handling |
+| `hero.jpg` | Hero Cargo-Hold / Airline |
+| `import-export.jpg` | Import & Export |
 | `dokumente.jpg` | Dokumentenmanagement |
 | `zoll.jpg` | Zoll & Compliance |
-| `uld.jpg` | Sicherheits- und ULD-Handling |
+| `uld.jpg` | ULD-Handling |
 
 ## Röntgen (`roentgen/`)
+
 | Datei | Verwendung |
 |-------|------------|
-| `hero.jpg` | Hero mit Monitoren |
+| `hero.jpg` | Hero Sicherheit / Monitore |
 | `kontrolle-roentgen.jpg` | Röntgenkontrolle |
 | `kontrolle-sicht.jpg` | Sichtkontrolle |
 | `kontrolle-hand.jpg` | Handdurchsuchung |
 | `kontrolle-etd.jpg` | ETD |
 
 ## Kontakt (`kontakt/`)
-| Datei | Verwendung |
-|-------|------------|
-| `hero.jpg` | Hero Kontakt / Anfrage |
 
-## Shared (`shared/`)
 | Datei | Verwendung |
 |-------|------------|
-| `logo.svg` | Logo (bereits angelegt) |
-| `sti-logo.png` | Partner-Logo STI (optional) |
+| `hero.jpg` | Hero Kontakt |
+
+## Nach dem Kopieren
+
+```bash
+git add public/images
+git commit -m "Eigene Bilder und Logos"
+git push
+```

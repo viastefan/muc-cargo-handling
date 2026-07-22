@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BrandLogo } from "./BrandLogo";
 import { Button } from "./Button";
 
 const NAV = [
@@ -26,14 +26,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-md">
       <div className="page-container flex h-[68px] items-center justify-between gap-3 sm:h-[72px] lg:h-[76px]">
         <Link href="/" className="shrink-0 transition-opacity duration-300 hover:opacity-80" onClick={() => setOpen(false)}>
-          <Image
-            src="/images/shared/logo.svg"
-            alt="MUC Cargo Handling"
-            width={148}
-            height={42}
-            className="h-9 w-auto sm:h-10"
-            priority
-          />
+          <BrandLogo priority />
         </Link>
 
         <nav className="hidden items-center lg:flex">

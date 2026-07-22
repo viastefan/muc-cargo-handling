@@ -35,7 +35,15 @@ open public/images
 | `airline-handling/` | Airline Handling |
 | `roentgen/` | Röntgen |
 | `kontakt/` | Kontakt |
-| `shared/` | Logo, Partner-Logos |
+| `shared/` | **logo.png**, **weltkugel.png**, **partner-vk-freight.png** |
+
+### Shared-Dateien (umbenennen falls nötig)
+
+| Deine Datei → Zielname |
+|------------------------|
+| MUC Logo → `shared/logo.png` |
+| Rote Weltkugel → `shared/weltkugel.png` |
+| VK Freight Management Logo → `shared/partner-vk-freight.png` |
 
 **Wichtig:** Dateinamen exakt wie in `public/images/README.md` — sonst werden die Platzhalter weiter angezeigt.
 
