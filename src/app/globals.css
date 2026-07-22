@@ -349,24 +349,25 @@ a {
 .hero-content {
   position: absolute;
   inset: 0;
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   min-height: inherit;
   padding: var(--hero-pad-top-mobile) calc(var(--page-x) - var(--hero-gap))
-    var(--hero-pad-bottom-mobile);
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
-  grid-template-areas:
-    "title"
-    "subtitle"
-    "cta"
-    "spacer"
-    "phone";
+    calc(var(--hero-pad-bottom-mobile) + 4.25rem);
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: min(48rem, 100%);
 }
 
 .hero-title {
-  grid-area: title;
-  align-self: start;
-  margin-top: 5px;
+  margin: 0;
   width: 85%;
   max-width: 85%;
   font-size: clamp(1.875rem, 5.4vw, 3.125rem);
@@ -376,9 +377,7 @@ a {
 }
 
 .hero-subtitle {
-  grid-area: subtitle;
-  align-self: start;
-  margin-top: 24px;
+  margin: 24px 0 0;
   width: 85%;
   max-width: 85%;
   font-size: clamp(14px, 1.6vw, 16px);
@@ -387,13 +386,7 @@ a {
   color: rgb(255 255 255 / 0.92);
 }
 
-.hero-spacer {
-  grid-area: spacer;
-}
-
 .hero-cta-slot {
-  grid-area: cta;
-  align-self: start;
   width: fit-content;
   max-width: 100%;
   margin-top: 40px;
@@ -789,11 +782,13 @@ a {
 }
 
 .hero-phone-slot {
-  grid-area: phone;
-  align-self: stretch;
+  position: absolute;
+  right: calc(var(--page-x) - var(--hero-gap));
+  bottom: var(--hero-pad-bottom-mobile);
+  z-index: 2;
   width: fit-content;
-  max-width: 100%;
-  margin-top: 0.625rem;
+  max-width: calc(100% - (var(--page-x) - var(--hero-gap)) * 2);
+  margin: 0;
 }
 
 @media (min-width: 640px) {
@@ -806,15 +801,11 @@ a {
 
 @media (min-width: 1024px) {
   .hero-content {
-    padding: var(--hero-pad-top-desktop) 0 0;
-    padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
-    grid-template-columns: minmax(0, min(48rem, 58vw)) 1fr minmax(17.5rem, auto);
-    grid-template-rows: auto auto auto minmax(1rem, 1fr);
-    grid-template-areas:
-      "title . ."
-      "subtitle . ."
-      "cta . ."
-      "spacer . .";
+    padding: 0 0 0 max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
+  }
+
+  .hero-copy {
+    max-width: min(48rem, 58vw);
   }
 
   .hero-title {
@@ -827,25 +818,14 @@ a {
     max-width: 36rem;
   }
 
-  .hero-spacer {
-    display: block;
-  }
-
   .hero-cta-slot {
     margin-top: 40px;
-    align-self: start;
   }
 
   .hero-phone-slot {
-    position: absolute;
     right: 0;
     bottom: 0;
-    z-index: 2;
-    align-self: auto;
-    justify-self: auto;
-    width: fit-content;
-    margin: 0;
-    padding: 0;
+    max-width: none;
     padding-right: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
   }
 
