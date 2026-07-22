@@ -3489,19 +3489,7 @@ a {
 }
 
 .security-band__header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-@media (min-width: 768px) {
-  .security-band__header {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 2.5rem;
-  }
+  display: block;
 }
 
 .security-band__intro {
@@ -3531,29 +3519,6 @@ a {
   line-height: 1.65;
   letter-spacing: -0.01em;
   color: rgb(255 255 255 / 0.88);
-}
-
-.security-band__cta {
-  flex-shrink: 0;
-}
-
-.security-band__more {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 14px;
-  font-weight: 400;
-  color: #ffffff;
-  transition: opacity var(--duration-fast) var(--ease-out);
-}
-
-.security-band__more:hover {
-  opacity: 0.82;
-}
-
-.security-band__more .btn-corner-symbol {
-  opacity: 0.92;
 }
 
 .security-band__grid {
