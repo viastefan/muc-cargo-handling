@@ -176,7 +176,9 @@ export default function HomePage() {
             eyebrow="Standort"
             dark="Direkt am"
             light="Flughafen München"
+            breakTitle={false}
             description="Kurze Wege zum Cargo-Drehkreuz – für effiziente Abläufe und schnelle Abstimmung vor Ort."
+            descriptionClassName="max-w-xl"
           />
         </ScrollReveal>
         <ScrollReveal delay={140} duration={1100}>

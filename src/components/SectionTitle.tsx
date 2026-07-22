@@ -3,6 +3,8 @@ type Props = {
   light: string;
   className?: string;
   as?: "h1" | "h2" | "h3";
+  /** When false, dark + light stay on one line. Default true. */
+  breakLines?: boolean;
 };
 
 export function SectionTitle({
@@ -10,13 +12,14 @@ export function SectionTitle({
   light,
   className = "",
   as: Tag = "h2",
+  breakLines = true,
 }: Props) {
   return (
     <Tag
       className={`max-w-4xl text-[clamp(1.5rem,4vw,2.375rem)] font-normal leading-[1.25] tracking-[-0.02em] text-[var(--foreground)] ${className}`}
     >
       <span>{dark}</span>
-      <br />
+      {breakLines ? <br /> : " "}
       <span className="text-[var(--muted-accent)]">{light}</span>
     </Tag>
   );
