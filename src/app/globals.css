@@ -16,7 +16,7 @@
   --section-y: 4rem;
   --section-header-gap: 2.75rem;
   --section-header-gap-lg: 3.5rem;
-  --hero-gap: 0.5rem;
+  --hero-gap: 0;
   --hero-min: min(92svh, 520px);
   --hero-pad-top-mobile: 3.25rem;
   --hero-pad-bottom-mobile: 2.75rem;
@@ -324,8 +324,8 @@ a {
 /* Hero: flush under header; mobile text top / actions bottom; desktop like mockup */
 .hero-wrap {
   padding-top: 0;
-  padding-inline: var(--hero-gap);
-  padding-bottom: var(--hero-gap);
+  padding-inline: 0;
+  padding-bottom: 0;
 }
 
 .hero-frame {
@@ -354,7 +354,7 @@ a {
   align-items: flex-start;
   justify-content: center;
   min-height: inherit;
-  padding: var(--hero-pad-top-mobile) calc(var(--page-x) - var(--hero-gap))
+  padding: var(--hero-pad-top-mobile) var(--page-x)
     calc(var(--hero-pad-bottom-mobile) + 4.25rem);
 }
 
@@ -783,11 +783,11 @@ a {
 
 .hero-phone-slot {
   position: absolute;
-  right: calc(var(--page-x) - var(--hero-gap));
+  right: var(--page-x);
   bottom: var(--hero-pad-bottom-mobile);
   z-index: 2;
   width: fit-content;
-  max-width: calc(100% - (var(--page-x) - var(--hero-gap)) * 2);
+  max-width: calc(100% - var(--page-x) * 2);
   margin: 0;
 }
 
