@@ -38,7 +38,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        image="/images/home/hero.jpg"
+        image="/images/home/hero.png"
         title="Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München"
         subtitle="Mit strukturierten Abläufen, erfahrenem Personal und hohen Qualitätsstandards begleiten wir Ihre Sendungen – von der Annahme bis zur Sicherheitskontrolle."
       />
