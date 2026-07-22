@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId } from "react";
 
 const inputBase =
   "w-full border border-transparent bg-[var(--surface)] px-4 py-3.5 text-[15px] text-[var(--foreground)] outline-none transition-[border-color,box-shadow,background] placeholder:text-[var(--muted-light)] focus:border-[var(--border)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(217,13,58,0.08)]";
