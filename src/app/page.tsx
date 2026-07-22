@@ -109,7 +109,7 @@ export default function HomePage() {
         />
       </ScrollReveal>
 
-      <PageSection muted borderTop id="leistungen">
+      <PageSection muted id="leistungen">
         <ScrollReveal variant="fade" duration={1000}>
           <SectionHeader
             eyebrow={HOME_TEAM_INTRO.eyebrow}
@@ -138,7 +138,7 @@ export default function HomePage() {
         </ScrollReveal>
       </PageSection>
 
-      <PageSection borderTop id="downloads">
+      <PageSection id="downloads">
         <ScrollReveal duration={1000}>
           <SectionHeader
             eyebrow="Download"
@@ -154,7 +154,7 @@ export default function HomePage() {
         </ScrollReveal>
       </PageSection>
 
-      <PageSection muted borderTop id="faq">
+      <PageSection muted id="faq">
         <div className="faq-home">
           <ScrollReveal duration={1000}>
             <SectionHeader
@@ -178,7 +178,7 @@ export default function HomePage() {
         </div>
       </PageSection>
 
-      <PageSection muted borderTop id="standort">
+      <PageSection id="standort">
         <ScrollReveal duration={1000}>
           <SectionHeader
             eyebrow="Standort"

@@ -8,11 +8,12 @@ type Props = {
 
 export function FaqList({ items, compact = false, className = "" }: Props) {
   return (
-    <dl
-      className={`divide-y divide-[var(--border)] border-y border-[var(--border)] ${compact ? "faq-list--compact" : ""} ${className}`.trim()}
-    >
+    <dl className={`faq-list ${compact ? "faq-list--compact" : ""} ${className}`.trim()}>
       {items.map((item) => (
-        <div key={item.q} className={compact ? "faq-list__item--compact" : "py-6 md:py-7"}>
+        <div
+          key={item.q}
+          className={compact ? "faq-list__item faq-list__item--compact" : "faq-list__item"}
+        >
           <dt
             className={
               compact
@@ -22,7 +23,9 @@ export function FaqList({ items, compact = false, className = "" }: Props) {
           >
             {item.q}
           </dt>
-          <dd className={`prose-muted ${compact ? "mt-2 text-[13px] leading-relaxed" : "mt-2.5 text-[14px]"}`}>
+          <dd
+            className={`prose-muted ${compact ? "mt-2 text-[13px] leading-relaxed" : "mt-2.5 text-[14px]"}`}
+          >
             {item.a}
           </dd>
         </div>

@@ -20,6 +20,10 @@ export const FAQ_HOME: readonly FaqItem[] = [
     a: "Für Speditionen, Airlines, Logistikpartner und Unternehmen mit Luftfracht am Standort München. Wir arbeiten als verlässlicher Partner entlang der Cargo-Kette mit klaren Prozessen und direkter Ansprechbarkeit.",
   },
   {
+    q: "Sind Sie als Reglementierter Beauftragter zugelassen?",
+    a: "Ja. Wir arbeiten als Reglementierter Beauftragter (DE/RA/01278-01) und führen Sicherheitskontrollen nach geltenden luftsicherheitsrechtlichen Vorgaben durch – dokumentiert und nachvollziehbar.",
+  },
+  {
     q: "Wie erreiche ich Sie für eine Anfrage?",
     a: "Per Kontaktformular, E-Mail oder telefonisch während der Betriebszeiten. Für dringende Sendungen stimmen wir Prioritäten und Zeitfenster individuell mit Ihnen ab.",
   },
@@ -42,6 +46,10 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       {
         q: "Sind Sie als Reglementierter Beauftragter zugelassen?",
         a: "Ja. Wir arbeiten als Reglementierter Beauftragter (DE/RA/01278-01) und führen Sicherheitskontrollen nach den geltenden luftsicherheitsrechtlichen Vorgaben durch – dokumentiert und nachvollziehbar.",
+      },
+      {
+        q: "Was unterscheidet Sie von anderen Handling-Partnern?",
+        a: "Kurze Wege am Standort, persönliche Ansprechpartner und dokumentierte Sicherheitsprozesse unter einem Dach. Statt anonymer Schnittstellen erhalten Sie klare Verantwortlichkeiten vom Eingang bis zur Übergabe.",
       },
       {
         q: "In welchen Sprachen können wir kommunizieren?",
@@ -78,6 +86,10 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
         a: "Ja. Bei dringenden Luftfrachten stimmen wir Abläufe, Sicherheitsfenster und Übergaben eng mit Ihnen und den beteiligten Partnern ab – mit klaren Prioritäten im Tagesgeschäft.",
       },
       {
+        q: "Bieten Sie Einlagerung und Kommissionierung an?",
+        a: "Ja. Wir unterstützen bei sicherer Einlagerung, Kommissionierung und Palettierung am Standort – abgestimmt auf Ihren Zeitplan und die nachfolgenden Handling-Schritte.",
+      },
+      {
         q: "Was passiert bei Unregelmäßigkeiten oder fehlenden Dokumenten?",
         a: "Wir melden Abweichungen frühzeitig, dokumentieren den Status und stimmen die nächsten Schritte mit Ihnen ab – damit Verzögerungen so gering wie möglich bleiben.",
       },
@@ -102,6 +114,10 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       {
         q: "Wie erfolgt die Abstimmung mit Airlines und Ground Handling?",
         a: "Über klar definierte Schnittstellen und direkte Kommunikation vor Ort. So bleiben Status, Zeitfenster und Verantwortlichkeiten für alle Beteiligten nachvollziehbar.",
+      },
+      {
+        q: "Unterstützen Sie auch Dokumenten- und Shuttleservices?",
+        a: "Ja. Für zeitkritische Unterlagen und kurze Wege am Flughafen organisieren wir abgestimmte Dokumenten- und Shuttleläufe im Rahmen des Handling-Prozesses.",
       },
     ],
   },
@@ -129,6 +145,32 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
         q: "Wie lange dauert eine typische Sicherheitskontrolle?",
         a: "Das hängt von Sendungsart, Volumen und gewähltem Verfahren ab. Wir stimmen realistische Zeitfenster vorab ab und priorisieren bei Bedarf dringende Sendungen.",
       },
+      {
+        q: "Was ist bei Röntgenaufträgen zu beachten?",
+        a: "Nutzen Sie unser Röntgenauftrags-Formular und geben Sie Maße, Gewicht und besondere Anforderungen an. So können wir Kapazität und Verfahren frühzeitig planen.",
+      },
+    ],
+  },
+  {
+    id: "dokumente",
+    title: "Dokumente & Formulare",
+    items: [
+      {
+        q: "Welche Formulare stehen zum Download bereit?",
+        a: "Auf der Startseite finden Sie u. a. Arbeitsauftrag, Röntgenauftrag sowie Unterlagen zu Zulassung und Versicherung – jeweils mit Vorschau und Download.",
+      },
+      {
+        q: "Muss ich Formulare vorab ausfüllen?",
+        a: "Für eine zügige Bearbeitung empfehlen wir, die relevanten Formulare möglichst vollständig auszufüllen. Fehlen Angaben, klären wir diese kurz mit Ihnen nach.",
+      },
+      {
+        q: "In welchem Format erhalte ich die Dokumente?",
+        a: "Die Formulare stehen als PDF bereit. Sie können sie herunterladen, digital ausfüllen bzw. ausdrucken und uns auf dem vereinbarten Weg übermitteln.",
+      },
+      {
+        q: "Wo finde ich Angaben zu Zulassung und Versicherung?",
+        a: "Aktuelle Nachweise und Informationen stellen wir über die Download-Bereiche auf der Website bereit. Bei speziellen Anforderungen melden Sie sich gern direkt.",
+      },
     ],
   },
   {
@@ -137,15 +179,15 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
     items: [
       {
         q: "Wie schnell erhalte ich eine Rückmeldung?",
-        a: "Unser Team ist während der Betriebszeiten direkt erreichbar. Für dringende Sendungen stimmen wir Prioritäten und Zeitfenster individuell ab.",
+        a: "Unser Team ist während der Betriebszeiten direkt erreichbar. Für dringende Sendungen stimmen wir Prioritäten und Zeitfenster individuell ab – in der Regel innerhalb eines Werktags.",
       },
       {
         q: "Wie stelle ich eine Anfrage?",
         a: "Über das Kontaktformular auf unserer Website, per E-Mail oder telefonisch. Je vollständiger Ihre Angaben zu Sendung, Route und Zeitfenster sind, desto schneller können wir einschätzen und antworten.",
       },
       {
-        q: "Gibt es Formulare oder Vorlagen zum Download?",
-        a: "Ja. Auf der Startseite finden Sie wichtige Formulare für Arbeitsaufträge, Zulassung und Versicherung – mit Vorschau und Download.",
+        q: "Welche Angaben helfen bei der ersten Einschätzung?",
+        a: "Sendungsart, Maße/Gewicht, Import oder Export, gewünschtes Zeitfenster sowie besondere Sicherheits- oder Dokumentenanforderungen. Auch AWB-Nummer und Partner vor Ort sind hilfreich.",
       },
       {
         q: "Bieten Sie eine feste Ansprechperson?",
@@ -154,6 +196,10 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       {
         q: "Kann ich Sie vor Ort am Flughafen besuchen?",
         a: "Termine vor Ort sind nach Absprache möglich. Melden Sie sich kurz mit Ihrem Anliegen – wir koordinieren einen passenden Zeitpunkt am Standort Südallee.",
+      },
+      {
+        q: "Wie erreiche ich Sie außerhalb der üblichen Zeiten?",
+        a: "Für zeitkritische Fälle nennen Sie Priorität und Erreichbarkeit in Ihrer Anfrage. Wir prüfen, ob eine beschleunigte Abstimmung möglich ist, und melden uns entsprechend zurück.",
       },
     ],
   },
