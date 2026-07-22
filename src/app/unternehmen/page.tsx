@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { PageSection } from "@/components/PageSection";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { GlobeIcon, MailIcon, PhoneIcon } from "@/components/ArrowIcon";
 
@@ -53,7 +54,7 @@ export default function UnternehmenPage() {
         subtitle="Mit Erfahrung, strukturierten Abläufen und höchsten Qualitätsstandards sorgen wir für eine sichere, effiziente und transparente Abwicklung Ihrer Sendungen am Flughafen München."
       />
 
-      <section className="section-y page-container">
+      <PageSection>
         <SectionTitle
           dark="Präzise Prozesse."
           light="Verlässliche Abläufe. Sichere Luftfracht"
@@ -89,10 +90,10 @@ export default function UnternehmenPage() {
             ))}
           </ul>
         </div>
-      </section>
+      </PageSection>
 
-      <section className="section-y page-container border-t border-[var(--border)]">
-        <h2 className="text-[28px] font-medium tracking-[-0.02em] text-[var(--foreground)] md:text-[34px] lg:text-[38px]">
+      <PageSection borderTop>
+        <h2 className="text-[28px] font-medium tracking-[-0.02em] md:text-[34px] lg:text-[38px]">
           Unser Team
         </h2>
 
@@ -123,9 +124,9 @@ export default function UnternehmenPage() {
             </article>
           ))}
         </div>
-      </section>
+      </PageSection>
 
-      <section className="section-y page-container">
+      <PageSection>
         <SectionTitle
           dark="Erfahrung, Kompetenz und"
           light="zuverlässige Cargo-Prozesse"
@@ -141,7 +142,7 @@ export default function UnternehmenPage() {
           />
         </div>
 
-        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard
             value="20+"
             label="Jahre Erfahrung"
@@ -170,7 +171,7 @@ export default function UnternehmenPage() {
             footer="Professionelle Abwicklung von Import- & Exportsendungen"
           />
         </div>
-      </section>
+      </PageSection>
 
       <FooterCta title="Gemeinsam für sichere und effiziente Luftfrachtprozesse." />
     </>

@@ -13,20 +13,28 @@ export function ServiceCard({
   bullets?: string[];
 }) {
   return (
-    <article className="overflow-hidden border border-[var(--border)] bg-white">
-      <div className="relative aspect-[16/10] w-full">
-        <Image src={image} alt={title} fill className="object-cover" sizes="(max-width:768px) 100vw, 50vw" />
+    <article className="group bg-white">
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)]">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          sizes="(max-width:768px) 100vw, 50vw"
+        />
       </div>
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-[var(--foreground)]">{title}</h3>
+      <div className="pt-5 md:pt-6">
+        <h3 className="text-[17px] font-semibold tracking-[-0.01em] text-[var(--foreground)]">
+          {title}
+        </h3>
         {description && (
-          <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">{description}</p>
+          <p className="prose-muted mt-2.5 text-[14px]">{description}</p>
         )}
         {bullets && bullets.length > 0 && (
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-4 space-y-2.5">
             {bullets.map((b) => (
-              <li key={b} className="flex items-start gap-2.5 text-sm text-[var(--muted)]">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#e8eef3] text-[#4a6b82]">
+              <li key={b} className="flex items-start gap-2.5 text-[14px] text-[var(--muted)]">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted-accent)]">
                   <CheckIcon />
                 </span>
                 <span>{b}</span>
@@ -47,9 +55,9 @@ export function InfoStat({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-[var(--surface)] p-6">
-      <h3 className="text-base font-bold">{title}</h3>
-      <div className="mt-2 text-sm leading-relaxed text-[var(--muted)]">{children}</div>
-    </div>
+    <article className="flex min-h-[160px] flex-col bg-[var(--surface)] p-6 md:p-7">
+      <h3 className="text-[15px] font-semibold tracking-[-0.01em]">{title}</h3>
+      <div className="prose-muted mt-2 flex-1 text-[14px]">{children}</div>
+    </article>
   );
 }

@@ -8,8 +8,8 @@ export function FooterCta({
 }) {
   return (
     <section className="bg-[var(--brand)]">
-      <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-5 py-16 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-20">
-        <h2 className="max-w-3xl text-3xl font-bold leading-tight text-white md:text-4xl lg:text-[42px]">
+      <div className="page-container flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
+        <h2 className="max-w-3xl text-[28px] font-medium leading-[1.2] tracking-[-0.02em] text-white md:text-[34px] lg:text-[38px]">
           {title}
         </h2>
         <Button href="/kontakt" variant="white" className="shrink-0 self-start">
@@ -23,39 +23,39 @@ export function FooterCta({
 export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--border)] bg-white">
-      <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-12 md:grid-cols-3 lg:px-8">
+      <div className="page-container grid gap-10 py-12 md:grid-cols-3">
         <div>
-          <p className="text-lg font-bold tracking-wide">MUC Cargo Handling</p>
-          <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--muted)]">
+          <p className="text-[15px] font-semibold tracking-[-0.01em]">MUC Cargo Handling</p>
+          <p className="prose-muted mt-3 max-w-xs text-[13px]">
             Professionelle Luftfrachtabwicklung am Flughafen München – seit 2003.
           </p>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted-light)]">
+          <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
             Navigation
           </p>
-          <ul className="mt-3 space-y-2 text-sm">
-            <li><Link href="/unternehmen" className="hover:text-[var(--brand)]">Unternehmen</Link></li>
-            <li><Link href="/luftfracht" className="hover:text-[var(--brand)]">Luftfracht Import Export</Link></li>
-            <li><Link href="/airline-handling" className="hover:text-[var(--brand)]">Airline Handling</Link></li>
-            <li><Link href="/roentgen" className="hover:text-[var(--brand)]">Röntgen</Link></li>
-            <li><Link href="/kontakt" className="hover:text-[var(--brand)]">Kontakt</Link></li>
+          <ul className="mt-4 space-y-2.5 text-[14px] text-[var(--muted)]">
+            <li><Link href="/unternehmen" className="hover:text-[var(--foreground)]">Unternehmen</Link></li>
+            <li><Link href="/luftfracht" className="hover:text-[var(--foreground)]">Luftfracht Import Export</Link></li>
+            <li><Link href="/airline-handling" className="hover:text-[var(--foreground)]">Airline Handling</Link></li>
+            <li><Link href="/roentgen" className="hover:text-[var(--foreground)]">Röntgen</Link></li>
+            <li><Link href="/kontakt" className="hover:text-[var(--foreground)]">Kontakt</Link></li>
           </ul>
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[var(--muted-light)]">
+          <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
             Kontakt
           </p>
-          <ul className="mt-3 space-y-2 text-sm text-[var(--muted)]">
+          <ul className="mt-4 space-y-2.5 text-[14px] text-[var(--muted)]">
             <li>Südallee 18/20</li>
             <li>85356 München / Flughafen</li>
             <li>
-              <a href="tel:08997594877" className="hover:text-[var(--brand)]">
+              <a href="tel:08997594877" className="hover:text-[var(--foreground)]">
                 Tel: 089 – 975 948 77
               </a>
             </li>
             <li>
-              <a href="mailto:info@muc-cargohandling.com" className="hover:text-[var(--brand)]">
+              <a href="mailto:info@muc-cargohandling.com" className="hover:text-[var(--foreground)]">
                 info@muc-cargohandling.com
               </a>
             </li>
@@ -63,7 +63,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-[var(--border)]">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-2 px-5 py-5 text-xs text-[var(--muted-light)] sm:flex-row sm:justify-between lg:px-8">
+        <div className="page-container flex flex-col gap-2 py-5 text-[12px] text-[var(--muted-light)] sm:flex-row sm:justify-between">
           <p>© {new Date().getFullYear()} MUC Cargo Handling GmbH</p>
           <p>Reglementierter Beauftragter · DE/RA/01278-01</p>
         </div>

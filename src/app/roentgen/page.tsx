@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import {
+  FeatureCard,
+  PageSection,
+  SectionEyebrow,
+  SectionHeader,
+} from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
@@ -24,107 +30,97 @@ export default function RoentgenPage() {
         subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für eine zuverlässige Freigabe Ihrer Sendungen am Flughafen München."
       />
 
-      <section className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
-        <h2 className="max-w-3xl text-3xl font-bold leading-tight md:text-4xl">
-          <span className="text-[var(--muted-light)]">Sicherheit </span>
-          in jedem Prozessschritt
-        </h2>
-        <div className="mt-8 grid gap-8 md:grid-cols-2">
-          <p className="text-[15px] leading-relaxed text-[var(--muted)]">
+      <PageSection>
+        <SectionHeader
+          dark="Sicherheit"
+          light="in jedem Prozessschritt"
+        />
+        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12">
+          <p className="prose-muted">
             Unsere Kontrollverfahren kombinieren Technik und Fachpersonal.
             Je nach Sendung setzen wir Röntgenkontrolle, Sichtprüfung,
             Handdurchsuchung oder Sprengstoff-Spurendetektion ein – immer mit
             dem Ziel einer klaren, dokumentierten Entscheidung.
           </p>
-          <p className="text-[15px] leading-relaxed text-[var(--muted)]">
+          <p className="prose-muted">
             Als reglementierter Beauftragter arbeiten wir nach den Anforderungen
             der Luftsicherheit und stimmen uns eng mit Partnern am Flughafen
             München ab.
           </p>
         </div>
 
-        <div className="mt-10 bg-[var(--surface)] p-6 md:p-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.06em] text-[var(--muted-light)]">
+        <div className="mt-10 bg-[var(--surface)] p-6 md:p-8 lg:mt-12">
+          <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
             Technische Eckdaten Röntgen
           </p>
-          <p className="mt-3 text-[15px] leading-relaxed text-[var(--muted)]">
-            Durchlassbreite ca. <strong className="text-[var(--foreground)]">179 cm</strong>,
-            Höhe ca. <strong className="text-[var(--foreground)]">170 cm</strong>,
-            max. Gewicht ca. <strong className="text-[var(--foreground)]">2.000 kg</strong>.
+          <p className="prose-muted mt-3 text-[14px]">
+            Durchlassbreite ca. <strong className="font-medium text-[var(--foreground)]">179 cm</strong>,
+            Höhe ca. <strong className="font-medium text-[var(--foreground)]">170 cm</strong>,
+            max. Gewicht ca. <strong className="font-medium text-[var(--foreground)]">2.000 kg</strong>.
             Für abweichende Abmessungen beraten wir Sie gerne zu Alternativverfahren.
           </p>
         </div>
-      </section>
+      </PageSection>
 
-      <section className="bg-[var(--surface)]">
-        <div className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
-          <span className="inline-block border border-[var(--border)] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em]">
-            Röntgen
-          </span>
-          <h2 className="mt-4 text-3xl font-bold md:text-4xl">Unsere Kontrollverfahren</h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <ServiceCard
-              image="/images/roentgen/kontrolle-roentgen.jpg"
-              title="Röntgenkontrolle"
-              description="Schnelle, bildgebende Prüfung großer Sendungsvolumina durch geschulte Operatoren."
-            />
-            <ServiceCard
-              image="/images/roentgen/kontrolle-sicht.jpg"
-              title="Sichtkontrolle"
-              description="Äußere Prüfung auf Unversehrtheit, Kennzeichnung und Auffälligkeiten."
-            />
-            <ServiceCard
-              image="/images/roentgen/kontrolle-hand.jpg"
-              title="Handdurchsuchung"
-              description="Manuelle Vertiefung, wenn Technik allein nicht ausreicht oder die Sendung es erfordert."
-            />
-            <ServiceCard
-              image="/images/roentgen/kontrolle-etd.jpg"
-              title="Sprengstoff-Spurendetektion"
-              description="ETD als ergänzendes Verfahren zur Spurensuche im Sicherheitsprozess."
-            />
-          </div>
+      <PageSection muted>
+        <SectionEyebrow>Röntgen</SectionEyebrow>
+        <SectionHeader dark="Unsere" light="Kontrollverfahren" />
+        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12 lg:gap-10">
+          <ServiceCard
+            image="/images/roentgen/kontrolle-roentgen.jpg"
+            title="Röntgenkontrolle"
+            description="Schnelle, bildgebende Prüfung großer Sendungsvolumina durch geschulte Operatoren."
+          />
+          <ServiceCard
+            image="/images/roentgen/kontrolle-sicht.jpg"
+            title="Sichtkontrolle"
+            description="Äußere Prüfung auf Unversehrtheit, Kennzeichnung und Auffälligkeiten."
+          />
+          <ServiceCard
+            image="/images/roentgen/kontrolle-hand.jpg"
+            title="Handdurchsuchung"
+            description="Manuelle Vertiefung, wenn Technik allein nicht ausreicht oder die Sendung es erfordert."
+          />
+          <ServiceCard
+            image="/images/roentgen/kontrolle-etd.jpg"
+            title="Sprengstoff-Spurendetektion"
+            description="ETD als ergänzendes Verfahren zur Spurensuche im Sicherheitsprozess."
+          />
         </div>
-      </section>
+      </PageSection>
 
-      <section className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <h2 className="text-3xl font-bold md:text-4xl">
-              Unsere Zusammenarbeit mit STI
-            </h2>
-            <p className="mt-5 text-[15px] leading-relaxed text-[var(--muted)]">
-              Am Flughafen München kooperieren wir mit etablierten Partnern wie
-              STI, um Sicherheits- und Handling-Prozesse effizient zu verzahnen.
-              So entstehen kurze Wege und klare Verantwortlichkeiten.
-            </p>
-          </div>
-          <div className="flex items-center gap-8 bg-[var(--surface)] p-8">
+      <PageSection borderTop>
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <SectionHeader
+            dark="Unsere Zusammenarbeit"
+            light="mit STI"
+            description="Am Flughafen München kooperieren wir mit etablierten Partnern wie STI, um Sicherheits- und Handling-Prozesse effizient zu verzahnen. So entstehen kurze Wege und klare Verantwortlichkeiten."
+          />
+          <div className="flex items-center gap-8 bg-[var(--surface)] p-8 md:p-10">
             <Image
               src="/images/shared/logo.svg"
               alt="MUC Cargo Handling"
-              width={180}
-              height={50}
+              width={160}
+              height={44}
             />
             <div className="h-10 w-px bg-[var(--border)]" />
-            <div className="text-sm font-bold tracking-wide text-[var(--muted)]">
+            <p className="text-[13px] font-medium text-[var(--muted)]">
               STI Partner
-              <span className="mt-1 block text-xs font-normal">
-                Logo unter <code className="text-[11px]">public/images/shared/sti-logo.png</code> einfügen
+              <span className="mt-1 block text-[12px] font-normal text-[var(--muted-light)]">
+                Logo: public/images/shared/sti-logo.png
               </span>
-            </div>
+            </p>
           </div>
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
           {HIGHLIGHTS.map((h) => (
-            <div key={h.title} className="bg-[var(--surface)] p-5">
-              <h3 className="font-bold">{h.title}</h3>
-              <p className="mt-2 text-sm text-[var(--muted)]">{h.text}</p>
-            </div>
+            <FeatureCard key={h.title} title={h.title}>
+              {h.text}
+            </FeatureCard>
           ))}
         </div>
-      </section>
+      </PageSection>
 
       <FooterCta title="Sicherheit, die Ihre Luftfrachtprozesse beschleunigt." />
     </>

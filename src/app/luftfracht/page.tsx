@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
@@ -16,18 +17,14 @@ export default function LuftfrachtPage() {
         subtitle="Von der Annahme bis zur Auslieferung: wir steuern Ihre Import- und Exportprozesse mit klaren Schnittstellen, dokumentierter Qualität und kurzen Durchlaufzeiten."
       />
 
-      <section className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
-        <h2 className="max-w-3xl text-3xl font-bold leading-tight md:text-4xl">
-          <span className="text-[var(--muted-light)]">Ihr Partner für </span>
-          professionelle Luftfrachtabwicklung
-        </h2>
-        <p className="mt-6 max-w-3xl text-[15px] leading-relaxed text-[var(--muted)]">
-          Ob Import oder Export – wir koordinieren Handling, Dokumentation und
-          Sicherheitsanforderungen entlang der gesamten Kette. So bleiben Ihre
-          Sendungen planbar, nachvollziehbar und bereit für den nächsten Schritt.
-        </p>
+      <PageSection>
+        <SectionHeader
+          dark="Ihr Partner für"
+          light="professionelle Luftfrachtabwicklung"
+          description="Ob Import oder Export – wir koordinieren Handling, Dokumentation und Sicherheitsanforderungen entlang der gesamten Kette. So bleiben Ihre Sendungen planbar, nachvollziehbar und bereit für den nächsten Schritt."
+        />
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14 lg:gap-10">
           <ServiceCard
             image="/images/luftfracht/service-1.jpg"
             title="Import Handling"
@@ -49,7 +46,7 @@ export default function LuftfrachtPage() {
             description="Anbindung an unsere Sicherheitsverfahren – Röntgen, Sichtkontrolle, Handdurchsuchung und ETD."
           />
         </div>
-      </section>
+      </PageSection>
 
       <FooterCta />
     </>
