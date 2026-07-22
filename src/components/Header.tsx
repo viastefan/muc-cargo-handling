@@ -33,7 +33,12 @@ export function Header() {
 
         {NAV.map((item) => (
           <div key={item.href} className="site-header-cell">
-            <Link href={item.href} className="site-header-link">
+            <Link
+              href={item.href}
+              className={`site-header-link ${
+                pathname === item.href || pathname.startsWith(`${item.href}/`) ? "is-active" : ""
+              }`}
+            >
               {item.label}
             </Link>
           </div>

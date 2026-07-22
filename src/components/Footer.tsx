@@ -8,8 +8,8 @@ export function FooterCta({
 }) {
   return (
     <section className="bg-[var(--brand)]">
-      <div className="page-container flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
-        <h2 className="heading-display max-w-3xl text-[clamp(1.5rem,4vw,2.375rem)] text-white">
+      <div className="page-container flex flex-col gap-8 py-16 md:py-20 lg:flex-row lg:items-center lg:justify-between lg:py-24">
+        <h2 className="heading-display max-w-3xl text-[clamp(1.5rem,4vw,2.5rem)] leading-[1.2] text-white">
           {title}
         </h2>
         <Button href="/kontakt" variant="white" className="shrink-0 self-start">

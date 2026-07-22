@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
-import { MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
+import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
 
 export const metadata: Metadata = {
   title: "Kontakt",
+  description:
+    "Kontakt zu MUC Cargo Handling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
 };
 
 const CONTACT = [
@@ -39,6 +42,17 @@ const CONTACT = [
       </a>
     ),
   },
+  {
+    icon: ClockIcon,
+    label: "Erreichbarkeit",
+    content: (
+      <>
+        Mo–Fr, Bürozeiten
+        <br />
+        24/7 für zeitkritische Sendungen
+      </>
+    ),
+  },
 ];
 
 export default function KontaktPage() {
@@ -55,6 +69,7 @@ export default function KontaktPage() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16 xl:gap-20">
           <div>
             <SectionHeader
+              eyebrow="Kontakt"
               dark="Anfrage stellen"
               description="Strukturiert, schnell und ohne Umwege. Teilen Sie uns Ihr Anliegen mit – wir melden uns persönlich bei Ihnen."
             />
@@ -62,22 +77,22 @@ export default function KontaktPage() {
           </div>
 
           <aside className="lg:pt-2">
-            <div className="sticky top-24 space-y-6">
-              <div className="bg-[var(--surface)] p-6 md:p-8">
+            <div className="sticky top-24 space-y-4">
+              <div className="border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
                 <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
                   Direktkontakt
                 </p>
                 <ul className="mt-6 space-y-6">
                   {CONTACT.map((item) => (
                     <li key={item.label} className="flex gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[var(--muted)]">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--muted)]">
                         <item.icon className="h-4 w-4" />
                       </span>
                       <div>
                         <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
                           {item.label}
                         </p>
-                        <p className="mt-1 text-[14px] text-[var(--muted)]">{item.content}</p>
+                        <p className="mt-1 text-[14px] leading-relaxed text-[var(--muted)]">{item.content}</p>
                       </div>
                     </li>
                   ))}
@@ -85,14 +100,25 @@ export default function KontaktPage() {
               </div>
 
               <div className="border border-[var(--border)] bg-white p-6 md:p-8">
-                <p className="text-[12px] font-medium text-[var(--foreground)]">
+                <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
+                  Zertifizierung
+                </p>
+                <p className="mt-3 text-[15px] text-[var(--foreground)]">
                   Reglementierter Beauftragter
                 </p>
                 <p className="mt-1 text-[13px] text-[var(--muted)]">DE/RA/01278-01</p>
                 <p className="prose-muted mt-4 text-[13px]">
-                  Mo–Fr, Reaktionszeit in der Regel innerhalb von 24 Stunden.
+                  Reaktionszeit auf Anfragen in der Regel innerhalb von 24 Stunden (Werktage).
                 </p>
               </div>
+
+              <MetricRow
+                items={[
+                  { value: "< 24h", label: "Rückmeldung auf Anfragen" },
+                  { value: "MUC", label: "Direkt am Flughafen" },
+                  { value: "DE/RA", label: "Zugelassene Sicherheit" },
+                ]}
+              />
             </div>
           </aside>
         </div>
@@ -100,6 +126,7 @@ export default function KontaktPage() {
 
       <PageSection muted id="datenschutz" borderTop>
         <SectionHeader
+          eyebrow="Rechtliches"
           dark="Datenschutz"
           description="Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Nach Abschluss der Kommunikation werden die Daten gemäß den gesetzlichen Aufbewahrungsfristen gelöscht."
         />

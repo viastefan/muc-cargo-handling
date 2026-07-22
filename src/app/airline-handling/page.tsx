@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { MetricRow } from "@/components/MetricRow";
+import { PartnerLogos } from "@/components/PartnerLogos";
 import { FeatureCard, PageSection, SectionHeader } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
   title: "Airline Handling",
+  description:
+    "Airline Handling am Flughafen München – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle.",
 };
 
 export default function AirlineHandlingPage() {
@@ -18,18 +22,26 @@ export default function AirlineHandlingPage() {
       />
 
       <PageSection>
-        <SectionHeader
-          dark="Professionelles Handling"
-          light="für einen reibungslosen Airline-Betrieb"
-          description="Als operative Schnittstelle verbinden wir Airlines, Speditionen und Logistikpartner. Klare Abläufe, belastbare Kommunikation und standardisierte Qualität sichern den Tagesbetrieb."
-          align="center"
-          className="mx-auto"
-        />
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+          <SectionHeader
+            eyebrow="Airline Handling"
+            dark="Professionelles Handling"
+            light="für einen reibungslosen Airline-Betrieb"
+            description="Als operative Schnittstelle verbinden wir Airlines, Speditionen und Logistikpartner. Klare Abläufe, belastbare Kommunikation und standardisierte Qualität sichern den Tagesbetrieb – auch bei hohem Sendungsaufkommen."
+          />
+          <MetricRow
+            items={[
+              { value: "Import", label: "Annahme und Übergabe eingehender Fracht" },
+              { value: "Export", label: "Vorbereitung und Freigabe ausgehender Sendungen" },
+              { value: "ULD", label: "Sicherheits- und Unit-Load-Device-Handling" },
+            ]}
+          />
+        </div>
       </PageSection>
 
-      <PageSection muted>
+      <PageSection muted borderTop>
         <SectionHeader dark="Leistungen" light="im Überblick" />
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12 lg:gap-10">
+        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
           <ServiceCard
             image="/images/airline-handling/import-export.jpg"
             title="Import & Export Handling"
@@ -65,6 +77,7 @@ export default function AirlineHandlingPage() {
               "Security-konforme Abläufe",
               "Sorgfältige Behandlung empfindlicher Fracht",
             ]}
+            href="/roentgen"
           />
         </div>
       </PageSection>
@@ -74,11 +87,25 @@ export default function AirlineHandlingPage() {
           dark="Operative Airline-Prozesse"
           description="Wir orchestrieren die Übergänge zwischen Airline, Frachtführer und Warehouse. Dadurch entstehen stabile Durchlaufzeiten, weniger Rückfragen und eine Abwicklung, die auch bei Peak-Zeiten belastbar bleibt."
         />
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <FeatureCard title="Schnittstelle">Airline ↔ Spedition ↔ Warehouse</FeatureCard>
           <FeatureCard title="Dokumentation">Vollständige Übergabeprotokolle</FeatureCard>
           <FeatureCard title="Compliance">Regelkonforme Abläufe</FeatureCard>
           <FeatureCard title="Peak-fähig">Belastbar bei hohem Sendungsaufkommen</FeatureCard>
+        </div>
+      </PageSection>
+
+      <PageSection muted>
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+          <SectionHeader
+            dark="Am Standort"
+            light="Flughafen München"
+            description="Kurze Wege, direkte Abstimmung mit Partnern und ein Team, das den lokalen Cargo-Betrieb kennt – für verlässliche Airline-Prozesse vor Ort."
+          />
+          <PartnerLogos
+            title="Partner am Cargo-Standort"
+            description="Zusammenarbeit mit erfahrenen Partnern für effiziente Handling- und Sicherheitsprozesse."
+          />
         </div>
       </PageSection>
 

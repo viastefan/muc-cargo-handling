@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { PartnerLogos } from "@/components/PartnerLogos";
+import { SpecGrid } from "@/components/SpecGrid";
 import {
   FeatureCard,
   PageSection,
@@ -12,6 +13,8 @@ import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
   title: "Röntgen",
+  description:
+    "Röntgen- und Sicherheitskontrollen am Flughafen München – LBA-konform, modern und als reglementierter Beauftragter.",
 };
 
 const HIGHLIGHTS = [
@@ -19,6 +22,21 @@ const HIGHLIGHTS = [
   { title: "Modernste Prüftechnik", text: "Röntgenanlagen für gängige Frachtmaße und Gewichte." },
   { title: "STI Kooperation", text: "Zusammenarbeit am Standort Flughafen München." },
   { title: "Flughafen München", text: "Kurze Wege – direkt am Cargo-Standort MUC." },
+];
+
+const FAQ = [
+  {
+    q: "Welche Sendungen können geröntgt werden?",
+    a: "Standardfracht bis ca. 179 cm Breite, 170 cm Höhe und 2.000 kg Gewicht. Für Sondermaße beraten wir zu Alternativverfahren.",
+  },
+  {
+    q: "Wie läuft die Freigabe ab?",
+    a: "Nach erfolgreicher Prüfung dokumentieren wir das Ergebnis und stimmen die Freigabe mit den beteiligten Partnern ab.",
+  },
+  {
+    q: "Welche Verfahren kommen zum Einsatz?",
+    a: "Je nach Sendung Röntgen, Sichtkontrolle, Handdurchsuchung oder Sprengstoff-Spurendetektion – immer regelkonform und nachvollziehbar.",
+  },
 ];
 
 export default function RoentgenPage() {
@@ -32,10 +50,11 @@ export default function RoentgenPage() {
 
       <PageSection>
         <SectionHeader
+          eyebrow="Luftsicherheit"
           dark="Sicherheit"
           light="in jedem Prozessschritt"
         />
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12">
+        <div className="section-header-gap grid gap-8 md:grid-cols-2">
           <p className="prose-muted">
             Unsere Kontrollverfahren kombinieren Technik und Fachpersonal.
             Je nach Sendung setzen wir Röntgenkontrolle, Sichtprüfung,
@@ -49,23 +68,27 @@ export default function RoentgenPage() {
           </p>
         </div>
 
-        <div className="mt-10 bg-[var(--surface)] p-6 md:p-8 lg:mt-12">
-          <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+        <div className="section-header-gap">
+          <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
             Technische Eckdaten Röntgen
           </p>
-          <p className="prose-muted mt-3 text-[14px]">
-            Durchlassbreite ca. <strong className="font-medium text-[var(--foreground)]">179 cm</strong>,
-            Höhe ca. <strong className="font-medium text-[var(--foreground)]">170 cm</strong>,
-            max. Gewicht ca. <strong className="font-medium text-[var(--foreground)]">2.000 kg</strong>.
+          <SpecGrid
+            items={[
+              { label: "Durchlassbreite", value: "179", unit: "cm" },
+              { label: "Höhe", value: "170", unit: "cm" },
+              { label: "Max. Gewicht", value: "2.000", unit: "kg" },
+            ]}
+          />
+          <p className="prose-muted mt-4 text-[14px]">
             Für abweichende Abmessungen beraten wir Sie gerne zu Alternativverfahren.
           </p>
         </div>
       </PageSection>
 
-      <PageSection muted>
+      <PageSection muted borderTop>
         <SectionEyebrow>Röntgen</SectionEyebrow>
         <SectionHeader dark="Unsere" light="Kontrollverfahren" />
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12 lg:gap-10">
+        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
           <ServiceCard
             image="/images/roentgen/kontrolle-roentgen.jpg"
             title="Röntgenkontrolle"
@@ -99,13 +122,31 @@ export default function RoentgenPage() {
           <PartnerLogos />
         </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
+        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {HIGHLIGHTS.map((h) => (
             <FeatureCard key={h.title} title={h.title}>
               {h.text}
             </FeatureCard>
           ))}
         </div>
+      </PageSection>
+
+      <PageSection muted>
+        <SectionHeader
+          eyebrow="FAQ"
+          dark="Häufige Fragen"
+          description="Kurze Antworten zu typischen Anforderungen im Sicherheitsprozess – für eine schnelle Orientierung vor Ihrer Anfrage."
+        />
+        <dl className="section-header-gap divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          {FAQ.map((item) => (
+            <div key={item.q} className="py-6 md:py-7">
+              <dt className="text-[15px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
+                {item.q}
+              </dt>
+              <dd className="prose-muted mt-2.5 text-[14px]">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
       </PageSection>
 
       <FooterCta title="Sicherheit, die Ihre Luftfrachtprozesse beschleunigt." />

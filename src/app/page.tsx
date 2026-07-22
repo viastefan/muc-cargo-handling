@@ -1,11 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { PageSection } from "@/components/PageSection";
+import { PageSection, SectionHeader } from "@/components/PageSection";
+import { ServiceNav } from "@/components/ServiceNav";
 import { ServiceCard } from "@/components/ServiceCard";
 import { PinIcon } from "@/components/ArrowIcon";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
+import { SERVICES } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "MUC Cargo Handling | Luftfracht am Flughafen München",
+  description:
+    "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
+};
 
 export default function HomePage() {
   return (
@@ -64,31 +73,51 @@ export default function HomePage() {
         </div>
       </PageSection>
 
-      <PageSection muted>
+      <PageSection muted borderTop>
+        <SectionHeader
+          eyebrow="Leistungen"
+          dark="Drei Kernbereiche"
+          light="für Ihre Luftfracht am MUC"
+          description="Von der operativen Abwicklung bis zur Luftsicherheit – alle Services aus einer Hand am Flughafen München."
+        />
+        <div className="section-header-gap">
+          <ServiceNav items={SERVICES} />
+        </div>
+      </PageSection>
+
+      <PageSection>
         <SectionTitle
           dark="Sicherheit und Kontrolle"
           light="für Ihre Luftfracht"
         />
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12 lg:gap-10">
+        <p className="prose-lead mt-5 max-w-2xl">
+          Als reglementierter Beauftragter setzen wir moderne Prüfverfahren ein – schnell,
+          dokumentiert und nach geltenden Luftsicherheitsvorgaben.
+        </p>
+        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
           <ServiceCard
             image="/images/home/service-roentgen.jpg"
             title="Röntgenkontrolle"
             description="Moderne Röntgentechnik für eine schnelle und regelkonforme Prüfung Ihrer Sendungen."
+            href="/roentgen"
           />
           <ServiceCard
             image="/images/home/service-sichtkontrolle.jpg"
             title="Sichtkontrolle"
             description="Geschulte Fachkräfte prüfen äußerlich erkennbare Auffälligkeiten und Unversehrtheit."
+            href="/roentgen"
           />
           <ServiceCard
             image="/images/home/service-handdurchsuchung.jpg"
             title="Handdurchsuchung"
             description="Manuelle Kontrolle dort, wo technisch oder inhaltlich eine vertiefte Prüfung nötig ist."
+            href="/roentgen"
           />
           <ServiceCard
             image="/images/home/service-etd.jpg"
             title="Sprengstoff-Spurendetektion"
             description="ETD-Verfahren zur Spurensuche – ergänzend zu Röntgen und physischen Kontrollen."
+            href="/roentgen"
           />
         </div>
       </PageSection>

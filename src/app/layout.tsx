@@ -11,9 +11,6 @@ export const metadata: Metadata = {
   },
   description:
     "Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München. Import, Export, Airline Handling und Röntgenkontrolle.",
-  other: {
-    "material-symbols": "arrow_forward_ios",
-  },
 };
 
 export default function RootLayout({

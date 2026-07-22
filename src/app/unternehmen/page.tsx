@@ -4,18 +4,23 @@ import Link from "next/link";
 import { InternationalGlobeSection } from "@/components/InternationalGlobeSection";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { PageSection } from "@/components/PageSection";
+import { PageSection, SectionHeader } from "@/components/PageSection";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
+import { Timeline } from "@/components/Timeline";
+import { ValuePillars } from "@/components/ValuePillars";
 import { MailIcon, PhoneIcon } from "@/components/ArrowIcon";
+import { COMPANY_VALUES } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Unternehmen",
+  description:
+    "Über MUC Cargo Handling – Erfahrung, Team und Prozesse für professionelle Luftfracht am Flughafen München seit 2003.",
 };
 
 const TIMELINE = [
   { year: "2003", text: "Gründung ALD – Airport Lagerdienste e.K." },
+  { year: "2013", text: "Umwandlung zur ALD – Airport Lagerdienste GmbH" },
   { year: "2015", text: "MUC Cargo Handling GmbH" },
-  { year: "2013", text: "Umwandlung zur GmbH" },
   { year: "Heute", text: "Erfahrener Partner für Airport Cargo Services" },
 ];
 
@@ -61,7 +66,7 @@ export default function UnternehmenPage() {
           light="Verlässliche Abläufe. Sichere Luftfracht"
         />
 
-        <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
+        <div className="section-header-gap grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <div className="space-y-6 prose-muted">
             <p>
               Seit 2003 steht MUC Cargo Handling für zuverlässige Prozesse,
@@ -78,32 +83,28 @@ export default function UnternehmenPage() {
             </p>
           </div>
 
-          <ul className="space-y-8 lg:pt-1">
-            {TIMELINE.map((item) => (
-              <li key={`${item.year}-${item.text}`}>
-                <p className="text-[13px] font-medium text-[var(--muted-light)]">
-                  {item.year}
-                </p>
-                <p className="mt-1 text-[15px] font-medium text-[var(--foreground)]">
-                  {item.text}
-                </p>
-              </li>
-            ))}
-          </ul>
+          <Timeline items={TIMELINE} />
+        </div>
+      </PageSection>
+
+      <PageSection muted borderTop>
+        <SectionHeader
+          eyebrow="Unsere Haltung"
+          dark="Werte, die"
+          light="unseren Alltag prägen"
+          description="Verlässlichkeit, Sicherheit und partnerschaftliche Zusammenarbeit sind die Grundlage für jeden Prozessschritt am Flughafen München."
+        />
+        <div className="section-header-gap">
+          <ValuePillars items={COMPANY_VALUES} />
         </div>
       </PageSection>
 
       <PageSection borderTop>
-        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)]">
-          Unser Team
-        </h2>
+        <SectionHeader dark="Unser Team" description="Persönliche Ansprechpartner für operative Fragen, Abwicklung und Koordination – direkt erreichbar am Standort MUC." />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:gap-5">
+        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:gap-5">
           {TEAM.map((person) => (
-            <article
-              key={person.email}
-              className="bg-[var(--surface)] p-6 md:p-8"
-            >
+            <article key={person.email} className="team-card">
               <h3 className="text-[17px] font-normal tracking-[-0.01em]">
                 {person.name}
               </h3>
@@ -133,10 +134,10 @@ export default function UnternehmenPage() {
           light="zuverlässige Cargo-Prozesse"
         />
 
-        <div className="relative mt-10 aspect-[16/7] w-full overflow-hidden bg-[var(--surface)] lg:mt-12">
+        <div className="section-header-gap relative aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
           <Image
             src="/images/unternehmen/stats.jpg"
-            alt="Team bei der Arbeit"
+            alt="Team bei der Arbeit am Flughafen München"
             fill
             className="object-cover"
             sizes="(max-width: 1280px) 100vw, 1280px"
