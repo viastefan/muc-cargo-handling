@@ -136,6 +136,7 @@ export default function HomePage() {
             eyebrow="Download"
             dark="Formulare und"
             light="Unterlagen"
+            breakTitle={false}
             description="Wichtige Dokumente für Arbeitsaufträge, Zulassung und Versicherung – jederzeit abrufbar."
           />
         </ScrollReveal>
