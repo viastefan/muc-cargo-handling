@@ -51,7 +51,7 @@ function CardBody({
 export function ServiceCard({ image, title, description, bullets, href }: Props) {
   const inner = (
     <article className="service-card group flex h-full flex-col bg-white">
-      <div className="service-card-media relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)]">
+      <div className="service-card-media media-dim relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)]">
         <Image
           src={image}
           alt={title}

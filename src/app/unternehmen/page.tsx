@@ -146,7 +146,7 @@ export default function UnternehmenPage() {
           light="zuverlässige Cargo-Prozesse"
         />
 
-        <div className="section-header-gap relative aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
+        <div className="section-header-gap media-dim relative aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
           <Image
             src="/images/unternehmen/stats.jpg"
             alt="Team bei der Arbeit am Flughafen München"

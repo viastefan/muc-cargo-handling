@@ -38,7 +38,7 @@ export function IntroSplitBand({
         </ScrollReveal>
       </div>
 
-      <ScrollReveal variant="scale" duration={1200} className="intro-split-band__media">
+      <ScrollReveal variant="scale" duration={1200} className="intro-split-band__media media-dim">
         <Image
           src={image}
           alt={imageAlt}

@@ -20,7 +20,7 @@ export function ImageCtaBand({ title, ctaLabel, ctaHref, image }: Props) {
             {ctaLabel}
           </Button>
         </div>
-        <div className="image-cta-band__media">
+        <div className="image-cta-band__media media-dim">
           <Image
             src={image}
             alt=""

@@ -409,6 +409,20 @@ a {
   }
 }
 
+/* Content photos — lighter dim than hero */
+.media-dim {
+  position: relative;
+}
+
+.media-dim::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgb(0 0 0 / 0.28);
+}
+
 .hero-content {
   position: absolute;
   inset: 0;
