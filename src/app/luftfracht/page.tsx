@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { MetricRow } from "@/components/MetricRow";
-import { PageSection, SectionHeader } from "@/components/PageSection";
-import { ProcessSteps } from "@/components/ProcessSteps";
-import { ServiceCard } from "@/components/ServiceCard";
-import { LUFTFRACHT_PROCESS } from "@/lib/content";
+import { IntroSplitBand } from "@/components/IntroSplitBand";
+import { PageSection } from "@/components/PageSection";
+import { ProcessDotCards } from "@/components/ProcessDotCards";
+import { LUFTFRACHT_IMPORT_EXPORT_STEPS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Luftfracht Import Export",
@@ -18,69 +17,25 @@ export default function LuftfrachtPage() {
     <>
       <Hero
         image="/images/luftfracht/hero.jpg"
-        title="Luftfracht Import & Export am Flughafen München"
-        subtitle="Von der Annahme bis zur Auslieferung: wir steuern Ihre Import- und Exportprozesse mit klaren Schnittstellen, dokumentierter Qualität und kurzen Durchlaufzeiten."
+        title="Luftfracht Import und Export"
+        subtitle="Mit Erfahrung, strukturierten Abläufen und höchsten Qualitätsstandards sorgen wir für eine sichere, effiziente und transparente Abwicklung Ihrer Sendungen am Flughafen München."
       />
 
-      <PageSection>
-        <SectionHeader
-          eyebrow="Luftfracht"
-          dark="Ihr Partner für"
-          light="professionelle Luftfrachtabwicklung"
-          description="Ob Import oder Export – wir koordinieren Handling, Dokumentation und Sicherheitsanforderungen entlang der gesamten Kette. So bleiben Ihre Sendungen planbar, nachvollziehbar und bereit für den nächsten Schritt."
-        />
+      <IntroSplitBand
+        titleDark="Zwei Prozesse."
+        titleLight="Ein hoher Qualitätsanspruch."
+        description="Ob eingehende oder ausgehende Luftfrachtsendungen – wir begleiten jeden Auftrag mit klar definierten Prozessen und einer zuverlässigen operativen Abwicklung. Durch die enge Zusammenarbeit mit Airlines, Behörden und Logistikpartnern gewährleisten wir einen reibungslosen Warenfluss am Flughafen München."
+        image="/images/luftfracht/band.jpg"
+        imageAlt="Luftfracht-Handling am Flughafen München"
+      />
 
-        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
-          <ServiceCard
-            image="/images/luftfracht/service-1.jpg"
-            title="Import Handling"
-            description="Annahme, Kontrolle und Weitergabe importierter Sendungen – inklusive Abstimmung mit Airlines und Empfängern."
-          />
-          <ServiceCard
-            image="/images/luftfracht/service-2.jpg"
-            title="Export Handling"
-            description="Strukturierte Vorbereitung Ihrer Exporte: Annahme, Dokumentation und Übergabe in den Flugbetrieb."
-          />
-          <ServiceCard
-            image="/images/luftfracht/service-3.jpg"
-            title="Dokumentation & Tracking"
-            description="Saubere Unterlagen und nachvollziehbare Statusinformationen für Spedition, Airline und Empfänger."
-          />
-          <ServiceCard
-            image="/images/luftfracht/service-4.jpg"
-            title="Security Ready"
-            description="Anbindung an unsere Sicherheitsverfahren – Röntgen, Sichtkontrolle, Handdurchsuchung und ETD."
-            href="/roentgen"
-          />
-        </div>
-      </PageSection>
-
-      <PageSection muted borderTop>
-        <SectionHeader
-          eyebrow="Prozess"
-          dark="Vom Eingang"
-          light="bis zur Freigabe"
-          description="Ein klar strukturierter Ablauf reduziert Rückfragen, verkürzt Durchlaufzeiten und schafft Transparenz für alle Beteiligten."
+      <PageSection className="!pt-12 md:!pt-16 lg:!pt-20">
+        <ProcessDotCards
+          titleMuted="Effiziente Prozesse"
+          titleDark="für Import und Export."
+          description="Eine zuverlässige Luftfrachtabwicklung erfordert präzise Abläufe, kurze Reaktionszeiten und eine enge Abstimmung zwischen allen Beteiligten. Wir koordinieren sämtliche operativen Prozesse – von der Ankunft der Sendung bis zur Weiterleitung – und gewährleisten eine sichere, transparente und termingerechte Bearbeitung Ihrer Luftfracht."
+          items={LUFTFRACHT_IMPORT_EXPORT_STEPS}
         />
-        <div className="section-header-gap">
-          <ProcessSteps items={LUFTFRACHT_PROCESS} />
-        </div>
-      </PageSection>
-
-      <PageSection borderTop>
-        <SectionHeader
-          dark="Operative Stärken"
-          description="Kurze Wege am Cargo-Drehkreuz, erfahrene Teams und dokumentierte Qualität – die Basis für verlässliche Luftfrachtprozesse."
-        />
-        <div className="section-header-gap">
-          <MetricRow
-            items={[
-              { value: "MUC", label: "Direkt am Cargo-Drehkreuz Flughafen München" },
-              { value: "DE/RA", label: "Reglementierter Beauftragter DE/RA/01278-01" },
-              { value: "24/7", label: "Für zeitkritische Sendungen und Sonderfälle" },
-            ]}
-          />
-        </div>
       </PageSection>
 
       <FooterCta />

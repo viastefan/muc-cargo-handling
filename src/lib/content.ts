@@ -42,6 +42,25 @@ export const LUFTFRACHT_PROCESS = [
   },
 ] as const;
 
+export const LUFTFRACHT_IMPORT_EXPORT_STEPS = [
+  {
+    title: "Ankunft",
+    text: "Annahme mit erster Sichtprüfung.",
+  },
+  {
+    title: "Erfassung",
+    text: "Dokumentation notwendiger Sendungsdaten.",
+  },
+  {
+    title: "Lagerung",
+    text: "Einlagern auf kontrollierte Lagerflächen.",
+  },
+  {
+    title: "Transport",
+    text: "Airline Handling bis termingerechter Auslieferung.",
+  },
+] as const;
+
 export const COMPANY_VALUES = [
   {
     title: "Präzision",
