@@ -2874,19 +2874,20 @@ a {
   flex-shrink: 0;
 }
 
-.partner-logos__vk {
-  position: relative;
-  width: min(200px, 100%);
-  height: 2.5rem;
+.partner-logos__vk-logo {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 2.25rem;
+  max-width: min(200px, 100%);
+  object-fit: contain;
+  object-position: left center;
 }
 
-.partner-logos__vk-fallback {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+@media (min-width: 640px) {
+  .partner-logos__vk-logo {
+    height: 2.5rem;
+  }
 }
 
 /* Intro split band — two-column copy + full-bleed image + red accent */
