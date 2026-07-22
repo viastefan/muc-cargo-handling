@@ -274,14 +274,12 @@ a {
 }
 
 .site-header-cta .header-contact-menu__button {
-  height: 72px;
-  min-height: 72px;
   width: 100%;
   min-width: 0;
   /* cover header bottom rule so no hairline under the CTA */
-  margin-bottom: -1px;
   height: calc(72px + 1px);
   min-height: calc(72px + 1px);
+  margin-bottom: -1px;
 }
 
 .site-header-wrap:has(+ main > :first-child.hero-wrap) + main > .hero-wrap:first-child {
