@@ -379,34 +379,32 @@ a {
   margin-top: clamp(1.25rem, 4vh, 2rem);
 }
 
-/* Hero CTA: einfacher Link zum Kontaktformular */
-.hero-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
+/* Hero CTA: corner label/icon with 8px inset */
+.btn-corner--hero.hero-cta-btn {
+  display: inline-block;
   width: auto;
   min-width: var(--hero-action-min-width);
   min-height: var(--hero-action-height);
-  padding: 0 2.25rem 0 var(--hero-action-pad-inline);
+  padding: 0;
 }
 
-.hero-cta-btn .btn-corner-label {
-  position: static;
-  right: auto;
-  bottom: auto;
-  left: auto;
+.btn-corner--hero.hero-cta-btn .btn-corner-label {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 2rem;
   font-size: 14px;
   letter-spacing: -0.012em;
 }
 
-.hero-cta-btn .btn-corner-icon {
-  top: 0.6875rem;
-  right: 0.6875rem;
+.btn-corner--hero.hero-cta-btn .btn-corner-icon {
+  top: 8px;
+  right: 8px;
   width: 1.125rem;
   height: 1.125rem;
 }
 
-.hero-cta-btn .btn-corner-symbol {
+.btn-corner--hero.hero-cta-btn .btn-corner-symbol {
   width: 0.6875rem;
   height: 0.6875rem;
   font-size: 0.6875rem;
