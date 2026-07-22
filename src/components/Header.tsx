@@ -57,20 +57,29 @@ export function Header() {
           <BrandLogo priority />
         </Link>
 
-        <button
-          type="button"
-          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
-          aria-label={open ? "Menü schließen" : "Menü öffnen"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">Menü</span>
-          <div className="flex w-5 flex-col items-center justify-center gap-[5px]">
-            <span className={`menu-toggle-line ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
-            <span className={`menu-toggle-line ${open ? "opacity-0 scale-x-0" : ""}`} />
-            <span className={`menu-toggle-line ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
-          </div>
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <Link
+            href="/kontakt"
+            className="header-mobile-cta"
+            onClick={() => setOpen(false)}
+          >
+            Anfrage stellen
+          </Link>
+          <button
+            type="button"
+            className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
+            aria-label={open ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">Menü</span>
+            <div className="flex w-5 flex-col items-center justify-center gap-[5px]">
+              <span className={`menu-toggle-line ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
+              <span className={`menu-toggle-line ${open ? "opacity-0 scale-x-0" : ""}`} />
+              <span className={`menu-toggle-line ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
       <div className="mobile-nav-panel border-t border-[var(--border)] bg-white lg:hidden" data-open={open}>
