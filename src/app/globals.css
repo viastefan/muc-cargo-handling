@@ -1751,7 +1751,27 @@ a {
 /* Material icon base — positioning handled by .btn-corner-icon */
 
 /* Mobile nav */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border: none;
+  padding: 0;
+  background: rgb(0 0 0 / 0.42);
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.28s var(--ease-out);
+}
+
+.mobile-nav-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .mobile-nav-panel {
+  position: relative;
+  z-index: 1;
   display: grid;
   transition: grid-template-rows var(--duration-normal) var(--ease-out);
 }
@@ -1788,6 +1808,14 @@ a {
 .mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(3) { transition-delay: 100ms; }
 .mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(4) { transition-delay: 130ms; }
 .mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(5) { transition-delay: 160ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-backdrop,
+  .mobile-nav-panel,
+  .mobile-nav-item {
+    transition: none;
+  }
+}
 
 .menu-toggle-line {
   display: block;
