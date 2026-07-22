@@ -478,7 +478,8 @@ a {
 
 .header-contact-menu__menu {
   position: absolute;
-  top: 100%;
+  /* Sit flush under the CTA — overlap 1px to kill hairline/gap */
+  top: calc(100% - 1px);
   right: 0;
   left: auto;
   z-index: 60;
@@ -503,8 +504,8 @@ a {
   border-top: none;
   background: #ffffff;
   box-shadow: 0 8px 20px rgb(0 0 0 / 0.06);
-  transform: translate3d(0, -6px, 0);
-  transition: transform var(--duration-normal) var(--ease-out);
+  transform: none;
+  transition: none;
 }
 
 .header-contact-menu.is-open .header-contact-menu__menu {
@@ -519,7 +520,7 @@ a {
 }
 
 .header-contact-menu.is-open .header-contact-menu__menu-panel {
-  transform: translate3d(0, 0, 0);
+  transform: none;
 }
 
 .header-contact-menu__menu-title {
