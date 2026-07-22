@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DownloadGrid } from "@/components/DownloadGrid";
 import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
+import { Button } from "@/components/Button";
 import { Hero } from "@/components/Hero";
 import { HomeImagePair } from "@/components/HomeImagePair";
 import { ImageCtaBand } from "@/components/ImageCtaBand";
@@ -148,19 +149,28 @@ export default function HomePage() {
         </ScrollReveal>
       </PageSection>
 
-      <PageSection borderTop id="faq">
-        <ScrollReveal duration={1000}>
-          <SectionHeader
-            eyebrow="FAQ"
-            dark="Häufige Fragen"
-            description="Kurze Antworten zu Leistungen und Abläufen – für einen schnellen Überblick."
-          />
-        </ScrollReveal>
-        <ScrollReveal delay={100} duration={1000}>
-          <div className="section-header-gap max-w-3xl">
-            <FaqList items={FAQ_HOME} compact />
-          </div>
-        </ScrollReveal>
+      <PageSection muted borderTop id="faq">
+        <div className="faq-home">
+          <ScrollReveal duration={1000}>
+            <SectionHeader
+              align="center"
+              eyebrow="FAQ"
+              dark="Häufige Fragen"
+              description="Kurze Antworten zu Leistungen und Abläufen – für einen schnellen Überblick."
+              className="faq-home__header"
+            />
+          </ScrollReveal>
+          <ScrollReveal delay={100} duration={1000}>
+            <div className="faq-home__panel section-header-gap">
+              <FaqList items={FAQ_HOME} />
+              <div className="faq-home__cta">
+                <Button href="/faq" variant="gray" size="md">
+                  Alle Fragen ansehen
+                </Button>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
       </PageSection>
 
       <PageSection muted borderTop id="standort">
