@@ -1,14 +1,8 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
+import { plex } from "@/lib/fonts";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/Footer";
 import "./globals.css";
-
-const manrope = Manrope({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${manrope.variable} h-full antialiased`}>
+    <html lang="de" className={`${plex.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <Header />
         <main className="flex-1">{children}</main>

@@ -14,7 +14,7 @@ type Props = {
 };
 
 const base =
-  "inline-flex items-stretch overflow-hidden text-[13px] font-semibold tracking-[0.04em] uppercase transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
+  "inline-flex items-stretch overflow-hidden text-[12px] font-medium tracking-[0.05em] uppercase transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
 
 function classes(variant: Variant) {
   switch (variant) {
@@ -73,7 +73,7 @@ export function Button({
 }: Props) {
   const content = (
     <>
-      <span className="flex items-center px-5 py-3.5">{children}</span>
+      <span className="flex items-center px-5 py-3">{children}</span>
       <ArrowSlot variant={variant} arrow={arrow} />
     </>
   );

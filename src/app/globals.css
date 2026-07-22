@@ -2,15 +2,18 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1a1a1a;
-  --muted: #5a5a5a;
-  --muted-light: #8a8a8a;
+  --foreground: #2a2a2a;
+  --muted: #6b6b6b;
+  --muted-light: #9a9a9a;
+  --muted-accent: #7a8fa3;
   --surface: #f4f4f4;
-  --surface-2: #ebebeb;
-  --border: #e5e5e5;
+  --surface-2: #ececec;
+  --border: #e8e8e8;
   --brand: #d90d3a;
   --brand-arrow: #f31042;
   --brand-dark: #b50b30;
+  --page-x: 1.25rem;
+  --section-y: 5rem;
 }
 
 @theme inline {
@@ -18,6 +21,7 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-muted-light: var(--muted-light);
+  --color-muted-accent: var(--muted-accent);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
@@ -39,7 +43,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -48,5 +56,37 @@ a {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--brand) 25%, white);
+  background: color-mix(in srgb, var(--brand) 18%, white);
+}
+
+.page-container {
+  margin-inline: auto;
+  max-width: 1280px;
+  padding-inline: var(--page-x);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-x: 2rem;
+    --section-y: 6.5rem;
+  }
+}
+
+.section-y {
+  padding-block: var(--section-y);
+}
+
+.prose-muted {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.link-underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link-underline:hover {
+  color: var(--brand);
 }

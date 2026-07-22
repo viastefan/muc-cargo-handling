@@ -38,7 +38,7 @@ export function Header() {
                 {i > 0 && <span className="mx-1 h-4 w-px bg-[var(--border)]" aria-hidden />}
                 <Link
                   href={item.href}
-                  className={`px-3 py-2 text-[12px] font-semibold uppercase tracking-[0.06em] transition-colors ${
+                  className={`px-3 py-2 text-[11px] font-medium uppercase tracking-[0.08em] transition-colors ${
                     active ? "text-[var(--brand)]" : "text-[var(--foreground)] hover:text-[var(--brand)]"
                   }`}
                 >
