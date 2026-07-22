@@ -24,10 +24,6 @@ export function TopBar() {
             </a>
           </div>
         </div>
-
-        <a href="/kontakt" className="top-bar__cta">
-          Anfrage stellen
-        </a>
       </div>
     </div>
   );
