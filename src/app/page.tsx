@@ -5,7 +5,6 @@ import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
 import { Button } from "@/components/Button";
 import { Hero } from "@/components/Hero";
-import { HomeImagePair } from "@/components/HomeImagePair";
 import { ImageCtaBand } from "@/components/ImageCtaBand";
 import { LocationMap } from "@/components/LocationMap";
 import { PageSection, SectionHeader } from "@/components/PageSection";
@@ -21,7 +20,6 @@ import { FAQ_HOME } from "@/lib/faq";
 import {
   HOME_CAPABILITY_AREAS,
   HOME_DOWNLOADS,
-  HOME_EDITORIAL_IMAGES,
   HOME_IMAGE_CTA,
   HOME_STORY,
   HOME_TEAM_INTRO,
@@ -63,10 +61,6 @@ export default function HomePage() {
               </p>
             ))}
           </div>
-        </ScrollReveal>
-
-        <ScrollReveal delay={80} variant="scale" duration={1150}>
-          <HomeImagePair images={HOME_EDITORIAL_IMAGES} />
         </ScrollReveal>
 
         <ScrollRevealStagger
