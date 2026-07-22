@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useState, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "muc-cookie-consent-v1";
 
@@ -12,7 +12,7 @@ type ConsentState = {
   decidedAt: string;
 };
 
-type PanelMode = "hidden" | "banner" | "settings";
+type PanelMode = "banner" | "settings" | "hidden";
 
 function readConsent(): ConsentState | null {
   if (typeof window === "undefined") return null;
@@ -30,14 +30,27 @@ function writeConsent(state: ConsentState) {
   window.dispatchEvent(new CustomEvent("muc:cookie-consent", { detail: state }));
 }
 
+function subscribeConsent(onStoreChange: () => void) {
+  const handler = () => onStoreChange();
+  window.addEventListener("storage", handler);
+  window.addEventListener("muc:cookie-consent", handler);
+  return () => {
+    window.removeEventListener("storage", handler);
+    window.removeEventListener("muc:cookie-consent", handler);
+  };
+}
+
+function getConsentSnapshot() {
+  return window.localStorage.getItem(STORAGE_KEY);
+}
+
+function getServerSnapshot() {
+  return null;
+}
+
 function FingerprintIcon({ className = "" }: { className?: string }) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden="true"
-    >
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
         d="M12 11.5c0 3.2-.7 5.8-1.8 7.8M12 11.5c0-2.2-1.3-4-3.2-4.7M12 11.5c0 4.1.8 7.4 2.2 9.5M8.8 6.8A5.5 5.5 0 0 1 17.5 11.5c0 1.4-.1 2.7-.4 3.9M6.2 9.2A7.8 7.8 0 0 1 19.8 11.5c0 2.2-.3 4.2-.8 6M4.5 12.2c.4 4.2 1.7 7.5 3.4 9.3M17.8 18.8c1-1.5 1.8-3.6 2.2-6.1"
         stroke="currentColor"
@@ -49,33 +62,25 @@ function FingerprintIcon({ className = "" }: { className?: string }) {
 }
 
 export function CookieConsent() {
-  const [mode, setMode] = useState<PanelMode>("hidden");
+  const stored = useSyncExternalStore(subscribeConsent, getConsentSnapshot, getServerSnapshot);
+  const existing = stored ? (JSON.parse(stored) as ConsentState) : null;
+
+  const [mode, setMode] = useState<PanelMode | null>(null);
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
-  const [ready, setReady] = useState(false);
   const titleId = useId();
 
-  useEffect(() => {
-    const existing = readConsent();
-    if (existing) {
-      setAnalytics(existing.analytics);
-      setMarketing(existing.marketing);
-      setMode("hidden");
-    } else {
-      setMode("banner");
-    }
-    setReady(true);
-  }, []);
+  const resolvedMode: PanelMode =
+    mode ?? (existing ? "hidden" : "banner");
 
   useEffect(() => {
-    if (mode === "banner" || mode === "settings") {
-      const previous = document.body.style.overflow;
-      if (mode === "settings") document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = previous;
-      };
-    }
-  }, [mode]);
+    if (resolvedMode !== "settings") return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [resolvedMode]);
 
   const save = useCallback((nextAnalytics: boolean, nextMarketing: boolean) => {
     const state: ConsentState = {
@@ -94,11 +99,9 @@ export function CookieConsent() {
   const rejectOptional = () => save(false, false);
   const saveSettings = () => save(analytics, marketing);
 
-  if (!ready) return null;
-
   return (
     <>
-      {mode === "banner" ? (
+      {resolvedMode === "banner" ? (
         <div className="cookie-banner" role="dialog" aria-modal="false" aria-labelledby={titleId}>
           <div className="cookie-banner__inner">
             <div className="cookie-banner__copy">
@@ -134,13 +137,13 @@ export function CookieConsent() {
         </div>
       ) : null}
 
-      {mode === "settings" ? (
+      {resolvedMode === "settings" ? (
         <div className="cookie-settings">
           <button
             type="button"
             className="cookie-settings__backdrop"
             aria-label="Einstellungen schließen"
-            onClick={() => setMode(readConsent() ? "hidden" : "banner")}
+            onClick={() => setMode(existing ? "hidden" : "banner")}
           />
           <div
             className="cookie-settings__panel"
@@ -159,7 +162,7 @@ export function CookieConsent() {
                 type="button"
                 className="cookie-settings__close"
                 aria-label="Schließen"
-                onClick={() => setMode(readConsent() ? "hidden" : "banner")}
+                onClick={() => setMode(existing ? "hidden" : "banner")}
               >
                 ×
               </button>
@@ -219,13 +222,19 @@ export function CookieConsent() {
         </div>
       ) : null}
 
-      {mode === "hidden" ? (
+      {resolvedMode === "hidden" ? (
         <button
           type="button"
           className="cookie-fab"
           aria-label="Cookie-Einstellungen öffnen"
           title="Cookie-Einstellungen"
-          onClick={() => setMode("settings")}
+          onClick={() => {
+            if (existing) {
+              setAnalytics(existing.analytics);
+              setMarketing(existing.marketing);
+            }
+            setMode("settings");
+          }}
         >
           <FingerprintIcon className="cookie-fab__icon" />
         </button>
