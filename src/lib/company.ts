@@ -19,6 +19,7 @@ export const COMPANY = {
     line2: "D-85356 München-Flughafen",
   },
   partner: {
+    name: "AVS Airport Verpackungsservice MUC",
     label: "airportverpackungsservice.com",
     href: "https://airportverpackungsservice.com",
   },

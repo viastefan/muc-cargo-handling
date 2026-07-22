@@ -110,6 +110,17 @@ export function SiteFooter() {
           <p className="site-footer-tagline">
             Luftfrachtabwicklung am Flughafen München — seit 2003.
           </p>
+          <p className="site-footer-partner">
+            Verpackungspartner:{" "}
+            <a
+              href={COMPANY.partner.href}
+              className="footer-link-inline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {COMPANY.partner.name}
+            </a>
+          </p>
         </div>
 
         <div className="site-footer-col">
