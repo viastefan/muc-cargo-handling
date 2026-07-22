@@ -1402,3 +1402,125 @@ a {
 .site-footer-bar .footer-link:hover {
   color: rgb(255 255 255 / 0.85);
 }
+
+/* Footer CTA — roter Abschluss mit Weltkugel */
+.footer-cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--brand);
+}
+
+.footer-cta__layout {
+  position: relative;
+  display: grid;
+  align-items: end;
+  gap: 2rem;
+  margin-inline: auto;
+  max-width: 1280px;
+  min-height: clamp(22rem, 52vw, 30rem);
+  padding:
+    clamp(3.5rem, 8vw, 5.5rem) var(--page-x)
+    clamp(2.5rem, 6vw, 4rem);
+}
+
+@media (min-width: 768px) {
+  .footer-cta__layout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.95fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    min-height: clamp(24rem, 42vw, 32rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-cta__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 52%);
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+}
+
+.footer-cta__copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+  max-width: 38rem;
+  padding-bottom: 0.5rem;
+}
+
+.footer-cta__title {
+  font-size: clamp(1.625rem, 3.8vw, 2.5rem);
+  line-height: 1.18;
+  letter-spacing: -0.028em;
+}
+
+.footer-cta__description {
+  max-width: 34rem;
+  font-size: clamp(0.9375rem, 1.6vw, 1.0625rem);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: rgb(255 255 255 / 0.92);
+}
+
+.footer-cta__action {
+  width: 100%;
+  max-width: 17.5rem;
+  padding-top: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .footer-cta__action {
+    width: auto;
+  }
+}
+
+.footer-cta__visual {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: clamp(14rem, 38vw, 22rem);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .footer-cta__visual {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(58%, 36rem);
+    height: min(92%, 30rem);
+    margin-right: calc(var(--page-x) * -0.15);
+  }
+}
+
+@media (min-width: 1024px) {
+  .footer-cta__visual {
+    position: absolute;
+    right: max(-2rem, calc((100vw - 1280px) / -2 + var(--page-x)));
+    bottom: -0.5rem;
+    width: min(54%, 40rem);
+    height: min(100%, 32rem);
+  }
+}
+
+.footer-cta__globe {
+  object-fit: contain;
+  object-position: right bottom;
+  opacity: 0.96;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out);
+}
+
+.footer-cta:hover .footer-cta__globe {
+  transform: scale(1.02) translateY(-2px);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-cta:hover .footer-cta__globe {
+    transform: none;
+  }
+}

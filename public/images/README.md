@@ -8,7 +8,7 @@ Kopiere deine Bilder in die passenden Ordner. **Dateinamen exakt einhalten.**
 |-------|------------|
 | **`logo.png`** | MUC Cargo Handling Logo (Header, Partner-Bereich) |
 | `logo.svg` | Fallback, falls PNG fehlt |
-| **`weltkugel.png`** | Rote Weltkugel — letzter Abschnitt auf „Unternehmen“ |
+| **`weltkugel.png`** | Rote Weltkugel — letzter roter CTA-Abschnitt (alle Seiten) |
 | **`partner-vk-freight.png`** | VK Freight Management Logo (Röntgen-Seite) |
 
 > Falls deine Dateien anders heißen: im Finder umbenennen oder in `src/lib/media.ts` anpassen.

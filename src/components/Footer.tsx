@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
@@ -8,6 +9,10 @@ import {
   FOOTER_QUICK,
   FOOTER_SERVICES,
 } from "@/lib/company";
+import { media } from "@/lib/media";
+
+const FOOTER_CTA_DEFAULT_DESCRIPTION =
+  "Von Import bis Export übernehmen wir die zuverlässige Abwicklung Ihrer Luftfrachtsendungen – mit klaren Prozessen, erfahrenem Handling und direkter Koordination am Flughafen München.";
 
 function FooterHeading({
   children,
@@ -25,18 +30,42 @@ function FooterHeading({
 
 export function FooterCta({
   title = "Effizientes Cargo Handling für internationale Luftfrachtprozesse.",
+  description = FOOTER_CTA_DEFAULT_DESCRIPTION,
+  ctaLabel = "Schreiben Sie uns",
+  ctaHref = "/kontakt",
 }: {
   title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 }) {
   return (
-    <section className="bg-[var(--brand)]">
-      <div className="page-container flex flex-col gap-8 py-16 md:py-20 lg:flex-row lg:items-center lg:justify-between lg:py-24">
-        <h2 className="heading-display max-w-3xl text-[clamp(1.5rem,4vw,2.5rem)] leading-[1.2] text-white">
-          {title}
-        </h2>
-        <Button href="/kontakt" variant="white" className="shrink-0 self-start">
-          Anfrage stellen
-        </Button>
+    <section className="footer-cta" aria-labelledby="footer-cta-heading">
+      <div className="footer-cta__layout">
+        <div className="footer-cta__copy">
+          <h2
+            id="footer-cta-heading"
+            className="footer-cta__title heading-display text-white"
+          >
+            {title}
+          </h2>
+          <p className="footer-cta__description">{description}</p>
+          <div className="footer-cta__action">
+            <Button href={ctaHref} variant="white" size="hero">
+              {ctaLabel}
+            </Button>
+          </div>
+        </div>
+
+        <div className="footer-cta__visual" aria-hidden="true">
+          <Image
+            src={media.weltkugel}
+            alt=""
+            fill
+            className="footer-cta__globe"
+            sizes="(max-width: 768px) 70vw, (max-width: 1280px) 45vw, 560px"
+          />
+        </div>
       </div>
     </section>
   );
