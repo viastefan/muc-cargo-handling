@@ -57,13 +57,14 @@ export default function DatenschutzPage() {
   return (
     <>
       <PageSection className="!pt-16 md:!pt-20">
-        <SectionHeader
-          eyebrow="Rechtliches"
-          dark="Datenschutzerklärung"
-          description="Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
-        />
+        <div className="mx-auto max-w-3xl">
+          <SectionHeader
+            eyebrow="Rechtliches"
+            dark="Datenschutzerklärung"
+            description="Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
+          />
 
-        <div className="section-header-gap max-w-3xl divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          <div className="section-header-gap divide-y divide-[var(--border)] border-y border-[var(--border)]">
           {SECTIONS.map((section) => (
             <section key={section.title} className="py-7 md:py-8">
               <h2 className="text-[15px] font-normal text-[var(--foreground)]">
@@ -72,6 +73,7 @@ export default function DatenschutzPage() {
               <p className="prose-muted mt-3 text-[14px] leading-relaxed">{section.body}</p>
             </section>
           ))}
+          </div>
         </div>
       </PageSection>
 

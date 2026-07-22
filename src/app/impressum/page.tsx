@@ -12,13 +12,14 @@ export default function ImpressumPage() {
   return (
     <>
       <PageSection className="!pt-16 md:!pt-20">
-        <SectionHeader
-          eyebrow="Rechtliches"
-          dark="Impressum"
-          description="Angaben gemäß § 5 TMG"
-        />
+        <div className="mx-auto max-w-3xl">
+          <SectionHeader
+            eyebrow="Rechtliches"
+            dark="Impressum"
+            description="Angaben gemäß § 5 TMG"
+          />
 
-        <div className="section-header-gap max-w-3xl space-y-10 text-[15px] leading-relaxed text-[var(--muted)]">
+          <div className="section-header-gap space-y-10 text-[15px] leading-relaxed text-[var(--muted)]">
           <section>
             <h2 className="text-[15px] font-normal text-[var(--foreground)]">
               Anbieter
@@ -98,6 +99,7 @@ export default function ImpressumPage() {
               forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
             </p>
           </section>
+        </div>
         </div>
       </PageSection>
 
