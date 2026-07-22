@@ -15,7 +15,7 @@
   --page-x: 1.5rem;
   --section-y: 4rem;
   --hero-gap: 0.5rem;
-  --hero-min: min(78svh, 560px);
+  --hero-min: min(82svh, 600px);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 180ms;
@@ -197,24 +197,45 @@ a {
   display: flex;
   min-height: inherit;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 5.5rem calc(var(--page-x) - var(--hero-gap)) 1.5rem;
+  justify-content: flex-start;
+  padding: 1.25rem calc(var(--page-x) - var(--hero-gap)) 1.25rem;
+}
+
+.hero-copy {
+  flex-shrink: 0;
+}
+
+.hero-actions {
+  margin-top: auto;
+  width: 100%;
+  padding-top: 1.5rem;
 }
 
 @media (min-width: 768px) {
   .hero-content {
-    padding-bottom: 2rem;
-    padding-top: 7rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .hero-actions {
+    padding-top: 2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .hero-content {
+    justify-content: flex-end;
+    gap: 2rem;
     margin-inline: auto;
     max-width: 1280px;
     width: 100%;
+    padding-top: 5rem;
     padding-bottom: 2.5rem;
-    padding-top: 8rem;
+  }
+
+  .hero-actions {
+    margin-top: 0;
+    padding-top: 0;
   }
 }
 

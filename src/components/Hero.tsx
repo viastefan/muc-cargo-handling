@@ -31,7 +31,7 @@ export function Hero({
         <div className="hero-overlay" />
 
         <div className="hero-content">
-          <div className="max-w-2xl">
+          <div className="hero-copy max-w-2xl">
             <h1 className="heading-display text-[clamp(1.625rem,5vw,2.625rem)] text-white">
               {title}
             </h1>
@@ -40,7 +40,7 @@ export function Hero({
             </p>
           </div>
 
-          <div className="mt-6 flex flex-col gap-3 md:mt-8 md:flex-row md:items-end md:justify-between md:gap-4 lg:mt-10">
+          <div className="hero-actions flex flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
             <Button href={ctaHref} variant="white" size="md">
               {ctaLabel}
             </Button>
