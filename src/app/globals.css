@@ -354,12 +354,12 @@ a {
   padding: var(--hero-pad-top-mobile) calc(var(--page-x) - var(--hero-gap))
     var(--hero-pad-bottom-mobile);
   grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   grid-template-areas:
     "title"
     "subtitle"
-    "spacer"
     "cta"
+    "spacer"
     "phone";
 }
 
@@ -396,7 +396,7 @@ a {
   align-self: start;
   width: fit-content;
   max-width: 100%;
-  margin-top: 64px;
+  margin-top: 40px;
 }
 
 /* Header: split button + Kontakt-Dropdown (Desktop) */
@@ -809,12 +809,12 @@ a {
     padding: var(--hero-pad-top-desktop) 0 0;
     padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
     grid-template-columns: minmax(0, min(48rem, 58vw)) 1fr minmax(17.5rem, auto);
-    grid-template-rows: auto auto minmax(1rem, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(1rem, 1fr);
     grid-template-areas:
       "title . ."
       "subtitle . ."
-      "spacer . ."
-      "cta . .";
+      "cta . ."
+      "spacer . .";
   }
 
   .hero-title {
@@ -832,7 +832,7 @@ a {
   }
 
   .hero-cta-slot {
-    margin-top: 64px;
+    margin-top: 40px;
     align-self: start;
   }
 
