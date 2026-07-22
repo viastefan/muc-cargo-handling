@@ -31,9 +31,14 @@ export function ChevronRight({ className = "h-4 w-4" }: { className?: string }) 
   );
 }
 
-export function PhoneIcon({ className = "h-5 w-5" }: { className?: string }) {
+export function PhoneIcon({ className = "" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={`h-4 w-4 shrink-0 ${className}`.trim()}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <path
         d="M7.5 3.5h3.2l1.2 4.2-2 1.2a12.5 12.5 0 0 0 5.2 5.2l1.2-2 4.2 1.2v3.2c0 .8-.6 1.5-1.4 1.5C10.4 18 6 13.6 6 7.9c0-.8.7-1.4 1.5-1.4Z"
         stroke="currentColor"
@@ -71,9 +76,14 @@ export function CheckIcon({ className = "h-3.5 w-3.5" }: { className?: string })
   );
 }
 
-export function MailIcon({ className = "h-4 w-4" }: { className?: string }) {
+export function MailIcon({ className = "" }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg
+      className={`h-4 w-4 shrink-0 ${className}`.trim()}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
       <rect x="3" y="5" width="18" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
       <path d="m4 7 8 6 8-6" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
     </svg>

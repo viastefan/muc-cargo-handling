@@ -100,29 +100,32 @@ export default function UnternehmenPage() {
       </PageSection>
 
       <PageSection borderTop id="team">
-        <SectionHeader dark="Unser Team" description="Persönliche Ansprechpartner für operative Fragen, Abwicklung und Koordination – direkt erreichbar am Standort MUC." />
+        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+          Unser Team
+        </h2>
 
-        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:gap-5">
+        <div className="team-grid">
           {TEAM.map((person) => (
             <article key={person.email} className="team-card">
-              <h3 className="text-[17px] font-normal tracking-[-0.01em]">
-                {person.name}
-              </h3>
-              <p className="mt-1 text-[14px] text-[var(--muted)]">{person.role}</p>
-              <div className="mt-6 space-y-2.5 text-[14px] text-[var(--muted)]">
-                <p className="flex items-center gap-2.5">
-                  <PhoneIcon className="h-4 w-4 shrink-0 text-[var(--muted-light)]" />
-                  <a href={`tel:${person.phone.replace(/[^\d+]/g, "")}`} className="hover:text-[var(--foreground)]">
-                    {person.phone}
+              <h3 className="team-card__name">{person.name}</h3>
+              <p className="team-card__role">{person.role}</p>
+              <ul className="team-card__contact">
+                <li>
+                  <a
+                    href={`tel:${person.phone.replace(/[^\d+]/g, "")}`}
+                    className="team-card__link"
+                  >
+                    <PhoneIcon className="text-[var(--muted-light)]" />
+                    <span>Tel: {person.phone}</span>
                   </a>
-                </p>
-                <p className="flex items-center gap-2.5">
-                  <MailIcon className="shrink-0 text-[var(--muted-light)]" />
-                  <a href={`mailto:${person.email}`} className="hover:text-[var(--foreground)]">
-                    {person.email}
+                </li>
+                <li>
+                  <a href={`mailto:${person.email}`} className="team-card__link">
+                    <MailIcon className="text-[var(--muted-light)]" />
+                    <span>{person.email}</span>
                   </a>
-                </p>
-              </div>
+                </li>
+              </ul>
             </article>
           ))}
         </div>
