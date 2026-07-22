@@ -53,16 +53,13 @@ export function HeaderContactMenu({
     <>
       <div ref={rootRef} className={`header-contact-menu${open ? " is-open" : ""}`}>
         <div className="header-contact-menu__button">
-          <button
-            type="button"
+          <Link
+            href={href}
             className="header-contact-menu__label"
-            aria-expanded={open}
-            aria-controls={menuId}
-            aria-haspopup="menu"
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen(false)}
           >
             {label}
-          </button>
+          </Link>
           <button
             type="button"
             className="header-contact-menu__toggle"
