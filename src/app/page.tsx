@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        image="/images/home/hero.jpg"
+        image="/images/home/hero.png"
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre

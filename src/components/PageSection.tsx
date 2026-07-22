@@ -90,11 +90,8 @@ export function FeatureCard({
 }) {
   return (
     <article className="feature-card">
-      <span className="feature-card-accent" aria-hidden="true" />
-      <h3 className="text-[15px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
-        {title}
-      </h3>
-      <p className="mt-2 text-[13px] leading-relaxed text-[var(--muted)]">{children}</p>
+      <h3 className="feature-card__title">{title}</h3>
+      <p className="feature-card__text">{children}</p>
     </article>
   );
 }

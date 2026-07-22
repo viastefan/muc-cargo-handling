@@ -130,9 +130,10 @@ export default function LuftfrachtPage() {
         </ScrollReveal>
 
         <ScrollRevealStagger
-          className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="section-header-gap feature-card-grid"
           stagger={80}
           duration={900}
+          itemClassName="h-full"
         >
           {LUFTFRACHT_HIGHLIGHTS.map((item) => (
             <FeatureCard key={item.title} title={item.title}>
