@@ -225,7 +225,7 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="form-section border-0 pb-0">
+      <div className="form-section form-section--tight border-0 pb-0">
         <FormCheckbox
           checked={data.privacy}
           onChange={(v) => patch("privacy", v)}
@@ -240,7 +240,7 @@ export function ContactForm() {
         </p>
       )}
 
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="form-actions">
         <Button
           type="submit"
           arrow
@@ -248,7 +248,7 @@ export function ContactForm() {
         >
           {status === "loading" ? "Wird gesendet…" : "Anfrage absenden"}
         </Button>
-        <p className="text-[12px] text-[var(--muted-light)]">
+        <p className="form-actions__hint">
           Antwort in der Regel innerhalb von 24 Stunden
         </p>
       </div>
