@@ -17,7 +17,8 @@ export function TopBar() {
     } catch {
       /* ignore */
     }
-    setReady(true);
+    const id = window.requestAnimationFrame(() => setReady(true));
+    return () => window.cancelAnimationFrame(id);
   }, []);
 
   const dismiss = () => {
