@@ -70,6 +70,7 @@ export function Header() {
             className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
             aria-label={open ? "Menü schließen" : "Menü öffnen"}
             aria-expanded={open}
+            aria-controls="mobile-nav-panel"
             onClick={() => setOpen((v) => !v)}
           >
             <span className="sr-only">Menü</span>
@@ -82,7 +83,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="mobile-nav-panel bg-white lg:hidden" data-open={open}>
+      <div id="mobile-nav-panel" className="mobile-nav-panel bg-white lg:hidden" data-open={open}>
         <div className="mobile-nav-inner">
           <nav className="page-container flex flex-col py-3">
             {NAV.map((item) => {

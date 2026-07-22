@@ -39,7 +39,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        image="/images/home/hero.png"
+        image="/images/home/hero.jpg"
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
@@ -92,7 +92,7 @@ export default function HomePage() {
               <>
                 Direkt am Cargo-Drehkreuz München.{" "}
                 <Link href="/kontakt" className="link-underline">
-                  Südallee, 85356 Deutschland.
+                  Südallee Modul F, 85356 München-Flughafen.
                 </Link>
               </>
             }

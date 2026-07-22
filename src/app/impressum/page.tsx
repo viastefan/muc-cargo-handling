@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageSection, SectionHeader } from "@/components/PageSection";
-import { FooterCta } from "@/components/Footer";
 import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = {
@@ -102,8 +101,6 @@ export default function ImpressumPage() {
         </div>
         </div>
       </PageSection>
-
-      <FooterCta title="Fragen? Wir sind für Sie erreichbar." />
     </>
   );
 }

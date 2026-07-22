@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageSection, SectionHeader } from "@/components/PageSection";
-import { FooterCta } from "@/components/Footer";
 import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = {
@@ -49,11 +48,11 @@ const SECTIONS = [
   },
   {
     title: "7. Cookies und Einwilligung",
-    body: "Beim ersten Besuch können Sie über unseren Cookie-Banner entscheiden, welche optionalen Cookies gesetzt werden dürfen. Technisch notwendige Cookies sind stets aktiv. Ihre Auswahl speichern wir lokal in Ihrem Browser und können Sie jederzeit über das Fingerabdruck-Symbol links unten anpassen. Weitere Informationen finden Sie in dieser Datenschutzerklärung.",
+    body: "Diese Website setzt derzeit ausschließlich technisch notwendige Cookies bzw. lokale Speicherung ein, um Ihre Einwilligungsauswahl zu speichern. Optionale Statistik- oder Marketing-Cookies sind vorbereitet, werden aber aktuell nicht geladen. Ihre Auswahl können Sie jederzeit über das Symbol links unten anpassen.",
   },
   {
-    title: "8. Externe Dienste",
-    body: "Sofern Schriftarten oder Symbole von externen Anbietern (z. B. Google Fonts) geladen werden, kann dabei eine Verbindung zu Servern des Anbieters hergestellt werden. Weitere Informationen entnehmen Sie den Datenschutzhinweisen des jeweiligen Anbieters.",
+    title: "8. Schriftarten und externe Dienste",
+    body: "Schriftarten werden lokal bzw. systemseitig bereitgestellt. Es werden keine externen Schriftdienste (z. B. Google Fonts) nachgeladen. Sofern künftig externe Dienste eingebunden werden, aktualisieren wir diese Datenschutzerklärung entsprechend.",
   },
 ];
 
@@ -80,8 +79,6 @@ export default function DatenschutzPage() {
           </div>
         </div>
       </PageSection>
-
-      <FooterCta title="Datenschutzfragen? Kontaktieren Sie uns direkt." />
     </>
   );
 }

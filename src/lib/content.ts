@@ -19,48 +19,6 @@ export const SERVICES = [
   },
 ] as const;
 
-export const LUFTFRACHT_PROCESS = [
-  {
-    step: "01",
-    title: "Annahme & Erfassung",
-    text: "Sendung wird erfasst, dokumentiert und für die weitere Abwicklung vorbereitet.",
-  },
-  {
-    step: "02",
-    title: "Sicherheitskontrolle",
-    text: "Röntgen und ergänzende Verfahren nach Luftsicherheitsvorgaben – regelkonform und nachvollziehbar.",
-  },
-  {
-    step: "03",
-    title: "Dokumentation",
-    text: "Vollständige Unterlagen für Airline, Spedition und Behörden – transparent und prüfbar.",
-  },
-  {
-    step: "04",
-    title: "Übergabe & Freigabe",
-    text: "Koordinierte Übergabe in den Flugbetrieb oder an den Empfänger – termingerecht und sicher.",
-  },
-] as const;
-
-export const LUFTFRACHT_IMPORT_EXPORT_STEPS = [
-  {
-    title: "Ankunft",
-    text: "Annahme mit erster Sichtprüfung.",
-  },
-  {
-    title: "Erfassung",
-    text: "Dokumentation notwendiger Sendungsdaten.",
-  },
-  {
-    title: "Lagerung",
-    text: "Einlagern auf kontrollierte Lagerflächen.",
-  },
-  {
-    title: "Transport",
-    text: "Airline Handling bis termingerechter Auslieferung.",
-  },
-] as const;
-
 export const COMPANY_VALUES = [
   {
     title: "Präzision",

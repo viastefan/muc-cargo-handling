@@ -56,6 +56,9 @@ export function HeaderContactMenu({
           <button
             type="button"
             className="header-contact-menu__label"
+            aria-expanded={open}
+            aria-controls={menuId}
+            aria-haspopup="menu"
             onClick={() => setOpen((value) => !value)}
           >
             {label}

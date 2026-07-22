@@ -40,7 +40,7 @@ function validate(data: FormData): FormErrors {
   if (!data.lastName.trim()) errors.lastName = "Nachname ist erforderlich.";
   if (!data.email.trim()) {
     errors.email = "E-Mail ist erforderlich.";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
     errors.email = "Bitte geben Sie eine gültige E-Mail ein.";
   }
   if (!data.message.trim()) {
@@ -244,7 +244,8 @@ export function ContactForm() {
         <Button
           type="submit"
           arrow
-          className={status === "loading" ? "pointer-events-none opacity-70" : ""}
+          disabled={status === "loading"}
+          aria-busy={status === "loading"}
         >
           {status === "loading" ? "Wird gesendet…" : "Anfrage absenden"}
         </Button>

@@ -15,6 +15,8 @@ type Props = {
   arrow?: boolean;
   fullWidth?: boolean;
   download?: boolean | string;
+  disabled?: boolean;
+  "aria-busy"?: boolean;
 };
 
 function iconLight(variant: Variant) {
@@ -32,6 +34,8 @@ export function Button({
   arrow = true,
   fullWidth = false,
   download,
+  disabled = false,
+  "aria-busy": ariaBusy,
 }: Props) {
   const content = (
     <>
@@ -50,6 +54,7 @@ export function Button({
     `btn-corner--${variant}`,
     `btn-corner--${size}`,
     fullWidth ? "btn-corner--full" : "",
+    disabled ? "is-disabled" : "",
     className,
   ]
     .filter(Boolean)
@@ -57,14 +62,14 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={cls} onClick={onClick} download={download}>
+      <Link href={href} className={cls} onClick={onClick} download={download} aria-disabled={disabled}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className={cls}>
+    <button type={type} onClick={onClick} className={cls} disabled={disabled} aria-busy={ariaBusy}>
       {content}
     </button>
   );

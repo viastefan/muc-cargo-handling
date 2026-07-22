@@ -4,6 +4,7 @@ import { PhoneBox } from "./PhoneBox";
 
 type Props = {
   image: string;
+  imageAlt?: string;
   title: React.ReactNode;
   subtitle: string;
   ctaLabel?: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export function Hero({
   image,
+  imageAlt = "Luftfracht und Cargo Handling am Flughafen München",
   title,
   subtitle,
   ctaLabel = "Schreiben Sie uns",
@@ -22,7 +24,7 @@ export function Hero({
       <div className="hero-frame">
         <Image
           src={image}
-          alt=""
+          alt={imageAlt}
           fill
           priority
           className="object-cover object-[center_32%] lg:object-center"

@@ -22,18 +22,18 @@ export const HOME_IMAGE_CTA = {
   title: "Gemeinsam für eine kontrollierte Luftfracht",
   ctaLabel: "Ihre Ansprechpartner",
   ctaHref: "/unternehmen#team",
-  image: "/images/home/team-band.jpg",
+  image: "/images/airline-handling/import-export.jpg",
 } as const;
 
 /** Editorial-Zwischenbilder — zwischen Story-Text und Statistik-Kacheln */
 export const HOME_EDITORIAL_IMAGES = [
   {
-    src: "/images/home/story-operations.jpg",
+    src: "/images/home/service-roentgen.jpg",
     alt: "Luftfracht-Handling am Cargo-Drehkreuz München",
     caption: "Operatives Handling direkt am Flughafen",
   },
   {
-    src: "/images/home/story-cargo.jpg",
+    src: "/images/home/service-sichtkontrolle.jpg",
     alt: "Sichere Abwicklung und Kontrolle von Luftfrachtsendungen",
     caption: "Präzise Prozesse entlang der Cargo-Kette",
   },
@@ -42,10 +42,10 @@ export const HOME_EDITORIAL_IMAGES = [
 /** Zusätzliche Leistungsbereiche — kompakte Ergänzung zu den drei Kernbereichen */
 export const HOME_CAPABILITY_AREAS = [
   { title: "Optimierte Luftfracht-Logistik", href: "/luftfracht" },
-  { title: "Kommissionieren und Palettieren", href: "/kontakt" },
+  { title: "Kommissionieren und Palettieren", href: "/luftfracht" },
   { title: "Verpackung und Materialverkauf", href: "/kontakt" },
-  { title: "Sichere Einlagerung", href: "/kontakt" },
-  { title: "Dokumenten- / Shuttleservice", href: "/kontakt" },
+  { title: "Sichere Einlagerung", href: "/luftfracht" },
+  { title: "Dokumenten- / Shuttleservice", href: "/airline-handling" },
   { title: "Transport- / Transportvermittlung", href: "/kontakt" },
 ] as const;
 
@@ -71,7 +71,7 @@ export const SECURITY_METHODS = [
 export const HOME_DOWNLOADS = [
   {
     title: "Effiziente Bearbeitung Ihres Arbeitsauftrags",
-    meta: "PDF · Stand Mai 2019",
+    meta: "PDF-Formular",
     files: [
       {
         label: "Arbeitsauftrag",
@@ -87,7 +87,7 @@ export const HOME_DOWNLOADS = [
   },
   {
     title: "Zuverlässige Unterstützung für die Zulassung",
-    meta: "PDF · Stand Mai 2019",
+    meta: "PDF-Formular",
     files: [
       {
         label: "Zulassung Reg.B.",
@@ -98,7 +98,7 @@ export const HOME_DOWNLOADS = [
   },
   {
     title: "Versicherungsservice – Speditionslogistik & Lager",
-    meta: "PDF · Stand Mai 2019",
+    meta: "PDF-Formular",
     files: [
       {
         label: "Versicherungsbestätigung",
@@ -109,7 +109,7 @@ export const HOME_DOWNLOADS = [
   },
   {
     title: "Versicherungsbestätigung Betriebshaftpflicht",
-    meta: "PDF · Stand Mai 2019",
+    meta: "PDF-Formular",
     files: [
       {
         label: "Betriebshaftpflicht",

@@ -166,10 +166,11 @@ export function TopicSelector({
               key={opt.id}
               type="button"
               onClick={() => onChange(opt.id)}
-              className={`rounded-none border px-4 py-3.5 text-left transition-all duration-300 ease-out ${
+              aria-pressed={selected}
+              className={`rounded-none border px-4 py-3.5 text-left transition-[border-color,background-color,color] duration-200 ease-out ${
                 selected
-                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-white scale-[1.01]"
-                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)] active:scale-[0.99]"
+                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-white"
+                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)]"
               }`}
             >
               <span className="block text-[14px] font-normal">{opt.label}</span>
@@ -210,12 +211,14 @@ export function FormCheckbox({
           id={id}
           type="checkbox"
           checked={checked}
+          required
+          aria-required="true"
           onChange={(e) => onChange(e.target.checked)}
           className="mt-1 h-4 w-4 accent-[var(--brand)]"
         />
         <span className="text-[13px] leading-relaxed text-[var(--muted)]">
           Ich habe die{" "}
-          <a href="/kontakt#datenschutz" className="link-underline text-[var(--foreground)]">
+          <a href="/datenschutz" className="link-underline text-[var(--foreground)]">
             Datenschutzhinweise
           </a>{" "}
           gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung der

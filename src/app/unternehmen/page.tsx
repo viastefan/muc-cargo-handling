@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const TIMELINE = [
   { year: "2003", text: "Gründung ALD – Airport Lagerdienste e.K." },
   { year: "2013", text: "Umwandlung zur ALD – Airport Lagerdienste GmbH" },
-  { year: "2015", text: "MUC Cargo Handling GmbH" },
+  { year: "2015", text: "MUC Cargohandling GmbH" },
   { year: "Heute", text: "Erfahrener Partner für Airport Cargo Services" },
 ];
 
@@ -30,25 +30,29 @@ const TEAM = [
   {
     name: "Johnbosco Onyeke",
     role: "Geschäftsführer",
-    phone: "089 – 975 948 77",
+    phone: "089 – 975 94 870",
+    phoneTel: "+498997594870",
     email: "johnbosco.onyeke@muc-cargo.de",
   },
   {
     name: "Lynn Onyeke",
     role: "Stellv. Geschäftsführerin",
-    phone: "089 – 975 948 70",
+    phone: "089 – 975 94 870",
+    phoneTel: "+498997594870",
     email: "lynn.onyeke@muc-cargo.de",
   },
   {
     name: "Evelyn Zimmert-Onyeke",
-    role: "BuHa",
-    phone: "08765-93 98 25",
+    role: "Buchhaltung",
+    phone: "08765 – 93 98 25",
+    phoneTel: "+498765939825",
     email: "evelyn.onyeke@muc-cargo.de",
   },
   {
     name: "Robert Cinca",
     role: "Lagerleitung",
-    phone: "089 – 975 948 70",
+    phone: "089 – 975 94 870",
+    phoneTel: "+498997594870",
     email: "robert.cinca@muc-cargo.de",
   },
 ];
@@ -81,7 +85,7 @@ export default function UnternehmenPage() {
               Durch kontinuierliches Wachstum und die Erweiterung unseres
               Leistungsspektrums erfolgte 2013 die Umwandlung zur ALD – Airport
               Lagerdienste GmbH. Im Jahr 2015 wurde daraus die heutige MUC
-              Cargo Handling GmbH.
+              Cargohandling GmbH.
             </p>
           </div>
 
@@ -119,10 +123,7 @@ export default function UnternehmenPage() {
               <p className="team-card__role">{person.role}</p>
               <ul className="team-card__contact">
                 <li>
-                  <a
-                    href={`tel:${person.phone.replace(/[^\d+]/g, "")}`}
-                    className="team-card__link"
-                  >
+                  <a href={`tel:${person.phoneTel}`} className="team-card__link">
                     <PhoneIcon className="text-[var(--muted-light)]" />
                     <span>Tel: {person.phone}</span>
                   </a>
@@ -173,7 +174,7 @@ export default function UnternehmenPage() {
               <>
                 Direkt am Flughafen München.{" "}
                 <Link href="/kontakt" className="link-underline text-[var(--muted-accent)]">
-                  Südallee, 85356, Deutschland
+                  Südallee Modul F, 85356 München-Flughafen
                 </Link>
               </>
             }

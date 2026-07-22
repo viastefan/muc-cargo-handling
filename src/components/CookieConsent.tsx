@@ -50,9 +50,25 @@ function FingerprintIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function parseConsent(raw: string | null): ConsentState | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as ConsentState;
+    if (!parsed || typeof parsed !== "object") return null;
+    return {
+      necessary: true,
+      analytics: Boolean(parsed.analytics),
+      marketing: Boolean(parsed.marketing),
+      decidedAt: typeof parsed.decidedAt === "string" ? parsed.decidedAt : "",
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function CookieConsent() {
   const stored = useSyncExternalStore(subscribeConsent, getConsentSnapshot, getServerSnapshot);
-  const existing = stored ? (JSON.parse(stored) as ConsentState) : null;
+  const existing = parseConsent(stored);
 
   const [mode, setMode] = useState<PanelMode | null>(null);
   const [analytics, setAnalytics] = useState(false);
@@ -91,16 +107,17 @@ export function CookieConsent() {
   return (
     <>
       {resolvedMode === "banner" ? (
-        <div className="cookie-banner" role="dialog" aria-modal="false" aria-labelledby={titleId}>
+        <div className="cookie-banner" role="region" aria-labelledby={titleId}>
           <div className="cookie-banner__inner">
             <div className="cookie-banner__copy">
-              <p className="cookie-banner__eyebrow">Datenschutz · Cookie-Einwilligung</p>
+              <p className="cookie-banner__eyebrow">Datenschutz</p>
               <h2 id={titleId} className="cookie-banner__title">
-                Wir respektieren Ihre Privatsphäre
+                Cookie-Hinweis
               </h2>
               <p className="cookie-banner__text">
-                Wir verwenden technisch notwendige Cookies sowie – nur mit Ihrer Einwilligung –
-                optionale Cookies für Statistik und Marketing. Details finden Sie in unserer{" "}
+                Wir verwenden derzeit nur technisch notwendige Speicherung (u. a. für diese
+                Einwilligung). Optionale Statistik- und Marketing-Cookies sind vorbereitet,
+                werden aber nicht geladen. Details in der{" "}
                 <Link href="/datenschutz" className="cookie-banner__link">
                   Datenschutzerklärung
                 </Link>
@@ -109,7 +126,7 @@ export function CookieConsent() {
             </div>
             <div className="cookie-banner__actions">
               <button type="button" className="cookie-banner__btn cookie-banner__btn--ghost" onClick={rejectOptional}>
-                Nur notwendige
+                Verstanden
               </button>
               <button
                 type="button"
@@ -119,7 +136,7 @@ export function CookieConsent() {
                 Einstellungen
               </button>
               <button type="button" className="cookie-banner__btn cookie-banner__btn--primary" onClick={acceptAll}>
-                Alle akzeptieren
+                Auswahl speichern
               </button>
             </div>
           </div>
@@ -172,7 +189,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Statistik</p>
                   <p className="cookie-settings__desc">
-                    Anonyme Nutzungsanalysen zur Verbesserung unserer Angebote.
+                    Für anonyme Nutzungsanalysen vorgesehen – derzeit nicht aktiv.
                   </p>
                 </div>
                 <input
@@ -187,7 +204,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Marketing</p>
                   <p className="cookie-settings__desc">
-                    Cookies für relevante Inhalte und optionale Marketing-Funktionen.
+                    Für optionale Marketing-Funktionen vorgesehen – derzeit nicht aktiv.
                   </p>
                 </div>
                 <input

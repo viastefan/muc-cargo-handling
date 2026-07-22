@@ -12,7 +12,7 @@ export function ImageCtaBand({ title, ctaLabel, ctaHref, image }: Props) {
   return (
     <section className="image-cta-band" aria-labelledby="image-cta-band-title">
       <div className="image-cta-band__media">
-        <Image src={image} alt="" fill className="object-cover object-center" sizes="100vw" />
+        <Image src={image} alt={title} fill className="object-cover object-center" sizes="100vw" />
         <div className="image-cta-band__overlay" aria-hidden="true" />
       </div>
       <div className="image-cta-band__panel">

@@ -1,11 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
 import { ScrollReveal } from "./ScrollReveal";
-import { FacebookIcon, InstagramIcon, LinkedInIcon } from "./SocialIcons";
 import { COMPANY, FOOTER_NAV } from "@/lib/company";
-import { media } from "@/lib/media";
 
 const FOOTER_CTA_DEFAULT_DESCRIPTION =
   "Von Import bis Export übernehmen wir die zuverlässige Abwicklung Ihrer Luftfrachtsendungen – mit klaren Prozessen, erfahrenem Handling und direkter Koordination am Flughafen München.";
@@ -35,7 +32,7 @@ export function FooterCta({
 }) {
   return (
     <section className="footer-cta" aria-labelledby="footer-cta-heading">
-      <div className="footer-cta__layout">
+      <div className="footer-cta__layout footer-cta__layout--minimal">
         <ScrollReveal className="footer-cta__copy" duration={1150}>
           <h2
             id="footer-cta-heading"
@@ -49,16 +46,6 @@ export function FooterCta({
               {ctaLabel}
             </Button>
           </div>
-        </ScrollReveal>
-
-        <ScrollReveal variant="fade" duration={1200} className="footer-cta__visual" aria-hidden="true">
-          <Image
-            src={media.weltkugel}
-            alt=""
-            fill
-            className="footer-cta__globe"
-            sizes="(max-width: 768px) 80vw, (max-width: 1280px) 42vw, 480px"
-          />
         </ScrollReveal>
       </div>
     </section>
@@ -91,11 +78,6 @@ function FooterLink({
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
-  const social = [
-    { href: COMPANY.social.facebook, label: "Facebook", Icon: FacebookIcon },
-    { href: COMPANY.social.instagram, label: "Instagram", Icon: InstagramIcon },
-    { href: COMPANY.social.linkedin, label: "LinkedIn", Icon: LinkedInIcon },
-  ];
 
   return (
     <footer className="site-footer">
@@ -113,20 +95,6 @@ export function SiteFooter() {
           <p className="site-footer-tagline">
             Luftfrachtabwicklung am Flughafen München — seit 2003.
           </p>
-          <div className="site-footer-social">
-            {social.map(({ href, label, Icon }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="footer-social"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
         </div>
 
         <div className="site-footer-col">
