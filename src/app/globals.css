@@ -2310,63 +2310,6 @@ a {
   color: rgb(255 255 255 / 0.85);
 }
 
-/* Home editorial image pair */
-.home-image-pair {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: clamp(2rem, 4vw, 2.75rem);
-}
-
-@media (min-width: 768px) {
-  .home-image-pair {
-    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-    gap: 1rem;
-    align-items: start;
-  }
-}
-
-.home-image-pair__item {
-  margin: 0;
-}
-
-.home-image-pair__item--offset {
-  margin-top: 0;
-}
-
-@media (min-width: 768px) {
-  .home-image-pair__item--offset {
-    margin-top: clamp(2rem, 4vw, 3rem);
-  }
-}
-
-.home-image-pair__frame {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  background: var(--surface);
-}
-
-@media (min-width: 768px) {
-  .home-image-pair__frame {
-    aspect-ratio: 5 / 4;
-    min-height: clamp(12rem, 22vw, 17rem);
-  }
-
-  .home-image-pair__item:first-child .home-image-pair__frame {
-    aspect-ratio: 16 / 11;
-    min-height: clamp(14rem, 24vw, 19rem);
-  }
-}
-
-.home-image-pair__caption {
-  margin-top: 0.625rem;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.45;
-  color: var(--muted-light);
-}
-
 .footer-cta__layout--minimal {
   grid-template-columns: minmax(0, 1fr);
   min-height: clamp(16rem, 28vw, 20rem);
