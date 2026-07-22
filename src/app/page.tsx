@@ -80,7 +80,7 @@ export default function HomePage() {
             footer="Zugelassene Sicherheitsprozesse für die Luftfrachtabwicklung."
           />
           <StatCard
-            icon={<PinIcon className="h-6 w-6" />}
+            value="MUC"
             label="Standort"
             footer={
               <>
