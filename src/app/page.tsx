@@ -13,7 +13,6 @@ import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
-import { PinIcon } from "@/components/ArrowIcon";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
