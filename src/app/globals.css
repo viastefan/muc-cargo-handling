@@ -3686,14 +3686,14 @@ a {
   letter-spacing: -0.01em;
   line-height: 1.45;
   color: var(--foreground);
-  background: #ffffff;
+  background: var(--surface);
   transition:
     background-color var(--duration-normal) var(--ease-out),
     color var(--duration-fast) var(--ease-out);
 }
 
 .capability-grid__link:hover {
-  background: #ffffff;
+  background: var(--surface-2);
   color: var(--brand);
 }
 
