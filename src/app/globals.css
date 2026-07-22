@@ -2469,15 +2469,13 @@ a {
 }
 
 .capability-grid__link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  display: block;
   min-height: 3.25rem;
   padding: 0.875rem 1.25rem;
   font-size: 14px;
   font-weight: 400;
   letter-spacing: -0.01em;
+  line-height: 1.45;
   color: var(--foreground);
   background: #ffffff;
   transition:
@@ -2488,22 +2486,6 @@ a {
 .capability-grid__link:hover {
   background: var(--surface);
   color: var(--brand);
-}
-
-.capability-grid__icon {
-  display: flex;
-  flex-shrink: 0;
-  opacity: 0.55;
-  transition: opacity var(--duration-fast) var(--ease-out);
-}
-
-.capability-grid__link:hover .capability-grid__icon {
-  opacity: 1;
-}
-
-.capability-grid__link:hover .btn-corner-symbol {
-  color: var(--brand);
-  transform: rotate(-45deg) translate(0.5px, -0.5px);
 }
 
 /* Security overview — compact, no duplicate image cards */
