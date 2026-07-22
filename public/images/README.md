@@ -22,6 +22,7 @@ Kopiere deine Bilder in die passenden Ordner. **Dateinamen exakt einhalten.**
 | `service-sichtkontrolle.jpg` | Kachel Sichtkontrolle |
 | `service-handdurchsuchung.jpg` | Kachel Handdurchsuchung |
 | `service-etd.jpg` | Kachel ETD |
+| `team-band.jpg` | Bildband „Gemeinsam für eine kontrollierte Luftfracht“ |
 
 ## Unternehmen (`unternehmen/`)
 
