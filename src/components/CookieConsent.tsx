@@ -102,20 +102,25 @@ export function CookieConsent() {
   const rejectOptional = () => save(false, false);
   const saveSettings = () => save(analytics, marketing);
 
+  const openSettings = () => {
+    setAnalytics(existing?.analytics ?? false);
+    setMarketing(existing?.marketing ?? false);
+    setMode("settings");
+  };
+
   return (
     <>
       {resolvedMode === "banner" ? (
         <div className="cookie-banner" role="region" aria-labelledby={titleId}>
           <div className="cookie-banner__inner">
             <div className="cookie-banner__copy">
-              <p className="cookie-banner__eyebrow">Datenschutz</p>
               <h2 id={titleId} className="cookie-banner__title">
-                Cookie-Einstellungen
+                Cookies & Einwilligung
               </h2>
               <p className="cookie-banner__text">
-                Wir setzen Cookies. Technisch notwendige Cookies speichern Ihre Auswahl.
-                Statistik- und Marketing-Cookies setzen wir nur mit Ihrer Einwilligung.
-                Details in der{" "}
+                Wir verwenden notwendige Cookies für den Betrieb der Website. Optionale
+                Statistik- und Marketing-Cookies setzen wir nur mit Ihrer Zustimmung. Mehr in
+                der{" "}
                 <Link href="/datenschutz" className="cookie-banner__link">
                   Datenschutzerklärung
                 </Link>
@@ -123,21 +128,25 @@ export function CookieConsent() {
               </p>
             </div>
             <div className="cookie-banner__actions">
-              <button type="button" className="cookie-banner__btn cookie-banner__btn--ghost" onClick={rejectOptional}>
+              <button
+                type="button"
+                className="cookie-banner__btn cookie-banner__btn--ghost"
+                onClick={rejectOptional}
+              >
                 Nur notwendige
               </button>
               <button
                 type="button"
                 className="cookie-banner__btn cookie-banner__btn--secondary"
-                onClick={() => {
-                  setAnalytics(existing?.analytics ?? false);
-                  setMarketing(existing?.marketing ?? false);
-                  setMode("settings");
-                }}
+                onClick={openSettings}
               >
                 Einstellungen
               </button>
-              <button type="button" className="cookie-banner__btn cookie-banner__btn--primary" onClick={acceptAll}>
+              <button
+                type="button"
+                className="cookie-banner__btn cookie-banner__btn--primary"
+                onClick={acceptAll}
+              >
                 Alle akzeptieren
               </button>
             </div>
@@ -160,12 +169,9 @@ export function CookieConsent() {
             aria-labelledby={`${titleId}-settings`}
           >
             <div className="cookie-settings__header">
-              <div>
-                <p className="cookie-banner__eyebrow">Cookie-Einstellungen</p>
-                <h2 id={`${titleId}-settings`} className="cookie-settings__title">
-                  Einwilligung verwalten
-                </h2>
-              </div>
+              <h2 id={`${titleId}-settings`} className="cookie-settings__title">
+                Cookie-Einstellungen
+              </h2>
               <button
                 type="button"
                 className="cookie-settings__close"
@@ -181,8 +187,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Notwendig</p>
                   <p className="cookie-settings__desc">
-                    Speichert Ihre Cookie-Auswahl im Browser-Cookie{" "}
-                    <code>muc_consent</code>. Immer aktiv.
+                    Erforderlich für Grundfunktionen und Speicherung Ihrer Auswahl. Immer aktiv.
                   </p>
                 </div>
                 <span className="cookie-settings__badge">Aktiv</span>
@@ -192,7 +197,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Statistik</p>
                   <p className="cookie-settings__desc">
-                    Setzt das Cookie <code>muc_analytics</code> für anonyme Nutzungsanalysen.
+                    Hilft uns, die Nutzung der Website anonym zu analysieren.
                   </p>
                 </div>
                 <input
@@ -207,7 +212,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Marketing</p>
                   <p className="cookie-settings__desc">
-                    Setzt das Cookie <code>muc_marketing</code> für optionale Marketing-Funktionen.
+                    Ermöglicht optionale, relevante Marketing-Funktionen.
                   </p>
                 </div>
                 <input
@@ -220,10 +225,18 @@ export function CookieConsent() {
             </div>
 
             <div className="cookie-settings__actions">
-              <button type="button" className="cookie-banner__btn cookie-banner__btn--ghost" onClick={rejectOptional}>
+              <button
+                type="button"
+                className="cookie-banner__btn cookie-banner__btn--ghost"
+                onClick={rejectOptional}
+              >
                 Ablehnen
               </button>
-              <button type="button" className="cookie-banner__btn cookie-banner__btn--primary" onClick={saveSettings}>
+              <button
+                type="button"
+                className="cookie-banner__btn cookie-banner__btn--primary"
+                onClick={saveSettings}
+              >
                 Auswahl speichern
               </button>
             </div>
@@ -237,13 +250,7 @@ export function CookieConsent() {
           className="cookie-fab"
           aria-label="Cookie-Einstellungen öffnen"
           title="Cookie-Einstellungen"
-          onClick={() => {
-            if (existing) {
-              setAnalytics(existing.analytics);
-              setMarketing(existing.marketing);
-            }
-            setMode("settings");
-          }}
+          onClick={openSettings}
         >
           <FingerprintIcon className="cookie-fab__icon" />
         </button>
