@@ -781,7 +781,7 @@ a {
   :root {
     --page-x: 2rem;
     --section-y: 6.5rem;
-    --hero-min: 520px;
+    --hero-min: 620px;
     --hero-gap: 0;
   }
 }
