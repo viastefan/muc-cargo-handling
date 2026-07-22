@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { FeatureIcon, type IconName } from "./FeatureIcon";
 
-type Item = { title: string; text: string };
+type Item = { title: string; text: string; icon?: IconName };
 
 export function SecurityOverview({ items }: { items: readonly Item[] }) {
   return (
@@ -23,8 +24,15 @@ export function SecurityOverview({ items }: { items: readonly Item[] }) {
           {items.map((item) => (
             <li key={item.title}>
               <Link href="/roentgen" className="security-band__item">
-                <span className="security-band__item-title">{item.title}</span>
-                <span className="security-band__item-text">{item.text}</span>
+                {item.icon ? (
+                  <span className="security-band__item-icon" aria-hidden="true">
+                    <FeatureIcon name={item.icon} className="security-band__item-icon-svg" />
+                  </span>
+                ) : null}
+                <span className="security-band__item-copy">
+                  <span className="security-band__item-title">{item.title}</span>
+                  <span className="security-band__item-text">{item.text}</span>
+                </span>
               </Link>
             </li>
           ))}

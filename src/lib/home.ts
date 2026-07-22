@@ -39,18 +39,22 @@ export const SECURITY_METHODS = [
   {
     title: "Röntgenkontrolle",
     text: "Schnelle, bildgebende Prüfung nach Luftsicherheitsvorgaben.",
+    icon: "xray" as const,
   },
   {
     title: "Sichtkontrolle",
     text: "Geschulte Fachkräfte prüfen Unversehrtheit und Kennzeichnung.",
+    icon: "eye" as const,
   },
   {
     title: "Handdurchsuchung",
     text: "Manuelle Vertiefung, wenn Technik allein nicht ausreicht.",
+    icon: "hand" as const,
   },
   {
     title: "Sprengstoff-Spurendetektion",
     text: "ETD als ergänzendes Verfahren im Sicherheitsprozess.",
+    icon: "etd" as const,
   },
 ] as const;
 

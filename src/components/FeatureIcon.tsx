@@ -9,7 +9,11 @@ type IconName =
   | "airport"
   | "link"
   | "docs"
-  | "peak";
+  | "peak"
+  | "xray"
+  | "eye"
+  | "hand"
+  | "etd";
 
 const stroke = {
   fill: "none",
@@ -110,6 +114,38 @@ export function FeatureIcon({ name, className = "" }: { name: IconName; classNam
         <svg {...common}>
           <path d="m4 16.5 4.2-5.2 3.3 2.6L16.5 7 20 10.2" {...stroke} />
           <path d="M4 19.5h16" {...stroke} />
+        </svg>
+      );
+    case "xray":
+      return (
+        <svg {...common}>
+          <rect x="4" y="5.5" width="16" height="13" rx="1.5" {...stroke} />
+          <path d="M8 9.5h8M8 12.5h5M8 15.5h6.5" {...stroke} />
+          <circle cx="16.25" cy="15.25" r="1.35" {...stroke} />
+        </svg>
+      );
+    case "eye":
+      return (
+        <svg {...common}>
+          <path d="M2.75 12s3.1-5.25 9.25-5.25S21.25 12 21.25 12s-3.1 5.25-9.25 5.25S2.75 12 2.75 12Z" {...stroke} />
+          <circle cx="12" cy="12" r="2.35" {...stroke} />
+        </svg>
+      );
+    case "hand":
+      return (
+        <svg {...common}>
+          <path
+            d="M8.5 11.2V6.8a1.35 1.35 0 0 1 2.7 0v4.4M11.2 10.6V5.9a1.35 1.35 0 0 1 2.7 0v5.3M13.9 11V7.4a1.35 1.35 0 0 1 2.7 0V14c0 2.85-1.85 5-4.6 5H11c-2.3 0-3.85-1.2-4.85-2.85L4.5 13.4a1.35 1.35 0 0 1 2.2-1.55l1.8 1.35"
+            {...stroke}
+          />
+        </svg>
+      );
+    case "etd":
+      return (
+        <svg {...common}>
+          <path d="M7.5 4.75h9A1.75 1.75 0 0 1 18.25 6.5v11A1.75 1.75 0 0 1 16.5 19.25h-9A1.75 1.75 0 0 1 5.75 17.5v-11A1.75 1.75 0 0 1 7.5 4.75Z" {...stroke} />
+          <path d="M9 9.25h6M9 12.25h6M9 15.25h3.75" {...stroke} />
+          <circle cx="15.35" cy="15.25" r="1.15" {...stroke} />
         </svg>
       );
     default:
