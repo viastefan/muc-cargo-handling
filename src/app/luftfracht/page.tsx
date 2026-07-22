@@ -43,8 +43,6 @@ export default function LuftfrachtPage() {
         description="Ob eingehende oder ausgehende Luftfrachtsendungen – wir begleiten jeden Auftrag mit klar definierten Prozessen und einer zuverlässigen operativen Abwicklung. Durch die enge Zusammenarbeit mit Airlines, Behörden und Logistikpartnern gewährleisten wir einen reibungslosen Warenfluss am Flughafen München."
         image="/images/luftfracht/intro-band.jpg"
         imageAlt="Luftfracht-Handling am Flughafen München"
-        ctaLabel="Anfrage stellen"
-        ctaHref="/kontakt"
       />
 
       <PageSection>
