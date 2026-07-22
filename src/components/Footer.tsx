@@ -171,6 +171,7 @@ export function SiteFooter() {
             © {year} {COMPANY.legalName}
           </p>
           <nav className="site-footer-legal" aria-label="Rechtliches">
+            <FooterLink href="/faq">FAQ</FooterLink>
             <FooterLink href="/impressum">Impressum</FooterLink>
             <FooterLink href="/datenschutz">Datenschutz</FooterLink>
           </nav>

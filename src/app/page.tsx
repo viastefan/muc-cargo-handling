@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DownloadGrid } from "@/components/DownloadGrid";
+import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { HomeImagePair } from "@/components/HomeImagePair";
@@ -15,6 +16,7 @@ import { ServiceNav } from "@/components/ServiceNav";
 import { PinIcon } from "@/components/ArrowIcon";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { SERVICES } from "@/lib/content";
+import { FAQ_HOME } from "@/lib/faq";
 import {
   HOME_CAPABILITY_AREAS,
   HOME_DOWNLOADS,
@@ -142,6 +144,21 @@ export default function HomePage() {
         <ScrollReveal delay={120} duration={1000}>
           <div className="section-header-gap">
             <DownloadGrid items={HOME_DOWNLOADS} />
+          </div>
+        </ScrollReveal>
+      </PageSection>
+
+      <PageSection borderTop id="faq">
+        <ScrollReveal duration={1000}>
+          <SectionHeader
+            eyebrow="FAQ"
+            dark="Häufige Fragen"
+            description="Kurze Antworten zu Leistungen und Abläufen – für einen schnellen Überblick."
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={100} duration={1000}>
+          <div className="section-header-gap max-w-3xl">
+            <FaqList items={FAQ_HOME} compact />
           </div>
         </ScrollReveal>
       </PageSection>

@@ -756,6 +756,16 @@ a {
   line-height: 1.75;
 }
 
+.faq-list--compact .faq-list__item--compact {
+  padding-block: 1rem;
+}
+
+@media (min-width: 768px) {
+  .faq-list--compact .faq-list__item--compact {
+    padding-block: 1.125rem;
+  }
+}
+
 .heading-display {
   font-weight: 400;
   letter-spacing: -0.025em;
