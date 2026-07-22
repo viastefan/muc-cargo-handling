@@ -50,28 +50,33 @@ export function deleteCookie(name: string) {
 }
 
 export function serializeConsent(state: ConsentState) {
+  const ts = Date.parse(state.decidedAt);
   return [
     "v1",
     state.analytics ? "a1" : "a0",
     state.marketing ? "m1" : "m0",
-    `t${state.decidedAt}`,
+    `t${Number.isFinite(ts) ? ts : Date.now()}`,
   ].join("|");
 }
 
 export function parseConsentValue(raw: string | null): ConsentState | null {
   if (!raw) return null;
 
-  // Compact cookie format: v1|a0|m1|t2026-...
+  // Compact cookie format: v1|a0|m1|t1719...
   if (raw.startsWith("v1|")) {
     const parts = raw.split("|");
     const analytics = parts.includes("a1");
     const marketing = parts.includes("m1");
-    const ts = parts.find((part) => part.startsWith("t"))?.slice(1) ?? "";
+    const tsRaw = parts.find((part) => part.startsWith("t"))?.slice(1) ?? "";
+    const tsNum = Number(tsRaw);
+    const decidedAt = Number.isFinite(tsNum) && tsNum > 0
+      ? new Date(tsNum).toISOString()
+      : tsRaw || new Date().toISOString();
     return {
       necessary: true,
       analytics,
       marketing,
-      decidedAt: ts || new Date().toISOString(),
+      decidedAt,
     };
   }
 
@@ -91,11 +96,13 @@ export function parseConsentValue(raw: string | null): ConsentState | null {
 }
 
 export function readConsent(): ConsentState | null {
-  const fromCookie = parseConsentValue(readCookie(CONSENT_COOKIE));
-  if (fromCookie) return fromCookie;
+  return parseConsentValue(readCookie(CONSENT_COOKIE));
+}
 
-  // One-time migration from older localStorage consent
+/** Migrate legacy localStorage consent once (call from client effect). */
+export function migrateLegacyConsent(): ConsentState | null {
   if (typeof window === "undefined") return null;
+  if (readCookie(CONSENT_COOKIE)) return null;
   try {
     const legacy = window.localStorage.getItem(LEGACY_STORAGE_KEY);
     const migrated = parseConsentValue(legacy);

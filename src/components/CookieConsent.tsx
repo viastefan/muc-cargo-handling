@@ -6,11 +6,10 @@ import {
   CONSENT_COOKIE,
   CONSENT_EVENT,
   type ConsentState,
+  migrateLegacyConsent,
   parseConsentValue,
   persistConsent,
-  readConsent,
   readCookie,
-  serializeConsent,
 } from "@/lib/consent-cookies";
 
 type PanelMode = "banner" | "settings" | "hidden";
@@ -23,10 +22,7 @@ function subscribeConsent(onStoreChange: () => void) {
 
 /** Stable string snapshot for useSyncExternalStore (Object.is) */
 function getConsentSnapshot() {
-  const fromCookie = readCookie(CONSENT_COOKIE);
-  if (fromCookie) return fromCookie;
-  const migrated = readConsent();
-  return migrated ? serializeConsent(migrated) : "";
+  return readCookie(CONSENT_COOKIE) ?? "";
 }
 
 function getServerSnapshot() {
@@ -71,6 +67,10 @@ export function CookieConsent() {
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const titleId = useId();
+
+  useEffect(() => {
+    migrateLegacyConsent();
+  }, []);
 
   const resolvedMode: PanelMode = !hydrated
     ? "hidden"
