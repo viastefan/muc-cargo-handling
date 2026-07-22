@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export type DownloadPreviewFile = {
   label: string;
@@ -38,11 +39,16 @@ function PdfIcon() {
 }
 
 export function DownloadPreviewSheet({ file, onClose }: Props) {
+  const [mounted, setMounted] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartY = useRef(0);
 
   const isOpen = file !== null;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const close = useCallback(() => {
     setDragOffset(0);
@@ -91,14 +97,14 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
     setDragOffset(0);
   };
 
-  if (!isOpen || !file) return null;
+  if (!mounted || !isOpen || !file) return null;
 
   const panelStyle =
     dragOffset > 0
       ? { transform: `translate3d(0, ${dragOffset}px, 0)` }
       : undefined;
 
-  return (
+  return createPortal(
     <div className="download-preview" data-open="true">
       <button
         type="button"
@@ -172,9 +178,9 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
         </div>
 
         <div className="download-preview__actions">
-          <a href={file.href} download className="download-preview__btn download-preview__btn--primary">
-            PDF herunterladen
-          </a>
+          <button type="button" className="download-preview__btn download-preview__btn--ghost" onClick={close}>
+            Schließen
+          </button>
           <a
             href={file.href}
             target="_blank"
@@ -183,11 +189,12 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
           >
             PDF öffnen
           </a>
-          <button type="button" className="download-preview__btn download-preview__btn--ghost" onClick={close}>
-            Schließen
-          </button>
+          <a href={file.href} download className="download-preview__btn download-preview__btn--primary">
+            PDF herunterladen
+          </a>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
