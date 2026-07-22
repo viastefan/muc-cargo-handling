@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ButtonArrowIcon } from "./ButtonArrowIcon";
 
 type Item = { title: string; text: string };
 
@@ -18,10 +17,6 @@ export function SecurityOverview({ items }: { items: readonly Item[] }) {
               dokumentiert und nach geltenden Vorschriften.
             </p>
           </div>
-          <Link href="/roentgen" className="security-band__more">
-            Alle Verfahren
-            <ButtonArrowIcon light />
-          </Link>
         </div>
 
         <ul className="security-band__grid">
