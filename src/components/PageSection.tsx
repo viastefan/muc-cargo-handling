@@ -26,11 +26,7 @@ export function PageSection({
 }
 
 export function SectionEyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[var(--muted-light)]">
-      {children}
-    </p>
-  );
+  return <p className="section-eyebrow">{children}</p>;
 }
 
 export function SectionHeader({
@@ -55,28 +51,28 @@ export function SectionHeader({
 }) {
   return (
     <div
-      className={`${align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"} ${className}`}
+      className={`section-header ${align === "center" ? "section-header--center" : ""} ${className}`.trim()}
     >
-      {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
+      {eyebrow ? <SectionEyebrow>{eyebrow}</SectionEyebrow> : null}
       {light ? (
         <SectionTitle
           dark={dark}
           light={light}
           breakLines={breakTitle}
-          className={align === "center" ? "mx-auto" : ""}
+          className={`section-header__title ${align === "center" ? "mx-auto" : ""}`.trim()}
         />
       ) : (
-        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+        <h2 className="section-header__title heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
           {dark}
         </h2>
       )}
-      {description && (
+      {description ? (
         <p
           className={`prose-lead mt-5 ${align === "center" ? "mx-auto" : ""} ${descriptionClassName}`.trim()}
         >
           {description}
         </p>
-      )}
+      ) : null}
     </div>
   );
 }
