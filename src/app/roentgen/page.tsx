@@ -6,7 +6,6 @@ import { SpecGrid } from "@/components/SpecGrid";
 import {
   FeatureCard,
   PageSection,
-  SectionEyebrow,
   SectionHeader,
 } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -69,9 +68,7 @@ export default function RoentgenPage() {
         </div>
 
         <div className="section-header-gap">
-          <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
-            Technische Eckdaten Röntgen
-          </p>
+          <p className="section-eyebrow">Technische Eckdaten Röntgen</p>
           <SpecGrid
             items={[
               { label: "Durchlassbreite", value: "179", unit: "cm" },
@@ -86,8 +83,7 @@ export default function RoentgenPage() {
       </PageSection>
 
       <PageSection muted borderTop>
-        <SectionEyebrow>Röntgen</SectionEyebrow>
-        <SectionHeader dark="Unsere" light="Kontrollverfahren" />
+        <SectionHeader eyebrow="Röntgen" dark="Unsere" light="Kontrollverfahren" />
         <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
             image="/images/roentgen/kontrolle-roentgen.jpg"

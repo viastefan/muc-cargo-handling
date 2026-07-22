@@ -111,7 +111,7 @@ export default function UnternehmenPage() {
 
       <PageSection borderTop id="team">
         <ScrollReveal duration={1000}>
-          <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+          <h2 className="section-header__title heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
             Unser Team
           </h2>
         </ScrollReveal>

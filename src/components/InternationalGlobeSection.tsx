@@ -19,12 +19,10 @@ export function InternationalGlobeSection() {
       <div className="page-container py-12 sm:py-14 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:items-end lg:gap-16">
           <div className="max-w-2xl">
-            <p className="text-[11px] font-normal uppercase tracking-[0.12em] text-white/45">
-              Drehkreuz MUC
-            </p>
+            <p className="section-eyebrow section-eyebrow--on-dark">Drehkreuz MUC</p>
             <h3
               id="international-band-title"
-              className="heading-display mt-3 text-[clamp(1.375rem,3.5vw,2rem)] text-white"
+              className="heading-display section-header__title text-[clamp(1.375rem,3.5vw,2rem)] text-white"
             >
               Internationale Sendungen brauchen eine starke lokale Schnittstelle.
             </h3>

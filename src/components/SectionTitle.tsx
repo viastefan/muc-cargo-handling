@@ -16,7 +16,7 @@ export function SectionTitle({
 }: Props) {
   return (
     <Tag
-      className={`max-w-4xl text-[clamp(1.5rem,4vw,2.375rem)] font-normal leading-[1.25] tracking-[-0.02em] text-[var(--foreground)] ${className}`}
+      className={`section-header__title heading-display max-w-4xl text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)] ${className}`}
     >
       <span>{dark}</span>
       {breakLines ? <br /> : " "}
