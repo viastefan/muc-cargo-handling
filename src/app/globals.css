@@ -1836,7 +1836,7 @@ a {
 .service-nav-card {
   display: block;
   border: none;
-  background: #ffffff;
+  background: var(--surface);
   padding: 1.5rem;
   transition:
     box-shadow var(--duration-normal) var(--ease-out),
@@ -1851,8 +1851,8 @@ a {
 }
 
 .service-nav-card:hover {
-  background: #ffffff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  background: var(--surface-2);
+  box-shadow: none;
   transform: translateY(-2px);
 }
 
