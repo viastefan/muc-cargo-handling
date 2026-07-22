@@ -4,6 +4,7 @@ export type FaqItem = {
 };
 
 export type FaqCategory = {
+  id: string;
   title: string;
   items: readonly FaqItem[];
 };
@@ -24,43 +25,49 @@ export const FAQ_HOME: readonly FaqItem[] = [
   },
 ] as const;
 
-/** Vollständige FAQ – nur über Footer verlinkt */
+/** Vollständige FAQ – nur über Footer / Startseiten-Button verlinkt */
 export const FAQ_CATEGORIES: readonly FaqCategory[] = [
   {
+    id: "allgemein",
     title: "Allgemein",
     items: [
       {
         q: "Seit wann sind Sie am Flughafen München tätig?",
-        a: "MUC Cargo Handling ist seit 2003 am Flughafen München aktiv. Diese Erfahrung fließt in strukturierte Abläufe, geschultes Personal und verlässliche Koordination mit Partnern vor Ort ein.",
+        a: "MUC Cargo Handling ist seit 2003 am Flughafen München aktiv. Diese Erfahrung fließt in strukturierte Abläufe, geschultes Personal und verlässliche Koordination mit Partnern vor Ort ein – Import, Export und Sicherheitsprozesse inklusive.",
       },
       {
         q: "Wo befindet sich Ihr Standort?",
-        a: "Unser Lager und Büro liegen in der Südallee am Flughafen München (85356). Kurze Wege zum Cargo-Drehkreuz ermöglichen effiziente Abstimmung und schnelle Übergaben.",
+        a: "Lager und Büro liegen in der Südallee am Flughafen München (85356). Kurze Wege zum Cargo-Drehkreuz ermöglichen effiziente Abstimmung, schnelle Übergaben und eine direkte Erreichbarkeit vor Ort.",
       },
       {
         q: "Sind Sie als Reglementierter Beauftragter zugelassen?",
-        a: "Ja. Wir arbeiten als Reglementierter Beauftragter (DE/RA/01278-01) und führen Sicherheitskontrollen nach den geltenden luftsicherheitsrechtlichen Vorgaben durch.",
+        a: "Ja. Wir arbeiten als Reglementierter Beauftragter (DE/RA/01278-01) und führen Sicherheitskontrollen nach den geltenden luftsicherheitsrechtlichen Vorgaben durch – dokumentiert und nachvollziehbar.",
       },
       {
         q: "In welchen Sprachen können wir kommunizieren?",
         a: "Unser Team berät Sie auf Deutsch und Englisch. Für internationale Sendungen und Dokumentation sind beide Sprachen im Tagesgeschäft etabliert.",
       },
+      {
+        q: "Mit welchen Partnern arbeiten Sie zusammen?",
+        a: "Am Standort München arbeiten wir mit erfahrenen Partnern entlang der Cargo-Kette zusammen – unter anderem im Handling und bei Sicherheitsprozessen. So entstehen kurze Wege und klare Verantwortlichkeiten.",
+      },
     ],
   },
   {
+    id: "luftfracht",
     title: "Luftfracht Import & Export",
     items: [
       {
         q: "Welche Sendungsarten bearbeiten Sie?",
-        a: "Standard- und Sonderfracht am Flughafen München – von Paletten und Kollo bis zu zeitkritischen Express-Sendungen. Für abweichende Maße oder Sonderanforderungen beraten wir vorab.",
+        a: "Standard- und Sonderfracht am Flughafen München – von Paletten und Kollo bis zu zeitkritischen Express-Sendungen. Für abweichende Maße oder Sonderanforderungen beraten wir vorab und prüfen die Machbarkeit.",
       },
       {
         q: "Wie läuft die Import-Abwicklung ab?",
-        a: "Nach Ankunft erfassen wir die Sendung, prüfen Unterlagen, führen die erforderlichen Sicherheitskontrollen durch und übergeben termingerecht an Spedition oder Empfänger.",
+        a: "Nach Ankunft erfassen wir die Sendung, prüfen Unterlagen, führen die erforderlichen Sicherheitskontrollen durch und übergeben termingerecht an Spedition oder Empfänger. Status und Übergaben bleiben dabei transparent.",
       },
       {
         q: "Unterstützen Sie auch beim Export?",
-        a: "Ja – von der Annahme über Sicherung und Dokumentation bis zur Übergabe an Airline Handling und Ramp koordinieren wir den gesamten Exportprozess.",
+        a: "Ja – von der Annahme über Sicherung und Dokumentation bis zur Übergabe an Airline Handling und Ramp koordinieren wir den gesamten Exportprozess am Standort München.",
       },
       {
         q: "Welche Unterlagen benötigen Sie für eine Abwicklung?",
@@ -68,11 +75,16 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       },
       {
         q: "Können Sie auch zeitkritische Sendungen priorisieren?",
-        a: "Ja. Bei dringenden Luftfrachten stimmen wir Abläufe, Sicherheitsfenster und Übergaben eng mit Ihnen und den beteiligten Partnern ab.",
+        a: "Ja. Bei dringenden Luftfrachten stimmen wir Abläufe, Sicherheitsfenster und Übergaben eng mit Ihnen und den beteiligten Partnern ab – mit klaren Prioritäten im Tagesgeschäft.",
+      },
+      {
+        q: "Was passiert bei Unregelmäßigkeiten oder fehlenden Dokumenten?",
+        a: "Wir melden Abweichungen frühzeitig, dokumentieren den Status und stimmen die nächsten Schritte mit Ihnen ab – damit Verzögerungen so gering wie möglich bleiben.",
       },
     ],
   },
   {
+    id: "airline-handling",
     title: "Airline Handling",
     items: [
       {
@@ -85,11 +97,16 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       },
       {
         q: "Können Sie Sonderfracht oder Übermaß bearbeiten?",
-        a: "Für abweichende Abmessungen oder besondere Anforderungen prüfen wir die Machbarkeit im Vorfeld und schlagen passende Abläufe vor.",
+        a: "Für abweichende Abmessungen oder besondere Anforderungen prüfen wir die Machbarkeit im Vorfeld und schlagen passende Abläufe bzw. Alternativen vor.",
+      },
+      {
+        q: "Wie erfolgt die Abstimmung mit Airlines und Ground Handling?",
+        a: "Über klar definierte Schnittstellen und direkte Kommunikation vor Ort. So bleiben Status, Zeitfenster und Verantwortlichkeiten für alle Beteiligten nachvollziehbar.",
       },
     ],
   },
   {
+    id: "sicherheit",
     title: "Sicherheit & Röntgen",
     items: [
       {
@@ -98,7 +115,7 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       },
       {
         q: "Welche Sendungen können geröntgt werden?",
-        a: "Standardfracht bis ca. 179 cm Breite, 170 cm Höhe und 2.000 kg Gewicht. Für Sondermaße beraten wir zu Alternativverfahren.",
+        a: "Standardfracht bis ca. 179 cm Breite, 170 cm Höhe und 2.000 kg Gewicht. Für Sondermaße beraten wir zu Alternativverfahren und passenden Kontrollschritten.",
       },
       {
         q: "Wie läuft die Freigabe nach der Kontrolle ab?",
@@ -108,9 +125,14 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
         q: "Wer führt die Sicherheitskontrollen durch?",
         a: "Geschultes Fachpersonal unter Aufsicht unseres Reglementierten Beauftragten. Technik und manuelle Prüfung ergänzen sich je nach Sendungsprofil.",
       },
+      {
+        q: "Wie lange dauert eine typische Sicherheitskontrolle?",
+        a: "Das hängt von Sendungsart, Volumen und gewähltem Verfahren ab. Wir stimmen realistische Zeitfenster vorab ab und priorisieren bei Bedarf dringende Sendungen.",
+      },
     ],
   },
   {
+    id: "kontakt",
     title: "Kontakt & Ablauf",
     items: [
       {
@@ -123,11 +145,15 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       },
       {
         q: "Gibt es Formulare oder Vorlagen zum Download?",
-        a: "Ja. Auf der Startseite finden Sie wichtige Formulare für Arbeitsaufträge, Zulassung und Versicherung zum direkten Download.",
+        a: "Ja. Auf der Startseite finden Sie wichtige Formulare für Arbeitsaufträge, Zulassung und Versicherung – mit Vorschau und Download.",
       },
       {
         q: "Bieten Sie eine feste Ansprechperson?",
         a: "Ja. Sie erhalten direkte Betreuung statt anonymer Abwicklungskette – mit klaren Verantwortlichkeiten für Ihre Sendungen am Standort München.",
+      },
+      {
+        q: "Kann ich Sie vor Ort am Flughafen besuchen?",
+        a: "Termine vor Ort sind nach Absprache möglich. Melden Sie sich kurz mit Ihrem Anliegen – wir koordinieren einen passenden Zeitpunkt am Standort Südallee.",
       },
     ],
   },
