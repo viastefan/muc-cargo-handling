@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "./Button";
+import { HeroContactCta } from "./HeroContactCta";
 import { PhoneBox } from "./PhoneBox";
 
 type Props = {
@@ -35,9 +35,7 @@ export function Hero({
           <p className="hero-subtitle">{subtitle}</p>
           <div className="hero-spacer" aria-hidden="true" />
           <div className="hero-cta-slot">
-            <Button href={ctaHref} variant="white" size="hero" className="hero-cta-btn">
-              {ctaLabel}
-            </Button>
+            <HeroContactCta label={ctaLabel} href={ctaHref} />
           </div>
           <div className="hero-phone-slot">
             <PhoneBox variant="hero" />

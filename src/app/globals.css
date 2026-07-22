@@ -315,50 +315,136 @@ a {
   margin-top: clamp(1.75rem, 5vh, 2.75rem);
 }
 
+/* Hero contact CTA — red split button + contact menu */
+.hero-contact-cta {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.hero-contact-cta__button {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 13.5rem;
+  min-height: 3.75rem;
+  background: var(--brand);
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.hero-contact-cta__button:hover {
+  background: var(--brand-dark);
+}
+
+.hero-contact-cta__label {
+  position: absolute;
+  right: 3.25rem;
+  bottom: 1.0625rem;
+  left: 1.375rem;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.hero-contact-cta__toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 0;
+  border: none;
+  background: var(--brand-arrow);
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+}
+
+.hero-contact-cta__toggle:hover {
+  filter: brightness(1.06);
+}
+
+.hero-contact-cta__toggle:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: -2px;
+}
+
+.hero-contact-cta__arrow--open {
+  transform: rotate(-45deg) translate(1px, 1px) !important;
+}
+
+.hero-contact-cta__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 20;
+  min-width: min(100%, 17.5rem);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.12);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -10px, 0);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.hero-contact-cta.is-open .hero-contact-cta__menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+.hero-contact-cta__menu-title {
+  margin: 0;
+  padding: 0.875rem 1.125rem 0.625rem;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.hero-contact-cta__menu-item {
+  display: block;
+  padding: 0.75rem 1.125rem;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.hero-contact-cta__menu-item:last-child {
+  padding-bottom: 0.875rem;
+}
+
+.hero-contact-cta__menu-item:hover {
+  background: var(--surface);
+  color: var(--brand);
+}
+
 .hero-phone-slot {
   grid-area: phone;
   align-self: stretch;
   width: 100%;
   max-width: 100%;
   margin-top: 0.625rem;
-}
-
-.hero-cta-btn {
-  display: block;
-  width: 100%;
-}
-
-/* Hero CTA: brand red on mobile/tablet, white from desktop */
-.hero-cta-btn.btn-corner--white {
-  background: var(--brand);
-  color: #ffffff;
-}
-
-.hero-cta-btn.btn-corner--white .btn-corner-symbol {
-  color: #ffffff;
-}
-
-.hero-cta-btn.btn-corner--white:hover {
-  background: var(--brand-dark);
-  box-shadow: 0 10px 26px rgba(217, 13, 58, 0.22);
-  transform: translateY(-1px);
-}
-
-@media (min-width: 1024px) {
-  .hero-cta-btn.btn-corner--white {
-    background: #ffffff;
-    color: var(--foreground);
-  }
-
-  .hero-cta-btn.btn-corner--white .btn-corner-symbol {
-    color: #5e7187;
-  }
-
-  .hero-cta-btn.btn-corner--white:hover {
-    background: #fafafa;
-    box-shadow: none;
-    transform: none;
-  }
 }
 
 @media (min-width: 640px) {
@@ -368,7 +454,11 @@ a {
     max-width: 100%;
   }
 
-  .hero-cta-btn {
+  .hero-contact-cta {
+    width: auto;
+  }
+
+  .hero-contact-cta__button {
     width: auto;
     min-width: 14.5rem;
   }
@@ -411,8 +501,8 @@ a {
 }
 
 @media (max-width: 639px) {
-  .hero-cta-slot .hero-cta-btn,
-  .hero-cta-slot a.hero-cta-btn {
+  .hero-contact-cta,
+  .hero-contact-cta__button {
     width: 100%;
   }
 
@@ -567,21 +657,21 @@ a {
     font-size: 15px;
   }
 
-  .hero-cta-btn.btn-corner--hero {
+  .hero-contact-cta__button {
     min-width: 17.5rem;
     min-height: 4.25rem;
   }
 
-  .hero-cta-btn.btn-corner--hero .btn-corner-label {
+  .hero-contact-cta__label {
     bottom: 1.25rem;
     left: 1.5rem;
-    right: 3rem;
+    right: 3.25rem;
     font-size: 15px;
   }
 
-  .hero-cta-btn.btn-corner--hero .btn-corner-icon {
-    top: 0.875rem;
-    right: 0.875rem;
+  .hero-contact-cta__toggle {
+    width: 3.5rem;
+    height: 3.5rem;
   }
 }
 
