@@ -3,4 +3,5 @@
  */
 export const media = {
   logo: "/images/shared/logo.svg",
+  weltkugel: "/images/shared/weltkugel.png",
 } as const;
