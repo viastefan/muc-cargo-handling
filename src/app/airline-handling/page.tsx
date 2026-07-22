@@ -41,7 +41,7 @@ export default function AirlineHandlingPage() {
 
       <PageSection muted borderTop>
         <SectionHeader dark="Leistungen" light="im Überblick" />
-        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
+        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
             image="/images/airline-handling/import-export.jpg"
             title="Import & Export Handling"

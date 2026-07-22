@@ -18,6 +18,8 @@
   --section-header-gap-lg: 3.5rem;
   --hero-gap: 0.5rem;
   --hero-min: min(88svh, 680px);
+  --hero-pad-top-mobile: 4rem;
+  --hero-pad-bottom-mobile: 4rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 180ms;
@@ -196,12 +198,14 @@ a {
   display: grid;
   grid-template-rows: 1fr auto;
   min-height: inherit;
-  padding: 1.25rem calc(var(--page-x) - var(--hero-gap)) 1rem;
+  padding: var(--hero-pad-top-mobile) calc(var(--page-x) - var(--hero-gap))
+    var(--hero-pad-bottom-mobile);
 }
 
 .hero-copy {
   align-self: start;
   max-width: 36rem;
+  padding-top: 0.25rem;
 }
 
 .hero-title {
@@ -225,23 +229,41 @@ a {
   width: 100%;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.75rem;
+  gap: 0.625rem;
   align-self: end;
 }
 
 .hero-cta-slot {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
 }
 
 .hero-phone-slot {
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
+}
+
+@media (max-width: 639px) {
+  .hero-cta-slot .btn-hero,
+  .hero-cta-slot a.btn-hero {
+    width: 100%;
+  }
+
+  .hero-phone-slot .phone-box-hero {
+    width: 100%;
+  }
 }
 
 @media (min-width: 640px) {
   .hero-content {
-    padding-bottom: 1.25rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero-cta-slot,
+  .hero-phone-slot {
+    width: fit-content;
+    max-width: 100%;
   }
 
   .hero-actions {
