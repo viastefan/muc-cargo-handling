@@ -23,38 +23,37 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-white/95 backdrop-blur-md">
-      <div className="page-container flex h-[68px] items-center justify-between gap-3 sm:h-[72px] lg:h-[76px]">
+    <header className="site-header-wrap sticky top-0 z-50 bg-white">
+      <div className="site-header hidden lg:grid">
+        <div className="site-header-cell site-header-logo">
+          <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
+            <BrandLogo priority />
+          </Link>
+        </div>
+
+        {NAV.map((item) => (
+          <div key={item.href} className="site-header-cell">
+            <Link href={item.href} className="site-header-link">
+              {item.label}
+            </Link>
+          </div>
+        ))}
+
+        <div className="site-header-cell site-header-cta p-0">
+          <Button href="/kontakt" className="site-header-btn !flex h-full w-full shadow-none hover:shadow-none">
+            Anfrage stellen
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex h-[68px] items-center justify-between gap-3 px-[var(--page-x)] sm:h-[72px] lg:hidden">
         <Link href="/" className="shrink-0 transition-opacity duration-300 hover:opacity-80" onClick={() => setOpen(false)}>
           <BrandLogo priority />
         </Link>
 
-        <nav className="hidden items-center lg:flex">
-          {NAV.map((item, i) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <div key={item.href} className="flex items-center">
-                {i > 0 && <span className="mx-1 h-3.5 w-px bg-[var(--border)]" aria-hidden />}
-                <Link
-                  href={item.href}
-                  className={`px-3 py-2 text-[11px] font-normal uppercase tracking-[0.09em] transition-colors duration-300 ${
-                    active ? "text-[var(--brand)]" : "text-[var(--foreground)] hover:text-[var(--brand)]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </div>
-            );
-          })}
-        </nav>
-
-        <div className="hidden lg:block">
-          <Button href="/kontakt">Anfrage stellen</Button>
-        </div>
-
         <button
           type="button"
-          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60 lg:hidden"
+          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}

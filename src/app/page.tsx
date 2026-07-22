@@ -2,12 +2,10 @@ import Link from "next/link";
 import { Button } from "@/components/Button";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import {
-  PageSection,
-  SectionHeader,
-} from "@/components/PageSection";
-import { InfoStat, ServiceCard } from "@/components/ServiceCard";
+import { PageSection } from "@/components/PageSection";
+import { ServiceCard } from "@/components/ServiceCard";
 import { PinIcon } from "@/components/ArrowIcon";
+import { SectionTitle, StatCard } from "@/components/SectionTitle";
 
 export default function HomePage() {
   return (
@@ -20,53 +18,54 @@ export default function HomePage() {
 
       <PageSection>
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-          <SectionHeader
-            dark="Ihr Partner für"
-            light="professionelle Luftfrachtabwicklung"
-            className="max-w-xl"
-          />
+          <h2 className="heading-display max-w-xl text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+            Ihr Partner für professionelle Luftfrachtabwicklung
+          </h2>
           <Button href="/unternehmen" variant="gray" className="shrink-0 self-start">
             Mehr dazu
           </Button>
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-12">
+        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14">
           <p className="prose-muted">
-            Seit 2003 stehen wir für zuverlässige Prozesse am Flughafen München.
-            Als reglementierter Beauftragter übernehmen wir Import- und Export-
-            Handling, Airline-Services sowie sicherheitsrelevante Kontrollen –
-            klar, nachvollziehbar und termingerecht.
+            Seit 2003 unterstützen wir Airlines, Speditionen und Unternehmen bei der
+            sicheren und effizienten Abwicklung von Luftfrachtsendungen.
           </p>
           <p className="prose-muted">
-            Unsere Teams arbeiten eng mit Airlines, Speditionen und Behörden
-            zusammen. So entstehen kurze Wege, sichere Übergaben und eine
-            Abwicklung, die internationalen Standards gerecht wird.
+            Mit Erfahrung, modernen Prozessen und direkter Nähe zum Flughafen München
+            schaffen wir zuverlässige Lösungen entlang der gesamten Cargo-Kette.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:mt-12">
-          <InfoStat title="20+ Jahre Erfahrung">
-            Langjährige Praxis in Airport-Cargo-Prozessen – von der Annahme bis
-            zur Freigabe.
-          </InfoStat>
-          <InfoStat title="Reglementierter Beauftragter">
-            Zulassung DE/RA/01278-01 – geprüfte Sicherheit nach geltenden
-            Vorschriften.
-          </InfoStat>
-          <InfoStat title="Standort">
-            <Link
-              href="/kontakt"
-              className="inline-flex items-center gap-2 link-underline"
-            >
-              <PinIcon className="h-4 w-4 text-[var(--muted-accent)]" />
-              Südallee, 85356, Deutschland
-            </Link>
-          </InfoStat>
+        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:mt-14">
+          <StatCard
+            value="20+"
+            label="Jahre Erfahrung"
+            footer="Seit 2003 steht MUC Cargo Handling."
+          />
+          <StatCard
+            value="Reglementierter Beauftragter"
+            label="DE/RA/01278-01"
+            valueSize="md"
+            footer="Zugelassene Sicherheitsprozesse für die professionelle Luftfrachtabwicklung."
+          />
+          <StatCard
+            icon={<PinIcon className="h-6 w-6" />}
+            label="Standort"
+            footer={
+              <>
+                Direkte Nähe zum Cargo-Drehkreuz für schnelle und effiziente Abläufe.{" "}
+                <Link href="/kontakt" className="link-underline">
+                  Südallee, 85356, Deutschland.
+                </Link>
+              </>
+            }
+          />
         </div>
       </PageSection>
 
       <PageSection muted>
-        <SectionHeader
+        <SectionTitle
           dark="Sicherheit und Kontrolle"
           light="für Ihre Luftfracht"
         />

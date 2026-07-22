@@ -26,21 +26,26 @@ export function StatCard({
   label,
   footer,
   icon,
+  valueSize = "lg",
 }: {
   value?: string;
   label: string;
   footer: React.ReactNode;
   icon?: React.ReactNode;
+  valueSize?: "lg" | "md";
 }) {
+  const valueClass =
+    valueSize === "md"
+      ? "text-[clamp(1.125rem,2.2vw,1.5rem)] font-normal leading-[1.2] tracking-[-0.02em] text-[var(--foreground)]"
+      : "text-[clamp(1.75rem,4vw,3rem)] font-normal leading-none tracking-[-0.03em] text-[var(--foreground)]";
+
   return (
     <article className="flex min-h-[220px] flex-col bg-[var(--surface)] p-6 md:min-h-[240px] md:p-8">
       <div className="flex-1">
         {icon ? (
           <div className="text-[var(--foreground)]">{icon}</div>
         ) : (
-          <p className="text-[clamp(1.75rem,4vw,3rem)] font-normal leading-none tracking-[-0.03em] text-[var(--foreground)]">
-            {value}
-          </p>
+          <p className={valueClass}>{value}</p>
         )}
         {!icon && (
           <p className="mt-2 text-[15px] font-normal text-[var(--foreground)]">{label}</p>

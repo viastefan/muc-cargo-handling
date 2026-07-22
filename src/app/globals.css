@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_forward_ios&display=swap");
 
 :root {
   --background: #ffffff;
@@ -89,6 +88,74 @@ a {
   margin-inline: auto;
   max-width: 1280px;
   padding-inline: var(--page-x);
+}
+
+/* Site header – 6-column grid (desktop) */
+.site-header-wrap {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header {
+  grid-template-columns:
+    minmax(148px, 1.15fr)
+    minmax(96px, 1fr)
+    minmax(148px, 1.4fr)
+    minmax(96px, 1fr)
+    minmax(80px, 0.85fr)
+    minmax(188px, 1.2fr);
+  height: 72px;
+}
+
+.site-header-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border-left: 1px solid var(--border);
+  padding-inline: 0.75rem;
+}
+
+.site-header-cell:first-child {
+  border-left: none;
+}
+
+.site-header-logo {
+  padding-inline: 1.25rem;
+}
+
+.site-header-link {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.5rem;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.site-header-link:hover {
+  color: var(--brand);
+}
+
+.site-header-cta {
+  overflow: hidden;
+  padding: 0;
+}
+
+.site-header-btn {
+  min-height: 100%;
+  border-radius: 0;
+}
+
+.site-header-btn:hover {
+  box-shadow: none;
 }
 
 /* Hero: 8px inset around image (mobile/tablet), full bleed on desktop */
