@@ -21,6 +21,9 @@ export function ScrollReveal({
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  // Cap long reveals so pages stay snappy even with older duration props.
+  const resolvedDuration = Math.min(duration, 780);
+  const resolvedDelay = Math.min(delay, 180);
 
   useEffect(() => {
     const node = ref.current;
@@ -63,8 +66,8 @@ export function ScrollReveal({
         .join(" ")}
       style={
         {
-          "--reveal-delay": `${delay}ms`,
-          "--reveal-duration": `${duration}ms`,
+          "--reveal-delay": `${resolvedDelay}ms`,
+          "--reveal-duration": `${resolvedDuration}ms`,
         } as React.CSSProperties
       }
     >
