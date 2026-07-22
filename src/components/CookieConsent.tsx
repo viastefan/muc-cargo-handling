@@ -14,17 +14,6 @@ type ConsentState = {
 
 type PanelMode = "banner" | "settings" | "hidden";
 
-function readConsent(): ConsentState | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as ConsentState;
-  } catch {
-    return null;
-  }
-}
-
 function writeConsent(state: ConsentState) {
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   window.dispatchEvent(new CustomEvent("muc:cookie-consent", { detail: state }));
