@@ -25,12 +25,9 @@ export function SecurityOverview({ items }: { items: readonly Item[] }) {
       <ul className="security-overview__grid">
         {items.map((item) => (
           <li key={item.title}>
-            <Link href="/roentgen" className="security-overview__item group">
+            <Link href="/roentgen" className="security-overview__item">
               <span className="security-overview__item-title">{item.title}</span>
               <span className="security-overview__item-text">{item.text}</span>
-              <span className="security-overview__item-icon" aria-hidden="true">
-                <ButtonArrowIcon />
-              </span>
             </Link>
           </li>
         ))}
