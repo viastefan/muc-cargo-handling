@@ -102,7 +102,7 @@ export default function UnternehmenPage() {
           {TEAM.map((person) => (
             <article
               key={person.email}
-              className="bg-[var(--surface)] p-7 md:p-8"
+              className="bg-[var(--surface)] p-6 md:p-8"
             >
               <h3 className="text-[17px] font-normal tracking-[-0.01em]">
                 {person.name}

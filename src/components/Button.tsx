@@ -2,19 +2,22 @@ import Link from "next/link";
 import { ArrowIcon, ChevronRight } from "./ArrowIcon";
 
 type Variant = "primary" | "white" | "ghost" | "gray";
+type Size = "md" | "sm";
 
 type Props = {
   href?: string;
   children: React.ReactNode;
   variant?: Variant;
+  size?: Size;
   className?: string;
   type?: "button" | "submit";
   onClick?: () => void;
   arrow?: "corner" | "chevron" | "none";
+  fullWidth?: boolean;
 };
 
 const base =
-  "btn-motion group inline-flex items-stretch overflow-hidden text-[11px] font-normal tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)] sm:text-[12px]";
+  "btn-motion group inline-flex w-fit max-w-full items-stretch overflow-hidden text-[12px] font-normal tracking-[0.05em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
 
 function classes(variant: Variant) {
   switch (variant) {
@@ -29,12 +32,22 @@ function classes(variant: Variant) {
   }
 }
 
+function labelPad(size: Size) {
+  return size === "sm" ? "px-4 py-2.5" : "px-5 py-3.5";
+}
+
+function arrowWidth(size: Size) {
+  return size === "sm" ? "w-10" : "w-11";
+}
+
 function ArrowSlot({
   variant,
   arrow,
+  size,
 }: {
   variant: Variant;
   arrow: "corner" | "chevron" | "none";
+  size: Size;
 }) {
   if (arrow === "none") return null;
 
@@ -53,7 +66,7 @@ function ArrowSlot({
 
   return (
     <span
-      className={`btn-arrow flex w-10 shrink-0 items-center justify-center border-l border-black/10 sm:w-11 ${slotBg} ${iconColor}`}
+      className={`btn-arrow flex ${arrowWidth(size)} shrink-0 items-center justify-center self-stretch border-l border-black/10 ${slotBg} ${iconColor}`}
     >
       {arrow === "chevron" ? <ChevronRight /> : <ArrowIcon />}
     </span>
@@ -64,19 +77,21 @@ export function Button({
   href,
   children,
   variant = "primary",
+  size = "md",
   className = "",
   type = "button",
   onClick,
   arrow = "corner",
+  fullWidth = false,
 }: Props) {
   const content = (
     <>
-      <span className="flex items-center px-4 py-2.5 sm:px-5 sm:py-3">{children}</span>
-      <ArrowSlot variant={variant} arrow={arrow} />
+      <span className={`flex min-h-[44px] items-center ${labelPad(size)}`}>{children}</span>
+      <ArrowSlot variant={variant} arrow={arrow} size={size} />
     </>
   );
 
-  const cls = `${base} ${classes(variant)} ${className}`;
+  const cls = `${base} ${classes(variant)} ${fullWidth ? "w-full" : ""} ${className}`;
 
   if (href) {
     return (

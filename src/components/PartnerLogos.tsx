@@ -10,7 +10,7 @@ export function PartnerLogos({
   description?: string;
 }) {
   return (
-    <div className="bg-[var(--surface)] p-7 md:p-10">
+    <div className="bg-[var(--surface)] p-6 md:p-10">
       <p className="text-[11px] font-normal uppercase tracking-[0.1em] text-[var(--muted-light)]">
         {title}
       </p>

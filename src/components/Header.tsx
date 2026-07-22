@@ -54,7 +54,7 @@ export function Header() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center border border-[var(--border)] transition-colors duration-300 hover:border-[var(--muted-light)] lg:hidden"
+          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60 lg:hidden"
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -87,7 +87,7 @@ export function Header() {
               );
             })}
             <div className="mobile-nav-item pt-4">
-              <Button href="/kontakt" className="w-full" onClick={() => setOpen(false)}>
+              <Button href="/kontakt" fullWidth onClick={() => setOpen(false)}>
                 Anfrage stellen
               </Button>
             </div>

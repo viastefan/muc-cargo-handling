@@ -63,7 +63,7 @@ export default function KontaktPage() {
 
           <aside className="lg:pt-2">
             <div className="sticky top-24 space-y-6">
-              <div className="bg-[var(--surface)] p-7 md:p-8">
+              <div className="bg-[var(--surface)] p-6 md:p-8">
                 <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
                   Direktkontakt
                 </p>
@@ -84,7 +84,7 @@ export default function KontaktPage() {
                 </ul>
               </div>
 
-              <div className="border border-[var(--border)] bg-white p-7 md:p-8">
+              <div className="border border-[var(--border)] bg-white p-6 md:p-8">
                 <p className="text-[12px] font-medium text-[var(--foreground)]">
                   Reglementierter Beauftragter
                 </p>
