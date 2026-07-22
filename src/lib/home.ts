@@ -22,7 +22,7 @@ export const HOME_IMAGE_CTA = {
   title: "Gemeinsam für eine kontrollierte Luftfracht",
   ctaLabel: "Ihre Ansprechpartner",
   ctaHref: "/unternehmen#team",
-  image: "/images/airline-handling/import-export.jpg",
+  image: "/images/home/team-band.jpg",
 } as const;
 
 /** Editorial-Zwischenbilder — zwischen Story-Text und Statistik-Kacheln */
