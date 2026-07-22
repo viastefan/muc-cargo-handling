@@ -99,7 +99,7 @@ export default function UnternehmenPage() {
         </div>
       </PageSection>
 
-      <PageSection borderTop>
+      <PageSection borderTop id="team">
         <SectionHeader dark="Unser Team" description="Persönliche Ansprechpartner für operative Fragen, Abwicklung und Koordination – direkt erreichbar am Standort MUC." />
 
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:gap-5">

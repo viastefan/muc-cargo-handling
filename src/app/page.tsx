@@ -73,7 +73,7 @@ export default function HomePage() {
         </div>
       </PageSection>
 
-      <PageSection muted borderTop>
+      <PageSection muted borderTop id="leistungen">
         <SectionHeader
           eyebrow="Leistungen"
           dark="Drei Kernbereiche"

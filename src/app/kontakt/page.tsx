@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
+import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -18,9 +19,9 @@ const CONTACT = [
     label: "Adresse",
     content: (
       <>
-        Südallee 18/20
+        {COMPANY.office.line1.replace("Büroadresse: ", "")}
         <br />
-        85356 München / Flughafen
+        {COMPANY.office.line2}
       </>
     ),
   },
@@ -28,8 +29,8 @@ const CONTACT = [
     icon: PhoneIcon,
     label: "Telefon",
     content: (
-      <a href="tel:08997594877" className="hover:text-[var(--foreground)]">
-        089 – 975 948 77
+      <a href={`tel:${COMPANY.phoneTel}`} className="hover:text-[var(--foreground)]">
+        {COMPANY.phone}
       </a>
     ),
   },
@@ -37,8 +38,8 @@ const CONTACT = [
     icon: MailIcon,
     label: "E-Mail",
     content: (
-      <a href="mailto:info@muc-cargohandling.com" className="hover:text-[var(--foreground)]">
-        info@muc-cargohandling.com
+      <a href={`mailto:${COMPANY.email}`} className="hover:text-[var(--foreground)]">
+        {COMPANY.email}
       </a>
     ),
   },
@@ -49,7 +50,10 @@ const CONTACT = [
       <>
         Mo–Fr, Bürozeiten
         <br />
-        24/7 für zeitkritische Sendungen
+        Mobil:{" "}
+        <a href={`tel:${COMPANY.mobileTel}`} className="hover:text-[var(--foreground)]">
+          {COMPANY.mobile}
+        </a>
       </>
     ),
   },
@@ -76,7 +80,7 @@ export default function KontaktPage() {
             <ContactForm />
           </div>
 
-          <aside className="lg:pt-2">
+          <aside className="lg:pt-2" id="standort">
             <div className="sticky top-24 space-y-4">
               <div className="border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
                 <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
@@ -97,6 +101,9 @@ export default function KontaktPage() {
                     </li>
                   ))}
                 </ul>
+                <p className="prose-muted mt-6 border-t border-[var(--border)] pt-6 text-[13px]">
+                  Lager: {COMPANY.lager.line1.replace("Lager: ", "")}
+                </p>
               </div>
 
               <div className="border border-[var(--border)] bg-white p-6 md:p-8">
@@ -106,7 +113,7 @@ export default function KontaktPage() {
                 <p className="mt-3 text-[15px] text-[var(--foreground)]">
                   Reglementierter Beauftragter
                 </p>
-                <p className="mt-1 text-[13px] text-[var(--muted)]">DE/RA/01278-01</p>
+                <p className="mt-1 text-[13px] text-[var(--muted)]">Reg.B. {COMPANY.regAgent}</p>
                 <p className="prose-muted mt-4 text-[13px]">
                   Reaktionszeit auf Anfragen in der Regel innerhalb von 24 Stunden (Werktage).
                 </p>
@@ -122,14 +129,6 @@ export default function KontaktPage() {
             </div>
           </aside>
         </div>
-      </PageSection>
-
-      <PageSection muted id="datenschutz" borderTop>
-        <SectionHeader
-          eyebrow="Rechtliches"
-          dark="Datenschutz"
-          description="Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an Dritte weitergegeben. Nach Abschluss der Kommunikation werden die Daten gemäß den gesetzlichen Aufbewahrungsfristen gelöscht."
-        />
       </PageSection>
 
       <FooterCta title="Wir freuen uns auf Ihre Anfrage." />
