@@ -1248,22 +1248,35 @@ a {
 
 .service-nav-arrow {
   display: flex;
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.125rem;
+  width: 1.125rem;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  background: var(--surface);
-  transition: background-color var(--duration-fast) var(--ease-out);
+  margin-top: 0.125rem;
+  background: transparent;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.service-nav-arrow .btn-corner-symbol {
+  width: 0.625rem;
+  height: 0.625rem;
+  font-size: 0.625rem;
+  opacity: 0.55;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 200,
+    "GRAD" -25,
+    "opsz" 16;
 }
 
 .service-nav-card:hover .service-nav-arrow {
-  background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+  opacity: 1;
 }
 
-.service-nav-card:hover .btn-corner-symbol {
+.service-nav-card:hover .service-nav-arrow .btn-corner-symbol {
   color: var(--brand);
-  opacity: 1;
+  opacity: 0.9;
   transform: rotate(-45deg) translate(0.5px, -0.5px);
 }
 
