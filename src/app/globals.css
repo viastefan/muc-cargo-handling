@@ -21,7 +21,7 @@
   --hero-pad-top-mobile: 3.25rem;
   --hero-pad-bottom-mobile: 2.75rem;
   --hero-pad-top-desktop: 4rem;
-  --hero-copy-max: 38rem;
+  --hero-copy-max: 52rem;
   --hero-action-height: 3.25rem;
   --hero-action-toggle: 2.5rem;
   --hero-action-min-width: 14.5rem;
@@ -333,7 +333,7 @@ a {
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  max-width: min(48rem, 100%);
+  max-width: min(var(--hero-copy-max), 100%);
 }
 
 .hero-title {
@@ -806,12 +806,14 @@ a {
   }
 
   .hero-copy {
-    max-width: min(48rem, 58vw);
+    /* wide enough for 2-line title: “…für Ihre” / “Luftfracht…” */
+    max-width: min(60rem, 88vw);
   }
 
   .hero-title {
     width: 100%;
-    max-width: 100%;
+    max-width: none;
+    font-size: clamp(2rem, 3.4vw, 2.875rem);
   }
 
   .hero-subtitle {
