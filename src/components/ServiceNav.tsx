@@ -23,7 +23,7 @@ export function ServiceNav({ items }: { items: readonly Item[] }) {
               </h3>
             </div>
             <span className="service-nav-arrow" aria-hidden="true">
-              <ButtonArrowIcon className="!relative !top-0 !right-0 text-[1.1rem]" />
+              <ButtonArrowIcon />
             </span>
           </div>
           <p className="prose-muted mt-4 text-[14px]">{item.description}</p>

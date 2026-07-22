@@ -536,14 +536,15 @@ a {
   }
 
   .hero-cta-btn.btn-corner--hero .btn-corner-label {
-    bottom: 1.125rem;
+    bottom: 1.25rem;
     left: 1.5rem;
+    right: 3rem;
     font-size: 15px;
   }
 
   .hero-cta-btn.btn-corner--hero .btn-corner-icon {
-    top: 0.75rem;
-    right: 0.75rem;
+    top: 0.875rem;
+    right: 0.875rem;
   }
 
   .hero-cta-btn.btn-corner--white:hover {
@@ -627,24 +628,35 @@ a {
 
 .btn-corner-label {
   position: absolute;
-  right: 2rem;
-  bottom: 0.75rem;
-  left: 1rem;
+  right: 2.75rem;
+  bottom: 0.875rem;
+  left: 1.125rem;
   line-height: 1.25;
   white-space: nowrap;
 }
 
 .btn-corner-icon {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.75rem;
+  right: 0.75rem;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
   line-height: 1;
 }
 
 .btn-corner-symbol {
-  font-size: 1.05rem;
-  color: var(--foreground);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.5rem;
+  color: #5e7187;
+  transform: rotate(-45deg);
+  transform-origin: center center;
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
@@ -654,13 +666,14 @@ a {
 
 /* Sizes */
 .btn-corner--sm {
-  min-width: 9.5rem;
-  min-height: 2.75rem;
+  min-width: 10rem;
+  min-height: 2.875rem;
 }
 
 .btn-corner--sm .btn-corner-label {
-  bottom: 0.625rem;
-  left: 0.875rem;
+  bottom: 0.6875rem;
+  left: 1rem;
+  right: 2.25rem;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -668,22 +681,27 @@ a {
 }
 
 .btn-corner--sm .btn-corner-icon {
-  top: 0.45rem;
-  right: 0.45rem;
+  top: 0.625rem;
+  right: 0.625rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .btn-corner--sm .btn-corner-symbol {
-  font-size: 0.95rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  font-size: 1.25rem;
 }
 
 .btn-corner--md {
-  min-width: 11rem;
-  min-height: 2.75rem;
+  min-width: 11.5rem;
+  min-height: 3rem;
 }
 
 .btn-corner--md .btn-corner-label {
-  bottom: 0.75rem;
-  left: 1.125rem;
+  bottom: 0.8125rem;
+  left: 1.25rem;
+  right: 2.5rem;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -691,19 +709,19 @@ a {
 }
 
 .btn-corner--md .btn-corner-icon {
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.6875rem;
+  right: 0.6875rem;
 }
 
 .btn-corner--hero {
   width: 100%;
-  min-width: 12rem;
-  min-height: 3.5rem;
+  min-width: 13.5rem;
+  min-height: 3.75rem;
 }
 
 .btn-corner--hero .btn-corner-label {
-  right: 2.5rem;
-  bottom: 1rem;
+  right: 2.875rem;
+  bottom: 1.0625rem;
   left: 1.375rem;
   font-size: clamp(14px, 1.5vw, 15px);
   font-weight: 400;
@@ -712,17 +730,8 @@ a {
 }
 
 .btn-corner--hero .btn-corner-icon {
-  top: 0.625rem;
-  right: 0.625rem;
-}
-
-.btn-corner--hero .btn-corner-symbol {
-  font-size: 0.875rem;
-  font-variation-settings:
-    "FILL" 0,
-    "wght" 300,
-    "GRAD" 0,
-    "opsz" 20;
+  top: 0.8125rem;
+  right: 0.8125rem;
 }
 
 @media (min-width: 640px) {
@@ -803,7 +812,7 @@ a {
 }
 
 .btn-motion:hover .btn-corner-symbol {
-  transform: translate(1px, -1px);
+  transform: rotate(-45deg) translate(1px, -1px);
 }
 
 .site-header-btn.btn-corner {
@@ -815,14 +824,14 @@ a {
 }
 
 .site-header-btn .btn-corner-label {
-  bottom: 0.875rem;
-  left: 1rem;
-  right: 2rem;
+  bottom: 0.9375rem;
+  left: 1.125rem;
+  right: 2.5rem;
 }
 
 .site-header-btn .btn-corner-icon {
-  top: 0.5rem;
-  right: 0.5rem;
+  top: 0.6875rem;
+  right: 0.6875rem;
 }
 
 .site-header-btn:hover {
@@ -1025,6 +1034,11 @@ a {
 
 .service-nav-card:hover .service-nav-arrow {
   background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+}
+
+.service-nav-card:hover .btn-corner-symbol {
+  color: var(--brand);
+  transform: rotate(-45deg) translate(1px, -1px);
 }
 
 /* Process steps */
