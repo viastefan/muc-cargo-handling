@@ -61,18 +61,18 @@ export function TopBar() {
               </div>
             </div>
           </div>
-
-          <button
-            type="button"
-            className="top-bar__close"
-            aria-label="Kontaktleiste schließen"
-            onClick={dismiss}
-            tabIndex={open ? 0 : -1}
-          >
-            <span aria-hidden="true">×</span>
-          </button>
         </div>
       </div>
+
+      <button
+        type="button"
+        className="top-bar__close"
+        aria-label="Kontaktleiste schließen"
+        onClick={dismiss}
+        tabIndex={open ? 0 : -1}
+      >
+        <span aria-hidden="true">×</span>
+      </button>
     </div>
   );
 }

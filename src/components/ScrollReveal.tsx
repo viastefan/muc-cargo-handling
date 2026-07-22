@@ -17,13 +17,13 @@ export function ScrollReveal({
   className = "",
   variant = "up",
   delay = 0,
-  duration = 700,
+  duration = 480,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   // Cap long reveals so pages stay snappy even with older duration props.
-  const resolvedDuration = Math.min(duration, 780);
-  const resolvedDelay = Math.min(delay, 180);
+  const resolvedDuration = Math.min(duration, 560);
+  const resolvedDelay = Math.min(delay, 120);
 
   useEffect(() => {
     const node = ref.current;
