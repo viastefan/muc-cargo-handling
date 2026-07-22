@@ -9,6 +9,8 @@ type Props = {
   width?: number;
   height?: number;
   priority?: boolean;
+  /** White logo treatment for dark backgrounds (e.g. footer) */
+  inverted?: boolean;
 };
 
 export function BrandLogo({
@@ -16,6 +18,7 @@ export function BrandLogo({
   width = 200,
   height = 56,
   priority = false,
+  inverted = false,
 }: Props) {
   const [src, setSrc] = useState<string>(media.logo);
 
@@ -26,7 +29,7 @@ export function BrandLogo({
       width={width}
       height={height}
       priority={priority}
-      className={className}
+      className={`${className} ${inverted ? "brand-logo-inverted" : ""}`.trim()}
       onError={() => {
         if (src !== media.logoFallback) setSrc(media.logoFallback);
       }}

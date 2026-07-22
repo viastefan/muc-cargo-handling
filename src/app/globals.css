@@ -1353,6 +1353,10 @@ a {
   color: white;
 }
 
+.brand-logo-inverted {
+  filter: brightness(0) invert(1);
+}
+
 .site-footer-main {
   display: grid;
   gap: 2.5rem;
@@ -1361,28 +1365,92 @@ a {
 
 @media (min-width: 768px) {
   .site-footer-main {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.5rem 2rem;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.75fr) minmax(0, 1fr);
+    gap: 3rem 2.5rem;
     padding-block: 4rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .site-footer-main {
-    grid-template-columns: 1.35fr 1fr 0.9fr 0.9fr 0.85fr;
-    gap: 2rem;
-    padding-block: 4.5rem;
-  }
-}
-
 .site-footer-brand {
-  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-@media (min-width: 1024px) {
-  .site-footer-brand {
-    grid-column: auto;
+.site-footer-logo-link {
+  display: inline-block;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.site-footer-logo-link:hover {
+  opacity: 0.82;
+}
+
+.site-footer-logo {
+  height: 3.25rem;
+  width: auto;
+}
+
+@media (min-width: 640px) {
+  .site-footer-logo {
+    height: 3.5rem;
   }
+}
+
+.site-footer-tagline {
+  margin-top: 1.25rem;
+  max-width: 18rem;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgb(255 255 255 / 0.5);
+}
+
+.site-footer-social {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.footer-heading {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.42);
+}
+
+.site-footer-links,
+.site-footer-contact {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  list-style: none;
+  padding: 0;
+}
+
+.site-footer-address {
+  margin-top: 1rem;
+  font-size: 13px;
+  font-style: normal;
+  line-height: 1.65;
+  color: rgb(255 255 255 / 0.58);
+}
+
+.site-footer-address p + p {
+  margin-top: 0.25rem;
+}
+
+.site-footer-meta {
+  margin-top: 0.75rem;
+  color: rgb(255 255 255 / 0.38);
+  font-size: 12px;
+}
+
+.site-footer-copy {
+  font-size: 12px;
+  color: rgb(255 255 255 / 0.38);
 }
 
 .footer-link {
@@ -1436,6 +1504,13 @@ a {
   flex-direction: column;
   gap: 1rem;
   padding-block: 1.25rem;
+}
+
+.site-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 @media (min-width: 640px) {

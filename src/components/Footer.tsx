@@ -3,12 +3,7 @@ import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "./SocialIcons";
-import {
-  COMPANY,
-  FOOTER_MENU,
-  FOOTER_QUICK,
-  FOOTER_SERVICES,
-} from "@/lib/company";
+import { COMPANY, FOOTER_NAV } from "@/lib/company";
 import { media } from "@/lib/media";
 
 const FOOTER_CTA_DEFAULT_DESCRIPTION =
@@ -22,9 +17,7 @@ function FooterHeading({
   className?: string;
 }) {
   return (
-    <p className={`text-[11px] font-medium uppercase tracking-[0.12em] text-white/45 ${className}`}>
-      {children}
-    </p>
+    <p className={`footer-heading ${className}`.trim()}>{children}</p>
   );
 }
 
@@ -107,13 +100,19 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="page-container site-footer-main">
         <div className="site-footer-brand">
-          <Link href="/" className="inline-block transition-opacity hover:opacity-80">
-            <BrandLogo className="h-10 w-auto brightness-0 invert sm:h-11" />
+          <Link href="/" className="site-footer-logo-link">
+            <BrandLogo
+              inverted
+              priority={false}
+              width={220}
+              height={64}
+              className="site-footer-logo"
+            />
           </Link>
-          <p className="mt-5 max-w-xs text-[13px] leading-relaxed text-white/55">
-            Professionelle Luftfrachtabwicklung am Flughafen München – seit 2003.
+          <p className="site-footer-tagline">
+            Luftfrachtabwicklung am Flughafen München — seit 2003.
           </p>
-          <div className="mt-6 flex items-center gap-2">
+          <div className="site-footer-social">
             {social.map(({ href, label, Icon }) => (
               <a
                 key={label}
@@ -127,35 +126,22 @@ export function SiteFooter() {
               </a>
             ))}
           </div>
-          <p className="mt-6 text-[13px] text-white/45">
-            In partnership with{" "}
-            <a
-              href={COMPANY.partner.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-link-inline"
-            >
-              {COMPANY.partner.label}
-            </a>
-          </p>
         </div>
 
-        <div>
-          <FooterHeading>Impressum</FooterHeading>
-          <address className="mt-4 space-y-1 text-[13px] not-italic leading-relaxed text-white/65">
-            <p className="text-white/85">{COMPANY.legalName}</p>
-            <p>{COMPANY.lager.line1}</p>
-            <p>{COMPANY.lager.line2}</p>
-            <p>{COMPANY.lager.line3}</p>
-            <p className="pt-2">{COMPANY.office.line1}</p>
-            <p>{COMPANY.office.line2}</p>
-            <p className="pt-2 text-white/50">Reg.B. {COMPANY.regAgent}</p>
-          </address>
+        <div className="site-footer-col">
+          <FooterHeading>Seiten</FooterHeading>
+          <ul className="site-footer-links">
+            {FOOTER_NAV.map((item) => (
+              <li key={item.href}>
+                <FooterLink href={item.href}>{item.label}</FooterLink>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div>
+        <div className="site-footer-col">
           <FooterHeading>Kontakt</FooterHeading>
-          <ul className="mt-4 space-y-2.5 text-[13px] text-white/65">
+          <ul className="site-footer-contact">
             <li>
               <a href={`mailto:${COMPANY.email}`} className="footer-link">
                 {COMPANY.email}
@@ -166,59 +152,26 @@ export function SiteFooter() {
                 Tel: {COMPANY.phone}
               </a>
             </li>
-            <li>
-              <span>Fax: {COMPANY.fax}</span>
-            </li>
-            <li>
-              <a href={`tel:${COMPANY.mobileTel}`} className="footer-link">
-                Mobil: {COMPANY.mobile}
-              </a>
-            </li>
           </ul>
-        </div>
 
-        <div>
-          <FooterHeading>Menü</FooterHeading>
-          <ul className="mt-4 space-y-2.5">
-            {FOOTER_MENU.map((item) => (
-              <li key={item.label}>
-                <FooterLink href={item.href}>{item.label}</FooterLink>
-              </li>
-            ))}
-          </ul>
-          <FooterHeading className="mt-8">Leistungen</FooterHeading>
-          <ul className="mt-4 space-y-2.5">
-            {FOOTER_SERVICES.map((item) => (
-              <li key={item.href}>
-                <FooterLink href={item.href}>{item.label}</FooterLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="lg:text-right">
-          <FooterHeading>Mehr entdecken</FooterHeading>
-          <ul className="mt-4 space-y-2.5 lg:items-end lg:text-right">
-            {FOOTER_QUICK.map((item) => (
-              <li key={item.label}>
-                <FooterLink href={item.href}>{item.label}</FooterLink>
-              </li>
-            ))}
-          </ul>
+          <FooterHeading className="mt-8">Standort</FooterHeading>
+          <address className="site-footer-address">
+            <p>{COMPANY.legalName}</p>
+            <p>{COMPANY.office.line1.replace("Büroadresse: ", "")}</p>
+            <p>{COMPANY.office.line2}</p>
+            <p className="site-footer-meta">Reg.B. {COMPANY.regAgent}</p>
+          </address>
         </div>
       </div>
 
       <div className="site-footer-bar">
         <div className="page-container site-footer-bar-inner">
-          <p className="text-[12px] text-white/40">
+          <p className="site-footer-copy">
             © {year} {COMPANY.legalName}
           </p>
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2" aria-label="Footer">
-            <FooterLink href="/kontakt">Kontakt</FooterLink>
-            <FooterLink href="/kontakt">Standort</FooterLink>
-            <FooterLink href="/">Start</FooterLink>
-            <FooterLink href="/datenschutz">Datenschutz</FooterLink>
+          <nav className="site-footer-legal" aria-label="Rechtliches">
             <FooterLink href="/impressum">Impressum</FooterLink>
+            <FooterLink href="/datenschutz">Datenschutz</FooterLink>
           </nav>
         </div>
       </div>

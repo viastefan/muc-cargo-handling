@@ -31,23 +31,10 @@ export const COMPANY = {
   managingDirector: "Johnbosco Onyeke",
 } as const;
 
-export const FOOTER_MENU = [
-  { label: "Team", href: "/unternehmen#team" },
-  { label: "Ansprechpartner", href: "/unternehmen#team" },
-  { label: "Leistungen", href: "/#leistungen" },
-  { label: "Luftfrachthandling", href: "/luftfracht" },
-  { label: "Kontakt", href: "/kontakt" },
-] as const;
-
-export const FOOTER_QUICK = [
-  { label: "Was wir machen", href: "/unternehmen" },
-  { label: "Alle Leistungen", href: "/#leistungen" },
-  { label: "Unser Team", href: "/unternehmen#team" },
-  { label: "Unser Standort", href: "/kontakt" },
-] as const;
-
-export const FOOTER_SERVICES = [
-  { label: "Luftfracht Import Export", href: "/luftfracht" },
+export const FOOTER_NAV = [
+  { label: "Unternehmen", href: "/unternehmen" },
+  { label: "Luftfracht", href: "/luftfracht" },
   { label: "Airline Handling", href: "/airline-handling" },
-  { label: "Röntgen & Security", href: "/roentgen" },
+  { label: "Röntgen", href: "/roentgen" },
+  { label: "Kontakt", href: "/kontakt" },
 ] as const;
