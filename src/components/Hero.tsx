@@ -35,7 +35,7 @@ export function Hero({
           <p className="hero-subtitle">{subtitle}</p>
           <div className="hero-spacer" aria-hidden="true" />
           <div className="hero-cta-slot">
-            <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn">
+            <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn" arrow={false}>
               {ctaLabel}
             </Button>
           </div>

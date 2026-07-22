@@ -53,37 +53,37 @@ export function HeaderContactMenu({
           aria-controls={menuId}
           aria-haspopup="menu"
           aria-label="Kontaktoptionen anzeigen"
-          onClick={() => setOpen((value) => !value)}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            setOpen((value) => !value);
+          }}
         >
           <ButtonArrowIcon light className={open ? "header-contact-menu__arrow--open" : ""} />
         </button>
       </div>
 
       {open ? (
-        <div
-          id={menuId}
-          role="menu"
-          className="header-contact-menu__menu"
-        >
-        <p className="header-contact-menu__menu-title" role="presentation">
-          Kontaktanfragen
-        </p>
-        <Link
-          href={href}
-          role="menuitem"
-          className="header-contact-menu__menu-item"
-          onClick={() => setOpen(false)}
-        >
-          Per E-Mail anfragen
-        </Link>
-        <a
-          href={`tel:${COMPANY.phoneTel.replace(/\s/g, "")}`}
-          role="menuitem"
-          className="header-contact-menu__menu-item"
-          onClick={() => setOpen(false)}
-        >
-          Anrufen
-        </a>
+        <div id={menuId} role="menu" className="header-contact-menu__menu">
+          <p className="header-contact-menu__menu-title" role="presentation">
+            Kontaktanfragen
+          </p>
+          <Link
+            href={href}
+            role="menuitem"
+            className="header-contact-menu__menu-item"
+            onClick={() => setOpen(false)}
+          >
+            Per E-Mail anfragen
+          </Link>
+          <a
+            href={`tel:${COMPANY.phoneTel.replace(/\s/g, "")}`}
+            role="menuitem"
+            className="header-contact-menu__menu-item"
+            onClick={() => setOpen(false)}
+          >
+            Anrufen
+          </a>
         </div>
       ) : null}
     </div>

@@ -325,28 +325,22 @@ a {
 
 /* Hero CTA: einfacher Link zum Kontaktformular */
 .hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   width: auto;
   min-width: var(--hero-action-min-width);
   min-height: var(--hero-action-height);
+  padding: 0 var(--hero-action-pad-inline);
 }
 
 .hero-cta-btn .btn-corner-label {
-  right: 2rem;
-  bottom: var(--hero-action-pad-block);
-  left: var(--hero-action-pad-inline);
+  position: static;
+  right: auto;
+  bottom: auto;
+  left: auto;
   font-size: 14px;
-}
-
-.hero-cta-btn .btn-corner-icon {
-  top: 0.75rem;
-  right: 0.75rem;
-}
-
-.hero-cta-btn .btn-corner-symbol {
-  width: 0.625rem;
-  height: 0.625rem;
-  font-size: 0.625rem;
-  opacity: 0.78;
+  letter-spacing: -0.012em;
 }
 
 /* Header: split button + Kontakt-Dropdown (Desktop) */
@@ -394,11 +388,11 @@ a {
   top: 0;
   right: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   width: 2.75rem;
   height: 100%;
-  padding: 0;
+  padding: 0.625rem 0.625rem 0 0;
   border: none;
   border-left: 1px solid rgb(255 255 255 / 0.22);
   background: var(--brand-arrow);
