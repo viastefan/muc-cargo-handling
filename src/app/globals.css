@@ -106,6 +106,10 @@ a {
   border-bottom: 1px solid var(--border);
 }
 
+.site-header-wrap:has(+ main > :first-child.hero-wrap) {
+  border-bottom: none;
+}
+
 .site-header {
   grid-template-columns:
     minmax(148px, 1.15fr)
@@ -195,9 +199,11 @@ a {
   box-shadow: none;
 }
 
-/* Hero: 8px inset around image (mobile/tablet), full bleed on desktop */
+/* Hero: side inset on mobile/tablet; flush under header; full bleed on desktop */
 .hero-wrap {
-  padding: var(--hero-gap);
+  padding-top: 0;
+  padding-inline: var(--hero-gap);
+  padding-bottom: var(--hero-gap);
 }
 
 .hero-frame {
