@@ -387,7 +387,7 @@ a {
   width: auto;
   min-width: var(--hero-action-min-width);
   min-height: var(--hero-action-height);
-  padding: 0 var(--hero-action-pad-inline);
+  padding: 0 2.25rem 0 var(--hero-action-pad-inline);
 }
 
 .hero-cta-btn .btn-corner-label {
@@ -397,6 +397,20 @@ a {
   left: auto;
   font-size: 14px;
   letter-spacing: -0.012em;
+}
+
+.hero-cta-btn .btn-corner-icon {
+  top: 0.6875rem;
+  right: 0.6875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.hero-cta-btn .btn-corner-symbol {
+  width: 0.6875rem;
+  height: 0.6875rem;
+  font-size: 0.6875rem;
+  opacity: 0.84;
 }
 
 /* Header: split button + Kontakt-Dropdown (Desktop) */
