@@ -3763,9 +3763,11 @@ a {
   display: inline-flex;
   align-items: flex-end;
   justify-content: flex-start;
-  min-width: 9.5rem;
+  flex: 0 0 auto;
+  width: max-content;
+  min-width: 11.5rem;
   min-height: 2.75rem;
-  padding: 0 2rem 8px 8px;
+  padding: 0 1.25rem 8px 8px;
   border: none;
   font-family: inherit;
   font-size: 12px;
@@ -3774,6 +3776,7 @@ a {
   line-height: 1.2;
   text-transform: uppercase;
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
   transition:
     background-color var(--duration-fast) var(--ease-out),
