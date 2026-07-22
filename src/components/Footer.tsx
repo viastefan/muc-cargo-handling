@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
+import { ScrollReveal } from "./ScrollReveal";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "./SocialIcons";
 import { COMPANY, FOOTER_NAV } from "@/lib/company";
 import { media } from "@/lib/media";
@@ -35,7 +36,7 @@ export function FooterCta({
   return (
     <section className="footer-cta" aria-labelledby="footer-cta-heading">
       <div className="footer-cta__layout">
-        <div className="footer-cta__copy">
+        <ScrollReveal className="footer-cta__copy" duration={1150}>
           <h2
             id="footer-cta-heading"
             className="footer-cta__title heading-display text-white"
@@ -48,7 +49,7 @@ export function FooterCta({
               {ctaLabel}
             </Button>
           </div>
-        </div>
+        </ScrollReveal>
 
         <div className="footer-cta__visual" aria-hidden="true">
           <Image

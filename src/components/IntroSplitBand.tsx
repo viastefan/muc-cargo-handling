@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ScrollReveal } from "./ScrollReveal";
 import { SectionTitle } from "./SectionTitle";
 
 type Props = {
@@ -19,13 +20,13 @@ export function IntroSplitBand({
   return (
     <section className="intro-split-band">
       <div className="page-container intro-split-band__header">
-        <div className="intro-split-band__grid">
+        <ScrollReveal className="intro-split-band__grid" duration={1100}>
           <SectionTitle dark={titleDark} light={titleLight} className="intro-split-band__title" />
           <p className="intro-split-band__description prose-muted">{description}</p>
-        </div>
+        </ScrollReveal>
       </div>
 
-      <div className="intro-split-band__media">
+      <ScrollReveal variant="scale" duration={1200} className="intro-split-band__media">
         <Image
           src={image}
           alt={imageAlt}
@@ -33,7 +34,7 @@ export function IntroSplitBand({
           className="object-cover object-center"
           sizes="100vw"
         />
-      </div>
+      </ScrollReveal>
 
       <div className="intro-split-band__accent" aria-hidden="true" />
     </section>

@@ -26,6 +26,45 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 180ms;
   --duration-normal: 320ms;
+  --reveal-distance: 28px;
+}
+
+/* Scroll reveal — dezent, smooth */
+.scroll-reveal {
+  --reveal-delay: 0ms;
+  --reveal-duration: 1000ms;
+  opacity: 0;
+  will-change: opacity, transform;
+  transition:
+    opacity var(--reveal-duration) var(--ease-out),
+    transform var(--reveal-duration) var(--ease-out);
+  transition-delay: var(--reveal-delay);
+}
+
+.scroll-reveal--up {
+  transform: translate3d(0, var(--reveal-distance), 0);
+}
+
+.scroll-reveal--fade {
+  transform: none;
+}
+
+.scroll-reveal--scale {
+  transform: scale(0.985) translate3d(0, 14px, 0);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
 }
 
 @theme inline {

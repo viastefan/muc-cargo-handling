@@ -1,3 +1,8 @@
+"use client";
+
+import { ScrollReveal } from "./ScrollReveal";
+import { ScrollRevealStagger } from "./ScrollRevealStagger";
+
 type Item = {
   title: string;
   text: string;
@@ -26,15 +31,22 @@ function StepDots({ activeIndex, total }: { activeIndex: number; total: number }
 export function ProcessDotCards({ titleMuted, titleDark, description, items }: Props) {
   return (
     <div className="process-dot-cards-wrap">
-      <div className="process-dot-cards__intro">
-        <h2 className="process-dot-cards__title heading-display">
-          <span className="text-[var(--muted-accent)]">{titleMuted}</span>{" "}
-          <span className="text-[var(--foreground)]">{titleDark}</span>
-        </h2>
-        <p className="process-dot-cards__description prose-muted">{description}</p>
-      </div>
+      <ScrollReveal duration={1100}>
+        <div className="process-dot-cards__intro">
+          <h2 className="process-dot-cards__title heading-display">
+            <span className="text-[var(--muted-accent)]">{titleMuted}</span>{" "}
+            <span className="text-[var(--foreground)]">{titleDark}</span>
+          </h2>
+          <p className="process-dot-cards__description prose-muted">{description}</p>
+        </div>
+      </ScrollReveal>
 
-      <div className="process-dot-cards">
+      <ScrollRevealStagger
+        className="process-dot-cards"
+        stagger={85}
+        duration={950}
+        itemClassName="h-full"
+      >
         {items.map((item, index) => (
           <article key={item.title} className="process-dot-card">
             <StepDots activeIndex={index} total={items.length} />
@@ -42,7 +54,7 @@ export function ProcessDotCards({ titleMuted, titleDark, description, items }: P
             <p className="process-dot-card__text">{item.text}</p>
           </article>
         ))}
-      </div>
+      </ScrollRevealStagger>
     </div>
   );
 }

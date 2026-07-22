@@ -4,6 +4,8 @@ import { Button } from "@/components/Button";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { PageSection, SectionHeader } from "@/components/PageSection";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { ServiceNav } from "@/components/ServiceNav";
 import { ServiceCard } from "@/components/ServiceCard";
 import { PinIcon } from "@/components/ArrowIcon";
@@ -26,27 +28,35 @@ export default function HomePage() {
       />
 
       <PageSection>
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-          <h2 className="heading-display max-w-xl text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
-            Ihr Partner für professionelle Luftfrachtabwicklung
-          </h2>
-          <Button href="/unternehmen" variant="gray" className="shrink-0 self-start">
-            Mehr dazu
-          </Button>
-        </div>
+        <ScrollReveal duration={1100}>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <h2 className="heading-display max-w-xl text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+              Ihr Partner für professionelle Luftfrachtabwicklung
+            </h2>
+            <Button href="/unternehmen" variant="gray" className="shrink-0 self-start">
+              Mehr dazu
+            </Button>
+          </div>
+        </ScrollReveal>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14">
-          <p className="prose-muted">
-            Seit 2003 unterstützen wir Airlines, Speditionen und Unternehmen bei der
-            sicheren und effizienten Abwicklung von Luftfrachtsendungen.
-          </p>
-          <p className="prose-muted">
-            Mit Erfahrung, modernen Prozessen und direkter Nähe zum Flughafen München
-            schaffen wir zuverlässige Lösungen entlang der gesamten Cargo-Kette.
-          </p>
-        </div>
+        <ScrollReveal delay={120} duration={1100}>
+          <div className="mt-10 grid gap-8 md:grid-cols-2 lg:mt-14">
+            <p className="prose-muted">
+              Seit 2003 unterstützen wir Airlines, Speditionen und Unternehmen bei der
+              sicheren und effizienten Abwicklung von Luftfrachtsendungen.
+            </p>
+            <p className="prose-muted">
+              Mit Erfahrung, modernen Prozessen und direkter Nähe zum Flughafen München
+              schaffen wir zuverlässige Lösungen entlang der gesamten Cargo-Kette.
+            </p>
+          </div>
+        </ScrollReveal>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-3 lg:mt-14">
+        <ScrollRevealStagger
+          className="mt-10 grid gap-4 md:grid-cols-3 lg:mt-14"
+          stagger={110}
+          duration={1000}
+        >
           <StatCard
             value="20+"
             label="Jahre Erfahrung"
@@ -70,31 +80,42 @@ export default function HomePage() {
               </>
             }
           />
-        </div>
+        </ScrollRevealStagger>
       </PageSection>
 
       <PageSection muted borderTop id="leistungen">
-        <SectionHeader
-          eyebrow="Leistungen"
-          dark="Drei Kernbereiche"
-          light="für Ihre Luftfracht am MUC"
-          description="Von der operativen Abwicklung bis zur Luftsicherheit – alle Services aus einer Hand am Flughafen München."
-        />
-        <div className="section-header-gap">
-          <ServiceNav items={SERVICES} />
-        </div>
+        <ScrollReveal variant="fade" duration={1000}>
+          <SectionHeader
+            eyebrow="Leistungen"
+            dark="Drei Kernbereiche"
+            light="für Ihre Luftfracht am MUC"
+            description="Von der operativen Abwicklung bis zur Luftsicherheit – alle Services aus einer Hand am Flughafen München."
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={140} duration={1100}>
+          <div className="section-header-gap">
+            <ServiceNav items={SERVICES} />
+          </div>
+        </ScrollReveal>
       </PageSection>
 
       <PageSection>
-        <SectionTitle
-          dark="Sicherheit und Kontrolle"
-          light="für Ihre Luftfracht"
-        />
-        <p className="prose-lead mt-5 max-w-2xl">
-          Als reglementierter Beauftragter setzen wir moderne Prüfverfahren ein – schnell,
-          dokumentiert und nach geltenden Luftsicherheitsvorgaben.
-        </p>
-        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
+        <ScrollReveal duration={1100}>
+          <SectionTitle
+            dark="Sicherheit und Kontrolle"
+            light="für Ihre Luftfracht"
+          />
+          <p className="prose-lead mt-5 max-w-2xl">
+            Als reglementierter Beauftragter setzen wir moderne Prüfverfahren ein – schnell,
+            dokumentiert und nach geltenden Luftsicherheitsvorgaben.
+          </p>
+        </ScrollReveal>
+        <ScrollRevealStagger
+          className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8"
+          stagger={90}
+          duration={950}
+          itemClassName="h-full"
+        >
           <ServiceCard
             image="/images/home/service-roentgen.jpg"
             title="Röntgenkontrolle"
@@ -119,7 +140,7 @@ export default function HomePage() {
             description="ETD-Verfahren zur Spurensuche – ergänzend zu Röntgen und physischen Kontrollen."
             href="/roentgen"
           />
-        </div>
+        </ScrollRevealStagger>
       </PageSection>
 
       <FooterCta />

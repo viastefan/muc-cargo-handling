@@ -5,6 +5,8 @@ import { InternationalGlobeSection } from "@/components/InternationalGlobeSectio
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { PageSection, SectionHeader } from "@/components/PageSection";
+import { ScrollReveal } from "@/components/ScrollReveal";
+import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { Timeline } from "@/components/Timeline";
 import { ValuePillars } from "@/components/ValuePillars";
@@ -88,23 +90,29 @@ export default function UnternehmenPage() {
       </PageSection>
 
       <PageSection muted borderTop>
-        <SectionHeader
-          eyebrow="Unsere Haltung"
-          dark="Werte, die"
-          light="unseren Alltag prägen"
-          description="Verlässlichkeit, Sicherheit und partnerschaftliche Zusammenarbeit sind die Grundlage für jeden Prozessschritt am Flughafen München."
-        />
-        <div className="section-header-gap">
-          <ValuePillars items={COMPANY_VALUES} />
-        </div>
+        <ScrollReveal duration={1000}>
+          <SectionHeader
+            eyebrow="Unsere Haltung"
+            dark="Werte, die"
+            light="unseren Alltag prägen"
+            description="Verlässlichkeit, Sicherheit und partnerschaftliche Zusammenarbeit sind die Grundlage für jeden Prozessschritt am Flughafen München."
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={120} duration={1000}>
+          <div className="section-header-gap">
+            <ValuePillars items={COMPANY_VALUES} />
+          </div>
+        </ScrollReveal>
       </PageSection>
 
       <PageSection borderTop id="team">
-        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
-          Unser Team
-        </h2>
+        <ScrollReveal duration={1000}>
+          <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+            Unser Team
+          </h2>
+        </ScrollReveal>
 
-        <div className="team-grid">
+        <ScrollRevealStagger className="team-grid" stagger={95} duration={950}>
           {TEAM.map((person) => (
             <article key={person.email} className="team-card">
               <h3 className="team-card__name">{person.name}</h3>
@@ -128,7 +136,7 @@ export default function UnternehmenPage() {
               </ul>
             </article>
           ))}
-        </div>
+        </ScrollRevealStagger>
       </PageSection>
 
       <PageSection>
