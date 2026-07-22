@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { inter } from "@/lib/fonts";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/Footer";
 import "./globals.css";
@@ -19,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${inter.variable} h-full antialiased`}>
+    <html lang="de" className="h-full antialiased">
       <head>
         <link
           rel="stylesheet"

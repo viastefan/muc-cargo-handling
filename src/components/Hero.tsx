@@ -31,20 +31,20 @@ export function Hero({
         <div className="hero-overlay" />
 
         <div className="hero-content">
-          <div className="hero-copy max-w-2xl">
-            <h1 className="heading-display text-[clamp(1.625rem,5vw,2.625rem)] text-white">
-              {title}
-            </h1>
-            <p className="mt-3 max-w-xl text-[14px] font-normal leading-[1.65] text-white/90 md:mt-4 md:text-[15px] md:leading-[1.7] lg:text-[16px]">
-              {subtitle}
-            </p>
+          <div className="hero-copy">
+            <h1 className="hero-title heading-display text-white">{title}</h1>
+            <p className="hero-subtitle">{subtitle}</p>
           </div>
 
-          <div className="hero-actions flex flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
-            <Button href={ctaHref} variant="white" size="md">
-              {ctaLabel}
-            </Button>
-            <PhoneBox className="md:ml-auto" />
+          <div className="hero-actions">
+            <div className="hero-cta-slot">
+              <Button href={ctaHref} variant="white" size="hero">
+                {ctaLabel}
+              </Button>
+            </div>
+            <div className="hero-phone-slot">
+              <PhoneBox variant="hero" />
+            </div>
           </div>
         </div>
       </div>

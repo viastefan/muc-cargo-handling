@@ -5,6 +5,8 @@ export const COMPANY = {
   email: "info@muc-cargo.de",
   phone: "+49 (0)89 – 975 94 870",
   phoneTel: "+498997594870",
+  phoneDisplay: "089 – 975 948 77",
+  phoneDisplayTel: "08997594877",
   fax: "+49 (0)89 – 975 94 871",
   mobile: "+49 (0)176 – 200 477 50",
   mobileTel: "+4917620047750",

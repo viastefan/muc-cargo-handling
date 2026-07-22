@@ -1,10 +1,2 @@
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  display: "swap",
-});
-
-export { inter };
+/** SF Pro — lokal installiert (macOS); Fallback über System-Fonts */
+export const fontClass = "font-sans";

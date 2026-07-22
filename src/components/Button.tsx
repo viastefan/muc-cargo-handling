@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ButtonArrowIcon } from "./ButtonArrowIcon";
 
 type Variant = "primary" | "white" | "ghost" | "gray";
-type Size = "md" | "sm";
+type Size = "md" | "sm" | "hero";
 
 type Props = {
   href?: string;
@@ -17,7 +17,14 @@ type Props = {
 };
 
 const base =
-  "btn-motion group inline-flex w-fit max-w-full items-stretch overflow-hidden text-[12px] font-normal tracking-[0.05em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
+  "btn-motion group inline-flex w-fit max-w-full items-stretch overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
+
+function textClasses(size: Size) {
+  if (size === "hero") {
+    return "btn-hero text-[12px] font-medium tracking-[0.01em] normal-case";
+  }
+  return "text-[12px] font-normal uppercase tracking-[0.05em]";
+}
 
 function classes(variant: Variant) {
   switch (variant) {
@@ -33,11 +40,15 @@ function classes(variant: Variant) {
 }
 
 function labelPad(size: Size) {
-  return size === "sm" ? "px-4 py-2.5" : "px-5 py-3.5";
+  if (size === "hero") return "btn-label flex items-center";
+  return size === "sm"
+    ? "flex min-h-[44px] items-center px-4 py-2.5"
+    : "flex min-h-[44px] items-center px-5 py-3.5";
 }
 
-function arrowWidth(size: Size) {
-  return size === "sm" ? "w-10" : "w-11";
+function arrowSlotClass(size: Size) {
+  const width = size === "sm" ? "w-10" : size === "md" ? "w-11" : "";
+  return `btn-arrow relative ${width} shrink-0 self-stretch border-l border-black/10`.trim();
 }
 
 function ArrowSlot({
@@ -61,9 +72,7 @@ function ArrowSlot({
   const iconLight = isPrimary || variant === "ghost";
 
   return (
-    <span
-      className={`btn-arrow relative ${arrowWidth(size)} shrink-0 self-stretch border-l border-black/10 ${slotBg}`}
-    >
+    <span className={`${arrowSlotClass(size)} ${slotBg}`}>
       <ButtonArrowIcon light={iconLight} />
     </span>
   );
@@ -82,12 +91,12 @@ export function Button({
 }: Props) {
   const content = (
     <>
-      <span className={`flex min-h-[44px] items-center ${labelPad(size)}`}>{children}</span>
+      <span className={`${labelPad(size)}`}>{children}</span>
       {arrow && <ArrowSlot variant={variant} size={size} />}
     </>
   );
 
-  const cls = `${base} ${classes(variant)} ${fullWidth ? "w-full" : ""} ${className}`;
+  const cls = `${base} ${textClasses(size)} ${classes(variant)} ${fullWidth ? "w-full" : ""} ${className}`;
 
   if (href) {
     return (
