@@ -323,12 +323,12 @@ a {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 0.52);
+  background: rgb(0 0 0 / 0.58);
 }
 
 @media (min-width: 1024px) {
   .hero-overlay {
-    background: rgb(0 0 0 / 0.5);
+    background: rgb(0 0 0 / 0.56);
   }
 }
 
