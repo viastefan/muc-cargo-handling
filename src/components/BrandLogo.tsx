@@ -10,10 +10,14 @@ type Props = {
   inverted?: boolean;
 };
 
+/** Intrinsic ratio of public/images/shared/logo.png (~1.48) */
+const LOGO_WIDTH = 178;
+const LOGO_HEIGHT = 120;
+
 export function BrandLogo({
-  className = "h-9 w-auto sm:h-10",
-  width = 200,
-  height = 56,
+  className = "h-10 w-auto sm:h-11",
+  width = LOGO_WIDTH,
+  height = LOGO_HEIGHT,
   priority = false,
   inverted = false,
 }: Props) {

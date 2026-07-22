@@ -5,7 +5,6 @@ import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
 import { Button } from "@/components/Button";
 import { Hero } from "@/components/Hero";
-import { HomeImagePair } from "@/components/HomeImagePair";
 import { ImageCtaBand } from "@/components/ImageCtaBand";
 import { LocationMap } from "@/components/LocationMap";
 import { PageSection, SectionHeader } from "@/components/PageSection";
@@ -14,14 +13,12 @@ import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
-import { PinIcon } from "@/components/ArrowIcon";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
 import {
   HOME_CAPABILITY_AREAS,
   HOME_DOWNLOADS,
-  HOME_EDITORIAL_IMAGES,
   HOME_IMAGE_CTA,
   HOME_STORY,
   HOME_TEAM_INTRO,
@@ -39,7 +36,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        image="/images/home/hero.jpg"
+        image="/images/home/hero.png"
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
@@ -65,10 +62,6 @@ export default function HomePage() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={80} variant="scale" duration={1150}>
-          <HomeImagePair images={HOME_EDITORIAL_IMAGES} />
-        </ScrollReveal>
-
         <ScrollRevealStagger
           className="mt-12 grid gap-4 md:grid-cols-3 lg:mt-14"
           stagger={100}
@@ -86,7 +79,7 @@ export default function HomePage() {
             footer="Zugelassene Sicherheitsprozesse für die Luftfrachtabwicklung."
           />
           <StatCard
-            icon={<PinIcon className="h-6 w-6" />}
+            value="MUC"
             label="Standort"
             footer={
               <>
@@ -109,7 +102,7 @@ export default function HomePage() {
         />
       </ScrollReveal>
 
-      <PageSection muted id="leistungen">
+      <PageSection id="leistungen">
         <ScrollReveal variant="fade" duration={1000}>
           <SectionHeader
             eyebrow={HOME_TEAM_INTRO.eyebrow}
@@ -131,12 +124,11 @@ export default function HomePage() {
             <ServiceCapabilityGrid items={HOME_CAPABILITY_AREAS} />
           </div>
         </ScrollReveal>
-        <ScrollReveal delay={180} duration={1100}>
-          <div className="section-header-gap">
-            <SecurityOverview items={SECURITY_METHODS} />
-          </div>
-        </ScrollReveal>
       </PageSection>
+
+      <ScrollReveal variant="fade" duration={1100}>
+        <SecurityOverview items={SECURITY_METHODS} />
+      </ScrollReveal>
 
       <PageSection id="downloads">
         <ScrollReveal duration={1000}>
@@ -144,7 +136,9 @@ export default function HomePage() {
             eyebrow="Download"
             dark="Formulare und"
             light="Unterlagen"
+            breakTitle={false}
             description="Wichtige Dokumente für Arbeitsaufträge, Zulassung und Versicherung – jederzeit abrufbar."
+            descriptionClassName="max-w-none max-lg:whitespace-normal lg:whitespace-nowrap"
           />
         </ScrollReveal>
         <ScrollReveal delay={120} duration={1000}>
@@ -184,7 +178,9 @@ export default function HomePage() {
             eyebrow="Standort"
             dark="Direkt am"
             light="Flughafen München"
+            breakTitle={false}
             description="Kurze Wege zum Cargo-Drehkreuz – für effiziente Abläufe und schnelle Abstimmung vor Ort."
+            descriptionClassName="max-w-xl"
           />
         </ScrollReveal>
         <ScrollReveal delay={140} duration={1100}>

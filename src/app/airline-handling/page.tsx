@@ -17,7 +17,12 @@ export default function AirlineHandlingPage() {
     <>
       <Hero
         image="/images/airline-handling/hero.jpg"
-        title="Die Schnittstelle zwischen Airline, Fracht und effizienten Prozessen."
+        title={
+          <>
+            Die Schnittstelle zwischen Airline,
+            <br className="max-lg:hidden" /> Fracht und effizienten Prozessen.
+          </>
+        }
         subtitle="Wir koordinieren Airline-Handling am Flughafen München – von Import und Export über Dokumentation bis zu Security- und ULD-Prozessen."
       />
 

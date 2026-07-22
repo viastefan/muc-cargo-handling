@@ -24,7 +24,8 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="site-header-wrap sticky top-0 z-50 bg-white">
+    <>
+      <header className="site-header-wrap sticky top-0 z-50 bg-white">
       <div className="site-header hidden lg:grid">
         <div className="site-header-cell site-header-logo">
           <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
@@ -100,6 +101,17 @@ export function Header() {
           </nav>
         </div>
       </div>
-    </header>
+      </header>
+
+      <button
+        type="button"
+        className="mobile-nav-backdrop lg:hidden"
+        data-open={open}
+        aria-label="Menü schließen"
+        aria-hidden={!open}
+        tabIndex={open ? 0 : -1}
+        onClick={() => setOpen(false)}
+      />
+    </>
   );
 }

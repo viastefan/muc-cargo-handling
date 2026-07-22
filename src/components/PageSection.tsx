@@ -40,6 +40,8 @@ export function SectionHeader({
   eyebrow,
   align = "left",
   className = "",
+  breakTitle = true,
+  descriptionClassName = "",
 }: {
   dark: string;
   light?: string;
@@ -47,6 +49,9 @@ export function SectionHeader({
   eyebrow?: string;
   align?: "left" | "center";
   className?: string;
+  /** When false, dark + light title stay on one line. */
+  breakTitle?: boolean;
+  descriptionClassName?: string;
 }) {
   return (
     <div
@@ -54,14 +59,23 @@ export function SectionHeader({
     >
       {eyebrow && <SectionEyebrow>{eyebrow}</SectionEyebrow>}
       {light ? (
-        <SectionTitle dark={dark} light={light} className={align === "center" ? "mx-auto" : ""} />
+        <SectionTitle
+          dark={dark}
+          light={light}
+          breakLines={breakTitle}
+          className={align === "center" ? "mx-auto" : ""}
+        />
       ) : (
         <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
           {dark}
         </h2>
       )}
       {description && (
-        <p className={`prose-lead mt-5 ${align === "center" ? "mx-auto" : ""}`}>{description}</p>
+        <p
+          className={`prose-lead mt-5 ${align === "center" ? "mx-auto" : ""} ${descriptionClassName}`.trim()}
+        >
+          {description}
+        </p>
       )}
     </div>
   );
@@ -76,11 +90,8 @@ export function FeatureCard({
 }) {
   return (
     <article className="feature-card">
-      <span className="feature-card-accent" aria-hidden="true" />
-      <h3 className="text-[15px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
-        {title}
-      </h3>
-      <p className="mt-2 text-[13px] leading-relaxed text-[var(--muted)]">{children}</p>
+      <h3 className="feature-card__title">{title}</h3>
+      <p className="feature-card__text">{children}</p>
     </article>
   );
 }

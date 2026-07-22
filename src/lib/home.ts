@@ -22,22 +22,8 @@ export const HOME_IMAGE_CTA = {
   title: "Gemeinsam für eine kontrollierte Luftfracht",
   ctaLabel: "Ihre Ansprechpartner",
   ctaHref: "/unternehmen#team",
-  image: "/images/airline-handling/import-export.jpg",
+  image: "/images/home/team-band.jpg",
 } as const;
-
-/** Editorial-Zwischenbilder — zwischen Story-Text und Statistik-Kacheln */
-export const HOME_EDITORIAL_IMAGES = [
-  {
-    src: "/images/home/service-roentgen.jpg",
-    alt: "Luftfracht-Handling am Cargo-Drehkreuz München",
-    caption: "Operatives Handling direkt am Flughafen",
-  },
-  {
-    src: "/images/home/service-sichtkontrolle.jpg",
-    alt: "Sichere Abwicklung und Kontrolle von Luftfrachtsendungen",
-    caption: "Präzise Prozesse entlang der Cargo-Kette",
-  },
-] as const;
 
 /** Zusätzliche Leistungsbereiche — kompakte Ergänzung zu den drei Kernbereichen */
 export const HOME_CAPABILITY_AREAS = [

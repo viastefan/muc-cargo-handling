@@ -10,7 +10,6 @@ import {
   PageSection,
   SectionHeader,
 } from "@/components/PageSection";
-import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -20,7 +19,6 @@ import {
   LUFTFRACHT_HIGHLIGHTS,
   LUFTFRACHT_IMPORT_FLOW,
   LUFTFRACHT_METRICS,
-  LUFTFRACHT_END_TO_END,
   LUFTFRACHT_SERVICES,
 } from "@/lib/luftfracht";
 
@@ -43,10 +41,8 @@ export default function LuftfrachtPage() {
         titleDark="Zwei Prozesse."
         titleLight="Ein hoher Qualitätsanspruch."
         description="Ob eingehende oder ausgehende Luftfrachtsendungen – wir begleiten jeden Auftrag mit klar definierten Prozessen und einer zuverlässigen operativen Abwicklung. Durch die enge Zusammenarbeit mit Airlines, Behörden und Logistikpartnern gewährleisten wir einen reibungslosen Warenfluss am Flughafen München."
-        image="/images/luftfracht/service-1.jpg"
+        image="/images/luftfracht/intro-band.jpg"
         imageAlt="Luftfracht-Handling am Flughafen München"
-        ctaLabel="Anfrage stellen"
-        ctaHref="/kontakt"
       />
 
       <PageSection>
@@ -83,16 +79,6 @@ export default function LuftfrachtPage() {
             }}
           />
         </div>
-      </PageSection>
-
-      <PageSection borderTop>
-        <ProcessTimeline
-          eyebrow="End-to-End"
-          titleDark="Vom Eingang"
-          titleLight="bis zur Freigabe."
-          description="Unabhängig von Richtung und Sendungsart folgen alle Aufträge einem klaren Qualitätsrahmen – mit dokumentierten Übergaben in jedem Schritt."
-          items={LUFTFRACHT_END_TO_END}
-        />
       </PageSection>
 
       <PageSection muted borderTop>
@@ -144,9 +130,10 @@ export default function LuftfrachtPage() {
         </ScrollReveal>
 
         <ScrollRevealStagger
-          className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className="section-header-gap feature-card-grid"
           stagger={80}
           duration={900}
+          itemClassName="h-full"
         >
           {LUFTFRACHT_HIGHLIGHTS.map((item) => (
             <FeatureCard key={item.title} title={item.title}>

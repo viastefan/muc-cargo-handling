@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
 import { ScrollReveal } from "./ScrollReveal";
 import { COMPANY, FOOTER_NAV } from "@/lib/company";
+import { media } from "@/lib/media";
 
 const FOOTER_CTA_DEFAULT_DESCRIPTION =
   "Von Import bis Export übernehmen wir die zuverlässige Abwicklung Ihrer Luftfrachtsendungen – mit klaren Prozessen, erfahrenem Handling und direkter Koordination am Flughafen München.";
@@ -32,7 +34,7 @@ export function FooterCta({
 }) {
   return (
     <section className="footer-cta" aria-labelledby="footer-cta-heading">
-      <div className="footer-cta__layout footer-cta__layout--minimal">
+      <div className="footer-cta__layout">
         <ScrollReveal className="footer-cta__copy" duration={1150}>
           <h2
             id="footer-cta-heading"
@@ -47,6 +49,19 @@ export function FooterCta({
             </Button>
           </div>
         </ScrollReveal>
+
+        <div className="footer-cta__visual" aria-hidden="true">
+          <Image
+            src={media.weltkugel}
+            alt=""
+            fill
+            className="footer-cta__globe"
+            sizes="(max-width: 768px) 90vw, 50vw"
+            quality={90}
+            unoptimized
+            priority={false}
+          />
+        </div>
       </div>
     </section>
   );
