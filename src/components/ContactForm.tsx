@@ -243,7 +243,7 @@ export function ContactForm() {
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <Button
           type="submit"
-          arrow="corner"
+          arrow
           className={status === "loading" ? "pointer-events-none opacity-70" : ""}
         >
           {status === "loading" ? "Wird gesendet…" : "Anfrage absenden"}

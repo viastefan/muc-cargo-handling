@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowIcon, ChevronRight } from "./ArrowIcon";
+import { ButtonArrowIcon } from "./ButtonArrowIcon";
 
 type Variant = "primary" | "white" | "ghost" | "gray";
 type Size = "md" | "sm";
@@ -12,7 +12,7 @@ type Props = {
   className?: string;
   type?: "button" | "submit";
   onClick?: () => void;
-  arrow?: "corner" | "chevron" | "none";
+  arrow?: boolean;
   fullWidth?: boolean;
 };
 
@@ -42,33 +42,29 @@ function arrowWidth(size: Size) {
 
 function ArrowSlot({
   variant,
-  arrow,
   size,
 }: {
   variant: Variant;
-  arrow: "corner" | "chevron" | "none";
   size: Size;
 }) {
-  if (arrow === "none") return null;
-
   const isPrimary = variant === "primary";
   const isWhite = variant === "white";
 
   const slotBg = isPrimary
     ? "bg-[var(--brand-arrow)]"
     : isWhite
-      ? "bg-[#f0f0f0]"
+      ? "bg-[#ececec]"
       : variant === "gray"
         ? "bg-[#ddd]"
         : "bg-white/15";
 
-  const iconColor = isPrimary || variant === "ghost" ? "text-white" : "text-[var(--foreground)]";
+  const iconLight = isPrimary || variant === "ghost";
 
   return (
     <span
-      className={`btn-arrow flex ${arrowWidth(size)} shrink-0 items-center justify-center self-stretch border-l border-black/10 ${slotBg} ${iconColor}`}
+      className={`btn-arrow relative ${arrowWidth(size)} shrink-0 self-stretch border-l border-black/10 ${slotBg}`}
     >
-      {arrow === "chevron" ? <ChevronRight /> : <ArrowIcon />}
+      <ButtonArrowIcon light={iconLight} />
     </span>
   );
 }
@@ -81,13 +77,13 @@ export function Button({
   className = "",
   type = "button",
   onClick,
-  arrow = "corner",
+  arrow = true,
   fullWidth = false,
 }: Props) {
   const content = (
     <>
       <span className={`flex min-h-[44px] items-center ${labelPad(size)}`}>{children}</span>
-      <ArrowSlot variant={variant} arrow={arrow} size={size} />
+      {arrow && <ArrowSlot variant={variant} size={size} />}
     </>
   );
 
