@@ -352,6 +352,7 @@ a {
 .hero-title {
   grid-area: title;
   align-self: start;
+  margin-top: 5px;
   width: 85%;
   max-width: 85%;
   font-size: clamp(1.875rem, 5.4vw, 3.125rem);
@@ -793,7 +794,7 @@ a {
   .hero-content {
     padding: var(--hero-pad-top-desktop) 0 0;
     padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
-    grid-template-columns: minmax(0, var(--hero-copy-max)) 1fr minmax(17.5rem, auto);
+    grid-template-columns: minmax(0, min(48rem, 58vw)) 1fr minmax(17.5rem, auto);
     grid-template-rows: auto auto minmax(1rem, 1fr) auto auto;
     grid-template-areas:
       "title . ."
@@ -804,13 +805,13 @@ a {
   }
 
   .hero-title {
-    width: 85%;
-    max-width: 85%;
+    width: 100%;
+    max-width: 100%;
   }
 
   .hero-subtitle {
     width: 85%;
-    max-width: 85%;
+    max-width: 36rem;
   }
 
   .hero-spacer {

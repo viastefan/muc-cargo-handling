@@ -4,7 +4,7 @@ import { PhoneBox } from "./PhoneBox";
 
 type Props = {
   image: string;
-  title: string;
+  title: React.ReactNode;
   subtitle: string;
   ctaLabel?: string;
   ctaHref?: string;
