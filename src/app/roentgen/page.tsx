@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 };
 
 const HIGHLIGHTS = [
-  { title: "LBA-konforme Prozesse", text: "Verfahren nach geltenden Luftsicherheitsvorgaben." },
-  { title: "Modernste Prüftechnik", text: "Röntgenanlagen für gängige Frachtmaße und Gewichte." },
-  { title: "STI Kooperation", text: "Zusammenarbeit am Standort Flughafen München." },
-  { title: "Flughafen München", text: "Kurze Wege – direkt am Cargo-Standort MUC." },
+  { title: "LBA-konforme Prozesse", text: "Verfahren nach geltenden Luftsicherheitsvorgaben.", icon: "compliance" as const },
+  { title: "Modernste Prüftechnik", text: "Röntgenanlagen für gängige Frachtmaße und Gewichte.", icon: "tech" as const },
+  { title: "STI Kooperation", text: "Zusammenarbeit am Standort Flughafen München.", icon: "partner" as const },
+  { title: "Flughafen München", text: "Kurze Wege – direkt am Cargo-Standort MUC.", icon: "airport" as const },
 ];
 
 const FAQ = [
@@ -120,7 +120,7 @@ export default function RoentgenPage() {
 
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {HIGHLIGHTS.map((h) => (
-            <FeatureCard key={h.title} title={h.title}>
+            <FeatureCard key={h.title} title={h.title} icon={h.icon}>
               {h.text}
             </FeatureCard>
           ))}

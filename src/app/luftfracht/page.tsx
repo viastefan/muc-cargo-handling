@@ -148,7 +148,7 @@ export default function LuftfrachtPage() {
           itemClassName="h-full"
         >
           {LUFTFRACHT_HIGHLIGHTS.map((item) => (
-            <FeatureCard key={item.title} title={item.title}>
+            <FeatureCard key={item.title} title={item.title} icon={item.icon}>
               {item.text}
             </FeatureCard>
           ))}

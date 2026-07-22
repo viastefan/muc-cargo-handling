@@ -118,18 +118,22 @@ export const LUFTFRACHT_HIGHLIGHTS = [
   {
     title: "Kurze Wege",
     text: "Direkt am Cargo-Drehkreuz MUC – für schnelle Reaktionszeiten und enge Abstimmung.",
+    icon: "route" as const,
   },
   {
     title: "Klare Prozesse",
     text: "Definierte Abläufe für Import und Export mit transparenten Verantwortlichkeiten.",
+    icon: "process" as const,
   },
   {
     title: "Luftsicherheit",
     text: "Integrierte Security-Prozesse als reglementierter Beauftragter.",
+    icon: "shield" as const,
   },
   {
     title: "Persönliche Betreuung",
     text: "Direkter Ansprechpartner statt anonymer Abwicklungskette.",
+    icon: "person" as const,
   },
 ] as const;
 

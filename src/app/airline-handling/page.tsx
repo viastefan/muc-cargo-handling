@@ -93,10 +93,10 @@ export default function AirlineHandlingPage() {
           description="Wir orchestrieren die Übergänge zwischen Airline, Frachtführer und Warehouse. Dadurch entstehen stabile Durchlaufzeiten, weniger Rückfragen und eine Abwicklung, die auch bei Peak-Zeiten belastbar bleibt."
         />
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <FeatureCard title="Schnittstelle">Airline ↔ Spedition ↔ Warehouse</FeatureCard>
-          <FeatureCard title="Dokumentation">Vollständige Übergabeprotokolle</FeatureCard>
-          <FeatureCard title="Compliance">Regelkonforme Abläufe</FeatureCard>
-          <FeatureCard title="Peak-fähig">Belastbar bei hohem Sendungsaufkommen</FeatureCard>
+          <FeatureCard title="Schnittstelle" icon="link">Airline ↔ Spedition ↔ Warehouse</FeatureCard>
+          <FeatureCard title="Dokumentation" icon="docs">Vollständige Übergabeprotokolle</FeatureCard>
+          <FeatureCard title="Compliance" icon="compliance">Regelkonforme Abläufe</FeatureCard>
+          <FeatureCard title="Peak-fähig" icon="peak">Belastbar bei hohem Sendungsaufkommen</FeatureCard>
         </div>
       </PageSection>
 
