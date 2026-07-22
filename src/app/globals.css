@@ -964,6 +964,7 @@ a {
   height: 2.25rem;
   overflow: visible;
   flex-shrink: 0;
+  border-radius: 50%;
 }
 
 .phone-box-hero .phone-box-icon svg {
