@@ -17,7 +17,7 @@ export function ScrollReveal({
   className = "",
   variant = "up",
   delay = 0,
-  duration = 1000,
+  duration = 700,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -25,6 +25,13 @@ export function ScrollReveal({
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+
+    // Already in view on mount (above-the-fold): show immediately.
+    const rect = node.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+      const id = window.requestAnimationFrame(() => setVisible(true));
+      return () => window.cancelAnimationFrame(id);
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -34,8 +41,8 @@ export function ScrollReveal({
         }
       },
       {
-        threshold: 0.14,
-        rootMargin: "0px 0px -6% 0px",
+        threshold: 0.06,
+        rootMargin: "0px 0px -4% 0px",
       },
     );
 

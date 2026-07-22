@@ -33,15 +33,14 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --duration-fast: 180ms;
   --duration-normal: 320ms;
-  --reveal-distance: 28px;
+  --reveal-distance: 18px;
 }
 
-/* Scroll reveal — dezent, smooth */
+/* Scroll reveal — snappy, GPU-light */
 .scroll-reveal {
   --reveal-delay: 0ms;
-  --reveal-duration: 1000ms;
+  --reveal-duration: 700ms;
   opacity: 0;
-  will-change: opacity, transform;
   transition:
     opacity var(--reveal-duration) var(--ease-out),
     transform var(--reveal-duration) var(--ease-out);
@@ -57,7 +56,7 @@
 }
 
 .scroll-reveal--scale {
-  transform: scale(0.985) translate3d(0, 14px, 0);
+  transform: scale(0.99) translate3d(0, 10px, 0);
 }
 
 .scroll-reveal.is-visible {
@@ -70,7 +69,6 @@
     opacity: 1;
     transform: none;
     transition: none;
-    will-change: auto;
   }
 }
 
