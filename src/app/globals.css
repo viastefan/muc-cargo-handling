@@ -17,10 +17,10 @@
   --section-header-gap: 2.75rem;
   --section-header-gap-lg: 3.5rem;
   --hero-gap: 0.5rem;
-  --hero-min: min(88svh, 680px);
-  --hero-pad-top-mobile: 4rem;
-  --hero-pad-bottom-mobile: 4rem;
-  --hero-pad-top-desktop: clamp(5.5rem, 21vh, 9rem);
+  --hero-min: min(92svh, 520px);
+  --hero-pad-top-mobile: 3.25rem;
+  --hero-pad-bottom-mobile: 2.75rem;
+  --hero-pad-top-desktop: 4rem;
   --hero-copy-max: 38rem;
   --hero-action-height: 3.25rem;
   --hero-action-toggle: 2.5rem;
@@ -318,7 +318,7 @@ a {
   align-self: start;
   width: fit-content;
   max-width: 100%;
-  margin-top: clamp(1.75rem, 5vh, 2.75rem);
+  margin-top: clamp(1.25rem, 4vh, 2rem);
 }
 
 /* Hero contact CTA — red split button + contact menu */
@@ -498,7 +498,7 @@ a {
     padding: var(--hero-pad-top-desktop) 0 0;
     padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
     grid-template-columns: minmax(0, var(--hero-copy-max)) 1fr minmax(17.5rem, auto);
-    grid-template-rows: auto auto minmax(clamp(2.5rem, 12vh, 6rem), 1fr) auto auto;
+    grid-template-rows: auto auto minmax(1rem, 1fr) auto auto;
     grid-template-areas:
       "title . ."
       "subtitle . ."
@@ -530,7 +530,7 @@ a {
     justify-self: end;
     margin-top: 0;
     padding-right: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
-    padding-bottom: clamp(1.25rem, 3.5vh, 2rem);
+    padding-bottom: clamp(1rem, 2.5vh, 1.5rem);
   }
 }
 
@@ -720,7 +720,7 @@ a {
 @media (min-width: 640px) {
   :root {
     --section-y: 5rem;
-    --hero-min: min(88svh, 660px);
+    --hero-min: 520px;
   }
 }
 
@@ -728,7 +728,7 @@ a {
   :root {
     --page-x: 2rem;
     --section-y: 6.5rem;
-    --hero-min: min(90svh, 720px);
+    --hero-min: 520px;
     --hero-gap: 0;
   }
 }
