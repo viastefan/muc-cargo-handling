@@ -18,24 +18,25 @@ function CardBody({
   href,
 }: Pick<Props, "title" | "description" | "bullets" | "href">) {
   return (
-    <div className="pt-5 md:pt-6">
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
+    <div className="service-card-body">
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="text-[17px] font-medium leading-snug tracking-[-0.02em] text-[var(--foreground)] md:text-[18px]">
           {title}
         </h3>
         {href && (
-          <span className="mt-0.5 shrink-0 text-[var(--muted-light)] transition-colors group-hover:text-[var(--brand)]">
-            <ButtonArrowIcon className="!relative !top-0 !right-0 text-[1rem]" />
+          <span
+            className="service-card-arrow shrink-0 text-[var(--muted-light)] transition-colors group-hover:text-[var(--brand)]"
+            aria-hidden="true"
+          >
+            <ButtonArrowIcon className="!relative !top-0 !right-0 text-[1.05rem]" />
           </span>
         )}
       </div>
-      {description && (
-        <p className="prose-muted mt-2.5 text-[14px]">{description}</p>
-      )}
+      {description && <p className="service-card-text">{description}</p>}
       {bullets && bullets.length > 0 && (
-        <ul className="mt-4 space-y-2.5">
+        <ul className="mt-5 space-y-3">
           {bullets.map((b) => (
-            <li key={b} className="flex items-start gap-2.5 text-[14px] text-[var(--muted)]">
+            <li key={b} className="flex items-start gap-3 text-[14px] leading-relaxed text-[var(--muted)]">
               <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted-accent)]">
                 <CheckIcon />
               </span>
@@ -50,8 +51,8 @@ function CardBody({
 
 export function ServiceCard({ image, title, description, bullets, href }: Props) {
   const inner = (
-    <article className="group h-full bg-white">
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)]">
+    <article className="service-card group flex h-full flex-col bg-white">
+      <div className="service-card-media relative aspect-[16/10] w-full overflow-hidden bg-[var(--surface)]">
         <Image
           src={image}
           alt={title}
@@ -66,7 +67,7 @@ export function ServiceCard({ image, title, description, bullets, href }: Props)
 
   if (href) {
     return (
-      <Link href={href} className="service-card-link">
+      <Link href={href} className="service-card-link h-full">
         {inner}
       </Link>
     );

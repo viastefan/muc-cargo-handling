@@ -88,7 +88,7 @@ export default function RoentgenPage() {
       <PageSection muted borderTop>
         <SectionEyebrow>Röntgen</SectionEyebrow>
         <SectionHeader dark="Unsere" light="Kontrollverfahren" />
-        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
+        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
             image="/images/roentgen/kontrolle-roentgen.jpg"
             title="Röntgenkontrolle"

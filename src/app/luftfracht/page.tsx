@@ -30,7 +30,7 @@ export default function LuftfrachtPage() {
           description="Ob Import oder Export – wir koordinieren Handling, Dokumentation und Sicherheitsanforderungen entlang der gesamten Kette. So bleiben Ihre Sendungen planbar, nachvollziehbar und bereit für den nächsten Schritt."
         />
 
-        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
+        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
             image="/images/luftfracht/service-1.jpg"
             title="Import Handling"

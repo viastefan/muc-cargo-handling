@@ -94,7 +94,7 @@ export default function HomePage() {
           Als reglementierter Beauftragter setzen wir moderne Prüfverfahren ein – schnell,
           dokumentiert und nach geltenden Luftsicherheitsvorgaben.
         </p>
-        <div className="section-header-gap grid gap-8 md:grid-cols-2 lg:gap-10">
+        <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
             image="/images/home/service-roentgen.jpg"
             title="Röntgenkontrolle"
