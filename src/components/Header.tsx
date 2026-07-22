@@ -45,7 +45,7 @@ export function Header() {
         ))}
 
         <div className="site-header-cell site-header-cta p-0">
-          <Button href="/kontakt" className="site-header-btn !flex h-full w-full shadow-none hover:shadow-none">
+          <Button href="/kontakt" className="site-header-btn" size="md">
             Anfrage stellen
           </Button>
         </div>

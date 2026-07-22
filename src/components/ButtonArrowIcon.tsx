@@ -6,7 +6,7 @@ type Props = {
 export function ButtonArrowIcon({ className = "", light = false }: Props) {
   return (
     <span
-      className={`material-symbols-outlined btn-arrow-symbol ${light ? "btn-arrow-symbol-light" : ""} ${className}`}
+      className={`material-symbols-outlined btn-corner-symbol ${light ? "btn-corner-symbol-light" : ""} ${className}`}
       aria-hidden="true"
     >
       arrow_forward_ios
