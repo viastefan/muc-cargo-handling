@@ -10,10 +10,12 @@ import {
   PageSection,
   SectionHeader,
 } from "@/components/PageSection";
+import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { ServiceCard } from "@/components/ServiceCard";
 import {
+  LUFTFRACHT_END_TO_END,
   LUFTFRACHT_EXPORT_FLOW,
   LUFTFRACHT_FAQ,
   LUFTFRACHT_HIGHLIGHTS,
@@ -79,6 +81,16 @@ export default function LuftfrachtPage() {
             }}
           />
         </div>
+      </PageSection>
+
+      <PageSection borderTop>
+        <ProcessTimeline
+          eyebrow="End-to-End"
+          titleDark="Vom Eingang"
+          titleLight="bis zur Freigabe."
+          description="Unabhängig von Richtung und Sendungsart folgen alle Aufträge einem klaren Qualitätsrahmen – mit dokumentierten Übergaben in jedem Schritt."
+          items={LUFTFRACHT_END_TO_END}
+        />
       </PageSection>
 
       <PageSection muted borderTop>
