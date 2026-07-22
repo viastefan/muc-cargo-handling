@@ -82,7 +82,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="mobile-nav-panel border-t border-[var(--border)] bg-white lg:hidden" data-open={open}>
+      <div className="mobile-nav-panel bg-white lg:hidden" data-open={open}>
         <div className="mobile-nav-inner">
           <nav className="page-container flex flex-col py-3">
             {NAV.map((item) => {
