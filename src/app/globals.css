@@ -24,7 +24,7 @@
   --hero-copy-max: 38rem;
   --hero-action-height: 3.25rem;
   --hero-action-toggle: 2.5rem;
-  --hero-action-min-width: 16rem;
+  --hero-action-min-width: 14.5rem;
   --hero-action-pad-inline: 1.25rem;
   --hero-action-pad-block: 0.8125rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -316,7 +316,7 @@ a {
 .hero-cta-slot {
   grid-area: cta;
   align-self: start;
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
   margin-top: clamp(1.75rem, 5vh, 2.75rem);
 }
@@ -324,15 +324,17 @@ a {
 /* Hero contact CTA — red split button + contact menu */
 .hero-contact-cta {
   position: relative;
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
 }
 
 .hero-contact-cta__button {
   position: relative;
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: auto;
   min-width: var(--hero-action-min-width);
+  max-width: 100%;
   min-height: var(--hero-action-height);
   background: var(--brand);
   transition:
@@ -469,7 +471,7 @@ a {
 .hero-phone-slot {
   grid-area: phone;
   align-self: stretch;
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
   margin-top: 0.625rem;
 }
@@ -533,13 +535,24 @@ a {
 }
 
 @media (max-width: 639px) {
-  .hero-contact-cta,
-  .hero-contact-cta__button {
-    width: 100%;
+  :root {
+    --hero-action-height: 3rem;
+    --hero-action-toggle: 2.25rem;
+    --hero-action-min-width: 13.25rem;
+    --hero-action-pad-inline: 1.125rem;
+    --hero-action-pad-block: 0.75rem;
   }
 
-  .hero-phone-slot .phone-box-hero {
-    width: 100%;
+  .hero-contact-cta__toggle .btn-corner-symbol {
+    width: 0.6875rem;
+    height: 0.6875rem;
+    font-size: 0.6875rem;
+  }
+
+  .phone-box-hero {
+    width: auto;
+    min-width: var(--hero-action-min-width);
+    max-width: 100%;
   }
 }
 
