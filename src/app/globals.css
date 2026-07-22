@@ -1309,23 +1309,18 @@ a {
 }
 
 .service-card-arrow {
-  display: flex;
-  height: 1.75rem;
-  width: 1.75rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface);
-  transition: background-color var(--duration-fast) var(--ease-out);
-}
-
-.group:hover .service-card-arrow {
-  background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+  line-height: 1;
 }
 
 .service-card-link {
   display: block;
   height: 100%;
   color: inherit;
+  cursor: pointer;
+  text-decoration: none;
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
