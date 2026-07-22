@@ -48,7 +48,7 @@ const SECTIONS = [
   },
   {
     title: "7. Cookies und Einwilligung",
-    body: "Diese Website setzt derzeit ausschließlich technisch notwendige Cookies bzw. lokale Speicherung ein, um Ihre Einwilligungsauswahl zu speichern. Optionale Statistik- oder Marketing-Cookies sind vorbereitet, werden aber aktuell nicht geladen. Ihre Auswahl können Sie jederzeit über das Symbol links unten anpassen.",
+    body: "Diese Website setzt Cookies. Das technisch notwendige Cookie „muc_consent“ speichert Ihre Einwilligungsauswahl (Laufzeit ca. 6 Monate, SameSite=Lax). Statistik- („muc_analytics“) und Marketing-Cookies („muc_marketing“) setzen wir nur, wenn Sie dem zustimmen; ohne Einwilligung werden sie gelöscht. Ihre Auswahl können Sie jederzeit über das Symbol links unten ändern.",
   },
   {
     title: "8. Schriftarten und externe Dienste",

@@ -2,39 +2,47 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useId, useState, useSyncExternalStore } from "react";
-
-const STORAGE_KEY = "muc-cookie-consent-v1";
-
-type ConsentState = {
-  necessary: true;
-  analytics: boolean;
-  marketing: boolean;
-  decidedAt: string;
-};
+import {
+  CONSENT_COOKIE,
+  CONSENT_EVENT,
+  type ConsentState,
+  parseConsentValue,
+  persistConsent,
+  readConsent,
+  readCookie,
+  serializeConsent,
+} from "@/lib/consent-cookies";
 
 type PanelMode = "banner" | "settings" | "hidden";
 
-function writeConsent(state: ConsentState) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  window.dispatchEvent(new CustomEvent("muc:cookie-consent", { detail: state }));
-}
-
 function subscribeConsent(onStoreChange: () => void) {
   const handler = () => onStoreChange();
-  window.addEventListener("storage", handler);
-  window.addEventListener("muc:cookie-consent", handler);
-  return () => {
-    window.removeEventListener("storage", handler);
-    window.removeEventListener("muc:cookie-consent", handler);
-  };
+  window.addEventListener(CONSENT_EVENT, handler);
+  return () => window.removeEventListener(CONSENT_EVENT, handler);
 }
 
+/** Stable string snapshot for useSyncExternalStore (Object.is) */
 function getConsentSnapshot() {
-  return window.localStorage.getItem(STORAGE_KEY);
+  const fromCookie = readCookie(CONSENT_COOKIE);
+  if (fromCookie) return fromCookie;
+  const migrated = readConsent();
+  return migrated ? serializeConsent(migrated) : "";
 }
 
 function getServerSnapshot() {
-  return null;
+  return "";
+}
+
+function subscribeHydration() {
+  return () => {};
+}
+
+function getHydrationSnapshot() {
+  return true;
+}
+
+function getServerHydrationSnapshot() {
+  return false;
 }
 
 function FingerprintIcon({ className = "" }: { className?: string }) {
@@ -50,33 +58,23 @@ function FingerprintIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function parseConsent(raw: string | null): ConsentState | null {
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw) as ConsentState;
-    if (!parsed || typeof parsed !== "object") return null;
-    return {
-      necessary: true,
-      analytics: Boolean(parsed.analytics),
-      marketing: Boolean(parsed.marketing),
-      decidedAt: typeof parsed.decidedAt === "string" ? parsed.decidedAt : "",
-    };
-  } catch {
-    return null;
-  }
-}
-
 export function CookieConsent() {
+  const hydrated = useSyncExternalStore(
+    subscribeHydration,
+    getHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const stored = useSyncExternalStore(subscribeConsent, getConsentSnapshot, getServerSnapshot);
-  const existing = parseConsent(stored);
+  const existing = parseConsentValue(stored || null);
 
   const [mode, setMode] = useState<PanelMode | null>(null);
   const [analytics, setAnalytics] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const titleId = useId();
 
-  const resolvedMode: PanelMode =
-    mode ?? (existing ? "hidden" : "banner");
+  const resolvedMode: PanelMode = !hydrated
+    ? "hidden"
+    : (mode ?? (existing ? "hidden" : "banner"));
 
   useEffect(() => {
     if (resolvedMode !== "settings") return;
@@ -94,7 +92,7 @@ export function CookieConsent() {
       marketing: nextMarketing,
       decidedAt: new Date().toISOString(),
     };
-    writeConsent(state);
+    persistConsent(state);
     setAnalytics(nextAnalytics);
     setMarketing(nextMarketing);
     setMode("hidden");
@@ -112,12 +110,12 @@ export function CookieConsent() {
             <div className="cookie-banner__copy">
               <p className="cookie-banner__eyebrow">Datenschutz</p>
               <h2 id={titleId} className="cookie-banner__title">
-                Cookie-Hinweis
+                Cookie-Einstellungen
               </h2>
               <p className="cookie-banner__text">
-                Wir verwenden derzeit nur technisch notwendige Speicherung (u. a. für diese
-                Einwilligung). Optionale Statistik- und Marketing-Cookies sind vorbereitet,
-                werden aber nicht geladen. Details in der{" "}
+                Wir setzen Cookies. Technisch notwendige Cookies speichern Ihre Auswahl.
+                Statistik- und Marketing-Cookies setzen wir nur mit Ihrer Einwilligung.
+                Details in der{" "}
                 <Link href="/datenschutz" className="cookie-banner__link">
                   Datenschutzerklärung
                 </Link>
@@ -126,17 +124,21 @@ export function CookieConsent() {
             </div>
             <div className="cookie-banner__actions">
               <button type="button" className="cookie-banner__btn cookie-banner__btn--ghost" onClick={rejectOptional}>
-                Verstanden
+                Nur notwendige
               </button>
               <button
                 type="button"
                 className="cookie-banner__btn cookie-banner__btn--secondary"
-                onClick={() => setMode("settings")}
+                onClick={() => {
+                  setAnalytics(existing?.analytics ?? false);
+                  setMarketing(existing?.marketing ?? false);
+                  setMode("settings");
+                }}
               >
                 Einstellungen
               </button>
               <button type="button" className="cookie-banner__btn cookie-banner__btn--primary" onClick={acceptAll}>
-                Auswahl speichern
+                Alle akzeptieren
               </button>
             </div>
           </div>
@@ -179,7 +181,8 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Notwendig</p>
                   <p className="cookie-settings__desc">
-                    Erforderlich für Grundfunktionen der Website. Immer aktiv.
+                    Speichert Ihre Cookie-Auswahl im Browser-Cookie{" "}
+                    <code>muc_consent</code>. Immer aktiv.
                   </p>
                 </div>
                 <span className="cookie-settings__badge">Aktiv</span>
@@ -189,7 +192,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Statistik</p>
                   <p className="cookie-settings__desc">
-                    Für anonyme Nutzungsanalysen vorgesehen – derzeit nicht aktiv.
+                    Setzt das Cookie <code>muc_analytics</code> für anonyme Nutzungsanalysen.
                   </p>
                 </div>
                 <input
@@ -204,7 +207,7 @@ export function CookieConsent() {
                 <div>
                   <p className="cookie-settings__name">Marketing</p>
                   <p className="cookie-settings__desc">
-                    Für optionale Marketing-Funktionen vorgesehen – derzeit nicht aktiv.
+                    Setzt das Cookie <code>muc_marketing</code> für optionale Marketing-Funktionen.
                   </p>
                 </div>
                 <input
@@ -228,7 +231,7 @@ export function CookieConsent() {
         </div>
       ) : null}
 
-      {resolvedMode === "hidden" ? (
+      {resolvedMode === "hidden" && hydrated ? (
         <button
           type="button"
           className="cookie-fab"
