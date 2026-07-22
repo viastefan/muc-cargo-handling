@@ -57,30 +57,21 @@ export function Header() {
           <BrandLogo priority />
         </Link>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <Link
-            href="/kontakt"
-            className="header-mobile-cta"
-            onClick={() => setOpen(false)}
-          >
-            Anfrage stellen
-          </Link>
-          <button
-            type="button"
-            className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
-            aria-label={open ? "Menü schließen" : "Menü öffnen"}
-            aria-expanded={open}
-            aria-controls="mobile-nav-panel"
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className="sr-only">Menü</span>
-            <div className="flex w-5 flex-col items-center justify-center gap-[5px]">
-              <span className={`menu-toggle-line ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
-              <span className={`menu-toggle-line ${open ? "opacity-0 scale-x-0" : ""}`} />
-              <span className={`menu-toggle-line ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
-            </div>
-          </button>
-        </div>
+        <button
+          type="button"
+          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
+          aria-label={open ? "Menü schließen" : "Menü öffnen"}
+          aria-expanded={open}
+          aria-controls="mobile-nav-panel"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className="sr-only">Menü</span>
+          <div className="flex w-5 flex-col items-center justify-center gap-[5px]">
+            <span className={`menu-toggle-line ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
+            <span className={`menu-toggle-line ${open ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`menu-toggle-line ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
+          </div>
+        </button>
       </div>
 
       <div id="mobile-nav-panel" className="mobile-nav-panel bg-white lg:hidden" data-open={open}>
