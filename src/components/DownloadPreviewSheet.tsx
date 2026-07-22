@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Button } from "./Button";
 
 export type DownloadPreviewFile = {
   label: string;
@@ -173,18 +172,18 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
         </div>
 
         <div className="download-preview__actions">
-          <Button href={file.href} download arrow={false} fullWidth className="download-preview__download">
+          <a href={file.href} download className="download-preview__btn download-preview__btn--primary">
             PDF herunterladen
-          </Button>
+          </a>
           <a
             href={file.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="download-preview__open"
+            className="download-preview__btn download-preview__btn--secondary"
           >
             PDF öffnen
           </a>
-          <button type="button" className="download-preview__dismiss" onClick={close}>
+          <button type="button" className="download-preview__btn download-preview__btn--ghost" onClick={close}>
             Schließen
           </button>
         </div>
