@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { ButtonArrowIcon } from "./ButtonArrowIcon";
-import { COMPANY } from "@/lib/company";
+import {
+  ContactActionModal,
+  type ContactAction,
+} from "./ContactActionModal";
 
 type Props = {
   label?: string;
@@ -15,6 +18,7 @@ export function HeaderContactMenu({
   href = "/kontakt",
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [action, setAction] = useState<ContactAction>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
 
@@ -28,7 +32,7 @@ export function HeaderContactMenu({
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape" && !action) setOpen(false);
     };
 
     document.addEventListener("pointerdown", onPointerDown);
@@ -38,54 +42,75 @@ export function HeaderContactMenu({
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("keydown", onKeyDown);
     };
-  }, [open]);
+  }, [open, action]);
+
+  const openAction = (next: Exclude<ContactAction, null>) => {
+    setOpen(false);
+    setAction(next);
+  };
 
   return (
-    <div ref={rootRef} className={`header-contact-menu${open ? " is-open" : ""}`}>
-      <div className="header-contact-menu__button">
-        <Link href={href} className="header-contact-menu__label">
-          {label}
-        </Link>
-        <button
-          type="button"
-          className="header-contact-menu__toggle"
-          aria-expanded={open}
-          aria-controls={menuId}
-          aria-haspopup="menu"
-          aria-label="Kontaktoptionen anzeigen"
-          onClick={(event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            setOpen((value) => !value);
-          }}
-        >
-          <ButtonArrowIcon light className={open ? "header-contact-menu__arrow--open" : ""} />
-        </button>
+    <>
+      <div ref={rootRef} className={`header-contact-menu${open ? " is-open" : ""}`}>
+        <div className="header-contact-menu__button">
+          <button
+            type="button"
+            className="header-contact-menu__label"
+            onClick={() => setOpen((value) => !value)}
+          >
+            {label}
+          </button>
+          <button
+            type="button"
+            className="header-contact-menu__toggle"
+            aria-expanded={open}
+            aria-controls={menuId}
+            aria-haspopup="menu"
+            aria-label="Kontaktoptionen anzeigen"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              setOpen((value) => !value);
+            }}
+          >
+            <ButtonArrowIcon light className={open ? "header-contact-menu__arrow--open" : ""} />
+          </button>
+        </div>
+
+        {open ? (
+          <div id={menuId} role="menu" className="header-contact-menu__menu">
+            <p className="header-contact-menu__menu-title" role="presentation">
+              Kontaktanfragen
+            </p>
+            <button
+              type="button"
+              role="menuitem"
+              className="header-contact-menu__menu-item"
+              onClick={() => openAction("email")}
+            >
+              Per E-Mail anfragen
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              className="header-contact-menu__menu-item"
+              onClick={() => openAction("phone")}
+            >
+              Anrufen
+            </button>
+            <Link
+              href={href}
+              role="menuitem"
+              className="header-contact-menu__menu-item"
+              onClick={() => setOpen(false)}
+            >
+              Kontaktformular
+            </Link>
+          </div>
+        ) : null}
       </div>
 
-      {open ? (
-        <div id={menuId} role="menu" className="header-contact-menu__menu">
-          <p className="header-contact-menu__menu-title" role="presentation">
-            Kontaktanfragen
-          </p>
-          <Link
-            href={href}
-            role="menuitem"
-            className="header-contact-menu__menu-item"
-            onClick={() => setOpen(false)}
-          >
-            Per E-Mail anfragen
-          </Link>
-          <a
-            href={`tel:${COMPANY.phoneTel.replace(/\s/g, "")}`}
-            role="menuitem"
-            className="header-contact-menu__menu-item"
-            onClick={() => setOpen(false)}
-          >
-            Anrufen
-          </a>
-        </div>
-      ) : null}
-    </div>
+      <ContactActionModal action={action} onClose={() => setAction(null)} />
+    </>
   );
 }
