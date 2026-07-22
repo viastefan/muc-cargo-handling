@@ -1400,6 +1400,7 @@ a {
   width: 0.75rem;
   height: 0.75rem;
   font-size: 0.75rem;
+  line-height: 1;
   color: #5e7187;
   opacity: 0.84;
   transform: rotate(-45deg);
@@ -1408,6 +1409,16 @@ a {
     transform var(--duration-normal) var(--ease-out),
     opacity var(--duration-fast) var(--ease-out),
     color var(--duration-fast) var(--ease-out);
+}
+
+/* Beat Material Symbols stylesheet default (font-size: 24px) */
+.btn-corner .material-symbols-outlined.btn-corner-symbol,
+.header-contact-menu__toggle .material-symbols-outlined.btn-corner-symbol,
+.service-nav-arrow .material-symbols-outlined.btn-corner-symbol {
+  width: 0.75rem;
+  height: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1;
 }
 
 .btn-corner-symbol-light {
