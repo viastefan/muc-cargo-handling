@@ -1,9 +1,10 @@
-import { IBM_Plex_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 
-const plex = IBM_Plex_Sans({
+const inter = Inter({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500"],
+  display: "swap",
 });
 
-export { plex };
+export { inter };

@@ -121,7 +121,7 @@ export function ContactForm() {
             />
           </svg>
         </div>
-        <h3 className="text-[22px] font-medium tracking-[-0.02em] text-[var(--foreground)]">
+        <h3 className="heading-display text-[22px] text-[var(--foreground)]">
           Vielen Dank für Ihre Anfrage
         </h3>
         <p className="prose-muted mt-3 max-w-md text-[14px]">

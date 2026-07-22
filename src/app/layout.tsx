@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { plex } from "@/lib/fonts";
+import { inter } from "@/lib/fonts";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/Footer";
 import "./globals.css";
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${plex.variable} h-full antialiased`}>
+    <html lang="de" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <Header />
         <main className="flex-1">{children}</main>

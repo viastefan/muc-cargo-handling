@@ -53,7 +53,7 @@ export function SectionHeader({
       {light ? (
         <SectionTitle dark={dark} light={light} />
       ) : (
-        <h2 className="text-[28px] font-medium tracking-[-0.02em] text-[var(--foreground)] md:text-[34px] lg:text-[38px]">
+        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
           {dark}
         </h2>
       )}
@@ -73,7 +73,7 @@ export function FeatureCard({
 }) {
   return (
     <article className="bg-[var(--surface)] p-6 md:p-7">
-      <h3 className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--foreground)]">
+      <h3 className="text-[15px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
         {title}
       </h3>
       <p className="mt-2 text-[13px] leading-relaxed text-[var(--muted)]">{children}</p>

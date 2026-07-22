@@ -166,13 +166,13 @@ export function TopicSelector({
               key={opt.id}
               type="button"
               onClick={() => onChange(opt.id)}
-              className={`rounded-none border px-4 py-3.5 text-left transition-all ${
+              className={`rounded-none border px-4 py-3.5 text-left transition-all duration-300 ease-out ${
                 selected
-                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-white"
-                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)]"
+                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-white scale-[1.01]"
+                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)] active:scale-[0.99]"
               }`}
             >
-              <span className="block text-[14px] font-medium">{opt.label}</span>
+              <span className="block text-[14px] font-normal">{opt.label}</span>
               <span
                 className={`mt-0.5 block text-[12px] ${
                   selected ? "text-white/75" : "text-[var(--muted)]"

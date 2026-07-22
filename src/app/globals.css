@@ -13,7 +13,12 @@
   --brand-arrow: #f31042;
   --brand-dark: #b50b30;
   --page-x: 1.25rem;
-  --section-y: 5rem;
+  --section-y: 4.5rem;
+  --hero-min: min(92svh, 640px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
 }
 
 @theme inline {
@@ -39,15 +44,34 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 15px;
+  font-weight: 400;
   line-height: 1.65;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body.menu-open {
+  overflow: hidden;
 }
 
 a {
@@ -65,10 +89,18 @@ a {
   padding-inline: var(--page-x);
 }
 
+@media (min-width: 640px) {
+  :root {
+    --page-x: 1.5rem;
+    --section-y: 5rem;
+  }
+}
+
 @media (min-width: 1024px) {
   :root {
     --page-x: 2rem;
     --section-y: 6.5rem;
+    --hero-min: 640px;
   }
 }
 
@@ -79,23 +111,104 @@ a {
 .prose-muted {
   color: var(--muted);
   font-size: 15px;
+  font-weight: 400;
   line-height: 1.75;
+}
+
+.heading-display {
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 .link-underline {
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .link-underline:hover {
   color: var(--brand);
 }
 
+/* Buttons */
+.btn-motion {
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+}
+
+.btn-motion:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.btn-motion:active {
+  transform: scale(0.985);
+}
+
+.btn-motion .btn-arrow {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.btn-motion:hover .btn-arrow {
+  transform: translateX(2px);
+}
+
+/* Mobile nav */
+.mobile-nav-panel {
+  display: grid;
+  transition: grid-template-rows var(--duration-normal) var(--ease-out);
+}
+
+.mobile-nav-panel[data-open="false"] {
+  grid-template-rows: 0fr;
+}
+
+.mobile-nav-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.mobile-nav-inner {
+  overflow: hidden;
+}
+
+.mobile-nav-item {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.mobile-nav-panel[data-open="true"] .mobile-nav-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(1) { transition-delay: 40ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(2) { transition-delay: 70ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(3) { transition-delay: 100ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(4) { transition-delay: 130ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(5) { transition-delay: 160ms; }
+
+.menu-toggle-line {
+  display: block;
+  height: 1.5px;
+  width: 1.25rem;
+  background: var(--foreground);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out);
+  transform-origin: center;
+}
+
 .form-label {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted-light);
@@ -120,7 +233,7 @@ a {
 }
 
 .form-section {
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -133,7 +246,7 @@ a {
 .form-section-label {
   margin-bottom: 1rem;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted-light);
@@ -143,7 +256,7 @@ a {
   margin-top: 2.5rem;
   border: 1px solid var(--border);
   background: var(--surface);
-  padding: 2.5rem 2rem;
+  padding: 2.5rem 1.5rem;
   text-align: center;
 }
 

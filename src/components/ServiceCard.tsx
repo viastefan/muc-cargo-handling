@@ -24,7 +24,7 @@ export function ServiceCard({
         />
       </div>
       <div className="pt-5 md:pt-6">
-        <h3 className="text-[17px] font-semibold tracking-[-0.01em] text-[var(--foreground)]">
+        <h3 className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
           {title}
         </h3>
         {description && (
@@ -56,7 +56,7 @@ export function InfoStat({
 }) {
   return (
     <article className="flex min-h-[160px] flex-col bg-[var(--surface)] p-6 md:p-7">
-      <h3 className="text-[15px] font-semibold tracking-[-0.01em]">{title}</h3>
+      <h3 className="text-[15px] font-normal tracking-[-0.01em]">{title}</h3>
       <div className="prose-muted mt-2 flex-1 text-[14px]">{children}</div>
     </article>
   );

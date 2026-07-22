@@ -13,10 +13,10 @@ export function SectionTitle({
 }: Props) {
   return (
     <Tag
-      className={`max-w-4xl text-[28px] font-light leading-[1.25] tracking-[-0.02em] text-[var(--foreground)] md:text-[34px] lg:text-[38px] ${className}`}
+      className={`max-w-4xl text-[clamp(1.5rem,4vw,2.375rem)] font-normal leading-[1.25] tracking-[-0.02em] text-[var(--foreground)] ${className}`}
     >
-      <span className="font-medium">{dark}</span>{" "}
-      <span className="font-light text-[var(--muted-accent)]">{light}</span>
+      <span>{dark}</span>{" "}
+      <span className="text-[var(--muted-accent)]">{light}</span>
     </Tag>
   );
 }
@@ -38,15 +38,15 @@ export function StatCard({
         {icon ? (
           <div className="text-[var(--foreground)]">{icon}</div>
         ) : (
-          <p className="text-[42px] font-light leading-none tracking-[-0.03em] text-[var(--foreground)] md:text-[48px]">
+          <p className="text-[clamp(1.75rem,4vw,3rem)] font-normal leading-none tracking-[-0.03em] text-[var(--foreground)]">
             {value}
           </p>
         )}
         {!icon && (
-          <p className="mt-2 text-[15px] font-medium text-[var(--foreground)]">{label}</p>
+          <p className="mt-2 text-[15px] font-normal text-[var(--foreground)]">{label}</p>
         )}
         {icon && (
-          <p className="mt-3 text-[15px] font-medium text-[var(--foreground)]">{label}</p>
+          <p className="mt-3 text-[15px] font-normal text-[var(--foreground)]">{label}</p>
         )}
       </div>
       <div className="mt-6 text-[13px] leading-relaxed text-[var(--muted)]">{footer}</div>

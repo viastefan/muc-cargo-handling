@@ -9,7 +9,7 @@ export function FooterCta({
   return (
     <section className="bg-[var(--brand)]">
       <div className="page-container flex flex-col gap-8 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
-        <h2 className="max-w-3xl text-[28px] font-medium leading-[1.2] tracking-[-0.02em] text-white md:text-[34px] lg:text-[38px]">
+        <h2 className="heading-display max-w-3xl text-[clamp(1.5rem,4vw,2.375rem)] text-white">
           {title}
         </h2>
         <Button href="/kontakt" variant="white" className="shrink-0 self-start">
@@ -25,7 +25,7 @@ export function SiteFooter() {
     <footer className="border-t border-[var(--border)] bg-white">
       <div className="page-container grid gap-10 py-12 md:grid-cols-3">
         <div>
-          <p className="text-[15px] font-semibold tracking-[-0.01em]">MUC Cargo Handling</p>
+          <p className="text-[15px] font-normal tracking-[-0.01em]">MUC Cargo Handling</p>
           <p className="prose-muted mt-3 max-w-xs text-[13px]">
             Professionelle Luftfrachtabwicklung am Flughafen München – seit 2003.
           </p>

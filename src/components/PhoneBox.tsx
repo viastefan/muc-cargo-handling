@@ -10,16 +10,16 @@ export function PhoneBox({
   return (
     <a
       href={`tel:${phone.replace(/[^\d+]/g, "")}`}
-      className={`inline-flex items-center gap-3 bg-white px-4 py-3 shadow-sm ${className}`}
+      className={`btn-motion inline-flex items-center gap-3 bg-white px-3.5 py-2.5 shadow-sm transition-shadow hover:shadow-md sm:px-4 sm:py-3 ${className}`}
     >
-      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--brand)]">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--border)] text-[var(--brand)] sm:h-10 sm:w-10">
         <PhoneIcon />
       </span>
-      <span className="leading-tight">
-        <span className="block text-[11px] font-semibold uppercase tracking-[0.08em] text-[var(--muted-light)]">
+      <span className="min-w-0 leading-tight">
+        <span className="block text-[10px] font-normal uppercase tracking-[0.08em] text-[var(--muted-light)] sm:text-[11px]">
           Haben Sie Fragen?
         </span>
-        <span className="block text-sm font-semibold text-[var(--foreground)]">
+        <span className="block truncate text-[13px] font-normal text-[var(--foreground)] sm:text-sm">
           Tel: {phone}
         </span>
       </span>

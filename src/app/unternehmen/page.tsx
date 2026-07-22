@@ -93,7 +93,7 @@ export default function UnternehmenPage() {
       </PageSection>
 
       <PageSection borderTop>
-        <h2 className="text-[28px] font-medium tracking-[-0.02em] md:text-[34px] lg:text-[38px]">
+        <h2 className="heading-display text-[clamp(1.5rem,4vw,2.375rem)]">
           Unser Team
         </h2>
 
@@ -103,7 +103,7 @@ export default function UnternehmenPage() {
               key={person.email}
               className="bg-[var(--surface)] p-7 md:p-8"
             >
-              <h3 className="text-[17px] font-semibold tracking-[-0.01em]">
+              <h3 className="text-[17px] font-normal tracking-[-0.01em]">
                 {person.name}
               </h3>
               <p className="mt-1 text-[14px] text-[var(--muted)]">{person.role}</p>

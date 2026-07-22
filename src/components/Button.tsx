@@ -14,18 +14,18 @@ type Props = {
 };
 
 const base =
-  "inline-flex items-stretch overflow-hidden text-[12px] font-medium tracking-[0.05em] uppercase transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]";
+  "btn-motion group inline-flex items-stretch overflow-hidden text-[11px] font-normal tracking-[0.06em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)] sm:text-[12px]";
 
 function classes(variant: Variant) {
   switch (variant) {
     case "primary":
-      return "bg-[var(--brand)] text-white";
+      return "bg-[var(--brand)] text-white hover:bg-[var(--brand-dark)]";
     case "white":
-      return "bg-white text-[var(--foreground)]";
+      return "bg-white text-[var(--foreground)] hover:bg-[#fafafa]";
     case "ghost":
-      return "bg-transparent text-white border border-white/70";
+      return "border border-white/70 bg-transparent text-white hover:bg-white/10";
     case "gray":
-      return "bg-[var(--surface-2)] text-[var(--foreground)]";
+      return "bg-[var(--surface-2)] text-[var(--foreground)] hover:bg-[#e4e4e4]";
   }
 }
 
@@ -53,9 +53,7 @@ function ArrowSlot({
 
   return (
     <span
-      className={`flex w-11 shrink-0 items-center justify-center border-l ${
-        isPrimary ? "border-black/10" : "border-black/10"
-      } ${slotBg} ${iconColor}`}
+      className={`btn-arrow flex w-10 shrink-0 items-center justify-center border-l border-black/10 sm:w-11 ${slotBg} ${iconColor}`}
     >
       {arrow === "chevron" ? <ChevronRight /> : <ArrowIcon />}
     </span>
@@ -73,7 +71,7 @@ export function Button({
 }: Props) {
   const content = (
     <>
-      <span className="flex items-center px-5 py-3">{children}</span>
+      <span className="flex items-center px-4 py-2.5 sm:px-5 sm:py-3">{children}</span>
       <ArrowSlot variant={variant} arrow={arrow} />
     </>
   );
@@ -82,7 +80,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={cls}>
+      <Link href={href} className={cls} onClick={onClick}>
         {content}
       </Link>
     );
