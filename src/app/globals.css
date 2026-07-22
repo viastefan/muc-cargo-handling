@@ -2526,6 +2526,14 @@ a {
   color: rgb(255 255 255 / 0.5);
 }
 
+.site-footer-partner {
+  margin-top: 1rem;
+  max-width: 20rem;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 0.42);
+}
+
 .site-footer-social {
   display: flex;
   align-items: center;
