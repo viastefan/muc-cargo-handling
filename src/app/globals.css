@@ -2455,47 +2455,44 @@ a {
   }
 }
 
-/* Globe — bottom-right; bottom inset == H1 top inset */
+/* Globe — bottom-right, slightly rotated, emerging from the corner */
 .footer-cta__visual {
   position: absolute;
   right: 0;
-  bottom: var(--footer-cta-inset-y);
+  bottom: 0;
   z-index: 1;
-  width: min(92vw, 28rem);
-  height: clamp(14rem, 55%, 20rem);
+  width: min(100vw, 34rem);
+  height: clamp(16rem, 68%, 24rem);
   pointer-events: none;
-  /* bleed only past the right edge */
-  transform: translateX(22%);
+  transform-origin: 85% 90%;
+  transform: translate(30%, 35%) rotate(-16deg);
 }
 
 @media (min-width: 768px) {
   .footer-cta__visual {
-    width: min(48vw, 34rem);
-    height: clamp(16rem, 58%, 24rem);
-    transform: translateX(18%);
+    width: min(55vw, 40rem);
+    height: clamp(18rem, 72%, 28rem);
+    transform: translate(24%, 30%) rotate(-14deg);
   }
 }
 
 @media (min-width: 1024px) {
   .footer-cta__visual {
-    width: min(36vw, 38rem);
-    height: clamp(18rem, 62%, 28rem);
-    transform: translateX(16%);
+    width: min(42vw, 44rem);
+    height: clamp(20rem, 78%, 30rem);
+    transform: translate(22%, 28%) rotate(-14deg);
   }
 }
 
 .footer-cta__globe {
   object-fit: contain;
-  object-position: center bottom;
-  opacity: 0.9;
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    opacity var(--duration-normal) var(--ease-out);
+  object-position: right bottom;
+  opacity: 1;
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
 .footer-cta:hover .footer-cta__globe {
-  transform: scale(1.02);
-  opacity: 1;
+  transform: scale(1.015);
 }
 
 @media (prefers-reduced-motion: reduce) {
