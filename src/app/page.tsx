@@ -138,6 +138,7 @@ export default function HomePage() {
             light="Unterlagen"
             breakTitle={false}
             description="Wichtige Dokumente für Arbeitsaufträge, Zulassung und Versicherung – jederzeit abrufbar."
+            descriptionClassName="max-w-none max-lg:whitespace-normal lg:whitespace-nowrap"
           />
         </ScrollReveal>
         <ScrollReveal delay={120} duration={1000}>
