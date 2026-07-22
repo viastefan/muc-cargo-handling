@@ -907,13 +907,13 @@ a {
   }
 
   .hero-copy {
-    /* wide enough for 2-line title: “…für Ihre” / “Luftfracht…” */
-    max-width: min(60rem, 88vw);
+    /* wide enough for homepage 2-line title; page titles can force their own break */
+    max-width: min(48rem, 72vw);
   }
 
   .hero-title {
-    width: 100%;
-    max-width: none;
+    width: auto;
+    max-width: 100%;
     font-size: clamp(2rem, 3.4vw, 2.875rem);
   }
 
