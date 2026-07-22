@@ -48,7 +48,11 @@ const SECTIONS = [
     body: "Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Zudem steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu.",
   },
   {
-    title: "7. Externe Dienste",
+    title: "7. Cookies und Einwilligung",
+    body: "Beim ersten Besuch können Sie über unseren Cookie-Banner entscheiden, welche optionalen Cookies gesetzt werden dürfen. Technisch notwendige Cookies sind stets aktiv. Ihre Auswahl speichern wir lokal in Ihrem Browser und können Sie jederzeit über das Fingerabdruck-Symbol links unten anpassen. Weitere Informationen finden Sie in dieser Datenschutzerklärung.",
+  },
+  {
+    title: "8. Externe Dienste",
     body: "Sofern Schriftarten oder Symbole von externen Anbietern (z. B. Google Fonts) geladen werden, kann dabei eine Verbindung zu Servern des Anbieters hergestellt werden. Weitere Informationen entnehmen Sie den Datenschutzhinweisen des jeweiligen Anbieters.",
   },
 ];
