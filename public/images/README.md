@@ -23,6 +23,10 @@ Kopiere deine Bilder in die passenden Ordner. **Dateinamen exakt einhalten.**
 | `service-handdurchsuchung.jpg` | Kachel Handdurchsuchung |
 | `service-etd.jpg` | Kachel ETD |
 | `team-band.jpg` | Bildband „Gemeinsam für eine kontrollierte Luftfracht“ |
+| `story-operations.jpg` | Editorial-Bild links (Story-Abschnitt, über Statistik) |
+| `story-cargo.jpg` | Editorial-Bild rechts (Story-Abschnitt, über Statistik) |
+
+> Die alten Service-Kacheln (`service-roentgen.jpg` usw.) können alternativ als `story-operations.jpg` / `story-cargo.jpg` umbenannt werden.
 
 ## Unternehmen (`unternehmen/`)
 
