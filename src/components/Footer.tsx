@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
+import { CookieSettingsButton } from "./CookieSettingsButton";
 import { ScrollReveal } from "./ScrollReveal";
 import { COMPANY, FOOTER_NAV } from "@/lib/company";
 import { media } from "@/lib/media";
@@ -169,6 +170,7 @@ export function SiteFooter() {
             <FooterLink href="/impressum">Impressum</FooterLink>
             <FooterLink href="/datenschutz">Datenschutz</FooterLink>
             <FooterLink href="/agb">AGB</FooterLink>
+            <CookieSettingsButton className="footer-link site-footer-cookie-btn" />
           </nav>
         </div>
       </div>

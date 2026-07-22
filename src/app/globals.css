@@ -2879,6 +2879,20 @@ a {
   color: rgb(255 255 255 / 0.85);
 }
 
+.site-footer-cookie-btn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.site-footer-cookie-btn:focus-visible {
+  outline: 2px solid rgb(255 255 255 / 0.55);
+  outline-offset: 3px;
+}
+
 .footer-cta__layout--minimal {
   grid-template-columns: minmax(0, 1fr);
   min-height: clamp(16rem, 28vw, 20rem);

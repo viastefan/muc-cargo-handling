@@ -9,6 +9,13 @@ export const CONSENT_COOKIE = "muc_consent";
 export const ANALYTICS_COOKIE = "muc_analytics";
 export const MARKETING_COOKIE = "muc_marketing";
 export const CONSENT_EVENT = "muc:cookie-consent";
+/** Open the cookie settings panel (e.g. from footer). */
+export const OPEN_CONSENT_SETTINGS_EVENT = "muc:cookie-settings-open";
+
+export function openConsentSettings() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(OPEN_CONSENT_SETTINGS_EVENT));
+}
 
 /** 6 months — typical consent lifetime */
 const CONSENT_MAX_AGE = 60 * 60 * 24 * 180;

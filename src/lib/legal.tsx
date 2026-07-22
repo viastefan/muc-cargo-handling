@@ -76,7 +76,7 @@ export function getDatenschutzSections(): LegalSection[] {
           (Marketing, optional): wird nur bei Einwilligung gesetzt; ohne Einwilligung
           wird es gelöscht.
         </>,
-        "Rechtsgrundlage für notwendige Cookies ist Art. 6 Abs. 1 lit. f DSGVO bzw. § 25 Abs. 2 TDDDG. Für optionale Cookies ist Rechtsgrundlage Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen, indem Sie die gespeicherten Cookies in Ihrem Browser löschen und die Seite erneut aufrufen; die Auswahl erscheint dann wieder beim ersten Besuch.",
+        "Rechtsgrundlage für notwendige Cookies ist Art. 6 Abs. 1 lit. f DSGVO bzw. § 25 Abs. 2 TDDDG. Für optionale Cookies ist Rechtsgrundlage Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG. Die Einwilligung können Sie jederzeit mit Wirkung für die Zukunft über den Link „Cookie-Einstellungen“ in der Fußzeile widerrufen oder ändern.",
       ],
     },
     {

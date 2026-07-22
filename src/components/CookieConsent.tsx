@@ -5,6 +5,7 @@ import { useCallback, useEffect, useId, useState, useSyncExternalStore } from "r
 import {
   CONSENT_COOKIE,
   CONSENT_EVENT,
+  OPEN_CONSENT_SETTINGS_EVENT,
   type ConsentState,
   migrateLegacyConsent,
   parseConsentValue,
@@ -89,11 +90,17 @@ export function CookieConsent() {
   const rejectOptional = () => save(false, false);
   const saveSettings = () => save(analytics, marketing);
 
-  const openSettings = () => {
+  const openSettings = useCallback(() => {
     setAnalytics(existing?.analytics ?? false);
     setMarketing(existing?.marketing ?? false);
     setMode("settings");
-  };
+  }, [existing?.analytics, existing?.marketing]);
+
+  useEffect(() => {
+    const onOpen = () => openSettings();
+    window.addEventListener(OPEN_CONSENT_SETTINGS_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_CONSENT_SETTINGS_EVENT, onOpen);
+  }, [openSettings]);
 
   return (
     <>
