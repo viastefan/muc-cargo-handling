@@ -77,7 +77,7 @@ export function HeroContactCta({
           Per E-Mail anfragen
         </Link>
         <a
-          href={`tel:${COMPANY.phoneDisplayTel}`}
+          href={`tel:${COMPANY.phoneTel.replace(/\s/g, "")}`}
           role="menuitem"
           className="hero-contact-cta__menu-item"
           onClick={() => setOpen(false)}
