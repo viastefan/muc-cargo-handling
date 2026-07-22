@@ -31,18 +31,20 @@ export function Header() {
           </Link>
         </div>
 
-        {NAV.map((item) => (
-          <div key={item.href} className="site-header-cell">
-            <Link
-              href={item.href}
-              className={`site-header-link ${
-                pathname === item.href || pathname.startsWith(`${item.href}/`) ? "is-active" : ""
-              }`}
+        {NAV.map((item) => {
+          const active =
+            pathname === item.href || pathname.startsWith(`${item.href}/`);
+          return (
+            <div
+              key={item.href}
+              className={`site-header-cell site-header-cell--nav ${active ? "is-active" : ""}`}
             >
-              {item.label}
-            </Link>
-          </div>
-        ))}
+              <Link href={item.href} className="site-header-link">
+                {item.label}
+              </Link>
+            </div>
+          );
+        })}
 
         <div className="site-header-cell site-header-cta p-0">
           <Button href="/kontakt" className="site-header-btn" size="md">

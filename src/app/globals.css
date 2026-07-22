@@ -130,6 +130,20 @@ a {
   border-left: none;
 }
 
+.site-header-cell--nav {
+  position: relative;
+  padding: 0;
+  align-self: stretch;
+  transition: background-color var(--duration-normal) var(--ease-out);
+}
+
+.site-header-cell--nav.is-active {
+  z-index: 2;
+  margin-bottom: -1px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--surface);
+}
+
 .site-header-logo {
   padding-inline: 1.25rem;
 }
@@ -140,7 +154,7 @@ a {
   width: 100%;
   align-items: center;
   justify-content: center;
-  padding-inline: 0.5rem;
+  padding-inline: 0.75rem;
   text-align: center;
   font-size: 11px;
   font-weight: 400;
@@ -148,11 +162,23 @@ a {
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--foreground);
-  transition: color var(--duration-fast) var(--ease-out);
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
-.site-header-link:hover {
-  color: var(--brand);
+.site-header-cell--nav:hover .site-header-link {
+  background-color: #f0f0f0;
+  color: var(--foreground);
+}
+
+.site-header-cell--nav.is-active .site-header-link {
+  background-color: var(--surface);
+  color: var(--foreground);
+}
+
+.site-header-cell--nav:active .site-header-link {
+  background-color: #e8e8e8;
 }
 
 .site-header-cta {
@@ -280,55 +306,208 @@ a {
 
 @media (min-width: 1024px) {
   .hero-content {
-    margin-inline: auto;
-    max-width: 1280px;
+    margin-inline: 0;
+    max-width: none;
     width: 100%;
-    padding-top: clamp(2rem, 4vw, 3.25rem);
+    padding-top: clamp(2.5rem, 5vh, 4rem);
     padding-bottom: 0;
-    padding-inline: var(--page-x);
+    padding-inline: 0;
   }
 
   .hero-copy {
-    max-width: min(36rem, 44%);
+    max-width: 36rem;
+    padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
+    padding-right: var(--page-x);
   }
 
   .hero-actions {
-    gap: 1.5rem;
+    position: relative;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 0;
+    padding-left: max(var(--page-x), calc((100vw - 1280px) / 2 + var(--page-x)));
+    padding-right: 0;
+  }
+
+  .hero-cta-slot {
+    flex-shrink: 0;
+  }
+
+  .hero-phone-slot {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 0;
   }
 }
 
-/* Hero CTA + phone — screenshot proportions */
+/* Hero CTA + phone */
+.phone-box {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  background: #ffffff;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.phone-box-default {
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+}
+
+.phone-box-default:hover {
+  background: #fafafa;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+  transform: translateY(-1px);
+}
+
+.phone-box-default .phone-box-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.phone-box-default .phone-box-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.phone-box-default .phone-box-label {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.phone-box-default .phone-box-number {
+  font-size: 13px;
+}
+
+.phone-box-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.phone-box-icon svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.phone-box-copy {
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.phone-box-label {
+  display: block;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+.phone-box-number {
+  display: block;
+  margin-top: 0.125rem;
+  font-weight: 400;
+  color: var(--foreground);
+}
+
 .phone-box-hero {
-  min-height: clamp(52px, 6vw, 60px);
-  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2.5vw, 1.25rem);
+  gap: 0.875rem;
+  min-height: 3.25rem;
+  padding: 0.875rem 1.25rem 1rem;
   box-shadow: none;
 }
 
+.phone-box-hero:hover {
+  background: #fafafa;
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.1);
+  transform: translateY(-2px);
+}
+
 .phone-box-hero .phone-box-icon {
-  height: clamp(2.5rem, 5vw, 2.75rem);
-  width: clamp(2.5rem, 5vw, 2.75rem);
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.phone-box-hero .phone-box-icon svg {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .phone-box-hero .phone-box-label {
-  font-size: clamp(10px, 1.1vw, 11px);
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 11px;
 }
 
 .phone-box-hero .phone-box-number {
-  font-size: clamp(13px, 1.4vw, 15px);
+  font-size: 14px;
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .phone-box-hero {
+    min-height: 3.5rem;
+    padding: 1rem 1.375rem;
+  }
 }
 
 @media (min-width: 1024px) {
-  .hero-phone-slot .phone-box-hero {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  .phone-box-hero {
+    min-height: 4.25rem;
+    min-width: 17.5rem;
+    padding: 1rem 1.5rem 1.125rem 1.25rem;
+    gap: 1rem;
   }
 
-  .hero-actions {
-    margin-inline: calc(-1 * var(--page-x));
-    width: calc(100% + 2 * var(--page-x));
-    padding-inline: var(--page-x);
+  .phone-box-hero .phone-box-icon {
+    width: 2.875rem;
+    height: 2.875rem;
+  }
+
+  .phone-box-hero .phone-box-icon svg {
+    width: 1.1875rem;
+    height: 1.1875rem;
+  }
+
+  .phone-box-hero .phone-box-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .phone-box-hero .phone-box-number {
+    margin-top: 0.1875rem;
+    font-size: 15px;
+  }
+
+  .btn-corner--hero {
+    min-width: 17.5rem;
+    min-height: 4.25rem;
+  }
+
+  .btn-corner--hero .btn-corner-label {
+    right: 2.5rem;
+    bottom: 1.125rem;
+    left: 1.5rem;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .btn-corner--hero .btn-corner-icon {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .btn-corner--hero .btn-corner-symbol {
+    font-size: 1.0625rem;
   }
 }
 
@@ -559,11 +738,22 @@ a {
 }
 
 .btn-motion:hover {
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+}
+
+.btn-corner--white:hover,
+.btn-corner--gray:hover {
+  transform: translateY(-2px);
+}
+
+.btn-corner--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(217, 13, 58, 0.22);
 }
 
 .btn-motion:active {
-  transform: scale(0.985);
+  transform: scale(0.988) translateY(0);
+  transition-duration: 0.12s;
 }
 
 .btn-motion:hover .btn-corner-symbol {
@@ -757,9 +947,10 @@ a {
   background: white;
   padding: 1.5rem;
   transition:
-    border-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out),
-    transform var(--duration-normal) var(--ease-out);
+    transform var(--duration-normal) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
 }
 
 @media (min-width: 768px) {
@@ -769,9 +960,10 @@ a {
 }
 
 .service-nav-card:hover {
-  border-color: color-mix(in srgb, var(--brand) 25%, var(--border));
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--brand) 22%, var(--border));
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
+  transform: translateY(-3px);
 }
 
 .service-nav-arrow {
@@ -978,8 +1170,10 @@ a {
   background: var(--surface);
   padding: 1.5rem;
   transition:
-    border-color var(--duration-fast) var(--ease-out),
-    background-color var(--duration-fast) var(--ease-out);
+    border-color var(--duration-normal) var(--ease-out),
+    background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 }
 
 @media (min-width: 768px) {
@@ -991,6 +1185,8 @@ a {
 .feature-card:hover {
   border-color: var(--border);
   background: white;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.05);
+  transform: translateY(-2px);
 }
 
 .feature-card-accent {
@@ -1007,7 +1203,10 @@ a {
   border: 1px solid var(--border);
   background: white;
   padding: 1.5rem;
-  transition: box-shadow var(--duration-normal) var(--ease-out);
+  transition:
+    box-shadow var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
 }
 
 @media (min-width: 768px) {
@@ -1017,12 +1216,9 @@ a {
 }
 
 .team-card:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-}
-
-/* Header active link */
-.site-header-link.is-active {
-  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand) 12%, var(--border));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
 /* Service card */
@@ -1081,9 +1277,13 @@ a {
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
+.service-card-link:hover {
+  transform: translateY(-3px);
+}
+
 .service-card-link:hover .service-card {
-  border-color: color-mix(in srgb, var(--brand) 22%, var(--border));
-  box-shadow: 0 10px 32px rgb(0 0 0 / 0.07);
+  border-color: color-mix(in srgb, var(--brand) 20%, var(--border));
+  box-shadow: 0 14px 36px rgb(0 0 0 / 0.08);
 }
 
 .service-card-link:focus-visible {
