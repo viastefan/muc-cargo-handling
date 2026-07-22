@@ -71,26 +71,52 @@ export const SECURITY_METHODS = [
 export const HOME_DOWNLOADS = [
   {
     title: "Effiziente Bearbeitung Ihres Arbeitsauftrags",
-    meta: "PDF · aktualisiert 24.07.2023",
+    meta: "PDF · Stand Mai 2019",
     files: [
-      { label: "Arbeitsauftrag", href: "/downloads/arbeitsauftrag.pdf" },
-      { label: "Röntgenauftrag", href: "/downloads/roentgenauftrag.pdf" },
+      {
+        label: "Arbeitsauftrag",
+        href: "/downloads/arbeitsauftrag.pdf",
+        preview: "/downloads/previews/arbeitsauftrag.jpg",
+      },
+      {
+        label: "Röntgenauftrag",
+        href: "/downloads/roentgenauftrag.pdf",
+        preview: "/downloads/previews/roentgenauftrag.jpg",
+      },
     ],
   },
   {
     title: "Zuverlässige Unterstützung für die Zulassung",
-    meta: "PDF · aktualisiert 24.07.2023",
-    files: [{ label: "Zulassung Reg.B.", href: "/downloads/zulassung-regb.pdf" }],
+    meta: "PDF · Stand Mai 2019",
+    files: [
+      {
+        label: "Zulassung Reg.B.",
+        href: "/downloads/zulassung-regb.pdf",
+        preview: "/downloads/previews/zulassung-regb.jpg",
+      },
+    ],
   },
   {
     title: "Versicherungsservice – Speditionslogistik & Lager",
-    meta: "PDF · aktualisiert 24.07.2023",
-    files: [{ label: "Versicherungsbestätigung", href: "/downloads/versicherungsbestaetigung.pdf" }],
+    meta: "PDF · Stand Mai 2019",
+    files: [
+      {
+        label: "Versicherungsbestätigung",
+        href: "/downloads/versicherungsbestaetigung.pdf",
+        preview: "/downloads/previews/versicherungsbestaetigung.jpg",
+      },
+    ],
   },
   {
     title: "Versicherungsbestätigung Betriebshaftpflicht",
-    meta: "PDF · aktualisiert 10.07.2019",
-    files: [{ label: "Betriebshaftpflicht", href: "/downloads/betriebshaftpflicht.pdf" }],
+    meta: "PDF · Stand Mai 2019",
+    files: [
+      {
+        label: "Betriebshaftpflicht",
+        href: "/downloads/betriebshaftpflicht.pdf",
+        preview: "/downloads/previews/betriebshaftpflicht.jpg",
+      },
+    ],
   },
 ] as const;
 

@@ -6,7 +6,7 @@ import {
   type DownloadPreviewFile,
 } from "./DownloadPreviewSheet";
 
-type File = { label: string; href: string };
+type File = { label: string; href: string; preview?: string };
 type Group = { title: string; meta: string; files: readonly File[] };
 
 export function DownloadGrid({ items }: { items: readonly Group[] }) {
@@ -16,6 +16,7 @@ export function DownloadGrid({ items }: { items: readonly Group[] }) {
     setActiveFile({
       label: file.label,
       href: file.href,
+      preview: file.preview,
       meta: group.meta,
       groupTitle: group.title,
     });

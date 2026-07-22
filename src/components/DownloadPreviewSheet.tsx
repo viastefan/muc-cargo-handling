@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
 
 export type DownloadPreviewFile = {
   label: string;
   href: string;
+  preview?: string;
   meta?: string;
   groupTitle?: string;
 };
@@ -40,7 +42,6 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartY = useRef(0);
-  const panelRef = useRef<HTMLDivElement>(null);
 
   const isOpen = file !== null;
 
@@ -108,7 +109,6 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
       />
 
       <div
-        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="download-preview-title"
@@ -150,18 +150,40 @@ export function DownloadPreviewSheet({ file, onClose }: Props) {
         </div>
 
         <div className="download-preview__frame-wrap">
-          <iframe
-            key={file.href}
-            src={`${file.href}#view=FitH`}
-            title={`Vorschau: ${file.label}`}
-            className="download-preview__frame"
-          />
+          {file.preview ? (
+            <div className="download-preview__image-scroll">
+              <Image
+                src={file.preview}
+                alt={`Vorschau: ${file.label}`}
+                width={910}
+                height={1287}
+                className="download-preview__image"
+                sizes="(max-width: 1024px) 90vw, 40rem"
+                priority
+              />
+            </div>
+          ) : (
+            <iframe
+              key={file.href}
+              src={`${file.href}#view=FitH`}
+              title={`Vorschau: ${file.label}`}
+              className="download-preview__frame"
+            />
+          )}
         </div>
 
         <div className="download-preview__actions">
           <Button href={file.href} download arrow={false} fullWidth className="download-preview__download">
             PDF herunterladen
           </Button>
+          <a
+            href={file.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="download-preview__open"
+          >
+            PDF öffnen
+          </a>
           <button type="button" className="download-preview__dismiss" onClick={close}>
             Schließen
           </button>

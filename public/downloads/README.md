@@ -1,11 +1,11 @@
 # Downloads
 
-PDF-Dateien hier ablegen (Dateinamen exakt einhalten):
+PDF-Dateien und Vorschau-Bilder:
 
-| Datei | Verwendung |
-|-------|------------|
-| `arbeitsauftrag.pdf` | Arbeitsauftrag |
-| `roentgenauftrag.pdf` | Röntgenauftrag |
-| `zulassung-regb.pdf` | Zulassung Reg.B. |
-| `versicherungsbestaetigung.pdf` | Versicherungsbestätigung |
-| `betriebshaftpflicht.pdf` | Betriebshaftpflicht |
+| Datei | Vorschau | Verwendung |
+|-------|----------|------------|
+| `arbeitsauftrag.pdf` | `previews/arbeitsauftrag.jpg` | Arbeitsauftrag |
+| `roentgenauftrag.pdf` | `previews/roentgenauftrag.jpg` | Röntgenauftrag |
+| `zulassung-regb.pdf` | `previews/zulassung-regb.jpg` | Zulassung Reg.B. |
+| `versicherungsbestaetigung.pdf` | `previews/versicherungsbestaetigung.jpg` | Versicherungsbestätigung |
+| `betriebshaftpflicht.pdf` | `previews/betriebshaftpflicht.jpg` | Betriebshaftpflicht |
