@@ -12,6 +12,8 @@
   --brand: #d90d3a;
   --brand-arrow: #f31042;
   --brand-dark: #b50b30;
+  --focus: #007aff;
+  --focus-ring: rgba(0, 122, 255, 0.22);
   --page-x: 1.5rem;
   --section-y: 4rem;
   --section-header-gap: 2.75rem;
@@ -1727,6 +1729,18 @@ a {
   margin-top: 0.375rem;
   font-size: 12px;
   color: var(--brand);
+}
+
+/* Contact form: Apple-blue focus rings (not brand red — that reads as error) */
+.form-shell :focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.form-shell input:focus-visible,
+.form-shell textarea:focus-visible,
+.form-shell button:focus-visible {
+  outline: none;
 }
 
 .form-shell {

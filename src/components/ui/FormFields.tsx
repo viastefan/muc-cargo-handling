@@ -3,7 +3,7 @@
 import { useId } from "react";
 
 const inputBase =
-  "w-full border border-transparent bg-[var(--surface)] px-4 py-3.5 text-[15px] text-[var(--foreground)] outline-none transition-[border-color,box-shadow,background] placeholder:text-[var(--muted-light)] focus:border-[var(--border)] focus:bg-white focus:shadow-[0_0_0_3px_rgba(217,13,58,0.08)]";
+  "w-full border border-transparent bg-[var(--surface)] px-4 py-3.5 text-[15px] text-[var(--foreground)] outline-none transition-[border-color,box-shadow,background] placeholder:text-[var(--muted-light)] focus:border-[var(--focus)] focus:bg-white focus:shadow-[0_0_0_3px_var(--focus-ring)]";
 
 export function FormField({
   label,
@@ -167,18 +167,14 @@ export function TopicSelector({
               type="button"
               onClick={() => onChange(opt.id)}
               aria-pressed={selected}
-              className={`rounded-none border px-4 py-3.5 text-left transition-[border-color,background-color,color] duration-200 ease-out ${
+              className={`rounded-none border px-4 py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
                 selected
-                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-white"
-                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)]"
+                  ? "border-[var(--focus)] bg-[color-mix(in_srgb,var(--focus)_8%,white)] text-[var(--foreground)] shadow-[0_0_0_1px_var(--focus)]"
+                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)] focus-visible:border-[var(--focus)] focus-visible:shadow-[0_0_0_3px_var(--focus-ring)]"
               }`}
             >
               <span className="block text-[14px] font-normal">{opt.label}</span>
-              <span
-                className={`mt-0.5 block text-[12px] ${
-                  selected ? "text-white/75" : "text-[var(--muted)]"
-                }`}
-              >
+              <span className="mt-0.5 block text-[12px] text-[var(--muted)]">
                 {opt.desc}
               </span>
             </button>
