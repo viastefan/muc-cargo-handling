@@ -33,13 +33,14 @@ export function Hero({
         <div className="hero-overlay" />
 
         <div className="hero-content">
-          <h1 className="hero-title heading-display text-white">{title}</h1>
-          <p className="hero-subtitle">{subtitle}</p>
-          <div className="hero-spacer" aria-hidden="true" />
-          <div className="hero-cta-slot">
-            <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn">
-              {ctaLabel}
-            </Button>
+          <div className="hero-copy">
+            <h1 className="hero-title heading-display text-white">{title}</h1>
+            <p className="hero-subtitle">{subtitle}</p>
+            <div className="hero-cta-slot">
+              <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn">
+                {ctaLabel}
+              </Button>
+            </div>
           </div>
           <div className="hero-phone-slot">
             <PhoneBox variant="hero" />
