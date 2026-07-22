@@ -870,7 +870,8 @@ a {
   .hero-cta-slot {
     width: 100%;
     max-width: 100%;
-    margin-top: 1.75rem;
+    /* Lift title + subtitle a bit; CTAs stay at the bottom */
+    margin-top: clamp(2.75rem, 8vh, 4.75rem);
   }
 
   .hero-cta-slot .hero-cta-btn.btn-corner--hero {
