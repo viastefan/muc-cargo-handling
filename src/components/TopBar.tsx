@@ -10,18 +10,20 @@ export function TopBar() {
             <p className="top-bar__value">Reg.B. {COMPANY.regAgent}</p>
           </div>
 
-          <div className="top-bar__item">
-            <p className="top-bar__label">Telefon</p>
-            <a href={`tel:${COMPANY.phoneTel}`} className="top-bar__value top-bar__link">
-              T. {COMPANY.phone}
-            </a>
-          </div>
+          <div className="top-bar__contact-row">
+            <div className="top-bar__item">
+              <p className="top-bar__label">Telefon</p>
+              <a href={`tel:${COMPANY.phoneTel}`} className="top-bar__value top-bar__link">
+                T. {COMPANY.phone}
+              </a>
+            </div>
 
-          <div className="top-bar__item top-bar__item--hide-sm">
-            <p className="top-bar__label">E-Mail</p>
-            <a href={`mailto:${COMPANY.email}`} className="top-bar__value top-bar__link">
-              {COMPANY.email}
-            </a>
+            <div className="top-bar__item">
+              <p className="top-bar__label">E-Mail</p>
+              <a href={`mailto:${COMPANY.email}`} className="top-bar__value top-bar__link">
+                {COMPANY.email}
+              </a>
+            </div>
           </div>
         </div>
       </div>
