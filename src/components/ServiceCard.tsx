@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CheckIcon } from "./ArrowIcon";
-import { ButtonArrowIcon } from "./ButtonArrowIcon";
+import { CheckIcon, ChevronRight } from "./ArrowIcon";
 
 type Props = {
   image: string;
@@ -25,10 +24,10 @@ function CardBody({
         </h3>
         {href && (
           <span
-            className="service-card-arrow shrink-0 text-[var(--muted-light)] transition-colors group-hover:text-[var(--brand)]"
+            className="service-card-arrow shrink-0 text-[var(--muted-light)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--brand)]"
             aria-hidden="true"
           >
-            <ButtonArrowIcon className="!relative !top-0 !right-0 text-[1.05rem]" />
+            <ChevronRight className="h-4 w-4" />
           </span>
         )}
       </div>
@@ -67,7 +66,11 @@ export function ServiceCard({ image, title, description, bullets, href }: Props)
 
   if (href) {
     return (
-      <Link href={href} className="service-card-link h-full">
+      <Link
+        href={href}
+        className="service-card-link h-full"
+        aria-label={`${title} — mehr erfahren`}
+      >
         {inner}
       </Link>
     );

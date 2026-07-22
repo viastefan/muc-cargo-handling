@@ -6,4 +6,5 @@ export const media = {
   logoFallback: "/images/shared/logo.svg",
   weltkugel: "/images/shared/weltkugel.png",
   partnerVk: "/images/shared/partner-vk-freight.png",
+  legalBanner: "/images/legal/banner.jpg",
 } as const;
