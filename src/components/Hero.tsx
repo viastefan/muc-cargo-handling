@@ -5,13 +5,9 @@ import { PhoneBox } from "./PhoneBox";
 type Props = {
   image: string;
   title: string;
-  subtitle?: string;
+  subtitle: string;
   ctaLabel?: string;
   ctaHref?: string;
-  showPhone?: boolean;
-  overlay?: "dark" | "medium";
-  align?: "left" | "center";
-  compact?: boolean;
 };
 
 export function Hero({
@@ -20,48 +16,36 @@ export function Hero({
   subtitle,
   ctaLabel = "Schreiben Sie uns",
   ctaHref = "/kontakt",
-  showPhone = true,
-  overlay = "dark",
-  align = "left",
-  compact = false,
 }: Props) {
   return (
-    <section className={`relative w-full overflow-hidden ${compact ? "min-h-[420px]" : "min-h-[560px] md:min-h-[640px]"}`}>
-      <Image
-        src={image}
-        alt=""
-        fill
-        priority
-        className="object-cover"
-        sizes="100vw"
-      />
-      <div
-        className={`absolute inset-0 ${
-          overlay === "dark"
-            ? "bg-gradient-to-r from-black/70 via-black/45 to-black/25"
-            : "bg-gradient-to-r from-black/55 via-black/35 to-black/20"
-        }`}
-      />
-      <div className="relative mx-auto flex h-full min-h-[inherit] max-w-[1280px] flex-col justify-end px-5 pb-10 pt-28 lg:px-8 lg:pb-14">
-        <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
-          <h1 className="text-3xl font-bold leading-[1.15] text-white md:text-4xl lg:text-[44px]">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/90 md:text-base">
+    <section className="relative w-full overflow-hidden">
+      <div className="relative min-h-[580px] md:min-h-[640px]">
+        <Image
+          src={image}
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30" />
+
+        <div className="relative mx-auto flex min-h-[580px] max-w-[1280px] flex-col justify-end px-5 pb-8 pt-28 md:min-h-[640px] lg:px-8 lg:pb-10">
+          <div className="max-w-2xl">
+            <h1 className="text-[32px] font-bold leading-[1.12] text-white md:text-[40px] lg:text-[44px]">
+              {title}
+            </h1>
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/92 md:mt-5 md:text-base">
               {subtitle}
             </p>
-          )}
-        </div>
-        <div
-          className={`mt-8 flex flex-col gap-4 sm:flex-row sm:items-end ${
-            showPhone ? "sm:justify-between" : ""
-          } ${align === "center" ? "sm:justify-center" : ""}`}
-        >
-          <Button href={ctaHref} variant="white">
-            {ctaLabel}
-          </Button>
-          {showPhone && <PhoneBox />}
+          </div>
+
+          <div className="mt-8 flex w-full flex-col items-stretch gap-4 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
+            <Button href={ctaHref} variant="white" className="w-fit shrink-0">
+              {ctaLabel}
+            </Button>
+            <PhoneBox className="w-fit shrink-0 sm:ml-auto" />
+          </div>
         </div>
       </div>
     </section>

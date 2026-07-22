@@ -12,7 +12,6 @@ export default function HomePage() {
         image="/images/home/hero.jpg"
         title="Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München"
         subtitle="Mit strukturierten Abläufen, erfahrenem Personal und hohen Qualitätsstandards begleiten wir Ihre Sendungen – von der Annahme bis zur Sicherheitskontrolle."
-        showPhone={false}
       />
 
       <section className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">

@@ -51,6 +51,11 @@ Kopiere hier deine Bilder hinein (auf dem Mac: diesen Ordner öffnen und Dateien
 | `kontrolle-hand.jpg` | Handdurchsuchung |
 | `kontrolle-etd.jpg` | ETD |
 
+## Kontakt (`kontakt/`)
+| Datei | Verwendung |
+|-------|------------|
+| `hero.jpg` | Hero Kontakt / Anfrage |
+
 ## Shared (`shared/`)
 | Datei | Verwendung |
 |-------|------------|

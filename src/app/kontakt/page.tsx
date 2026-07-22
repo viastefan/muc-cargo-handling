@@ -11,13 +11,10 @@ export default function KontaktPage() {
   return (
     <>
       <Hero
-        image="/images/unternehmen/hero.jpg"
+        image="/images/kontakt/hero.jpg"
         title="Schreiben Sie uns"
         subtitle="Schildern Sie kurz Ihr Anliegen – wir melden uns zeitnah mit den nächsten Schritten für Ihre Luftfracht am Flughafen München."
-        showPhone
-        ctaLabel="Zur Anfrage"
         ctaHref="#anfrage"
-        compact
       />
 
       <section id="anfrage" className="mx-auto max-w-[1280px] px-5 py-16 lg:px-8 lg:py-24">
