@@ -327,6 +327,39 @@ a {
   width: 100%;
 }
 
+/* Hero CTA: brand red on mobile/tablet, white from desktop */
+.hero-cta-btn.btn-corner--white {
+  background: var(--brand);
+  color: #ffffff;
+}
+
+.hero-cta-btn.btn-corner--white .btn-corner-symbol {
+  color: #ffffff;
+}
+
+.hero-cta-btn.btn-corner--white:hover {
+  background: var(--brand-dark);
+  box-shadow: 0 10px 26px rgba(217, 13, 58, 0.22);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 1024px) {
+  .hero-cta-btn.btn-corner--white {
+    background: #ffffff;
+    color: var(--foreground);
+  }
+
+  .hero-cta-btn.btn-corner--white .btn-corner-symbol {
+    color: #5e7187;
+  }
+
+  .hero-cta-btn.btn-corner--white:hover {
+    background: #fafafa;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
 @media (min-width: 640px) {
   .hero-cta-slot,
   .hero-phone-slot {
@@ -545,11 +578,6 @@ a {
   .hero-cta-btn.btn-corner--hero .btn-corner-icon {
     top: 0.875rem;
     right: 0.875rem;
-  }
-
-  .hero-cta-btn.btn-corner--white:hover {
-    transform: none;
-    box-shadow: none;
   }
 }
 
