@@ -51,15 +51,15 @@ export function FooterCta({
           </div>
         </ScrollReveal>
 
-        <div className="footer-cta__visual" aria-hidden="true">
+        <ScrollReveal variant="fade" duration={1200} className="footer-cta__visual" aria-hidden="true">
           <Image
             src={media.weltkugel}
             alt=""
             fill
             className="footer-cta__globe"
-            sizes="(max-width: 768px) 70vw, (max-width: 1280px) 45vw, 560px"
+            sizes="(max-width: 768px) 80vw, (max-width: 1280px) 42vw, 480px"
           />
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );
