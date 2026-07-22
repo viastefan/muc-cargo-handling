@@ -157,6 +157,7 @@ export function SiteFooter() {
             <FooterLink href="/faq">FAQ</FooterLink>
             <FooterLink href="/impressum">Impressum</FooterLink>
             <FooterLink href="/datenschutz">Datenschutz</FooterLink>
+            <FooterLink href="/agb">AGB</FooterLink>
           </nav>
         </div>
       </div>
