@@ -4618,51 +4618,9 @@ a {
   }
 }
 
-.cookie-fab {
-  position: fixed;
-  left: 1rem;
-  bottom: 1rem;
-  z-index: 95;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  background: #ffffff;
-  color: var(--foreground);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 0.08);
-  cursor: pointer;
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
-}
-
-.cookie-fab:hover {
-  color: var(--brand);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgb(0 0 0 / 0.1);
-}
-
-.cookie-fab__icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-@media (min-width: 768px) {
-  .cookie-fab {
-    left: 1.25rem;
-    bottom: 1.25rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .cookie-banner,
-  .cookie-settings__panel,
-  .cookie-fab {
+  .cookie-settings__panel {
     animation: none;
     transition: none;
   }
