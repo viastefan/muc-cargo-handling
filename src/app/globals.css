@@ -166,8 +166,15 @@ a {
   border-bottom: 1px solid var(--border);
 }
 
+/* Keep header flush with hero on mobile; restore bottom rule on desktop. */
 .site-header-wrap:has(+ main > :first-child.hero-wrap) {
   border-bottom: none;
+}
+
+@media (min-width: 1024px) {
+  .site-header-wrap:has(+ main > :first-child.hero-wrap) {
+    border-bottom: 1px solid var(--border);
+  }
 }
 
 .site-header {
