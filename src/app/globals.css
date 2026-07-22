@@ -254,10 +254,6 @@ a {
   margin-bottom: 0;
 }
 
-.site-header-wrap:has(+ main > :first-child.hero-wrap) {
-  border-bottom: none;
-}
-
 .site-header-wrap:has(+ main > :first-child.hero-wrap) + main > .hero-wrap:first-child {
   margin-top: 0;
   padding-top: 0;
