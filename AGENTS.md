@@ -22,6 +22,6 @@ Replace placeholders by copying files into `public/images/` using the filenames 
 ### Design tokens
 Primary button `#D90D3A`, arrow slot `#F31042` — defined as CSS variables `--brand` / `--brand-arrow` in `src/app/globals.css`.
 
-### Notes
-- Contact form is client-side demo only (no email backend yet).
-- No Docker, DB, or env secrets needed to run the site locally.
+### Deploy
+- Vercel via GitHub import (recommended): repo `viastefan/muc-cargo-handling`, project name `muc-cargo-handling`.
+- CLI deploy requires `VERCEL_TOKEN`; not needed for local dev.

@@ -24,6 +24,14 @@ Copy your photos into `public/images/` — see `public/images/README.md` for exa
 | `npm run build` | Production build |
 | `npm start` | Serve production build |
 
-## Deploy
+## Deploy (Vercel)
 
-Configured for Vercel (`next` app). Push to GitHub and import the repo in Vercel, or run `npx vercel`.
+Das Projekt heißt **`muc-cargo-handling`** (siehe `vercel.json`). Ohne CLI-Token am einfachsten über die Vercel-GitHub-Integration:
+
+1. Auf [vercel.com/new](https://vercel.com/new) einloggen
+2. Repository `viastefan/muc-cargo-handling` importieren
+3. Framework: **Next.js** (wird automatisch erkannt)
+4. Projektname: **muc-cargo-handling**
+5. Deploy starten (Branch `main` nach Merge des PRs, oder Preview für den Feature-Branch)
+
+Optional per CLI (mit Token): `npx vercel --prod`
