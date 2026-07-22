@@ -10,8 +10,8 @@ type Props = {
   href?: string;
 };
 
-export function HeroContactCta({
-  label = "Schreiben Sie uns",
+export function HeaderContactMenu({
+  label = "Anfrage stellen",
   href = "/kontakt",
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -41,37 +41,37 @@ export function HeroContactCta({
   }, [open]);
 
   return (
-    <div ref={rootRef} className={`hero-contact-cta${open ? " is-open" : ""}`}>
-      <div className="hero-contact-cta__button">
-        <Link href={href} className="hero-contact-cta__label">
+    <div ref={rootRef} className={`header-contact-menu${open ? " is-open" : ""}`}>
+      <div className="header-contact-menu__button">
+        <Link href={href} className="header-contact-menu__label">
           {label}
         </Link>
         <button
           type="button"
-          className="hero-contact-cta__toggle"
+          className="header-contact-menu__toggle"
           aria-expanded={open}
           aria-controls={menuId}
           aria-haspopup="menu"
           aria-label="Kontaktoptionen anzeigen"
           onClick={() => setOpen((value) => !value)}
         >
-          <ButtonArrowIcon light className={open ? "hero-contact-cta__arrow--open" : ""} />
+          <ButtonArrowIcon light className={open ? "header-contact-menu__arrow--open" : ""} />
         </button>
       </div>
 
-      <div
-        id={menuId}
-        role="menu"
-        className="hero-contact-cta__menu"
-        aria-hidden={!open}
-      >
-        <p className="hero-contact-cta__menu-title" role="presentation">
+      {open ? (
+        <div
+          id={menuId}
+          role="menu"
+          className="header-contact-menu__menu"
+        >
+        <p className="header-contact-menu__menu-title" role="presentation">
           Kontaktanfragen
         </p>
         <Link
           href={href}
           role="menuitem"
-          className="hero-contact-cta__menu-item"
+          className="header-contact-menu__menu-item"
           onClick={() => setOpen(false)}
         >
           Per E-Mail anfragen
@@ -79,12 +79,13 @@ export function HeroContactCta({
         <a
           href={`tel:${COMPANY.phoneTel.replace(/\s/g, "")}`}
           role="menuitem"
-          className="hero-contact-cta__menu-item"
+          className="header-contact-menu__menu-item"
           onClick={() => setOpen(false)}
         >
           Anrufen
         </a>
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BrandLogo } from "./BrandLogo";
+import { HeaderContactMenu } from "./HeaderContactMenu";
 import { Button } from "./Button";
 
 const NAV = [
@@ -47,9 +48,7 @@ export function Header() {
         })}
 
         <div className="site-header-cell site-header-cta p-0">
-          <Button href="/kontakt" className="site-header-btn" size="md">
-            Anfrage stellen
-          </Button>
+          <HeaderContactMenu />
         </div>
       </div>
 
