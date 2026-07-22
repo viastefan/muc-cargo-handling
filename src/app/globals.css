@@ -444,32 +444,58 @@ a {
   opacity: 0.84;
 }
 
-.header-contact-menu__arrow--open {
-  transform: rotate(-45deg) translate(0.5px, -0.5px) !important;
+.header-contact-menu__arrow {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+/* Closed: NE (default -45deg). Open: point down. */
+.header-contact-menu.is-open .header-contact-menu__arrow {
+  transform: rotate(90deg);
 }
 
 .header-contact-menu__menu {
   position: absolute;
-  top: calc(100% + 2px);
+  top: 100%;
   right: 0;
   left: auto;
   z-index: 60;
   min-width: 17.5rem;
   overflow: hidden;
-  border: 1px solid var(--border);
-  background: #ffffff;
-  box-shadow: 0 8px 20px rgb(0 0 0 / 0.06);
+  /* grid 0fr → 1fr for smooth height slide */
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
   pointer-events: none;
-  transform: translate3d(0, -8px, 0);
+  visibility: hidden;
   transition:
+    grid-template-rows var(--duration-normal) var(--ease-out),
     opacity var(--duration-normal) var(--ease-out),
-    transform var(--duration-normal) var(--ease-out);
+    visibility 0s linear var(--duration-normal);
+}
+
+.header-contact-menu__menu-panel {
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-top: none;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.06);
+  transform: translate3d(0, -6px, 0);
+  transition: transform var(--duration-normal) var(--ease-out);
 }
 
 .header-contact-menu.is-open .header-contact-menu__menu {
+  grid-template-rows: 1fr;
   opacity: 1;
   pointer-events: auto;
+  visibility: visible;
+  transition:
+    grid-template-rows var(--duration-normal) var(--ease-out),
+    opacity var(--duration-normal) var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.header-contact-menu.is-open .header-contact-menu__menu-panel {
   transform: translate3d(0, 0, 0);
 }
 
@@ -518,8 +544,13 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header-contact-menu__menu {
+  .header-contact-menu__menu,
+  .header-contact-menu__menu-panel,
+  .header-contact-menu__arrow {
     transition: none;
+  }
+
+  .header-contact-menu__menu-panel {
     transform: none;
   }
 }

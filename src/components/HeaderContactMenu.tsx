@@ -76,18 +76,25 @@ export function HeaderContactMenu({
               setOpen((value) => !value);
             }}
           >
-            <ButtonArrowIcon light className={open ? "header-contact-menu__arrow--open" : ""} />
+            <ButtonArrowIcon light className="header-contact-menu__arrow" />
           </button>
         </div>
 
-        {open ? (
-          <div id={menuId} role="menu" className="header-contact-menu__menu">
+        <div
+          id={menuId}
+          role="menu"
+          className="header-contact-menu__menu"
+          aria-hidden={!open}
+          inert={!open ? true : undefined}
+        >
+          <div className="header-contact-menu__menu-panel">
             <p className="header-contact-menu__menu-title" role="presentation">
               Kontaktanfragen
             </p>
             <button
               type="button"
               role="menuitem"
+              tabIndex={open ? 0 : -1}
               className="header-contact-menu__menu-item"
               onClick={() => openAction("email")}
             >
@@ -96,6 +103,7 @@ export function HeaderContactMenu({
             <button
               type="button"
               role="menuitem"
+              tabIndex={open ? 0 : -1}
               className="header-contact-menu__menu-item"
               onClick={() => openAction("phone")}
             >
@@ -104,13 +112,14 @@ export function HeaderContactMenu({
             <Link
               href={href}
               role="menuitem"
+              tabIndex={open ? 0 : -1}
               className="header-contact-menu__menu-item"
               onClick={() => setOpen(false)}
             >
               Kontaktformular
             </Link>
           </div>
-        ) : null}
+        </div>
       </div>
 
       <ContactActionModal action={action} onClose={() => setAction(null)} />
