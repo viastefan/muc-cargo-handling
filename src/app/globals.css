@@ -2532,14 +2532,14 @@ a {
   height: clamp(16rem, 68%, 24rem);
   pointer-events: none;
   transform-origin: 85% 90%;
-  transform: translate(30%, 35%) rotate(-16deg);
+  transform: translate(28%, 14%) rotate(-16deg);
 }
 
 @media (min-width: 768px) {
   .footer-cta__visual {
     width: min(55vw, 40rem);
     height: clamp(18rem, 72%, 28rem);
-    transform: translate(24%, 30%) rotate(-14deg);
+    transform: translate(22%, 12%) rotate(-14deg);
   }
 }
 
@@ -2547,7 +2547,7 @@ a {
   .footer-cta__visual {
     width: min(42vw, 44rem);
     height: clamp(20rem, 78%, 30rem);
-    transform: translate(22%, 28%) rotate(-14deg);
+    transform: translate(20%, 10%) rotate(-14deg);
   }
 }
 
