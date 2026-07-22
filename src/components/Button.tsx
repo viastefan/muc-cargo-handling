@@ -14,6 +14,7 @@ type Props = {
   onClick?: () => void;
   arrow?: boolean;
   fullWidth?: boolean;
+  download?: boolean | string;
 };
 
 function iconLight(variant: Variant) {
@@ -30,6 +31,7 @@ export function Button({
   onClick,
   arrow = true,
   fullWidth = false,
+  download,
 }: Props) {
   const content = (
     <>
@@ -55,7 +57,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={cls} onClick={onClick}>
+      <Link href={href} className={cls} onClick={onClick} download={download}>
         {content}
       </Link>
     );
