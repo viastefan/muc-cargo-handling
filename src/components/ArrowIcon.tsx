@@ -40,9 +40,10 @@ export function PhoneIcon({ className = "" }: { className?: string }) {
       aria-hidden="true"
     >
       <path
-        d="M7.5 3.5h3.2l1.2 4.2-2 1.2a12.5 12.5 0 0 0 5.2 5.2l1.2-2 4.2 1.2v3.2c0 .8-.6 1.5-1.4 1.5C10.4 18 6 13.6 6 7.9c0-.8.7-1.4 1.5-1.4Z"
+        d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2Z"
         stroke="currentColor"
         strokeWidth="1.6"
+        strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>

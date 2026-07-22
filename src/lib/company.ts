@@ -5,8 +5,7 @@ export const COMPANY = {
   email: "info@muc-cargo.de",
   phone: "+49 (0)89 – 975 94 870",
   phoneTel: "+498997594870",
-  phoneDisplay: "089 – 975 948 77",
-  phoneDisplayTel: "08997594877",
+  phoneDisplay: "089 – 975 94 870",
   fax: "+49 (0)89 – 975 94 871",
   mobile: "+49 (0)176 – 200 477 50",
   mobileTel: "+4917620047750",
@@ -23,11 +22,8 @@ export const COMPANY = {
     label: "airportverpackungsservice.com",
     href: "https://airportverpackungsservice.com",
   },
-  social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
-    linkedin: "https://www.linkedin.com/",
-  },
+  /** Nur echte Profile eintragen – leere Liste blendet Icons aus */
+  social: [] as readonly { href: string; label: "Facebook" | "Instagram" | "LinkedIn" }[],
   managingDirector: "Johnbosco Onyeke",
 } as const;
 
@@ -36,5 +32,6 @@ export const FOOTER_NAV = [
   { label: "Luftfracht", href: "/luftfracht" },
   { label: "Airline Handling", href: "/airline-handling" },
   { label: "Röntgen", href: "/roentgen" },
+  { label: "FAQ", href: "/faq" },
   { label: "Kontakt", href: "/kontakt" },
 ] as const;

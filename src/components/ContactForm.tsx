@@ -40,7 +40,7 @@ function validate(data: FormData): FormErrors {
   if (!data.lastName.trim()) errors.lastName = "Nachname ist erforderlich.";
   if (!data.email.trim()) {
     errors.email = "E-Mail ist erforderlich.";
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
     errors.email = "Bitte geben Sie eine gültige E-Mail ein.";
   }
   if (!data.message.trim()) {
@@ -225,7 +225,7 @@ export function ContactForm() {
         />
       </div>
 
-      <div className="form-section border-0 pb-0">
+      <div className="form-section form-section--tight border-0 pb-0">
         <FormCheckbox
           checked={data.privacy}
           onChange={(v) => patch("privacy", v)}
@@ -240,15 +240,16 @@ export function ContactForm() {
         </p>
       )}
 
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="form-actions">
         <Button
           type="submit"
           arrow
-          className={status === "loading" ? "pointer-events-none opacity-70" : ""}
+          disabled={status === "loading"}
+          aria-busy={status === "loading"}
         >
           {status === "loading" ? "Wird gesendet…" : "Anfrage absenden"}
         </Button>
-        <p className="text-[12px] text-[var(--muted-light)]">
+        <p className="form-actions__hint">
           Antwort in der Regel innerhalb von 24 Stunden
         </p>
       </div>

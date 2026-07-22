@@ -56,3 +56,47 @@ git push
 ```
 
 Vercel baut die Seite danach automatisch neu.
+
+---
+
+## Häufiger Fehler: „nothing to commit“ / Bilder werden nicht gepusht
+
+**Symptom:** Im Finder liegen PNG/JPG-Dateien **direkt im Projektordner** (`muc-cargo-handling/` neben `package.json`) — und `git add public/images` meldet *nothing to commit*.
+
+**Ursache:** Git trackt nur Dateien **in** `public/images/…`. Bilder im Projekt-Root sind für Git „untracked“ und werden mit `git add public/images` **nicht** erfasst.
+
+**So prüfen (Terminal im Projektordner):**
+
+```bash
+git status
+```
+
+Stehen die Bilder unter *Untracked files* mit Namen wie `Gemini_Generated_…` oder `managers-walking…` **ohne** Pfad `public/images/` → falscher Ort.
+
+**Richtig:**
+
+1. Finder: `open public/images` (oder manuell in `public/images/home/`, `luftfracht/` usw.)
+2. Bilder **dorthin verschieben** (nicht nur kopieren lassen im Root)
+3. **Umbenennen** wie in `public/images/README.md` (z. B. `home/hero.jpg`, `shared/logo.png`)
+4. Dann:
+
+```bash
+git status                    # sollte public/images/… zeigen
+git add public/images
+git commit -m "Eigene Bilder eingefügt"
+git push
+```
+
+**Nicht** die rohen Gemini/ChatGPT-Dateien im Projekt-Root committen — die gehören nach dem Umbenennen in die Unterordner unter `public/images/`.
+
+### Kurz-Checkliste
+
+| Schritt | OK? |
+|--------|-----|
+| Bild liegt unter `public/images/home/hero.jpg` (Beispiel) | ☐ |
+| Dateiname stimmt mit README überein | ☐ |
+| `git status` zeigt `new file: public/images/...` | ☐ |
+| `git commit` ausgeführt | ☐ |
+| `git push` auf dem richtigen Branch | ☐ |
+
+Aktueller Website-Branch (falls abweichend): `main` oder Feature-Branches wie `cursor/luftfracht-ui-fa3f` — mit `git branch` prüfen.

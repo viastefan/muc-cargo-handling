@@ -4,7 +4,8 @@ import { PhoneBox } from "./PhoneBox";
 
 type Props = {
   image: string;
-  title: string;
+  imageAlt?: string;
+  title: React.ReactNode;
   subtitle: string;
   ctaLabel?: string;
   ctaHref?: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export function Hero({
   image,
+  imageAlt = "Luftfracht und Cargo Handling am Flughafen München",
   title,
   subtitle,
   ctaLabel = "Schreiben Sie uns",
@@ -22,7 +24,7 @@ export function Hero({
       <div className="hero-frame">
         <Image
           src={image}
-          alt=""
+          alt={imageAlt}
           fill
           priority
           className="object-cover object-[center_32%] lg:object-center"
@@ -35,7 +37,7 @@ export function Hero({
           <p className="hero-subtitle">{subtitle}</p>
           <div className="hero-spacer" aria-hidden="true" />
           <div className="hero-cta-slot">
-            <Button href={ctaHref} variant="white" size="hero" className="hero-cta-btn">
+            <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn">
               {ctaLabel}
             </Button>
           </div>

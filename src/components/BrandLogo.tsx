@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
 import { media } from "@/lib/media";
 
 type Props = {
@@ -20,19 +17,14 @@ export function BrandLogo({
   priority = false,
   inverted = false,
 }: Props) {
-  const [src, setSrc] = useState<string>(media.logo);
-
   return (
     <Image
-      src={src}
+      src={media.logo}
       alt="MUC Cargo Handling"
       width={width}
       height={height}
       priority={priority}
       className={`${className} ${inverted ? "brand-logo-inverted" : ""}`.trim()}
-      onError={() => {
-        if (src !== media.logoFallback) setSrc(media.logoFallback);
-      }}
     />
   );
 }

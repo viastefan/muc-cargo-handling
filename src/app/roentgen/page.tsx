@@ -113,7 +113,7 @@ export default function RoentgenPage() {
       </PageSection>
 
       <PageSection borderTop>
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12">
+        <div className="partner-standort partner-standort--spaced">
           <SectionHeader
             dark="Unsere Zusammenarbeit"
             light="mit Partnern am Standort"

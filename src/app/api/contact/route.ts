@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+const TOPICS = new Set(["luftfracht", "airline", "roentgen", "allgemein"]);
+const MAX_MESSAGE = 2000;
+const MAX_FIELD = 120;
+
 type Body = {
   topic?: string;
   firstName?: string;
@@ -12,7 +16,11 @@ type Body = {
 };
 
 function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function clip(value: string | undefined, max: number) {
+  return (value ?? "").trim().slice(0, max);
 }
 
 export async function POST(request: Request) {
@@ -24,13 +32,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Ungültige Anfrage" }, { status: 400 });
   }
 
-  const firstName = body.firstName?.trim() ?? "";
-  const lastName = body.lastName?.trim() ?? "";
-  const email = body.email?.trim() ?? "";
-  const message = body.message?.trim() ?? "";
+  const topic = clip(body.topic, 40);
+  const firstName = clip(body.firstName, MAX_FIELD);
+  const lastName = clip(body.lastName, MAX_FIELD);
+  const company = clip(body.company, MAX_FIELD);
+  const email = clip(body.email, 180);
+  const phone = clip(body.phone, 60);
+  const message = clip(body.message, MAX_MESSAGE);
 
-  if (!body.topic || !firstName || !lastName || !email || !message || !body.privacy) {
-    return NextResponse.json({ ok: false, error: "Pflichtfelder fehlen" }, { status: 400 });
+  if (!topic || !TOPICS.has(topic) || !firstName || !lastName || !email || !message || body.privacy !== true) {
+    return NextResponse.json({ ok: false, error: "Pflichtfelder fehlen oder ungültig" }, { status: 400 });
   }
 
   if (!isValidEmail(email)) {
@@ -42,17 +53,43 @@ export async function POST(request: Request) {
   }
 
   const reference = `MUC-${Date.now().toString(36).toUpperCase()}`;
-
-  // Ready for Resend, SendGrid, or CRM webhook — payload validated server-side.
-  console.info("[contact]", {
+  const payload = {
     reference,
-    topic: body.topic,
+    topic,
     name: `${firstName} ${lastName}`,
-    company: body.company?.trim() || null,
+    company: company || null,
     email,
-    phone: body.phone?.trim() || null,
-    messageLength: message.length,
-  });
+    phone: phone || null,
+    message,
+  };
+
+  const webhook = process.env.CONTACT_WEBHOOK_URL;
+
+  if (webhook) {
+    try {
+      const response = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        console.error("[contact] webhook failed", response.status);
+        return NextResponse.json(
+          { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
+          { status: 502 },
+        );
+      }
+    } catch (error) {
+      console.error("[contact] webhook error", error);
+      return NextResponse.json(
+        { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
+        { status: 502 },
+      );
+    }
+  } else {
+    // Development / pre-integration: validated payload logged until webhook is configured.
+    console.info("[contact]", payload);
+  }
 
   return NextResponse.json({ ok: true, reference });
 }

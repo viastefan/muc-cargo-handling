@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageSection, SectionHeader } from "@/components/PageSection";
-import { FooterCta } from "@/components/Footer";
 import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = {
@@ -48,8 +47,12 @@ const SECTIONS = [
     body: "Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch. Zudem steht Ihnen ein Beschwerderecht bei einer Aufsichtsbehörde zu.",
   },
   {
-    title: "7. Externe Dienste",
-    body: "Sofern Schriftarten oder Symbole von externen Anbietern (z. B. Google Fonts) geladen werden, kann dabei eine Verbindung zu Servern des Anbieters hergestellt werden. Weitere Informationen entnehmen Sie den Datenschutzhinweisen des jeweiligen Anbieters.",
+    title: "7. Cookies und Einwilligung",
+    body: "Diese Website setzt Cookies. Das technisch notwendige Cookie „muc_consent“ speichert Ihre Einwilligungsauswahl (Laufzeit ca. 6 Monate, SameSite=Lax). Statistik- („muc_analytics“) und Marketing-Cookies („muc_marketing“) setzen wir nur, wenn Sie dem zustimmen; ohne Einwilligung werden sie gelöscht. Ihre Auswahl können Sie jederzeit über das Symbol links unten ändern.",
+  },
+  {
+    title: "8. Schriftarten und externe Dienste",
+    body: "Schriftarten werden lokal bzw. systemseitig bereitgestellt. Es werden keine externen Schriftdienste (z. B. Google Fonts) nachgeladen. Sofern künftig externe Dienste eingebunden werden, aktualisieren wir diese Datenschutzerklärung entsprechend.",
   },
 ];
 
@@ -57,13 +60,14 @@ export default function DatenschutzPage() {
   return (
     <>
       <PageSection className="!pt-16 md:!pt-20">
-        <SectionHeader
-          eyebrow="Rechtliches"
-          dark="Datenschutzerklärung"
-          description="Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
-        />
+        <div className="mx-auto max-w-3xl">
+          <SectionHeader
+            eyebrow="Rechtliches"
+            dark="Datenschutzerklärung"
+            description="Informationen zur Verarbeitung personenbezogener Daten auf dieser Website."
+          />
 
-        <div className="section-header-gap max-w-3xl divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          <div className="section-header-gap divide-y divide-[var(--border)] border-y border-[var(--border)]">
           {SECTIONS.map((section) => (
             <section key={section.title} className="py-7 md:py-8">
               <h2 className="text-[15px] font-normal text-[var(--foreground)]">
@@ -72,10 +76,9 @@ export default function DatenschutzPage() {
               <p className="prose-muted mt-3 text-[14px] leading-relaxed">{section.body}</p>
             </section>
           ))}
+          </div>
         </div>
       </PageSection>
-
-      <FooterCta title="Datenschutzfragen? Kontaktieren Sie uns direkt." />
     </>
   );
 }

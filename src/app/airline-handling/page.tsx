@@ -95,8 +95,8 @@ export default function AirlineHandlingPage() {
         </div>
       </PageSection>
 
-      <PageSection muted>
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+      <PageSection muted borderTop>
+        <div className="partner-standort">
           <SectionHeader
             dark="Am Standort"
             light="Flughafen München"
