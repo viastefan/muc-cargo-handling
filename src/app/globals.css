@@ -4315,28 +4315,28 @@ a {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 3.15rem;
-  height: 3.15rem;
+  width: 3.75rem;
+  height: 3.75rem;
   border-radius: 50%;
-  background: rgb(255 255 255 / 0.16);
+  background: rgb(255 255 255 / 0.18);
   color: rgb(255 255 255 / 0.98);
 }
 
 .security-band__item-icon-svg {
   display: block;
-  width: 1.55rem;
-  height: 1.55rem;
+  width: 1.85rem;
+  height: 1.85rem;
 }
 
 @media (min-width: 768px) {
   .security-band__item-icon {
-    width: 3.35rem;
-    height: 3.35rem;
+    width: 4rem;
+    height: 4rem;
   }
 
   .security-band__item-icon-svg {
-    width: 1.65rem;
-    height: 1.65rem;
+    width: 2rem;
+    height: 2rem;
   }
 }
 
