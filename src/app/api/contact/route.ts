@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { appendInquiry } from "@/lib/cms/store.server";
 
 const TOPICS = new Set(["luftfracht", "airline", "roentgen", "allgemein"]);
 const MAX_MESSAGE = 2000;
@@ -65,7 +66,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Ungültige Anfrage" }, { status: 400 });
   }
 
-  // Honeypot: bots fill hidden fields; real users leave them empty.
   if (clip(body.website, 200)) {
     return NextResponse.json({ ok: true, reference: `MUC-${Date.now().toString(36).toUpperCase()}` });
   }
@@ -91,6 +91,7 @@ export async function POST(request: Request) {
   }
 
   const reference = `MUC-${Date.now().toString(36).toUpperCase()}`;
+  const now = new Date().toISOString();
   const payload = {
     reference,
     topic,
@@ -101,46 +102,39 @@ export async function POST(request: Request) {
     message,
   };
 
-  const webhook = process.env.CONTACT_WEBHOOK_URL?.trim();
-  const isProd = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
+  const inbox = await appendInquiry({
+    ...payload,
+    createdAt: now,
+  });
 
-  if (!webhook) {
-    if (isProd) {
-      console.error("[contact] CONTACT_WEBHOOK_URL missing in production");
-      return NextResponse.json(
-        {
-          ok: false,
-          error:
-            "Anfragen können derzeit nicht zugestellt werden. Bitte rufen Sie uns an oder schreiben Sie eine E-Mail.",
-        },
-        { status: 503 },
-      );
-    }
-    // Local / preview without webhook: keep validated payload for manual checks.
-    console.info("[contact] webhook unset — logged only", payload);
-    return NextResponse.json({ ok: true, reference, delivered: false });
-  }
-
-  try {
-    const response = await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!response.ok) {
-      console.error("[contact] webhook failed", response.status);
-      return NextResponse.json(
-        { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
-        { status: 502 },
-      );
-    }
-  } catch (error) {
-    console.error("[contact] webhook error", error);
+  if (!inbox.ok) {
+    console.error("[contact] inbox persist failed", inbox.error);
     return NextResponse.json(
-      { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
-      { status: 502 },
+      { ok: false, error: "Anfrage konnte nicht gespeichert werden. Bitte später erneut versuchen." },
+      { status: 503 },
     );
   }
 
-  return NextResponse.json({ ok: true, reference, delivered: true });
+  const webhook = process.env.CONTACT_WEBHOOK_URL?.trim();
+  let delivered = false;
+
+  if (webhook) {
+    try {
+      const response = await fetch(webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      delivered = response.ok;
+      if (!response.ok) {
+        console.error("[contact] webhook failed", response.status);
+      }
+    } catch (error) {
+      console.error("[contact] webhook error", error);
+    }
+  } else {
+    console.info("[contact] stored in admin inbox", payload.reference);
+  }
+
+  return NextResponse.json({ ok: true, reference, delivered });
 }

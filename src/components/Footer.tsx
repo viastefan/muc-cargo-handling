@@ -99,7 +99,12 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="page-container site-footer-main">
         <div className="site-footer-brand">
-          <Link href="/" className="site-footer-logo-link">
+          <Link
+            href="/admin"
+            className="site-footer-logo-link"
+            title="Admin"
+            aria-label="MUC Cargo Admin öffnen"
+          >
             <BrandLogo
               inverted
               priority={false}

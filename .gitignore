@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# CMS runtime store (seeded on first admin/contact write)
+/data/cms/*.json
+!/data/cms/.gitkeep
