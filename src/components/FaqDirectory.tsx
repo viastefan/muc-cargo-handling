@@ -84,6 +84,7 @@ export function FaqDirectory({ categories }: Props) {
               key={category.id}
               href={`#faq-${category.id}`}
               className={`faq-toc__link${activeCategory === category.id ? " is-active" : ""}`}
+              onClick={() => setActiveCategory(category.id)}
             >
               <span>{category.title}</span>
               <span className="faq-toc__count">{category.items.length}</span>
@@ -145,25 +146,16 @@ export function FaqDirectory({ categories }: Props) {
         ))}
       </div>
 
-      <button
-        type="button"
-        className={`faq-toc-fab${menuOpen ? " is-open" : ""}`}
-        aria-expanded={menuOpen}
-        aria-controls={`${baseId}-menu`}
-        aria-haspopup="dialog"
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        <span className="faq-toc-fab__icon" aria-hidden="true">
-          {menuOpen ? (
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-              <path
-                d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
-          ) : (
+      {!menuOpen ? (
+        <button
+          type="button"
+          className="faq-toc-fab"
+          aria-expanded={false}
+          aria-controls={`${baseId}-menu`}
+          aria-haspopup="dialog"
+          onClick={() => setMenuOpen(true)}
+        >
+          <span className="faq-toc-fab__icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
               <path
                 d="M5 7.5h14M5 12h14M5 16.5h10"
@@ -172,13 +164,13 @@ export function FaqDirectory({ categories }: Props) {
                 strokeLinecap="round"
               />
             </svg>
-          )}
-        </span>
-        <span className="faq-toc-fab__copy">
-          <span className="faq-toc-fab__label">{menuOpen ? "Schließen" : "Inhalt"}</span>
-          {!menuOpen ? <span className="faq-toc-fab__active">{activeTitle}</span> : null}
-        </span>
-      </button>
+          </span>
+          <span className="faq-toc-fab__copy">
+            <span className="faq-toc-fab__label">Inhalt</span>
+            <span className="faq-toc-fab__active">{activeTitle}</span>
+          </span>
+        </button>
+      ) : null}
 
       {menuOpen ? (
         <div className="faq-toc-sheet" id={`${baseId}-menu`}>
@@ -210,6 +202,7 @@ export function FaqDirectory({ categories }: Props) {
                 className="faq-toc-sheet__close"
                 aria-label="Schließen"
                 onClick={closeMenu}
+                autoFocus
               >
                 ×
               </button>

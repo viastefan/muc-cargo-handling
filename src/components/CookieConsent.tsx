@@ -68,10 +68,19 @@ export function CookieConsent() {
     if (resolvedMode !== "settings") return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMode(existing ? "hidden" : "banner");
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
     };
-  }, [resolvedMode]);
+  }, [resolvedMode, existing]);
 
   const save = useCallback((nextAnalytics: boolean, nextMarketing: boolean) => {
     const state: ConsentState = {

@@ -1,33 +1,49 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { COMPANY } from "@/lib/company";
 
 const STORAGE_KEY = "muc-top-bar-dismissed";
+const listeners = new Set<() => void>();
+
+function subscribeTopBar(onStoreChange: () => void) {
+  listeners.add(onStoreChange);
+  return () => {
+    listeners.delete(onStoreChange);
+  };
+}
+
+function emitTopBarChange() {
+  listeners.forEach((listener) => listener());
+}
+
+function getTopBarSnapshot() {
+  try {
+    return sessionStorage.getItem(STORAGE_KEY) === "1" ? "closed" : "open";
+  } catch {
+    return "open";
+  }
+}
+
+function getServerSnapshot() {
+  return "open";
+}
 
 export function TopBar() {
-  const [ready, setReady] = useState(false);
-  const [open, setOpen] = useState(true);
-
-  useEffect(() => {
-    try {
-      if (sessionStorage.getItem(STORAGE_KEY) === "1") {
-        setOpen(false);
-      }
-    } catch {
-      /* ignore */
-    }
-    const id = window.requestAnimationFrame(() => setReady(true));
-    return () => window.cancelAnimationFrame(id);
-  }, []);
+  const open = useSyncExternalStore(subscribeTopBar, getTopBarSnapshot, getServerSnapshot) === "open";
+  const ready = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const dismiss = () => {
-    setOpen(false);
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
       /* ignore */
     }
+    emitTopBarChange();
   };
 
   return (
@@ -36,6 +52,7 @@ export function TopBar() {
       role="region"
       aria-label="Schnellkontakt"
       aria-hidden={!open}
+      inert={!open ? true : undefined}
     >
       <div className="top-bar__collapse">
         <div className="page-container top-bar__inner">

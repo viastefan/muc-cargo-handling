@@ -1545,10 +1545,6 @@ a {
   transform: translateY(1px);
 }
 
-.faq-toc-fab.is-open {
-  background: var(--foreground);
-}
-
 .faq-toc-fab__icon {
   display: inline-flex;
   flex-shrink: 0;
@@ -1590,7 +1586,7 @@ a {
 .faq-toc-sheet {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 110;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -1756,11 +1752,22 @@ a {
   scroll-margin-top: 5.5rem;
 }
 
+/* Sticky header clearance for in-page anchors (#anfrage, #team, …) */
+.section-y[id],
+main [id] {
+  scroll-margin-top: 5.5rem;
+}
+
 @media (min-width: 1024px) {
   .faq-toc-fab,
   .faq-toc-sheet {
     display: none !important;
   }
+}
+
+/* Keep cookie banner above FAB; hide FAB while banner is visible */
+body:has(.cookie-banner) .faq-toc-fab {
+  display: none;
 }
 
 .faq-main {
@@ -2360,6 +2367,16 @@ a {
   margin-top: 2.5rem;
   border: 1px solid var(--border);
   background: white;
+  position: relative;
+}
+
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .form-actions {
@@ -4559,6 +4576,11 @@ a {
   transform: translateY(-1px);
 }
 
+.security-band__item:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
 .security-band__item-icon {
   display: inline-flex;
   flex-shrink: 0;
@@ -4810,7 +4832,7 @@ a {
 .cookie-settings {
   position: fixed;
   inset: 0;
-  z-index: 110;
+  z-index: 120;
   display: flex;
   align-items: flex-end;
   justify-content: center;

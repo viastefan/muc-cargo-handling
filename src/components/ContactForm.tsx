@@ -18,6 +18,8 @@ type FormData = {
   phone: string;
   message: string;
   privacy: boolean;
+  /** Honeypot — must stay empty */
+  website: string;
 };
 
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -31,6 +33,7 @@ const INITIAL: FormData = {
   phone: "",
   message: "",
   privacy: false,
+  website: "",
 };
 
 function validate(data: FormData): FormErrors {
@@ -58,6 +61,7 @@ export function ContactForm() {
   const [touched, setTouched] = useState<Partial<Record<keyof FormData, boolean>>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [reference, setReference] = useState("");
+  const [serverError, setServerError] = useState("");
 
   const patch = useCallback(<K extends keyof FormData>(key: K, value: FormData[K]) => {
     setData((prev) => ({ ...prev, [key]: value }));
@@ -92,6 +96,7 @@ export function ContactForm() {
     if (Object.keys(nextErrors).length > 0) return;
 
     setStatus("loading");
+    setServerError("");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -102,7 +107,8 @@ export function ContactForm() {
       if (!res.ok || !json.ok) throw new Error(json.error ?? "Senden fehlgeschlagen");
       setReference(json.reference ?? "");
       setStatus("success");
-    } catch {
+    } catch (error) {
+      setServerError(error instanceof Error ? error.message : "Senden fehlgeschlagen");
       setStatus("error");
     }
   }
@@ -136,6 +142,7 @@ export function ContactForm() {
             setTouched({});
             setStatus("idle");
             setReference("");
+            setServerError("");
           }}
           className="mt-8 text-[13px] font-medium text-[var(--brand)] underline underline-offset-4 hover:opacity-80"
         >
@@ -233,10 +240,24 @@ export function ContactForm() {
         />
       </div>
 
+      {/* Honeypot — visually hidden, not for users */}
+      <div className="form-honeypot" aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          value={data.website}
+          onChange={(event) => patch("website", event.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       {status === "error" && (
         <p className="form-error mb-4" role="alert">
-          Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut
-          oder rufen Sie uns direkt an.
+          {serverError ||
+            "Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut oder rufen Sie uns direkt an."}
         </p>
       )}
 
