@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { saveFaqsAction } from "@/lib/cms/actions";
 import type { FaqItem } from "@/lib/cms/types";
+import { AdminIcon } from "@/components/admin/AdminIcon";
 import { newClientId } from "@/components/admin/clientIds";
 import { SaveBar } from "@/components/admin/AdminWidgets";
 
@@ -59,17 +60,18 @@ export function FaqEditor({ initial }: { initial: FaqItem[] }) {
             </div>
           </div>
           <div className="admin-btn-row">
-            <button type="button" className="admin-btn admin-btn--ghost" onClick={() => move(index, -1)}>
-              ↑
+            <button type="button" className="admin-btn admin-btn--ghost" aria-label="Nach oben" onClick={() => move(index, -1)}>
+              <AdminIcon name="arrowUp" size={15} />
             </button>
-            <button type="button" className="admin-btn admin-btn--ghost" onClick={() => move(index, 1)}>
-              ↓
+            <button type="button" className="admin-btn admin-btn--ghost" aria-label="Nach unten" onClick={() => move(index, 1)}>
+              <AdminIcon name="arrowDown" size={15} />
             </button>
             <button
               type="button"
               className="admin-btn admin-btn--danger"
               onClick={() => setItems(items.filter((x) => x.id !== item.id))}
             >
+              <AdminIcon name="trash" size={14} />
               Entfernen
             </button>
           </div>
@@ -93,6 +95,7 @@ export function FaqEditor({ initial }: { initial: FaqItem[] }) {
             ])
           }
         >
+          <AdminIcon name="plus" size={15} />
           FAQ hinzufügen
         </button>
       </div>

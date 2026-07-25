@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { deleteNewsAction, setNewsStatusAction } from "@/lib/cms/actions";
 import type { NewsPost } from "@/lib/cms/types";
+import { AdminIcon } from "@/components/admin/AdminIcon";
 import { ConfirmDeleteButton } from "@/components/admin/AdminWidgets";
 import { useRouter } from "next/navigation";
 
@@ -56,16 +57,24 @@ export function NewsListClient({ posts }: { posts: NewsPost[] }) {
 
       <section className="admin-panel">
         <div className="admin-panel__head">
-          <h2>{filtered.length} Einträge</h2>
+          <h2>
+            <AdminIcon name="news" size={16} />
+            {filtered.length} Einträge
+          </h2>
           <Link href="/admin/news/new" className="admin-btn admin-btn--brand">
+            <AdminIcon name="plus" size={15} />
             Neue News
           </Link>
         </div>
         <div className="admin-panel__body">
           {filtered.length === 0 ? (
             <div className="admin-empty">
+              <span className="admin-empty__icon">
+                <AdminIcon name="search" size={20} />
+              </span>
               <p>Keine News gefunden.</p>
               <Link href="/admin/news/new" className="admin-btn admin-btn--brand">
+                <AdminIcon name="plus" size={15} />
                 Erste News anlegen
               </Link>
             </div>
@@ -99,6 +108,7 @@ export function NewsListClient({ posts }: { posts: NewsPost[] }) {
                       <td>
                         <div className="admin-btn-row">
                           <Link href={`/admin/news/${post.id}`} className="admin-btn admin-btn--ghost">
+                            <AdminIcon name="edit" size={14} />
                             Bearbeiten
                           </Link>
                           <button
@@ -112,6 +122,7 @@ export function NewsListClient({ posts }: { posts: NewsPost[] }) {
                               router.refresh();
                             }}
                           >
+                            <AdminIcon name={post.status === "published" ? "ops" : "check"} size={14} />
                             {post.status === "published" ? "Unpublish" : "Publish"}
                           </button>
                           <ConfirmDeleteButton

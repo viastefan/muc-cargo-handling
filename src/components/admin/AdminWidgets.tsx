@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { AdminIcon } from "@/components/admin/AdminIcon";
 
 export function SaveBar({
   onSave,
@@ -14,41 +15,44 @@ export function SaveBar({
 
   return (
     <div className="admin-sticky-save">
-      {message ? (
-        <div className={`admin-alert admin-alert--${message.type === "ok" ? "ok" : "error"}`} role="status">
-          {message.text}
-        </div>
-      ) : null}
-      <button
-        type="button"
-        className="admin-btn admin-btn--brand"
-        disabled={pending}
-        onClick={() => {
-          startTransition(async () => {
-            try {
-              const result = await onSave();
-              if (!result) {
-                setMessage({ type: "ok", text: "Gespeichert." });
-                return;
+      <div className="admin-sticky-save__inner">
+        {message ? (
+          <div className={`admin-alert admin-alert--${message.type === "ok" ? "ok" : "error"}`} role="status">
+            {message.text}
+          </div>
+        ) : null}
+        <button
+          type="button"
+          className="admin-btn admin-btn--brand"
+          disabled={pending}
+          onClick={() => {
+            startTransition(async () => {
+              try {
+                const result = await onSave();
+                if (!result) {
+                  setMessage({ type: "ok", text: "Gespeichert." });
+                  return;
+                }
+                if (!result.ok) {
+                  setMessage({ type: "error", text: result.error || "Speichern fehlgeschlagen." });
+                  return;
+                }
+                setMessage({
+                  type: "ok",
+                  text: result.error
+                    ? `Gespeichert (Hinweis: ${result.error})`
+                    : `Gespeichert${result.savedAt ? ` · ${new Date(result.savedAt).toLocaleString("de-DE")}` : ""}`,
+                });
+              } catch {
+                setMessage({ type: "error", text: "Unerwarteter Fehler beim Speichern." });
               }
-              if (!result.ok) {
-                setMessage({ type: "error", text: result.error || "Speichern fehlgeschlagen." });
-                return;
-              }
-              setMessage({
-                type: "ok",
-                text: result.error
-                  ? `Gespeichert (Hinweis: ${result.error})`
-                  : `Gespeichert${result.savedAt ? ` · ${new Date(result.savedAt).toLocaleString("de-DE")}` : ""}`,
-              });
-            } catch {
-              setMessage({ type: "error", text: "Unerwarteter Fehler beim Speichern." });
-            }
-          });
-        }}
-      >
-        {pending ? "Speichert…" : label}
-      </button>
+            });
+          }}
+        >
+          <AdminIcon name={pending ? "persist" : "check"} size={15} />
+          {pending ? "Speichert…" : label}
+        </button>
+      </div>
     </div>
   );
 }
@@ -76,6 +80,7 @@ export function ConfirmDeleteButton({
         });
       }}
     >
+      <AdminIcon name="trash" size={14} />
       {pending ? "Löscht…" : label}
     </button>
   );

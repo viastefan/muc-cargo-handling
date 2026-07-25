@@ -3,22 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "@/lib/cms/actions";
+import { AdminIcon, type AdminIconName } from "@/components/admin/AdminIcon";
 
-const NAV = [
-  { href: "/admin", label: "Dashboard" },
-  { href: "/admin/profile", label: "Business-Profil" },
-  { href: "/admin/news", label: "News" },
-  { href: "/admin/services", label: "Services" },
-  { href: "/admin/ops", label: "Ops-Status" },
-  { href: "/admin/banner", label: "Top-Banner" },
-  { href: "/admin/inquiries", label: "Anfragen" },
-  { href: "/admin/jobs", label: "Jobs" },
-  { href: "/admin/faq", label: "FAQ" },
-  { href: "/admin/documents", label: "Dokumente" },
-  { href: "/admin/content", label: "Seiten-Texte" },
-  { href: "/admin/team", label: "Team" },
-  { href: "/admin/settings", label: "Einstellungen" },
-] as const;
+const NAV: { href: string; label: string; icon: AdminIconName }[] = [
+  { href: "/admin", label: "Dashboard", icon: "dashboard" },
+  { href: "/admin/profile", label: "Business-Profil", icon: "building" },
+  { href: "/admin/news", label: "News", icon: "news" },
+  { href: "/admin/services", label: "Services", icon: "services" },
+  { href: "/admin/ops", label: "Ops-Status", icon: "ops" },
+  { href: "/admin/banner", label: "Top-Banner", icon: "banner" },
+  { href: "/admin/inquiries", label: "Anfragen", icon: "inbox" },
+  { href: "/admin/jobs", label: "Jobs", icon: "jobs" },
+  { href: "/admin/faq", label: "FAQ", icon: "faq" },
+  { href: "/admin/documents", label: "Dokumente", icon: "docs" },
+  { href: "/admin/content", label: "Seiten-Texte", icon: "content" },
+  { href: "/admin/team", label: "Team", icon: "team" },
+  { href: "/admin/settings", label: "Einstellungen", icon: "settings" },
+];
 
 function navActive(pathname: string, href: string) {
   if (href === "/admin") return pathname === "/admin";
@@ -41,27 +42,41 @@ export function AdminShell({
       <div className="admin-shell">
         <aside className="admin-sidebar" aria-label="Admin-Navigation">
           <div className="admin-sidebar__brand">
-            <strong>MUC Cargo Atelier</strong>
-            <span>Admin-Backend</span>
+            <span className="admin-sidebar__mark" aria-hidden="true">
+              <AdminIcon name="spark" size={16} />
+            </span>
+            <div>
+              <strong>MUC Cargo Atelier</strong>
+              <span>Admin-Backend</span>
+            </div>
           </div>
-          <nav>
+          <nav className="admin-sidebar__nav">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={`admin-nav-link${navActive(pathname, item.href) ? " is-active" : ""}`}
               >
-                {item.label}
+                <span className="admin-nav-link__icon">
+                  <AdminIcon name={item.icon} size={16} />
+                </span>
+                <span>{item.label}</span>
               </Link>
             ))}
           </nav>
           <div className="admin-sidebar__footer">
             <Link href="/" className="admin-nav-link">
-              Zur Website
+              <span className="admin-nav-link__icon">
+                <AdminIcon name="external" size={16} />
+              </span>
+              <span>Zur Website</span>
             </Link>
             <form action={logoutAction}>
-              <button type="submit" className="admin-nav-link" style={{ width: "100%", textAlign: "left", background: "transparent", border: 0, cursor: "pointer" }}>
-                Abmelden
+              <button type="submit" className="admin-nav-link admin-nav-link--button">
+                <span className="admin-nav-link__icon">
+                  <AdminIcon name="logout" size={16} />
+                </span>
+                <span>Abmelden</span>
               </button>
             </form>
           </div>
@@ -71,12 +86,19 @@ export function AdminShell({
           <header className="admin-topbar">
             <h1 className="admin-topbar__title">{title}</h1>
             <div className="admin-topbar__actions">
-              {persistLabel ? <span className="admin-badge">{persistLabel}</span> : null}
+              {persistLabel ? (
+                <span className="admin-badge admin-badge--persist">
+                  <AdminIcon name="persist" size={13} />
+                  {persistLabel}
+                </span>
+              ) : null}
               <Link href="/" className="admin-btn admin-btn--ghost">
+                <AdminIcon name="external" size={15} />
                 Zur Website
               </Link>
               <form action={logoutAction}>
                 <button type="submit" className="admin-btn admin-btn--soft">
+                  <AdminIcon name="logout" size={15} />
                   Abmelden
                 </button>
               </form>
@@ -90,6 +112,7 @@ export function AdminShell({
                 href={item.href}
                 className={navActive(pathname, item.href) ? "is-active" : undefined}
               >
+                <AdminIcon name={item.icon} size={14} />
                 {item.label}
               </Link>
             ))}
