@@ -11,34 +11,49 @@ import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { Timeline } from "@/components/Timeline";
 import { ValuePillars } from "@/components/ValuePillars";
 import { MailIcon, PhoneIcon } from "@/components/ArrowIcon";
+import { COMPANY } from "@/lib/company";
 import { COMPANY_VALUES } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Unternehmen",
   description:
-    "Über MUC Cargo Handling – Erfahrung, Team und Prozesse für professionelle Luftfracht am Flughafen München seit 2003.",
+    "Über MUC Cargohandling – Erfahrung, Team und Prozesse für professionelle Luftfracht am Flughafen München seit 2003.",
 };
 
 const TIMELINE = [
   { year: "2003", text: "Gründung ALD – Airport Lagerdienste e.K." },
   { year: "2013", text: "Umwandlung zur ALD – Airport Lagerdienste GmbH" },
-  { year: "2015", text: "MUC Cargohandling GmbH" },
+  { year: "2015", text: "Umfirmierung zur MUC Cargohandling GmbH" },
   { year: "Heute", text: "Erfahrener Partner für Airport Cargo Services" },
 ];
 
-const TEAM = [
+type TeamMember = {
+  name: string;
+  role: string;
+  phone: string;
+  phoneTel: string;
+  mobile?: string;
+  mobileTel?: string;
+  email?: string;
+};
+
+const TEAM: TeamMember[] = [
   {
     name: "Johnbosco Onyeke",
     role: "Geschäftsführer",
-    phone: "089 – 975 94 870",
-    phoneTel: "+498997594870",
+    phone: "089 – 975 94 877",
+    phoneTel: "+498997594877",
+    mobile: "0176 – 2004 7750",
+    mobileTel: "+4917620047750",
     email: "johnbosco.onyeke@muc-cargo.de",
   },
   {
     name: "Lynn Onyeke",
-    role: "Stellv. Geschäftsführerin",
-    phone: "089 – 975 94 870",
-    phoneTel: "+498997594870",
+    role: "Geschäftsführung",
+    phone: "089 – 975 94 592",
+    phoneTel: "+498997594592",
+    mobile: "0151 – 2950 8973",
+    mobileTel: "+4915129508973",
     email: "lynn.onyeke@muc-cargo.de",
   },
   {
@@ -46,14 +61,22 @@ const TEAM = [
     role: "Buchhaltung",
     phone: "08765 – 93 98 25",
     phoneTel: "+498765939825",
-    email: "evelyn.onyeke@muc-cargo.de",
+    email: "buchhaltung@muc-cargo.de",
   },
   {
     name: "Robert Cinca",
-    role: "Lagerleitung",
+    role: "Teamleader Warehouse",
+    phone: "089 – 975 94 877",
+    phoneTel: "+498997594877",
+    mobile: "0179 – 452 64 37",
+    mobileTel: "+491794526437",
+    email: "robert.cinca@muc-cargo.de",
+  },
+  {
+    name: "Siegfried Kübler",
+    role: "Import/Zoll",
     phone: "089 – 975 94 870",
     phoneTel: "+498997594870",
-    email: "robert.cinca@muc-cargo.de",
   },
 ];
 
@@ -62,7 +85,7 @@ export default function UnternehmenPage() {
     <>
       <Hero
         image="/images/unternehmen/hero.jpg"
-        title="Über MUC Cargo Handling"
+        title="Über MUC Cargohandling"
         subtitle="Mit Erfahrung, strukturierten Abläufen und höchsten Qualitätsstandards sorgen wir für eine sichere, effiziente und transparente Abwicklung Ihrer Sendungen am Flughafen München."
       />
 
@@ -75,7 +98,7 @@ export default function UnternehmenPage() {
         <div className="section-header-gap grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <div className="space-y-6 prose-muted">
             <p>
-              Seit 2003 steht MUC Cargo Handling für zuverlässige Prozesse,
+              Seit 2003 steht MUC Cargohandling für zuverlässige Prozesse,
               persönliche Betreuung und professionelle Dienstleistungen rund um
               die Luftfracht am Flughafen München. Was als ALD – Airport
               Lagerdienste e.K. begann, entwickelte sich über die Jahre zu einem
@@ -118,7 +141,7 @@ export default function UnternehmenPage() {
 
         <ScrollRevealStagger className="team-grid" stagger={95} duration={950}>
           {TEAM.map((person) => (
-            <article key={person.email} className="team-card">
+            <article key={person.name} className="team-card">
               <h3 className="team-card__name">{person.name}</h3>
               <p className="team-card__role">{person.role}</p>
               <ul className="team-card__contact">
@@ -128,12 +151,22 @@ export default function UnternehmenPage() {
                     <span>Tel: {person.phone}</span>
                   </a>
                 </li>
-                <li>
-                  <a href={`mailto:${person.email}`} className="team-card__link">
-                    <MailIcon className="text-[var(--muted-light)]" />
-                    <span>{person.email}</span>
-                  </a>
-                </li>
+                {person.mobile && person.mobileTel ? (
+                  <li>
+                    <a href={`tel:${person.mobileTel}`} className="team-card__link">
+                      <PhoneIcon className="text-[var(--muted-light)]" />
+                      <span>Mobil: {person.mobile}</span>
+                    </a>
+                  </li>
+                ) : null}
+                {person.email ? (
+                  <li>
+                    <a href={`mailto:${person.email}`} className="team-card__link">
+                      <MailIcon className="text-[var(--muted-light)]" />
+                      <span>{person.email}</span>
+                    </a>
+                  </li>
+                ) : null}
               </ul>
             </article>
           ))}
@@ -174,7 +207,7 @@ export default function UnternehmenPage() {
               <>
                 Direkt am Flughafen München.{" "}
                 <Link href="/kontakt" className="link-underline text-[var(--muted-accent)]">
-                  Südallee Modul F, 85356 München-Flughafen
+                  {COMPANY.office.line1}, {COMPANY.office.line2}
                 </Link>
               </>
             }

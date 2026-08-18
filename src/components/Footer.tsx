@@ -113,14 +113,19 @@ export function SiteFooter() {
           </p>
           <p className="site-footer-partner">
             Verpackungspartner:{" "}
-            <a
-              href={COMPANY.partner.href}
-              className="footer-link-inline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {COMPANY.partner.name}
-            </a>
+            {COMPANY.partners.map((partner, index) => (
+              <span key={partner.name}>
+                {index > 0 ? " · " : ""}
+                <a
+                  href={partner.href}
+                  className="footer-link-inline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {partner.name}
+                </a>
+              </span>
+            ))}
           </p>
         </div>
 
@@ -153,9 +158,9 @@ export function SiteFooter() {
           <FooterHeading className="mt-8">Standort</FooterHeading>
           <address className="site-footer-address">
             <p>{COMPANY.legalName}</p>
-            <p>{COMPANY.office.line1.replace("Büroadresse: ", "")}</p>
+            <p>{COMPANY.office.line1}</p>
             <p>{COMPANY.office.line2}</p>
-            <p className="site-footer-meta">Reg.B. {COMPANY.regAgent}</p>
+            <p className="site-footer-meta">{COMPANY.regAgent}</p>
           </address>
         </div>
       </div>

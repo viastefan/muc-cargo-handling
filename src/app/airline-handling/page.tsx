@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { MetricRow } from "@/components/MetricRow";
-import { PartnerLogos } from "@/components/PartnerLogos";
 import { FeatureCard, PageSection, SectionHeader } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
 
@@ -101,17 +100,11 @@ export default function AirlineHandlingPage() {
       </PageSection>
 
       <PageSection muted borderTop>
-        <div className="partner-standort">
-          <SectionHeader
-            dark="Am Standort"
-            light="Flughafen München"
-            description="Kurze Wege, direkte Abstimmung mit Partnern und ein Team, das den lokalen Cargo-Betrieb kennt – für verlässliche Airline-Prozesse vor Ort."
-          />
-          <PartnerLogos
-            title="Partner am Cargo-Standort"
-            description="Zusammenarbeit mit erfahrenen Partnern für effiziente Handling- und Sicherheitsprozesse."
-          />
-        </div>
+        <SectionHeader
+          dark="Am Standort"
+          light="Flughafen München"
+          description="Kurze Wege, direkte Abstimmung mit Partnern und ein Team, das den lokalen Cargo-Betrieb kennt – für verlässliche Airline-Prozesse vor Ort."
+        />
       </PageSection>
 
       <FooterCta />

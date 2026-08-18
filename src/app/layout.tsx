@@ -7,8 +7,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "MUC Cargo Handling | Luftfracht am Flughafen München",
-    template: "%s | MUC Cargo Handling",
+    default: "MUC Cargohandling | Luftfracht am Flughafen München",
+    template: "%s | MUC Cargohandling",
   },
   description:
     "Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München. Import, Export, Airline Handling und Röntgenkontrolle.",

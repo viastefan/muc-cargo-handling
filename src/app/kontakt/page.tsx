@@ -10,7 +10,7 @@ import { COMPANY } from "@/lib/company";
 export const metadata: Metadata = {
   title: "Kontakt",
   description:
-    "Kontakt zu MUC Cargo Handling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
+    "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
 };
 
 const CONTACT = [
@@ -19,7 +19,7 @@ const CONTACT = [
     label: "Adresse",
     content: (
       <>
-        {COMPANY.office.line1.replace("Büroadresse: ", "")}
+        {COMPANY.office.line1}
         <br />
         {COMPANY.office.line2}
       </>
@@ -102,7 +102,13 @@ export default function KontaktPage() {
                   ))}
                 </ul>
                 <p className="prose-muted mt-6 border-t border-[var(--border)] pt-6 text-[13px]">
-                  Lager: {COMPANY.lager.line1.replace("Lager: ", "")}
+                  <strong className="font-medium text-[var(--foreground)]">
+                    Warehouse (Warenannahme)
+                  </strong>
+                  <br />
+                  {COMPANY.warehouse.line1}
+                  <br />
+                  {COMPANY.warehouse.line2}
                 </p>
               </div>
 
@@ -113,7 +119,7 @@ export default function KontaktPage() {
                 <p className="mt-3 text-[15px] text-[var(--foreground)]">
                   Reglementierter Beauftragter
                 </p>
-                <p className="mt-1 text-[13px] text-[var(--muted)]">Reg.B. {COMPANY.regAgent}</p>
+                <p className="mt-1 text-[13px] text-[var(--muted)]">{COMPANY.regAgent}</p>
                 <p className="prose-muted mt-4 text-[13px]">
                   Reaktionszeit auf Anfragen in der Regel innerhalb von 24 Stunden (Werktage).
                 </p>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { PartnerLogos } from "@/components/PartnerLogos";
 import { SpecGrid } from "@/components/SpecGrid";
 import {
   FeatureCard,
@@ -19,7 +18,7 @@ export const metadata: Metadata = {
 const HIGHLIGHTS = [
   { title: "LBA-konforme Prozesse", text: "Verfahren nach geltenden Luftsicherheitsvorgaben.", icon: "compliance" as const },
   { title: "Modernste Prüftechnik", text: "Röntgenanlagen für gängige Frachtmaße und Gewichte.", icon: "tech" as const },
-  { title: "STI Kooperation", text: "Zusammenarbeit am Standort Flughafen München.", icon: "partner" as const },
+  { title: "Starke Vernetzung", text: "Enge Zusammenarbeit mit erfahrenen Partnern am Cargo-Standort München.", icon: "partner" as const },
   { title: "Flughafen München", text: "Kurze Wege – direkt am Cargo-Standort MUC.", icon: "airport" as const },
 ];
 
@@ -44,7 +43,7 @@ export default function RoentgenPage() {
       <Hero
         image="/images/roentgen/hero.jpg"
         title="Sichere Luftfracht nach höchsten Sicherheitsstandards."
-        subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für eine zuverlässige Freigabe Ihrer Sendungen am Flughafen München."
+        subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für die sichere und regelkonforme Abfertigung Ihrer Sendungen am Flughafen München."
       />
 
       <PageSection>
@@ -109,14 +108,11 @@ export default function RoentgenPage() {
       </PageSection>
 
       <PageSection borderTop>
-        <div className="partner-standort partner-standort--spaced">
-          <SectionHeader
-            dark="Unsere Zusammenarbeit"
-            light="mit Partnern am Standort"
-            description="Am Flughafen München arbeiten wir mit erfahrenen Partnern wie VK Freight Management zusammen – für effiziente Sicherheits- und Handling-Prozesse mit kurzen Wegen und klaren Verantwortlichkeiten."
-          />
-          <PartnerLogos />
-        </div>
+        <SectionHeader
+          dark="Unsere Zusammenarbeit"
+          light="mit Partnern am Standort"
+          description="Am Flughafen München arbeiten wir eng mit erfahrenen Partnern zusammen – für effiziente Sicherheits- und Handling-Prozesse mit kurzen Wegen und klaren Verantwortlichkeiten."
+        />
 
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {HIGHLIGHTS.map((h) => (

@@ -12,7 +12,7 @@ export type FaqCategory = {
 /** Kurze Auswahl für die Startseite */
 export const FAQ_HOME: readonly FaqItem[] = [
   {
-    q: "Welche Leistungen bietet MUC Cargo Handling?",
+    q: "Welche Leistungen bietet MUC Cargohandling?",
     a: "Wir übernehmen Luftfracht Import und Export, Airline Handling sowie Sicherheitskontrollen am Flughafen München – von der Annahme über Dokumentation und Sicherung bis zur Übergabe an Spedition oder Airline.",
   },
   {
@@ -37,11 +37,11 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
     items: [
       {
         q: "Seit wann sind Sie am Flughafen München tätig?",
-        a: "MUC Cargo Handling ist seit 2003 am Flughafen München aktiv. Diese Erfahrung fließt in strukturierte Abläufe, geschultes Personal und verlässliche Koordination mit Partnern vor Ort ein – Import, Export und Sicherheitsprozesse inklusive.",
+        a: "MUC Cargohandling ist seit 2003 am Flughafen München aktiv. Diese Erfahrung fließt in strukturierte Abläufe, geschultes Personal und verlässliche Koordination mit Partnern vor Ort ein – Import, Export und Sicherheitsprozesse inklusive.",
       },
       {
         q: "Wo befindet sich Ihr Standort?",
-        a: "Lager und Büro liegen in der Südallee am Flughafen München (85356). Kurze Wege zum Cargo-Drehkreuz ermöglichen effiziente Abstimmung, schnelle Übergaben und eine direkte Erreichbarkeit vor Ort.",
+        a: "Unser Büro liegt im Frachtzentrum, Modul H, Pavillon (85356 München-Flughafen); die Warenannahme befindet sich im Frachtzentrum, Modul E, E48, Rampe 51. Kurze Wege zum Cargo-Drehkreuz ermöglichen effiziente Abstimmung, schnelle Übergaben und eine direkte Erreichbarkeit vor Ort.",
       },
       {
         q: "Sind Sie als Reglementierter Beauftragter zugelassen?",
@@ -195,7 +195,7 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
       },
       {
         q: "Kann ich Sie vor Ort am Flughafen besuchen?",
-        a: "Termine vor Ort sind nach Absprache möglich. Melden Sie sich kurz mit Ihrem Anliegen – wir koordinieren einen passenden Zeitpunkt am Standort Südallee.",
+        a: "Termine vor Ort sind nach Absprache möglich. Melden Sie sich kurz mit Ihrem Anliegen – wir koordinieren einen passenden Zeitpunkt am Standort im Frachtzentrum.",
       },
       {
         q: "Wie erreiche ich Sie außerhalb der üblichen Zeiten?",

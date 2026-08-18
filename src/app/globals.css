@@ -2869,6 +2869,13 @@ body:has(.cookie-banner) .faq-toc-fab {
   }
 }
 
+/* Ab 5 Personen dreispaltig – vermeidet die allein stehende Karte in der letzten Reihe. */
+@media (min-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .team-card {
   background: var(--surface);
   padding: 1.75rem 2rem;

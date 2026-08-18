@@ -59,14 +59,14 @@ export function TopBar() {
           <div className="top-bar__items">
             <div className="top-bar__item">
               <p className="top-bar__label">Reglementierter Beauftragter</p>
-              <p className="top-bar__value">Reg.B. {COMPANY.regAgent}</p>
+              <p className="top-bar__value">{COMPANY.regAgent}</p>
             </div>
 
             <div className="top-bar__contact-row">
               <div className="top-bar__item">
                 <p className="top-bar__label">Telefon</p>
                 <a href={`tel:${COMPANY.phoneTel}`} className="top-bar__value top-bar__link">
-                  T. {COMPANY.phone}
+                  {COMPANY.phone}
                 </a>
               </div>
 

@@ -14,6 +14,7 @@ import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
+import { COMPANY, MAPS_EMBED } from "@/lib/company";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
 import {
@@ -22,12 +23,11 @@ import {
   HOME_IMAGE_CTA,
   HOME_STORY,
   HOME_TEAM_INTRO,
-  MAP_EMBED,
   SECURITY_METHODS,
 } from "@/lib/home";
 
 export const metadata: Metadata = {
-  title: "MUC Cargo Handling | Luftfracht am Flughafen München",
+  title: "MUC Cargohandling | Luftfracht am Flughafen München",
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
 };
@@ -85,7 +85,7 @@ export default function HomePage() {
               <>
                 Direkt am Cargo-Drehkreuz München.{" "}
                 <Link href="/kontakt" className="link-underline">
-                  Südallee Modul F, 85356 München-Flughafen.
+                  {COMPANY.office.line1}, {COMPANY.office.line2}.
                 </Link>
               </>
             }
@@ -185,7 +185,7 @@ export default function HomePage() {
         </ScrollReveal>
         <ScrollReveal delay={140} duration={1100}>
           <div className="section-header-gap">
-            <LocationMap embedSrc={MAP_EMBED} />
+            <LocationMap embedSrc={MAPS_EMBED} />
           </div>
         </ScrollReveal>
       </PageSection>

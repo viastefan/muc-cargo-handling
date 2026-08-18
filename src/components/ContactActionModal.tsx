@@ -103,9 +103,6 @@ export function ContactActionModal({ action, onClose }: Props) {
               <span className="contact-action__row-value">{secondaryValue}</span>
             </a>
           ) : null}
-          {!isEmail ? (
-            <p className="contact-action__note">Fax: {COMPANY.fax}</p>
-          ) : null}
         </div>
 
         <div className="contact-action__actions">

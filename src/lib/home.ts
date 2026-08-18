@@ -13,7 +13,7 @@ export const HOME_STORY = {
 export const HOME_TEAM_INTRO = {
   eyebrow: "Leistungen",
   titleDark: "Ihr zuverlässiger Partner",
-  titleLight: "für Luftfrachthandling am MUC.",
+  titleLight: "für Luftfrachthandling am Münchner Flughafen.",
   description:
     "Wir sind ein kompetentes Team mit langjähriger Erfahrung am Münchner Flughafen. Mit bewährtem Handling und klaren Prozessen garantieren wir eine für Sie optimale Lösung – von der Annahme bis zur sicheren Freigabe.",
 } as const;
@@ -68,6 +68,9 @@ export const HOME_DOWNLOADS = [
         href: "/downloads/arbeitsauftrag.pdf",
         preview: "/downloads/previews/arbeitsauftrag.jpg",
       },
+      // TODO Rückfrage Lynn: In der Korrekturliste ist in dieser Kachel genau ein
+      // Dokument blau durchgestrichen (= entfernen). Aus dem Screenshot ist nicht
+      // eindeutig lesbar, welches. Bleibt bis zur Klärung unverändert.
       {
         label: "Röntgenauftrag",
         href: "/downloads/roentgenauftrag.pdf",
@@ -109,6 +112,3 @@ export const HOME_DOWNLOADS = [
     ],
   },
 ] as const;
-
-export const MAP_EMBED =
-  "https://maps.google.com/maps?q=S%C3%BCdallee+Modul+F+85356+M%C3%BCnchen-Flughafen&t=&z=14&ie=UTF8&iwloc=&output=embed";

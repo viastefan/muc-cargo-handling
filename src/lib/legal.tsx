@@ -6,7 +6,7 @@ export type LegalSection = {
   paragraphs: ReactNode[];
 };
 
-const officeStreet = COMPANY.office.line1.replace("Büroadresse: ", "");
+const officeStreet = COMPANY.office.line1;
 
 export const LEGAL_UPDATED = "22. Juli 2026";
 
@@ -203,7 +203,7 @@ export function getAgbSections(): LegalSection[] {
       title: "3. Leistungsgegenstand",
       paragraphs: [
         "Unser Leistungsangebot umfasst insbesondere Luftfracht-Import- und Export-Handling, Airline Handling, Röntgen-/Sicherheitskontrollen im Rahmen unserer Zulassungen sowie damit zusammenhängende organisatorische und dokumentarische Dienstleistungen am Standort Flughafen München.",
-        `Wir sind reglementierter Beauftragter (Reg.B. ${COMPANY.regAgent}). Sicherheitsrelevante Leistungen erbringen wir nur im Rahmen geltender luftsicherheitsrechtlicher Vorgaben und unserer jeweiligen Zulassungen.`,
+        `Wir sind reglementierter Beauftragter (${COMPANY.regAgent}). Sicherheitsrelevante Leistungen erbringen wir nur im Rahmen geltender luftsicherheitsrechtlicher Vorgaben und unserer jeweiligen Zulassungen.`,
         "Der konkrete Leistungsumfang ergibt sich aus dem jeweiligen Auftrag, der Auftragsbestätigung und etwaigen Leistungsbeschreibungen. Änderungen und Ergänzungen bedürfen der schriftlichen Absprache.",
       ],
     },

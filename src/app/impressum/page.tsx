@@ -15,7 +15,7 @@ export default function ImpressumPage() {
           <SectionHeader
             eyebrow="Rechtliches"
             dark="Impressum"
-            description="Angaben gemäß § 5 TMG"
+            description="Angaben gemäß § 5 DDG"
           />
 
           <div className="section-header-gap space-y-10 text-[15px] leading-relaxed text-[var(--muted)]">
@@ -26,7 +26,7 @@ export default function ImpressumPage() {
             <p className="mt-3">
               {COMPANY.legalName}
               <br />
-              {COMPANY.office.line1.replace("Büroadresse: ", "")}
+              {COMPANY.office.line1}
               <br />
               {COMPANY.office.line2}
             </p>
@@ -34,14 +34,14 @@ export default function ImpressumPage() {
 
           <section>
             <h2 className="text-[15px] font-normal text-[var(--foreground)]">
-              Lager & Postanschrift
+              Warenannahme & Postanschrift
             </h2>
             <p className="mt-3">
-              {COMPANY.lager.line1}
+              {COMPANY.warehouse.line1}
               <br />
-              {COMPANY.lager.line2}
+              {COMPANY.postfach}
               <br />
-              {COMPANY.lager.line3}
+              {COMPANY.warehouse.line2}
             </p>
           </section>
 
@@ -56,7 +56,6 @@ export default function ImpressumPage() {
                   {COMPANY.phone}
                 </a>
               </li>
-              <li>Fax: {COMPANY.fax}</li>
               <li>
                 Mobil:{" "}
                 <a href={`tel:${COMPANY.mobileTel}`} className="link-underline text-[var(--foreground)]">
@@ -83,7 +82,7 @@ export default function ImpressumPage() {
             <h2 className="text-[15px] font-normal text-[var(--foreground)]">
               Reglementierter Beauftragter
             </h2>
-            <p className="mt-3">Reg.B. {COMPANY.regAgent}</p>
+            <p className="mt-3">{COMPANY.regAgent}</p>
           </section>
 
           <section>
@@ -91,11 +90,31 @@ export default function ImpressumPage() {
               Haftung für Inhalte
             </h2>
             <p className="mt-3">
-              Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf
-              diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10
-              TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder
-              gespeicherte fremde Informationen zu überwachen oder nach Umständen zu
-              forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+              Die Inhalte unserer Website wurden mit größtmöglicher Sorgfalt erstellt.
+              Für die Richtigkeit, Vollständigkeit und Aktualität der bereitgestellten
+              Inhalte übernehmen wir jedoch keine Gewähr.
+            </p>
+            <p className="mt-3">
+              Die Haftung für Schäden, die durch die Nutzung der auf dieser Website
+              bereitgestellten Informationen entstehen, richtet sich nach den
+              gesetzlichen Bestimmungen. Gesetzliche Haftungsansprüche bleiben
+              unberührt.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[15px] font-normal text-[var(--foreground)]">
+              Haftung für externe Links
+            </h2>
+            <p className="mt-3">
+              Unsere Website kann Links zu externen Websites Dritter enthalten, auf
+              deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten
+              Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.
+            </p>
+            <p className="mt-3">
+              Sollten uns Rechtsverletzungen auf verlinkten Websites bekannt werden,
+              werden wir entsprechende Links im Rahmen der gesetzlichen Verpflichtungen
+              entfernen.
             </p>
           </section>
         </div>

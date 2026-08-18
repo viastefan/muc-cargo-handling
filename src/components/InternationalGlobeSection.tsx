@@ -28,8 +28,8 @@ export function InternationalGlobeSection() {
             </h3>
             <p className="mt-4 max-w-lg text-[14px] font-normal leading-[1.7] text-white/72 sm:text-[15px]">
               Am Cargo-Standort München halten wir die Verbindung zwischen globalem Netzwerk und
-              operativer Realität: kurze Wege, dokumentierte Übergaben und eine Ansprechpartnerin
-              oder einen Ansprechpartner vor Ort – wenn es auf Minuten ankommt.
+              operativer Realität: kurze Wege, dokumentierte Übergaben und ein(e) Ansprechpartner(in)
+              vor Ort – wenn es auf Minuten ankommt.
             </p>
           </div>
 

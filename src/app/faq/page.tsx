@@ -7,7 +7,7 @@ import { FAQ_CATEGORIES } from "@/lib/faq";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Häufige Fragen zu Luftfracht, Airline Handling und Sicherheitskontrollen am Flughafen München – Antworten von MUC Cargo Handling.",
+    "Häufige Fragen zu Luftfracht, Airline Handling und Sicherheitskontrollen am Flughafen München – Antworten von MUC Cargohandling.",
 };
 
 export default function FaqPage() {

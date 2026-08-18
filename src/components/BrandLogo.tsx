@@ -24,7 +24,7 @@ export function BrandLogo({
   return (
     <Image
       src={media.logo}
-      alt="MUC Cargo Handling"
+      alt="MUC Cargohandling"
       width={width}
       height={height}
       priority={priority}
