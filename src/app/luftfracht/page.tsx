@@ -42,7 +42,7 @@ export default function LuftfrachtPage() {
       <IntroSplitBand
         titleDark="Zwei Prozesse."
         titleLight="Ein hoher Qualitätsanspruch."
-        description="Ob eingehende oder ausgehende Luftfrachtsendungen – wir begleiten jeden Auftrag mit klar definierten Prozessen und einer zuverlässigen operativen Abwicklung. Durch die enge Zusammenarbeit mit Airlines, Behörden und Logistikpartnern gewährleisten wir einen reibungslosen Warenfluss am Flughafen München."
+        description="Ob eingehend oder ausgehend – jeder Auftrag läuft nach klar definierten Prozessen. In enger Abstimmung mit Airlines, Behörden und Logistikpartnern."
         image="/images/luftfracht/intro-band.jpg"
         imageAlt="Luftfracht-Handling am Flughafen München"
       />
@@ -54,7 +54,7 @@ export default function LuftfrachtPage() {
               eyebrow="Luftfracht"
               dark="Professionelle Abwicklung"
               light="für Import und Export"
-              description="Von der ersten Annahme bis zur termingerechten Übergabe koordinieren wir sämtliche Schritte am Cargo-Drehkreuz München – mit klaren Verantwortlichkeiten und kurzen Kommunikationswegen."
+              description="Von der Annahme bis zur termingerechten Übergabe – mit klaren Verantwortlichkeiten und kurzen Wegen."
             />
             <MetricRow items={LUFTFRACHT_METRICS} />
           </div>
@@ -65,7 +65,7 @@ export default function LuftfrachtPage() {
         <FlowTracksIntro
           titleMuted="Effiziente Prozesse"
           titleDark="für Import und Export."
-          description="Eine zuverlässige Luftfrachtabwicklung erfordert präzise Abläufe, kurze Reaktionszeiten und eine enge Abstimmung zwischen allen Beteiligten. So strukturieren wir Import und Export – transparent und nachvollziehbar."
+          description="So strukturieren wir Import und Export – transparent und nachvollziehbar."
         />
         <div className="section-header-gap">
           <FlowTracks

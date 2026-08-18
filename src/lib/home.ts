@@ -4,9 +4,8 @@ export const HOME_STORY = {
   subtitle:
     "Qualität und Know-how für Ihre reibungslose Luftfrachtabwicklung am Flughafen München.",
   paragraphs: [
-    "Im Mai 2003 wurde die ALD – Airport Lagerdienste e.K. durch Johnbosco Onyeke gegründet. Durch kontinuierliches Wachstum und die Erweiterung des Leistungsspektrums erfolgte 2013 die Umwandlung zur ALD – Airport Lagerdienste GmbH. Im August 2015 entstand daraus die heutige MUC Cargohandling GmbH.",
-    "Unser Ziel ist es, qualitative und quantitative Lösungen zu bieten und unsere Kunden mit Know-how zu unterstützen. Qualität, Zuverlässigkeit, Pünktlichkeit, Flexibilität und faire Preise stehen im Mittelpunkt unseres Handelns.",
-    "Als Reglementierter Beauftragter (DE/RA/01278-01) erfüllen wir die hohen Anforderungen der Luftsicherheit und begleiten Ihre Sendungen mit dokumentierten, regelkonformen Prozessen.",
+    "Im Mai 2003 gegründet als ALD – Airport Lagerdienste e.K., 2013 umgewandelt zur GmbH und seit 2015 die heutige MUC Cargohandling GmbH.",
+    "Qualität, Zuverlässigkeit, Pünktlichkeit und Flexibilität stehen im Mittelpunkt unseres Handelns – mit fairen Preisen und Know-how, auf das Sie sich verlassen können.",
   ],
 } as const;
 

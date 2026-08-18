@@ -505,15 +505,31 @@ a {
   overflow: hidden;
 }
 
+/*
+ * Verlauf statt Flaeche: dunkel dort, wo Text steht, hell dort, wo das Foto
+ * wirken soll. Ein flaechiges 58%-Schwarz hatte die Motive komplett zugedeckt.
+ */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 0.58);
+  background: linear-gradient(
+    to top,
+    rgb(0 0 0 / 0.66) 0%,
+    rgb(0 0 0 / 0.42) 55%,
+    rgb(0 0 0 / 0.24) 100%
+  );
 }
 
 @media (min-width: 1024px) {
   .hero-overlay {
-    background: rgb(0 0 0 / 0.56);
+    background:
+      linear-gradient(
+        to right,
+        rgb(0 0 0 / 0.74) 0%,
+        rgb(0 0 0 / 0.48) 48%,
+        rgb(0 0 0 / 0.16) 100%
+      ),
+      linear-gradient(to top, rgb(0 0 0 / 0.28) 0%, transparent 50%);
   }
 }
 
@@ -3911,7 +3927,8 @@ body:has(.cookie-banner) .faq-toc-fab {
 @media (min-width: 768px) {
   .image-cta-band__inner {
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-    min-height: clamp(15rem, 22vw, 19rem);
+    /* Hoeher als zuvor: das Motiv wurde sonst auf ~1:2.7 beschnitten. */
+    min-height: clamp(18rem, 27vw, 24rem);
   }
 
   .image-cta-band__media {

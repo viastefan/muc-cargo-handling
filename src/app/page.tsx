@@ -36,7 +36,7 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        image="/images/home/hero.png"
+        image="/images/home/hero.jpg"
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
@@ -53,7 +53,7 @@ export default function HomePage() {
         </ScrollReveal>
 
         <ScrollReveal delay={100} duration={1100}>
-          <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-3 lg:gap-8">
+          <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2 lg:gap-10">
             {HOME_STORY.paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 32)} className="prose-muted text-[15px] leading-[1.75]">
                 {paragraph}

@@ -31,7 +31,7 @@ export default function AirlineHandlingPage() {
             eyebrow="Airline Handling"
             dark="Professionelles Handling"
             light="für einen reibungslosen Airline-Betrieb"
-            description="Als operative Schnittstelle verbinden wir Airlines, Speditionen und Logistikpartner. Klare Abläufe, belastbare Kommunikation und standardisierte Qualität sichern den Tagesbetrieb – auch bei hohem Sendungsaufkommen."
+            description="Als operative Schnittstelle verbinden wir Airlines, Speditionen und Logistikpartner – mit klaren Abläufen, die auch bei hohem Sendungsaufkommen tragen."
           />
           <MetricRow
             items={[
@@ -89,7 +89,7 @@ export default function AirlineHandlingPage() {
       <PageSection borderTop>
         <SectionHeader
           dark="Operative Airline-Prozesse"
-          description="Wir orchestrieren die Übergänge zwischen Airline, Frachtführer und Warehouse. Dadurch entstehen stabile Durchlaufzeiten, weniger Rückfragen und eine Abwicklung, die auch bei Peak-Zeiten belastbar bleibt."
+          description="Wir steuern die Übergänge zwischen Airline, Frachtführer und Warehouse – für stabile Durchlaufzeiten und weniger Rückfragen."
         />
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <FeatureCard title="Schnittstelle" icon="link">Airline ↔ Spedition ↔ Warehouse</FeatureCard>

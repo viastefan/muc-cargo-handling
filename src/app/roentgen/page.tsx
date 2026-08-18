@@ -111,7 +111,7 @@ export default function RoentgenPage() {
         <SectionHeader
           dark="Unsere Zusammenarbeit"
           light="mit Partnern am Standort"
-          description="Am Flughafen München arbeiten wir eng mit erfahrenen Partnern zusammen – für effiziente Sicherheits- und Handling-Prozesse mit kurzen Wegen und klaren Verantwortlichkeiten."
+          description="Enge Zusammenarbeit mit erfahrenen Partnern am Cargo-Standort München – kurze Wege, klare Verantwortlichkeiten."
         />
 
         <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

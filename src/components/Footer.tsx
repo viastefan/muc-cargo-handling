@@ -58,8 +58,7 @@ export function FooterCta({
             fill
             className="footer-cta__globe"
             sizes="(max-width: 768px) 90vw, 50vw"
-            quality={90}
-            unoptimized
+            quality={85}
             priority={false}
           />
         </div>
