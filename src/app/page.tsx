@@ -26,8 +26,8 @@ import {
   SECURITY_METHODS,
 } from "@/lib/home";
 
+// Titel kommt aus dem `default` in app/layout.tsx – hier nicht wiederholen.
 export const metadata: Metadata = {
-  title: "MUC Cargohandling | Luftfracht am Flughafen München",
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
 };

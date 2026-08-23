@@ -96,7 +96,7 @@ export function FormTextarea({
           {label}
           {required && <span className="text-[var(--brand)]"> *</span>}
         </label>
-        <span className="text-[11px] tabular-nums text-[var(--muted-light)]">
+        <span className="text-[12px] tabular-nums text-[var(--muted-light)]">
           {remaining}
         </span>
       </div>

@@ -7,7 +7,7 @@ export function SpecGrid({
     <dl className="spec-grid">
       {items.map((item) => (
         <div key={item.label} className="spec-grid-item">
-          <dt className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+          <dt className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
             {item.label}
           </dt>
           <dd className="mt-2 text-[clamp(1.25rem,2.5vw,1.75rem)] font-normal leading-none tracking-[-0.02em] text-[var(--foreground)]">

@@ -39,10 +39,10 @@ export function InternationalGlobeSection() {
                 key={item.label}
                 className="border border-white/12 bg-white/[0.03] px-4 py-3.5"
               >
-                <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-white/45">
+                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-white/70">
                   {item.label}
                 </p>
-                <p className="mt-1.5 text-[13px] leading-snug text-white/78">{item.text}</p>
+                <p className="mt-1.5 text-[13px] leading-snug text-white/80">{item.text}</p>
               </li>
             ))}
           </ul>

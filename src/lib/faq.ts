@@ -9,32 +9,24 @@ export type FaqCategory = {
   items: readonly FaqItem[];
 };
 
-/** Kurze Auswahl für die Startseite */
-export const FAQ_HOME: readonly FaqItem[] = [
-  {
-    q: "Welche Leistungen bietet MUC Cargohandling?",
-    a: "Wir übernehmen Luftfracht Import und Export, Airline Handling sowie Sicherheitskontrollen am Flughafen München – von der Annahme über Dokumentation und Sicherung bis zur Übergabe an Spedition oder Airline.",
-  },
-  {
-    q: "Für wen sind Ihre Leistungen gedacht?",
-    a: "Für Speditionen, Airlines, Logistikpartner und Unternehmen mit Luftfracht am Standort München. Wir arbeiten als verlässlicher Partner entlang der Cargo-Kette mit klaren Prozessen und direkter Ansprechbarkeit.",
-  },
-  {
-    q: "Sind Sie als Reglementierter Beauftragter zugelassen?",
-    a: "Ja. Wir arbeiten als Reglementierter Beauftragter (DE/RA/01278-01) und führen Sicherheitskontrollen nach geltenden luftsicherheitsrechtlichen Vorgaben durch – dokumentiert und nachvollziehbar.",
-  },
-  {
-    q: "Wie erreiche ich Sie für eine Anfrage?",
-    a: "Per Kontaktformular, E-Mail oder telefonisch während der Betriebszeiten. Für dringende Sendungen stimmen wir Prioritäten und Zeitfenster individuell mit Ihnen ab.",
-  },
-] as const;
-
-/** Vollständige FAQ – nur über Footer / Startseiten-Button verlinkt */
+/**
+ * Einzige Quelle für alle FAQ-Inhalte. Die Startseiten-Auswahl (FAQ_HOME)
+ * wird unten daraus abgeleitet – vorher waren die Einträge dort kopiert und
+ * begannen bereits auseinanderzulaufen.
+ */
 export const FAQ_CATEGORIES: readonly FaqCategory[] = [
   {
     id: "allgemein",
     title: "Allgemein",
     items: [
+      {
+        q: "Welche Leistungen bietet MUC Cargohandling?",
+        a: "Wir übernehmen Luftfracht Import und Export, Airline Handling sowie Sicherheitskontrollen am Flughafen München – von der Annahme über Dokumentation und Sicherung bis zur Übergabe an Spedition oder Airline.",
+      },
+      {
+        q: "Für wen sind Ihre Leistungen gedacht?",
+        a: "Für Speditionen, Airlines, Logistikpartner und Unternehmen mit Luftfracht am Standort München. Wir arbeiten als verlässlicher Partner entlang der Cargo-Kette mit klaren Prozessen und direkter Ansprechbarkeit.",
+      },
       {
         q: "Seit wann sind Sie am Flughafen München tätig?",
         a: "MUC Cargohandling ist seit 2003 am Flughafen München aktiv. Diese Erfahrung fließt in strukturierte Abläufe, geschultes Personal und verlässliche Koordination mit Partnern vor Ort ein – Import, Export und Sicherheitsprozesse inklusive.",
@@ -204,3 +196,23 @@ export const FAQ_CATEGORIES: readonly FaqCategory[] = [
     ],
   },
 ] as const;
+
+const ALL_FAQ_ITEMS: readonly FaqItem[] = FAQ_CATEGORIES.flatMap((c) => c.items);
+
+/** Auf der Startseite angeteaserte Fragen – Reihenfolge wie hier gelistet. */
+const FAQ_HOME_QUESTIONS = [
+  "Welche Leistungen bietet MUC Cargohandling?",
+  "Für wen sind Ihre Leistungen gedacht?",
+  "Sind Sie als Reglementierter Beauftragter zugelassen?",
+  "Wie stelle ich eine Anfrage?",
+] as const;
+
+export const FAQ_HOME: readonly FaqItem[] = FAQ_HOME_QUESTIONS.map((q) => {
+  const item = ALL_FAQ_ITEMS.find((i) => i.q === q);
+  if (!item) {
+    throw new Error(
+      `FAQ_HOME verweist auf eine Frage, die es in FAQ_CATEGORIES nicht gibt: "${q}"`,
+    );
+  }
+  return item;
+});

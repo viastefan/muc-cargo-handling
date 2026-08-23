@@ -5,6 +5,7 @@ const MAX_MESSAGE = 2000;
 const MAX_FIELD = 120;
 const RATE_WINDOW_MS = 60_000;
 const RATE_MAX = 5;
+const DELIVERY_ERROR = "Versand fehlgeschlagen. Bitte später erneut versuchen.";
 
 type Body = {
   topic?: string;
@@ -121,6 +122,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, reference, delivered: false });
   }
 
+  const deliveryFailed = () =>
+    NextResponse.json(
+      { ok: false, error: DELIVERY_ERROR },
+      { status: 502 },
+    );
+
   try {
     const response = await fetch(webhook, {
       method: "POST",
@@ -129,17 +136,11 @@ export async function POST(request: Request) {
     });
     if (!response.ok) {
       console.error("[contact] webhook failed", response.status);
-      return NextResponse.json(
-        { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
-        { status: 502 },
-      );
+      return deliveryFailed();
     }
   } catch (error) {
     console.error("[contact] webhook error", error);
-    return NextResponse.json(
-      { ok: false, error: "Versand fehlgeschlagen. Bitte später erneut versuchen." },
-      { status: 502 },
-    );
+    return deliveryFailed();
   }
 
   return NextResponse.json({ ok: true, reference, delivered: true });

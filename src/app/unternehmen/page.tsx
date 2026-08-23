@@ -206,7 +206,7 @@ export default function UnternehmenPage() {
             footer={
               <>
                 Direkt am Flughafen München.{" "}
-                <Link href="/kontakt" className="link-underline text-[var(--muted-accent)]">
+                <Link href="/kontakt" className="link-underline">
                   {COMPANY.office.line1}, {COMPANY.office.line2}
                 </Link>
               </>

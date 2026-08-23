@@ -15,7 +15,7 @@ export function ServiceNav({ items }: { items: readonly Item[] }) {
         <Link key={item.href} href={item.href} className="service-nav-card group">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+              <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
                 {item.subtitle}
               </p>
               <h3 className="mt-2 text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">

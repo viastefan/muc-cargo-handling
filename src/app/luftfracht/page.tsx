@@ -36,7 +36,7 @@ export default function LuftfrachtPage() {
       <Hero
         image="/images/luftfracht/hero.jpg"
         title="Luftfracht Import und Export"
-        subtitle="Mit Erfahrung, strukturierten Abläufen und höchsten Qualitätsstandards sorgen wir für eine sichere, effiziente und transparente Abwicklung Ihrer Sendungen am Flughafen München."
+        subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
       />
 
       <IntroSplitBand
