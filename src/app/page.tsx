@@ -63,7 +63,7 @@ export default function HomePage() {
         </ScrollReveal>
 
         <ScrollRevealStagger
-          className="mt-12 grid gap-4 md:grid-cols-3 lg:mt-14"
+          className="mt-12 grid gap-8 md:grid-cols-3 md:gap-10 lg:mt-14"
           stagger={100}
           duration={1000}
         >

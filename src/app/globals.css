@@ -206,12 +206,14 @@ a {
 
 .top-bar__inner {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-end;
-  gap: 0.75rem 1rem;
-  min-height: 2.75rem;
-  padding-block: 0.55rem;
-  padding-right: 2.25rem;
+  gap: 0.5rem 1rem;
+  /* Label und Wert stehen jetzt nebeneinander statt uebereinander –
+     dadurch eine Zeile statt zwei und rund die halbe Bauhoehe. */
+  min-height: 2.1rem;
+  padding-block: 0.3rem;
+  padding-right: 2.5rem;
 }
 
 .top-bar__items {
@@ -233,6 +235,9 @@ a {
 }
 
 .top-bar__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
   min-width: 0;
 }
 
@@ -240,14 +245,15 @@ a {
   margin: 0;
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-light);
   line-height: 1.3;
+  white-space: nowrap;
 }
 
 .top-bar__value {
-  margin: 0.15rem 0 0;
+  margin: 0;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -265,33 +271,42 @@ a {
   color: var(--brand);
 }
 
+/*
+ * Schliessen-Schaltflaeche: war blass (muted-light bei 72% Deckkraft),
+ * randlos und mit 24px unter jeder sinnvollen Trefferflaeche. Jetzt als
+ * erkennbarer Button mit Kante, vollem Kontrast und groesserem Ziel.
+ */
 .top-bar__close {
   position: absolute;
-  top: 0.4rem;
-  right: 0.35rem;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
   z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.75rem;
+  height: 1.75rem;
   padding: 0;
-  border: none;
-  background: transparent;
-  color: var(--muted-light);
-  font-size: 1.05rem;
-  font-weight: 300;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--foreground);
+  font-size: 1.1rem;
+  font-weight: 400;
   line-height: 1;
-  opacity: 0.72;
+  opacity: 1;
   cursor: pointer;
   transition:
     color var(--duration-fast) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out);
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
 }
 
 .top-bar__close:hover {
-  color: var(--foreground);
-  opacity: 1;
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #ffffff;
 }
 
 .top-bar__close:focus-visible {
@@ -301,19 +316,10 @@ a {
 
 @media (min-width: 1024px) {
   .top-bar__inner {
-    padding-right: 2.5rem;
+    padding-right: 2.75rem;
   }
-
-  .top-bar__close {
-    top: 0.45rem;
-    right: 0.5rem;
-    width: 1.35rem;
-    height: 1.35rem;
-    font-size: 0.95rem;
-    font-weight: 200;
-    letter-spacing: 0;
-    opacity: 0.55;
-  }
+  /* Frueher wurde das X hier auf 1.35rem und 55% Deckkraft verkleinert –
+     die Schaltflaeche behaelt jetzt auf allen Breiten dieselbe Groesse. */
 }
 
 @media (max-width: 639px) {
@@ -2801,6 +2807,51 @@ body:has(.cookie-banner) .faq-toc-fab {
   flex-direction: column;
   height: 100%;
   min-height: 100%;
+}
+
+/*
+ * Datenblock – bewusst KEINE Box. Fuenf der sechs Kartentypen waren zuvor
+ * "gefuellte Flaeche mit etwas Text" und dadurch nicht unterscheidbar.
+ * Kennzahlen tragen hier eine Oberkante statt einer Fuellung.
+ */
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border-top: 2px solid var(--foreground);
+  padding-top: 1.15rem;
+}
+
+.stat-block__value {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+}
+
+.stat-block__value--md {
+  font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.stat-block__icon {
+  color: var(--foreground);
+}
+
+.stat-block__label {
+  margin-top: 0.6rem;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--foreground);
+}
+
+.stat-block__footer {
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--muted);
 }
 
 .feature-card {

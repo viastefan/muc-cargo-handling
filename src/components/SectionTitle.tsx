@@ -40,25 +40,20 @@ export function StatCard({
 }) {
   const valueClass =
     valueSize === "md"
-      ? "text-[clamp(1.125rem,2.2vw,1.5rem)] font-normal leading-[1.2] tracking-[-0.02em] text-[var(--foreground)]"
-      : "text-[clamp(1.75rem,4vw,3rem)] font-normal leading-none tracking-[-0.03em] text-[var(--foreground)]";
+      ? "stat-block__value stat-block__value--md"
+      : "stat-block__value";
 
   return (
-    <article className="flex min-h-[220px] flex-col bg-[var(--surface)] p-6 md:min-h-[240px] md:p-8">
-      <div className="flex-1">
+    <article className="stat-block">
+      <div className="stat-block__head">
         {icon ? (
-          <div className="text-[var(--foreground)]">{icon}</div>
+          <div className="stat-block__icon">{icon}</div>
         ) : (
           <p className={valueClass}>{value}</p>
         )}
-        {!icon && (
-          <p className="mt-2 text-[15px] font-normal text-[var(--foreground)]">{label}</p>
-        )}
-        {icon && (
-          <p className="mt-3 text-[15px] font-normal text-[var(--foreground)]">{label}</p>
-        )}
+        <p className="stat-block__label">{label}</p>
       </div>
-      <div className="mt-6 text-[13px] leading-relaxed text-[var(--muted)]">{footer}</div>
+      <div className="stat-block__footer">{footer}</div>
     </article>
   );
 }
