@@ -2354,6 +2354,104 @@ body:has(.cookie-banner) .faq-toc-fab {
   transform-origin: center;
 }
 
+/*
+ * Eingabefeld mit innenliegender Beschriftung.
+ * Die Beschriftung sitzt IM Feld ueber dem Wert statt darueber - dadurch
+ * kein separater Titelblock, ruhigeres Formular und auf schmalen Displays
+ * spuerbar weniger Hoehe. Das gesamte Feld ist ein <label>, also ueberall
+ * anklickbar, um den Fokus zu setzen.
+ */
+.field {
+  display: block;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 0.55rem 1rem 0.7rem;
+  cursor: text;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.field:hover {
+  background: var(--surface-2);
+}
+
+.field:focus-within {
+  border-color: var(--focus);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.field--error {
+  border-color: var(--brand);
+  background: #ffffff;
+}
+
+.field__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--muted-light);
+}
+
+.field:focus-within .field__label {
+  color: var(--muted);
+}
+
+.field__control {
+  display: block;
+  width: 100%;
+  margin-top: 0.15rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  /* 16px verhindert das automatische Hineinzoomen von iOS beim Fokus. */
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--foreground);
+  outline: none;
+}
+
+.field__control::placeholder {
+  color: var(--muted-light);
+}
+
+textarea.field__control {
+  min-height: 8.5rem;
+  resize: vertical;
+  /* Platz freihalten, damit der Zeichenzaehler nicht auf dem Text liegt. */
+  padding-bottom: 1.1rem;
+}
+
+.field__counter {
+  position: absolute;
+  /* Weiter nach innen, damit der Zaehler nicht auf dem Resize-Griff liegt. */
+  right: 1.6rem;
+  bottom: 0.6rem;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-light);
+  pointer-events: none;
+}
+
+.field-error {
+  margin-top: 0.4rem;
+  padding-left: 0.15rem;
+  font-size: 12px;
+  color: var(--brand);
+}
+
+.field-hint {
+  margin-top: 0.4rem;
+  padding-left: 0.15rem;
+  font-size: 12px;
+  color: var(--muted-light);
+}
+
 .form-label {
   display: block;
   margin-bottom: 0.5rem;
@@ -2364,11 +2462,6 @@ body:has(.cookie-banner) .faq-toc-fab {
   color: var(--muted-light);
 }
 
-.form-hint {
-  margin-top: 0.375rem;
-  font-size: 12px;
-  color: var(--muted-light);
-}
 
 .form-error {
   margin-top: 0.375rem;

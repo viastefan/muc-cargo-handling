@@ -2,8 +2,11 @@
 
 import { useId } from "react";
 
-const inputBase =
-  "w-full border border-transparent bg-[var(--surface)] px-4 py-3.5 text-[15px] text-[var(--foreground)] outline-none transition-[border-color,box-shadow,background] placeholder:text-[var(--muted-light)] focus:border-[var(--focus)] focus:bg-white focus:shadow-[0_0_0_3px_var(--focus-ring)]";
+/** Passende Bildschirmtastatur je Feldtyp – spart Tipparbeit auf Mobilgeraeten. */
+const INPUT_MODE: Record<string, "email" | "tel" | "text"> = {
+  email: "email",
+  tel: "tel",
+};
 
 export function FormField({
   label,
@@ -33,31 +36,34 @@ export function FormField({
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="form-label">
-        {label}
-        {required && <span className="text-[var(--brand)]"> *</span>}
+      <label htmlFor={id} className={`field ${error ? "field--error" : ""}`.trim()}>
+        <span className="field__label">
+          {label}
+          {required && <span className="text-[var(--brand)]"> *</span>}
+        </span>
+        <input
+          id={id}
+          name={name}
+          type={type}
+          inputMode={INPUT_MODE[type]}
+          required={required}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
+          className="field__control"
+        />
       </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        required={required}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : hint ? `${id}-hint` : undefined}
-        className={`${inputBase} ${error ? "border-[var(--brand)]/40 bg-white" : ""}`}
-      />
       {error && (
-        <p id={`${id}-error`} className="form-error" role="alert">
+        <p id={`${id}-error`} className="field-error" role="alert">
           {error}
         </p>
       )}
       {hint && !error && (
-        <p id={`${id}-hint`} className="form-hint">
+        <p id={`${id}-hint`} className="field-hint">
           {hint}
         </p>
       )}
@@ -91,31 +97,31 @@ export function FormTextarea({
 
   return (
     <div>
-      <div className="mb-2 flex items-end justify-between gap-4">
-        <label htmlFor={id} className="form-label mb-0">
+      <label htmlFor={id} className={`field ${error ? "field--error" : ""}`.trim()}>
+        <span className="field__label">
           {label}
           {required && <span className="text-[var(--brand)]"> *</span>}
-        </label>
-        <span className="text-[12px] tabular-nums text-[var(--muted-light)]">
+        </span>
+        <textarea
+          id={id}
+          name={name}
+          required={required}
+          value={value}
+          onChange={(e) => onChange(e.target.value.slice(0, maxLength))}
+          onBlur={onBlur}
+          rows={rows}
+          maxLength={maxLength}
+          aria-invalid={!!error}
+          aria-describedby={error ? `${id}-error` : undefined}
+          placeholder="Sendung, Zeitfenster, besondere Anforderungen…"
+          className="field__control"
+        />
+        <span className="field__counter" aria-hidden="true">
           {remaining}
         </span>
-      </div>
-      <textarea
-        id={id}
-        name={name}
-        required={required}
-        value={value}
-        onChange={(e) => onChange(e.target.value.slice(0, maxLength))}
-        onBlur={onBlur}
-        rows={rows}
-        maxLength={maxLength}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
-        placeholder="Beschreiben Sie Sendung, Zeitfenster, besondere Anforderungen…"
-        className={`${inputBase} resize-y min-h-[140px] ${error ? "border-[var(--brand)]/40 bg-white" : ""}`}
-      />
+      </label>
       {error && (
-        <p id={`${id}-error`} className="form-error" role="alert">
+        <p id={`${id}-error`} className="field-error" role="alert">
           {error}
         </p>
       )}
@@ -167,10 +173,10 @@ export function TopicSelector({
               type="button"
               onClick={() => onChange(opt.id)}
               aria-pressed={selected}
-              className={`rounded-none border px-4 py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
+              className={`min-h-[64px] rounded-[10px] border px-4 py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
                 selected
                   ? "border-[var(--focus)] bg-[color-mix(in_srgb,var(--focus)_8%,white)] text-[var(--foreground)] shadow-[0_0_0_1px_var(--focus)]"
-                  : "border-[var(--border)] bg-white text-[var(--foreground)] hover:border-[var(--muted-light)] hover:bg-[var(--surface)] focus-visible:border-[var(--focus)] focus-visible:shadow-[0_0_0_3px_var(--focus-ring)]"
+                  : "border-transparent bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-2)] focus-visible:border-[var(--focus)] focus-visible:shadow-[0_0_0_3px_var(--focus-ring)]"
               }`}
             >
               <span className="block text-[14px] font-normal">{opt.label}</span>

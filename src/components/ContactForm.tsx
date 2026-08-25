@@ -188,11 +188,10 @@ export function ContactForm() {
         </div>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           <FormField
-            label="Unternehmen"
+            label="Unternehmen (optional)"
             name="company"
             value={data.company}
             onChange={(v) => patch("company", v)}
-            hint="Optional"
             autoComplete="organization"
           />
           <FormField
@@ -209,12 +208,12 @@ export function ContactForm() {
         </div>
         <div className="mt-4">
           <FormField
-            label="Telefon"
+            label="Telefon (optional)"
             name="phone"
             type="tel"
             value={data.phone}
             onChange={(v) => patch("phone", v)}
-            hint="Optional – für Rückfragen bei zeitkritischer Fracht"
+            hint="Für Rückfragen bei zeitkritischer Fracht"
             autoComplete="tel"
           />
         </div>
