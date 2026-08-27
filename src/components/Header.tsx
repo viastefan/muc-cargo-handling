@@ -25,7 +25,7 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header-wrap sticky top-0 z-50 bg-white">
+      <header className="site-header-wrap sticky top-0 z-50 bg-[var(--background)]">
       <div className="site-header hidden lg:grid">
         <div className="site-header-cell site-header-logo">
           <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
@@ -60,22 +60,21 @@ export function Header() {
 
         <button
           type="button"
-          className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-sm transition-opacity duration-300 hover:opacity-60"
+          className="menu-toggle -mr-1"
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
           aria-controls="mobile-nav-panel"
           onClick={() => setOpen((v) => !v)}
         >
           <span className="sr-only">Menü</span>
-          <div className="flex w-5 flex-col items-center justify-center gap-[5px]">
-            <span className={`menu-toggle-line ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
-            <span className={`menu-toggle-line ${open ? "opacity-0 scale-x-0" : ""}`} />
-            <span className={`menu-toggle-line ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
-          </div>
+          <span className="menu-toggle__box" aria-hidden="true">
+            <span className="menu-toggle-line" />
+            <span className="menu-toggle-line" />
+          </span>
         </button>
       </div>
 
-      <div id="mobile-nav-panel" className="mobile-nav-panel bg-white lg:hidden" data-open={open}>
+      <div id="mobile-nav-panel" className="mobile-nav-panel bg-[var(--background)] lg:hidden" data-open={open}>
         <div className="mobile-nav-inner">
           <nav className="page-container flex flex-col py-3">
             {NAV.map((item) => {
@@ -86,7 +85,7 @@ export function Header() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={`mobile-nav-item border-b border-[var(--border)] py-3.5 text-[13px] font-normal uppercase tracking-[0.07em] transition-colors last:border-b-0 ${
-                    active ? "text-[var(--brand)]" : "text-[var(--foreground)]"
+                    active ? "text-[var(--brand-text)]" : "text-[var(--foreground)]"
                   }`}
                 >
                   {item.label}

@@ -89,7 +89,7 @@ export default function KontaktPage() {
                 <ul className="mt-6 space-y-6">
                   {CONTACT.map((item) => (
                     <li key={item.label} className="flex gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-white text-[var(--muted)]">
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--card)] text-[var(--muted)]">
                         <item.icon className="h-4 w-4" />
                       </span>
                       <div>
@@ -112,7 +112,7 @@ export default function KontaktPage() {
                 </p>
               </div>
 
-              <div className="border border-[var(--border)] bg-white p-6 md:p-8">
+              <div className="border border-[var(--border)] bg-[var(--card)] p-6 md:p-8">
                 <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
                   Zertifizierung
                 </p>

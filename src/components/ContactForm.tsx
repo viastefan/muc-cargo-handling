@@ -144,7 +144,7 @@ export function ContactForm() {
             setReference("");
             setServerError("");
           }}
-          className="mt-8 text-[13px] font-medium text-[var(--brand)] underline underline-offset-4 hover:opacity-80"
+          className="mt-8 text-[13px] font-medium text-[var(--brand-text)] underline underline-offset-4 hover:opacity-80"
         >
           Weitere Anfrage senden
         </button>

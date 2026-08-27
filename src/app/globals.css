@@ -1,19 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  color-scheme: light;
+  --background: var(--card);
   --foreground: #2a2a2a;
-  --muted: #6b6b6b;
-  /* Zuvor #9a9a9a = 2.84:1 auf Weiss und damit unter dem WCAG-AA-Minimum.
-     Die Abstufung zu --muted traegt jetzt Versalien/Laufweite, nicht die Helligkeit. */
-  --muted-light: #757575;
+  /* Beide gegen den hellsten UND den grauen Grund (--surface) geprueft:
+     #757575 erreichte auf #f4f4f4 nur 4.19:1. --muted wurde mit
+     nachgezogen, damit die Abstufung erhalten bleibt. */
+  --muted: #5f5f5f;
+  --muted-light: #6e6e6e;
   --muted-accent: #7a8fa3;
   --surface: #f4f4f4;
   --surface-2: #ececec;
+  /* Erhoehte Flaeche: Karten, Panels, Eingaben im Fokus. Frueher ueberall
+     hart #ffffff – dadurch waere jeder Dark Mode zwangslaeufig gebrochen. */
+  --card: #ffffff;
+  --card-hover: #fafafa;
   --border: #e8e8e8;
   --brand: #d90d3a;
   --brand-arrow: #f31042;
   --brand-dark: #b50b30;
+  /* Markenrot als Textfarbe – auf dunklem Grund waere #d90d3a nur 3.7:1. */
+  --brand-text: #d90d3a;
+  --brand-text-hover: #b50b30;
   --focus: #007aff;
   --focus-ring: rgba(0, 122, 255, 0.22);
   --page-x: 1.5rem;
@@ -38,6 +47,51 @@
   --duration-fast: 140ms;
   --duration-normal: 240ms;
   --reveal-distance: 12px;
+}
+
+/*
+ * Dunkelmodus.
+ * Die Werte sind gegen den jeweiligen Grund durchgerechnet und liegen alle
+ * ueber 4.5:1 (--brand bleibt Flaechenfarbe, dafuer gibt es --brand-text).
+ * Zwei Einstiege: Systemeinstellung, und data-theme fuer einen spaeteren
+ * manuellen Umschalter. data-theme="light" gewinnt immer.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #0f0f11;
+    --foreground: #ededed;
+    --muted: #a9a9a9;
+    --muted-light: #8f8f8f;
+    --muted-accent: #9db4c8;
+    --surface: #17171a;
+    --surface-2: #202024;
+    --card: #1a1a1d;
+    --card-hover: #212125;
+    --border: #2c2c31;
+    --brand-text: #ff5c78;
+    --brand-text-hover: #ff8ea3;
+    --focus: #4d9bff;
+    --focus-ring: rgba(77, 155, 255, 0.28);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0f0f11;
+  --foreground: #ededed;
+  --muted: #a9a9a9;
+  --muted-light: #8f8f8f;
+  --muted-accent: #9db4c8;
+  --surface: #17171a;
+  --surface-2: #202024;
+  --card: #1a1a1d;
+  --card-hover: #212125;
+  --border: #2c2c31;
+  --brand-text: #ff5c78;
+  --brand-text-hover: #ff8ea3;
+  --focus: #4d9bff;
+  --focus-ring: rgba(77, 155, 255, 0.28);
 }
 
 /* Scroll reveal — snappy, GPU-light */
@@ -268,7 +322,7 @@ a {
 }
 
 .top-bar__link:hover {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 /*
@@ -290,7 +344,7 @@ a {
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
-  background: #ffffff;
+  background: var(--card);
   color: var(--foreground);
   font-size: 1.1rem;
   font-weight: 400;
@@ -725,7 +779,7 @@ a {
   overflow: hidden;
   border: 1px solid var(--border);
   border-top: none;
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 8px 20px rgb(0 0 0 / 0.06);
   transform: none;
   transition: none;
@@ -779,7 +833,7 @@ a {
 
 .header-contact-menu__menu-item:hover {
   background: var(--surface);
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .header-contact-menu.is-open .header-contact-menu__toggle {
@@ -857,7 +911,7 @@ a {
   z-index: 1;
   width: 100%;
   max-height: min(88svh, 560px);
-  background: #ffffff;
+  background: var(--card);
   border: 1px solid var(--border);
   box-shadow: 0 -6px 24px rgb(0 0 0 / 0.08);
   animation: contact-action-sheet-in 0.36s var(--ease-out);
@@ -1002,7 +1056,7 @@ a {
   min-height: 2.75rem;
   padding: 0.625rem 1rem;
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--card);
   color: var(--foreground);
   font-size: 14px;
   text-decoration: none;
@@ -1213,7 +1267,7 @@ a {
   display: inline-flex;
   max-width: 100%;
   align-items: center;
-  background: #ffffff;
+  background: var(--card);
   color: var(--foreground);
   text-decoration: none;
 }
@@ -1225,7 +1279,7 @@ a {
 }
 
 .phone-box-default:hover {
-  background: #fafafa;
+  background: var(--card-hover);
   box-shadow: 0 4px 16px rgb(0 0 0 / 0.05);
   transform: translateY(-1px);
 }
@@ -1298,7 +1352,7 @@ a {
 }
 
 .phone-box-hero:hover {
-  background: #fafafa;
+  background: var(--card-hover);
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.05);
   transform: none;
 }
@@ -1633,7 +1687,7 @@ a {
   width: 100%;
   max-height: min(78svh, 34rem);
   flex-direction: column;
-  background: #ffffff;
+  background: var(--card);
   border: 1px solid var(--border);
   box-shadow: 0 -8px 28px rgb(0 0 0 / 0.1);
   animation: contact-action-sheet-in 0.36s var(--ease-out);
@@ -1748,7 +1802,7 @@ a {
 }
 
 .faq-toc-sheet__link.is-active .faq-toc-sheet__index {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .faq-toc-sheet__text {
@@ -1854,7 +1908,7 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .faq-accordion__trigger:hover .faq-accordion__question {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .faq-accordion__question {
@@ -1898,7 +1952,7 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .faq-accordion--home .faq-accordion__item {
-  background: #ffffff;
+  background: var(--card);
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
@@ -1907,7 +1961,7 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .faq-accordion--home .faq-accordion__item.is-open {
-  background: #ffffff;
+  background: var(--card);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--border) 85%, transparent);
 }
 
@@ -1965,7 +2019,7 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .faq-accordion--home .faq-accordion__item.is-open .faq-accordion__icon {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .faq-accordion--home .faq-accordion__panel {
@@ -2010,7 +2064,7 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .link-underline:hover {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 /* Buttons — corner layout: label bottom-left 8px, small arrow top-right 8px */
@@ -2165,7 +2219,9 @@ body:has(.cookie-banner) .faq-toc-fab {
 
 .btn-corner--white {
   background: #ffffff;
-  color: var(--foreground);
+  /* Flaeche bleibt in beiden Modi weiss, deshalb hier keine Token-Farbe -
+     sonst kippt die Schrift im Dunkelmodus auf Weiss-auf-Weiss. */
+  color: #2a2a2a;
   box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.07);
 }
 
@@ -2343,15 +2399,65 @@ body:has(.cookie-banner) .faq-toc-fab {
   }
 }
 
+/*
+ * Menue-Umschalter: zwei Striche statt drei, die sich zum X drehen.
+ * Ruhiger als der klassische Burger und laesst sich sauber animieren,
+ * weil kein Strich ausgeblendet werden muss.
+ */
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.menu-toggle:hover {
+  background: var(--surface-2);
+}
+
+.menu-toggle[aria-expanded="true"] {
+  border-color: var(--foreground);
+}
+
+.menu-toggle__box {
+  position: relative;
+  width: 1.125rem;
+  height: 0.75rem;
+}
+
 .menu-toggle-line {
+  position: absolute;
+  left: 0;
   display: block;
   height: 1.5px;
-  width: 1.25rem;
+  width: 100%;
+  border-radius: 2px;
   background: var(--foreground);
-  transition:
-    transform var(--duration-normal) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out);
+  transition: transform var(--duration-normal) var(--ease-out);
   transform-origin: center;
+}
+
+.menu-toggle-line:first-child {
+  top: 0;
+}
+
+.menu-toggle-line:last-child {
+  bottom: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-line:first-child {
+  transform: translateY(5.25px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-line:last-child {
+  transform: translateY(-5.25px) rotate(-45deg);
 }
 
 /*
@@ -2381,13 +2487,13 @@ body:has(.cookie-banner) .faq-toc-fab {
 
 .field:focus-within {
   border-color: var(--focus);
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .field--error {
   border-color: var(--brand);
-  background: #ffffff;
+  background: var(--card);
 }
 
 .field__label {
@@ -2442,7 +2548,7 @@ textarea.field__control {
   margin-top: 0.4rem;
   padding-left: 0.15rem;
   font-size: 12px;
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .field-hint {
@@ -2466,7 +2572,7 @@ textarea.field__control {
 .form-error {
   margin-top: 0.375rem;
   font-size: 12px;
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 /* Contact form: Apple-blue focus rings (not brand red — that reads as error) */
@@ -2484,7 +2590,7 @@ textarea.field__control {
 .form-shell {
   margin-top: 2.5rem;
   border: 1px solid var(--border);
-  background: white;
+  background: var(--card);
   position: relative;
 }
 
@@ -2576,8 +2682,8 @@ textarea.field__control {
   align-items: center;
   justify-content: center;
   border-radius: 2px;
-  background: white;
-  color: var(--brand);
+  background: var(--card);
+  color: var(--brand-text);
   box-shadow: 0 0 0 1px var(--border);
   margin-bottom: 1.25rem;
 }
@@ -2647,7 +2753,7 @@ textarea.field__control {
 }
 
 .service-nav-card:hover .service-nav-arrow .btn-corner-symbol {
-  color: var(--brand);
+  color: var(--brand-text);
   opacity: 0.9;
   transform: rotate(-45deg) translate(0.5px, -0.5px);
 }
@@ -2692,7 +2798,7 @@ textarea.field__control {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
-  background: white;
+  background: var(--card);
   font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--muted);
@@ -2779,7 +2885,7 @@ textarea.field__control {
   flex-direction: column;
   height: 100%;
   min-height: 11.5rem;
-  background: #ffffff;
+  background: var(--card);
   padding: 1.35rem 1.35rem 1.45rem;
   transition: background-color var(--duration-normal) var(--ease-out);
 }
@@ -2792,7 +2898,7 @@ textarea.field__control {
 }
 
 .value-pillar:hover {
-  background: #ffffff;
+  background: var(--card);
 }
 
 .value-pillar__index {
@@ -2839,7 +2945,7 @@ textarea.field__control {
 }
 
 .spec-grid-item {
-  background: white;
+  background: var(--card);
   padding: 1.5rem;
 }
 
@@ -2864,7 +2970,7 @@ textarea.field__control {
 }
 
 .metric-row-item {
-  background: white;
+  background: var(--card);
   padding: 1.5rem 1.25rem;
   text-align: center;
 }
@@ -3168,7 +3274,23 @@ textarea.field__control {
   color: white;
 }
 
+/* Footer liegt in beiden Modi auf Schwarz – dort immer weiss. */
 .brand-logo-inverted {
+  filter: brightness(0) invert(1);
+}
+
+/*
+ * Das Logo ist schwarze Strichgrafik. Im Dunkelmodus waere es auf dem
+ * dunklen Header unsichtbar, deshalb dort umkehren. Das bereits invertierte
+ * Footer-Logo ist ausgenommen, sonst waere es doppelt gedreht.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand-logo:not(.brand-logo-inverted) {
+    filter: brightness(0) invert(1);
+  }
+}
+
+:root[data-theme="dark"] .brand-logo:not(.brand-logo-inverted) {
   filter: brightness(0) invert(1);
 }
 
@@ -3529,7 +3651,7 @@ textarea.field__control {
 
 .partner-logos {
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--card);
   padding: 1.25rem 1.25rem 1.5rem;
 }
 
@@ -3779,7 +3901,7 @@ textarea.field__control {
 }
 
 .flow-track {
-  background: #ffffff;
+  background: var(--card);
   border: 1px solid var(--border);
   padding: clamp(1.5rem, 3vw, 2rem);
 }
@@ -4158,7 +4280,7 @@ textarea.field__control {
   font-family: inherit;
   font-size: 14px;
   font-weight: 400;
-  color: var(--brand);
+  color: var(--brand-text);
   text-align: left;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -4167,7 +4289,7 @@ textarea.field__control {
 }
 
 .download-card__link:hover {
-  color: var(--brand-dark);
+  color: var(--brand-text-hover);
 }
 
 /* PDF preview — desktop modal / mobile bottom sheet (portaled to body) */
@@ -4207,7 +4329,7 @@ textarea.field__control {
   overflow: hidden;
   border: none;
   border-radius: 20px 20px 0 0;
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 -12px 40px rgb(0 0 0 / 0.18);
   transform: translate3d(0, 0, 0);
   animation: download-preview-sheet-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -4337,7 +4459,7 @@ textarea.field__control {
   width: 2.5rem;
   height: 2.5rem;
   background: var(--surface);
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .download-preview__pdf-icon {
@@ -4413,14 +4535,14 @@ textarea.field__control {
   width: 100%;
   height: min(46svh, 360px);
   border: none;
-  background: #ffffff;
+  background: var(--card);
 }
 
 .download-preview__image-scroll {
   height: min(46svh, 360px);
   overflow: auto;
   overscroll-behavior: contain;
-  background: #ffffff;
+  background: var(--card);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -4436,7 +4558,7 @@ textarea.field__control {
   gap: 0.625rem;
   flex-shrink: 0;
   padding: 0.95rem 1.15rem calc(0.95rem + env(safe-area-inset-bottom, 0px));
-  background: #ffffff;
+  background: var(--card);
   border-top: 1px solid var(--border);
 }
 
@@ -4645,7 +4767,7 @@ textarea.field__control {
 
 .capability-grid__link:hover {
   background: var(--surface-2);
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 /* Security band — full-bleed red break between Leistungen and Downloads */
@@ -4860,13 +4982,13 @@ textarea.field__control {
   width: fit-content;
   font-size: 13px;
   font-weight: 400;
-  color: var(--brand);
+  color: var(--brand-text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .location-map__directions:hover {
-  color: var(--brand-dark);
+  color: var(--brand-text-hover);
 }
 
 /* Cookie consent banner + floating fingerprint */
@@ -4879,7 +5001,7 @@ textarea.field__control {
   max-width: 40rem;
   margin-inline: auto;
   border: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 10px 36px rgb(0 0 0 / 0.12);
   animation: download-sheet-in 0.34s var(--ease-out);
 }
@@ -4934,7 +5056,7 @@ textarea.field__control {
 }
 
 .cookie-banner__link:hover {
-  color: var(--brand);
+  color: var(--brand-text);
 }
 
 .cookie-banner__actions {
@@ -5030,7 +5152,7 @@ textarea.field__control {
   overflow: auto;
   border: none;
   border-top: 1px solid var(--border);
-  background: #ffffff;
+  background: var(--card);
   box-shadow: 0 -8px 32px rgb(0 0 0 / 0.08);
   animation: download-sheet-in 0.34s var(--ease-out);
 }

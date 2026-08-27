@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { InternationalGlobeSection } from "@/components/InternationalGlobeSection";
 import { FooterCta } from "@/components/Footer";
@@ -179,17 +178,7 @@ export default function UnternehmenPage() {
           light="zuverlässige Cargo-Prozesse"
         />
 
-        <div className="section-header-gap media-dim relative aspect-[16/7] w-full overflow-hidden bg-[var(--surface)]">
-          <Image
-            src="/images/unternehmen/stats.jpg"
-            alt="Team bei der Arbeit am Flughafen München"
-            fill
-            className="object-cover"
-            sizes="(max-width: 1280px) 100vw, 1280px"
-          />
-        </div>
-
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+        <div className="section-header-gap grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           <StatCard
             value="20+"
             label="Jahre Erfahrung"

@@ -10,9 +10,9 @@ type Props = {
   inverted?: boolean;
 };
 
-/** Intrinsic ratio of public/images/shared/logo.png (~1.48) */
-const LOGO_WIDTH = 178;
-const LOGO_HEIGHT = 120;
+/** Echte Maße von public/images/shared/logo.png (1400×940, freigestellt) */
+const LOGO_WIDTH = 1400;
+const LOGO_HEIGHT = 940;
 
 export function BrandLogo({
   className = "h-10 w-auto sm:h-11",
@@ -28,7 +28,7 @@ export function BrandLogo({
       width={width}
       height={height}
       priority={priority}
-      className={`${className} ${inverted ? "brand-logo-inverted" : ""}`.trim()}
+      className={`brand-logo ${className} ${inverted ? "brand-logo-inverted" : ""}`.trim()}
     />
   );
 }

@@ -39,7 +39,7 @@ export function FormField({
       <label htmlFor={id} className={`field ${error ? "field--error" : ""}`.trim()}>
         <span className="field__label">
           {label}
-          {required && <span className="text-[var(--brand)]"> *</span>}
+          {required && <span className="text-[var(--brand-text)]"> *</span>}
         </span>
         <input
           id={id}
@@ -100,7 +100,7 @@ export function FormTextarea({
       <label htmlFor={id} className={`field ${error ? "field--error" : ""}`.trim()}>
         <span className="field__label">
           {label}
-          {required && <span className="text-[var(--brand)]"> *</span>}
+          {required && <span className="text-[var(--brand-text)]"> *</span>}
         </span>
         <textarea
           id={id}
@@ -175,7 +175,7 @@ export function TopicSelector({
               aria-pressed={selected}
               className={`min-h-[64px] rounded-[10px] border px-4 py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
                 selected
-                  ? "border-[var(--focus)] bg-[color-mix(in_srgb,var(--focus)_8%,white)] text-[var(--foreground)] shadow-[0_0_0_1px_var(--focus)]"
+                  ? "border-[var(--focus)] bg-[color-mix(in_srgb,var(--focus)_10%,var(--card))] text-[var(--foreground)] shadow-[0_0_0_1px_var(--focus)]"
                   : "border-transparent bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-2)] focus-visible:border-[var(--focus)] focus-visible:shadow-[0_0_0_3px_var(--focus-ring)]"
               }`}
             >

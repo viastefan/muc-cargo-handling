@@ -24,7 +24,7 @@ function CardBody({
         </h3>
         {href && (
           <span
-            className="service-card-arrow shrink-0 text-[var(--muted-light)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--brand)]"
+            className="service-card-arrow shrink-0 text-[var(--muted-light)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--brand-text)]"
             aria-hidden="true"
           >
             <ChevronRight className="h-4 w-4" />
@@ -50,7 +50,7 @@ function CardBody({
 
 export function ServiceCard({ image, title, description, bullets, href }: Props) {
   const inner = (
-    <article className="service-card group flex h-full flex-col bg-white">
+    <article className="service-card group flex h-full flex-col bg-[var(--card)]">
       <div className="service-card-media media-dim relative aspect-[3/2] w-full overflow-hidden bg-[var(--surface)]">
         <Image
           src={image}
