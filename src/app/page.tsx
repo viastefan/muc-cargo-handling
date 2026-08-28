@@ -130,7 +130,7 @@ export default function HomePage() {
         <SecurityOverview items={SECURITY_METHODS} />
       </ScrollReveal>
 
-      <PageSection id="downloads">
+      <PageSection id="downloads" compact>
         <ScrollReveal duration={1000}>
           <SectionHeader
             eyebrow="Download"
@@ -148,7 +148,7 @@ export default function HomePage() {
         </ScrollReveal>
       </PageSection>
 
-      <PageSection muted id="faq">
+      <PageSection muted compact id="faq">
         <div className="faq-home">
           <ScrollReveal duration={1000}>
             <SectionHeader
@@ -172,7 +172,7 @@ export default function HomePage() {
         </div>
       </PageSection>
 
-      <PageSection id="standort">
+      <PageSection id="standort" compact>
         <ScrollReveal duration={1000}>
           <SectionHeader
             eyebrow="Standort"

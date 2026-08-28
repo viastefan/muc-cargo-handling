@@ -6,6 +6,8 @@ type Props = {
   className?: string;
   muted?: boolean;
   borderTop?: boolean;
+  /** Geringere Bauhöhe für unterstützende Abschnitte. */
+  compact?: boolean;
   id?: string;
 };
 
@@ -14,12 +16,13 @@ export function PageSection({
   className = "",
   muted = false,
   borderTop = false,
+  compact = false,
   id,
 }: Props) {
   return (
     <section
       id={id}
-      className={`section-y ${muted ? "bg-[var(--surface)]" : ""} ${borderTop ? "border-t border-[var(--border)]" : ""} ${className}`}
+      className={`section-y ${compact ? "section-y--compact" : ""} ${muted ? "bg-[var(--surface)]" : ""} ${borderTop ? "border-t border-[var(--border)]" : ""} ${className}`}
     >
       <div className="page-container">{children}</div>
     </section>
