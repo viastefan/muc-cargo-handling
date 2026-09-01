@@ -25,6 +25,29 @@
   --brand-text-hover: #b50b30;
   --focus: #007aff;
   --focus-ring: rgba(0, 122, 255, 0.22);
+  /* Dritte Flaechenstufe – nur fuer Hover auf --surface-2 (Buttons, Nav).
+     Vorher standen hier harte Hellgrau-Werte, die im Dunkelmodus zu
+     Weiss-auf-Weiss fuehrten. */
+  --surface-3: #e2e2e2;
+  /* Feine Innenkanten. Im Dunkelmodus muss das Licht statt Schatten sein,
+     sonst verschwindet die Kante komplett. */
+  --ring-subtle: rgb(0 0 0 / 0.07);
+  --ring-subtle-strong: rgb(0 0 0 / 0.1);
+  /* Heller Button ("white"). Auf dauerdunklem Grund (Footer, Bildband)
+     wird das Paar lokal wieder auf echtes Weiss gesetzt. */
+  --btn-solid-bg: #ffffff;
+  --btn-solid-bg-hover: #fcfcfc;
+  --btn-solid-fg: #2a2a2a;
+  /* Eckpfeil im Button. */
+  --btn-arrow-ink: #5e7187;
+  /* Prozess-Punkte und Sheet-Griff. */
+  --dot-idle: #d8dde3;
+  --dot-active: #5a6d82;
+  --handle: #cfcfcf;
+  /* Icon-Kachel in Karten-Rastern. */
+  --icon-tile-bg: #ffffff;
+  --icon-tile-border: #dedede;
+  --icon-tile-ink: #3d3d3d;
   --page-x: 1.5rem;
   --section-y: 4rem;
   --section-header-gap: 2.75rem;
@@ -73,6 +96,19 @@
     --brand-text-hover: #ff8ea3;
     --focus: #4d9bff;
     --focus-ring: rgba(77, 155, 255, 0.28);
+    --surface-3: #2b2b31;
+    --ring-subtle: rgb(255 255 255 / 0.09);
+    --ring-subtle-strong: rgb(255 255 255 / 0.14);
+    --btn-solid-bg: #26262b;
+    --btn-solid-bg-hover: #303037;
+    --btn-solid-fg: #ededed;
+    --btn-arrow-ink: #9fb1c4;
+    --dot-idle: #3a3a42;
+    --dot-active: #9db4c8;
+    --handle: #4a4a52;
+    --icon-tile-bg: #232329;
+    --icon-tile-border: #35353c;
+    --icon-tile-ink: #e2e2e2;
   }
 }
 
@@ -92,6 +128,19 @@
   --brand-text-hover: #ff8ea3;
   --focus: #4d9bff;
   --focus-ring: rgba(77, 155, 255, 0.28);
+  --surface-3: #2b2b31;
+  --ring-subtle: rgb(255 255 255 / 0.09);
+  --ring-subtle-strong: rgb(255 255 255 / 0.14);
+  --btn-solid-bg: #26262b;
+  --btn-solid-bg-hover: #303037;
+  --btn-solid-fg: #ededed;
+  --btn-arrow-ink: #9fb1c4;
+  --dot-idle: #3a3a42;
+  --dot-active: #9db4c8;
+  --handle: #4a4a52;
+  --icon-tile-bg: #232329;
+  --icon-tile-border: #35353c;
+  --icon-tile-ink: #e2e2e2;
 }
 
 /* Scroll reveal — snappy, GPU-light */
@@ -474,29 +523,32 @@ a {
 .site-header-logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.5rem;
   min-width: 0;
 }
 
 .site-header-logo-img {
-  height: 2.25rem;
+  height: 2.5rem;
   width: auto;
   flex-shrink: 0;
 }
 
+/*
+ * Zulassung als ruhiger Vertrauensstempel neben dem Logo. Kein Trennstrich –
+ * der erzeugte einen "Kasten"-Look, der wie ein Bug wirkte. Stattdessen trennt
+ * nur der Weissraum, und die Kennung steht als kleiner Block fuer sich.
+ */
 .site-header-cert {
   display: none;
   min-width: 0;
-  padding-left: 0.75rem;
-  border-left: 1px solid var(--border);
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .site-header-cert__label {
   display: block;
   font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-weight: 400;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-light);
   white-space: nowrap;
@@ -504,8 +556,10 @@ a {
 
 .site-header-cert__value {
   display: block;
-  font-size: 12px;
-  font-weight: 400;
+  margin-top: 0.05rem;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   color: var(--foreground);
   white-space: nowrap;
 }
@@ -555,7 +609,7 @@ a {
 }
 
 .site-header-cell--nav:hover .site-header-link {
-  background-color: #f0f0f0;
+  background-color: var(--surface-2);
   color: var(--foreground);
 }
 
@@ -565,7 +619,7 @@ a {
 }
 
 .site-header-cell--nav:active .site-header-link {
-  background-color: #e8e8e8;
+  background-color: var(--surface-3);
 }
 
 .site-header-cta {
@@ -2190,7 +2244,7 @@ body:has(.cookie-banner) .faq-toc-fab {
   height: 0.75rem;
   font-size: 0.75rem;
   line-height: 1;
-  color: #5e7187;
+  color: var(--btn-arrow-ink);
   opacity: 0.84;
   transform: rotate(-45deg);
   transform-origin: center center;
@@ -2295,31 +2349,35 @@ body:has(.cookie-banner) .faq-toc-fab {
   background: var(--brand-dark);
 }
 
+/*
+ * Heller Button. Frueher hart weiss mit dunkler Schrift: im Dunkelmodus
+ * war das ein grelles Rechteck, und beim Hover lief die Flaeche gegen die
+ * Schriftfarbe. Jetzt ueber ein Token-Paar, das der Modus dreht – und das
+ * auf dauerdunklem Grund (Footer, Bildband) lokal wieder echt weiss wird.
+ */
 .btn-corner--white {
-  background: #ffffff;
-  /* Flaeche bleibt in beiden Modi weiss, deshalb hier keine Token-Farbe -
-     sonst kippt die Schrift im Dunkelmodus auf Weiss-auf-Weiss. */
-  color: #2a2a2a;
-  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.07);
+  background: var(--btn-solid-bg);
+  color: var(--btn-solid-fg);
+  box-shadow: inset 0 0 0 1px var(--ring-subtle);
 }
 
 .btn-corner--white:hover {
-  background: #fcfcfc;
+  background: var(--btn-solid-bg-hover);
   box-shadow:
-    inset 0 0 0 1px rgb(0 0 0 / 0.09),
+    inset 0 0 0 1px var(--ring-subtle-strong),
     0 4px 14px rgb(0 0 0 / 0.05);
 }
 
 .btn-corner--gray {
   background: var(--surface-2);
   color: var(--foreground);
-  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.05);
+  box-shadow: inset 0 0 0 1px var(--ring-subtle);
 }
 
 .btn-corner--gray:hover {
-  background: #eaeaea;
+  background: var(--surface-3);
   box-shadow:
-    inset 0 0 0 1px rgb(0 0 0 / 0.07),
+    inset 0 0 0 1px var(--ring-subtle-strong),
     0 4px 14px rgb(0 0 0 / 0.04);
 }
 
@@ -3349,6 +3407,22 @@ textarea.field__control {
   border-color: var(--brand);
 }
 
+/*
+ * Bereiche, die in beiden Modi dunkel bzw. rot bleiben. Dort ist der helle
+ * Button weiter echt weiss – das Token-Paar wird lokal zurueckgedreht.
+ */
+.site-footer,
+.footer-cta,
+.image-cta-band__inner,
+.international-band {
+  --btn-solid-bg: #ffffff;
+  --btn-solid-bg-hover: #fcfcfc;
+  --btn-solid-fg: #2a2a2a;
+  --ring-subtle: rgb(0 0 0 / 0.07);
+  --ring-subtle-strong: rgb(0 0 0 / 0.1);
+  --btn-arrow-ink: #5e7187;
+}
+
 /* Site footer */
 .site-footer {
   background: #0a0a0a;
@@ -3927,12 +4001,12 @@ textarea.field__control {
   height: 0.5rem;
   width: 0.5rem;
   border-radius: 999px;
-  background: #d8dde3;
+  background: var(--dot-idle);
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .process-dot-card__dot--active {
-  background: #5a6d82;
+  background: var(--dot-active);
 }
 
 .process-dot-card__title {
@@ -4503,7 +4577,7 @@ textarea.field__control {
   width: 3rem;
   height: 0.3rem;
   border-radius: 999px;
-  background: #cfcfcf;
+  background: var(--handle);
 }
 
 .download-preview__grab-hint {

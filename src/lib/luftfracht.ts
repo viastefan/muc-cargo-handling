@@ -18,7 +18,7 @@ export const LUFTFRACHT_IMPORT_FLOW = [
   {
     step: "03",
     title: "Sicherheit & Freigabe",
-    text: "Röntgen und ergänzende Verfahren nach Luftsicherheitsvorgaben – dokumentiert und nachvollziehbar.",
+    text: "Zoll- und Sicherheitsfreigabe nach geltenden Vorgaben – dokumentiert und nachvollziehbar.",
   },
   {
     step: "04",

@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DownloadGrid } from "@/components/DownloadGrid";
 import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
 import { Button } from "@/components/Button";
 import { Hero } from "@/components/Hero";
 import { ImageCtaBand } from "@/components/ImageCtaBand";
-import { LocationMap } from "@/components/LocationMap";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
@@ -14,12 +12,11 @@ import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
-import { COMPANY, MAPS_EMBED } from "@/lib/company";
+import { COMPANY } from "@/lib/company";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
 import {
   HOME_CAPABILITY_AREAS,
-  HOME_DOWNLOADS,
   HOME_IMAGE_CTA,
   HOME_STORY,
   HOME_TEAM_INTRO,
@@ -130,24 +127,6 @@ export default function HomePage() {
         <SecurityOverview items={SECURITY_METHODS} />
       </ScrollReveal>
 
-      <PageSection id="downloads" compact>
-        <ScrollReveal duration={1000}>
-          <SectionHeader
-            eyebrow="Download"
-            dark="Formulare und"
-            light="Unterlagen"
-            breakTitle={false}
-            description="Wichtige Dokumente für Arbeitsaufträge, Zulassung und Versicherung – jederzeit abrufbar."
-            descriptionClassName="max-w-none max-lg:whitespace-normal lg:whitespace-nowrap"
-          />
-        </ScrollReveal>
-        <ScrollReveal delay={120} duration={1000}>
-          <div className="section-header-gap">
-            <DownloadGrid items={HOME_DOWNLOADS} />
-          </div>
-        </ScrollReveal>
-      </PageSection>
-
       <PageSection muted compact id="faq">
         <div className="faq-home">
           <ScrollReveal duration={1000}>
@@ -170,24 +149,6 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
         </div>
-      </PageSection>
-
-      <PageSection id="standort" compact>
-        <ScrollReveal duration={1000}>
-          <SectionHeader
-            eyebrow="Standort"
-            dark="Direkt am"
-            light="Flughafen München"
-            breakTitle={false}
-            description="Kurze Wege zum Cargo-Drehkreuz – für effiziente Abläufe und schnelle Abstimmung vor Ort."
-            descriptionClassName="max-w-xl"
-          />
-        </ScrollReveal>
-        <ScrollReveal delay={140} duration={1100}>
-          <div className="section-header-gap">
-            <LocationMap embedSrc={MAPS_EMBED} />
-          </div>
-        </ScrollReveal>
       </PageSection>
 
       <FooterCta />

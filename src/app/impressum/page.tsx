@@ -28,18 +28,18 @@ export default function ImpressumPage() {
               <br />
               {COMPANY.office.line1}
               <br />
+              {COMPANY.postfach}
+              <br />
               {COMPANY.office.line2}
             </p>
           </section>
 
           <section>
             <h2 className="text-[15px] font-normal text-[var(--foreground)]">
-              Warenannahme & Postanschrift
+              Warenannahme
             </h2>
             <p className="mt-3">
               {COMPANY.warehouse.line1}
-              <br />
-              {COMPANY.postfach}
               <br />
               {COMPANY.warehouse.line2}
             </p>

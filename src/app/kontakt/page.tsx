@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
+import { LocationMap } from "@/components/LocationMap";
 import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
-import { COMPANY } from "@/lib/company";
+import { COMPANY, MAPS_EMBED } from "@/lib/company";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -129,11 +130,25 @@ export default function KontaktPage() {
                 items={[
                   { value: "< 24h", label: "Rückmeldung auf Anfragen" },
                   { value: "MUC", label: "Direkt am Flughafen" },
-                  { value: "DE/RA", label: "Zugelassene Sicherheit" },
+                  { value: "DE/RA", label: "Zugelassener reglementierter Beauftragter" },
                 ]}
               />
             </div>
           </aside>
+        </div>
+      </PageSection>
+
+      <PageSection muted borderTop compact id="standort-karte">
+        <SectionHeader
+          eyebrow="Standort"
+          dark="So finden Sie uns"
+          light="am Flughafen München"
+          breakTitle={false}
+          description="Kurze Wege zum Cargo-Drehkreuz – Büro und Warenannahme im Frachtzentrum."
+          descriptionClassName="max-w-xl"
+        />
+        <div className="section-header-gap">
+          <LocationMap embedSrc={MAPS_EMBED} />
         </div>
       </PageSection>
 

@@ -28,9 +28,9 @@ const TIMELINE = [
 
 type TeamMember = {
   name: string;
-  role: string;
-  phone: string;
-  phoneTel: string;
+  role?: string;
+  phone?: string;
+  phoneTel?: string;
   mobile?: string;
   mobileTel?: string;
   email?: string;
@@ -56,17 +56,15 @@ const TEAM: TeamMember[] = [
     email: "lynn.onyeke@muc-cargo.de",
   },
   {
-    name: "Evelyn Zimmert-Onyeke",
-    role: "Buchhaltung",
-    phone: "08765 – 93 98 25",
-    phoneTel: "+498765939825",
+    // Auf Wunsch als Abteilung ohne Namen und ohne Telefonnummer geführt.
+    name: "Buchhaltung",
     email: "buchhaltung@muc-cargo.de",
   },
   {
     name: "Robert Cinca",
     role: "Teamleader Warehouse",
-    phone: "089 – 975 94 877",
-    phoneTel: "+498997594877",
+    phone: "089 – 975 94 870",
+    phoneTel: "+498997594870",
     mobile: "0179 – 452 64 37",
     mobileTel: "+491794526437",
     email: "robert.cinca@muc-cargo.de",
@@ -76,6 +74,7 @@ const TEAM: TeamMember[] = [
     role: "Import/Zoll",
     phone: "089 – 975 94 870",
     phoneTel: "+498997594870",
+    email: "lager@muc-cargo.de",
   },
 ];
 
@@ -142,14 +141,16 @@ export default function UnternehmenPage() {
           {TEAM.map((person) => (
             <article key={person.name} className="team-card">
               <h3 className="team-card__name">{person.name}</h3>
-              <p className="team-card__role">{person.role}</p>
+              {person.role ? <p className="team-card__role">{person.role}</p> : null}
               <ul className="team-card__contact">
-                <li>
-                  <a href={`tel:${person.phoneTel}`} className="team-card__link">
-                    <PhoneIcon className="text-[var(--muted-light)]" />
-                    <span>Tel: {person.phone}</span>
-                  </a>
-                </li>
+                {person.phone && person.phoneTel ? (
+                  <li>
+                    <a href={`tel:${person.phoneTel}`} className="team-card__link">
+                      <PhoneIcon className="text-[var(--muted-light)]" />
+                      <span>Tel: {person.phone}</span>
+                    </a>
+                  </li>
+                ) : null}
                 {person.mobile && person.mobileTel ? (
                   <li>
                     <a href={`tel:${person.mobileTel}`} className="team-card__link">
