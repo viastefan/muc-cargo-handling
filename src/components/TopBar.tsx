@@ -57,7 +57,10 @@ export function TopBar() {
       <div className="top-bar__collapse">
         <div className="page-container top-bar__inner">
           <div className="top-bar__items">
-            <div className="top-bar__item">
+            {/* Ab 1380px steht die Zulassung fest in der Kopfzeile; dann wird
+                sie hier ausgeblendet, damit sie nicht doppelt erscheint.
+                Darunter ist im Header kein Platz – dort bleibt sie hier. */}
+            <div className="top-bar__item top-bar__item--cert">
               <p className="top-bar__label">Reglementierter Beauftragter</p>
               <p className="top-bar__value">{COMPANY.regAgent}</p>
             </div>

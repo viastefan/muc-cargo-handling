@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BrandLogo } from "./BrandLogo";
 import { HeaderContactMenu } from "./HeaderContactMenu";
 import { Button } from "./Button";
+import { COMPANY } from "@/lib/company";
 
 const NAV = [
   { href: "/unternehmen", label: "Unternehmen" },
@@ -28,8 +29,15 @@ export function Header() {
       <header className="site-header-wrap sticky top-0 z-50 bg-[var(--background)]">
       <div className="site-header hidden lg:grid">
         <div className="site-header-cell site-header-logo">
-          <Link href="/" className="transition-opacity duration-300 hover:opacity-80">
-            <BrandLogo priority />
+          <Link
+            href="/"
+            className="site-header-logo-link transition-opacity duration-300 hover:opacity-80"
+          >
+            <BrandLogo priority className="site-header-logo-img" />
+            <span className="site-header-cert">
+              <span className="site-header-cert__label">Reglementierter Beauftragter</span>
+              <span className="site-header-cert__value">{COMPANY.regAgent}</span>
+            </span>
           </Link>
         </div>
 

@@ -465,6 +465,75 @@ a {
   padding-inline: 1.25rem;
 }
 
+/*
+ * Zulassung in der festen Kopfzeile.
+ * Sie stand bisher nur in der wegklickbaren Leiste darueber und war nach
+ * einem Klick auf das X dauerhaft weg. Als Vertrauensmerkmal gehoert sie
+ * in den Bereich, der beim Scrollen stehen bleibt.
+ */
+.site-header-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.site-header-logo-img {
+  height: 2.25rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.site-header-cert {
+  display: none;
+  min-width: 0;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border);
+  line-height: 1.25;
+}
+
+.site-header-cert__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+  white-space: nowrap;
+}
+
+.site-header-cert__value {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+/* Erst einblenden, wenn die Zelle wirklich Platz dafuer hat. */
+@media (min-width: 1380px) {
+  .site-header-cert {
+    display: block;
+  }
+
+  /* Logo-Spalte waechst mit, damit die Navigation nicht gestaucht wird. */
+  .site-header {
+    grid-template-columns:
+      minmax(340px, 2fr)
+      minmax(96px, 1fr)
+      minmax(148px, 1.4fr)
+      minmax(96px, 1fr)
+      minmax(80px, 0.85fr)
+      minmax(241px, 1.4fr);
+  }
+
+  /* Ab hier traegt die Kopfzeile die Zulassung – in der Leiste waere sie
+     dann doppelt. */
+  .top-bar__item--cert {
+    display: none;
+  }
+}
+
 .site-header-link {
   display: flex;
   height: 100%;
