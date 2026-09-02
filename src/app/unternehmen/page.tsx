@@ -76,7 +76,26 @@ const TEAM: TeamMember[] = [
     phoneTel: "+498997594870",
     email: "lager@muc-cargo.de",
   },
+  {
+    // Ebenfalls als Abteilung ohne Namen und Telefonnummer geführt.
+    name: "Frachtvermittlung",
+    email: "dispo@muc-cargo.de",
+  },
 ];
+
+/** Kuerzel fuers Karten-Icon: bei zwei Woertern je der erste Buchstabe
+ *  (Personennamen), bei einem Wort die ersten zwei Buchstaben
+ *  (Abteilungsnamen wie "Buchhaltung") – so sind es immer zwei Zeichen. */
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return parts
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() ?? "")
+      .join("");
+  }
+  return (parts[0] ?? "").slice(0, 2).toUpperCase();
+}
 
 export default function UnternehmenPage() {
   return (
@@ -140,30 +159,52 @@ export default function UnternehmenPage() {
         <ScrollRevealStagger className="team-grid" stagger={95} duration={950}>
           {TEAM.map((person) => (
             <article key={person.name} className="team-card">
-              <h3 className="team-card__name">{person.name}</h3>
-              {person.role ? <p className="team-card__role">{person.role}</p> : null}
+              <div className="team-card__head">
+                <span className="team-card__avatar" aria-hidden="true">
+                  {initials(person.name)}
+                </span>
+                <div className="min-w-0">
+                  <h3 className="team-card__name">{person.name}</h3>
+                  {person.role ? <p className="team-card__role">{person.role}</p> : null}
+                </div>
+              </div>
               <ul className="team-card__contact">
                 {person.phone && person.phoneTel ? (
                   <li>
                     <a href={`tel:${person.phoneTel}`} className="team-card__link">
-                      <PhoneIcon className="text-[var(--muted-light)]" />
-                      <span>Tel: {person.phone}</span>
+                      <span className="team-card__link-icon" aria-hidden="true">
+                        <PhoneIcon />
+                      </span>
+                      <span>
+                        <span className="team-card__link-label">Telefon</span>
+                        <span className="team-card__link-value">{person.phone}</span>
+                      </span>
                     </a>
                   </li>
                 ) : null}
                 {person.mobile && person.mobileTel ? (
                   <li>
                     <a href={`tel:${person.mobileTel}`} className="team-card__link">
-                      <PhoneIcon className="text-[var(--muted-light)]" />
-                      <span>Mobil: {person.mobile}</span>
+                      <span className="team-card__link-icon" aria-hidden="true">
+                        <PhoneIcon />
+                      </span>
+                      <span>
+                        <span className="team-card__link-label">Mobil</span>
+                        <span className="team-card__link-value">{person.mobile}</span>
+                      </span>
                     </a>
                   </li>
                 ) : null}
                 {person.email ? (
                   <li>
                     <a href={`mailto:${person.email}`} className="team-card__link">
-                      <MailIcon className="text-[var(--muted-light)]" />
-                      <span>{person.email}</span>
+                      <span className="team-card__link-icon" aria-hidden="true">
+                        <MailIcon />
+                      </span>
+                      <span>
+                        <span className="team-card__link-label">E-Mail</span>
+                        <span className="team-card__link-value">{person.email}</span>
+                      </span>
                     </a>
                   </li>
                 ) : null}

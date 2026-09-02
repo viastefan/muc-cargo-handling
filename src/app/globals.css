@@ -3600,60 +3600,138 @@ textarea.field__control {
   }
 }
 
+/*
+ * Team-Karten: waren eine flache Flaeche ohne Kante mit reinem
+ * Fliesstext-Kontaktblock (16px-Icon + Text in einer Zeile). Jetzt im
+ * selben Formensystem wie die Standortkarte und die Direktkontakt-Liste
+ * auf /kontakt: gerahmte Karte, Avatar-Kuerzel, Kontaktzeilen mit
+ * eigenem Icon-Kreis und Label/Wert gestapelt statt einer Zeile.
+ */
 .team-card {
   display: flex;
   height: 100%;
   flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: 14px;
   background: var(--surface);
-  padding: 1.75rem 2rem;
-  transition: background-color var(--duration-normal) var(--ease-out);
+  padding: 1.75rem;
+  transition:
+    background-color var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 }
 
 .team-card:hover {
   background: var(--surface-2);
+  border-color: var(--muted-light);
+  transform: translateY(-2px);
+}
+
+.team-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.team-card__avatar {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--brand-text);
 }
 
 .team-card__name {
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
   letter-spacing: -0.01em;
   color: var(--foreground);
 }
 
 .team-card__role {
-  margin-top: 0.25rem;
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--muted);
+  margin-top: 0.3rem;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-light);
 }
 
 .team-card__contact {
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.5rem;
   list-style: none;
   padding: 0;
 }
 
 .team-card__link {
-  display: inline-flex;
+  display: flex;
   max-width: 100%;
   align-items: center;
-  gap: 0.625rem;
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--muted);
+  gap: 0.75rem;
+  padding: 0.4rem;
+  margin-inline: -0.4rem;
+  border-radius: 10px;
   text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.team-card__link-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--muted-light);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.team-card__link-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.team-card__link-value {
+  display: block;
+  min-width: 0;
+  margin-top: 0.05rem;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--muted);
+  word-break: break-word;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-.team-card__link span {
-  min-width: 0;
-  word-break: break-word;
+.team-card__link:hover {
+  background: var(--card);
 }
 
-.team-card__link:hover {
+.team-card__link:hover .team-card__link-icon {
+  color: var(--brand-text);
+  border-color: var(--brand-text);
+}
+
+.team-card__link:hover .team-card__link-value {
   color: var(--foreground);
 }
 
