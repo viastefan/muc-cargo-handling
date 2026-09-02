@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/Header";
+import { LeadCaptureWidget } from "@/components/LeadCaptureWidget";
+import { RouteScrollReset } from "@/components/RouteScrollReset";
 import { SiteFooter } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
+import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,8 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className="h-full antialiased">
+    <html lang="de" className="h-full antialiased" suppressHydrationWarning>
       <head>
+        {/* Setzt data-theme vor dem ersten Paint (Standard: dunkel, siehe
+            src/lib/theme.ts) — verhindert einen hell/dunkel-Flash. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -30,11 +36,13 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-full flex-col font-sans">
+        <RouteScrollReset />
         <TopBar />
         <Header />
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <CookieConsent />
+        <LeadCaptureWidget />
       </body>
     </html>
   );

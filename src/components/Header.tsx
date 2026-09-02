@@ -26,7 +26,7 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header-wrap sticky top-0 z-50 bg-[var(--background)]">
+      <header className="site-header-wrap sticky top-[var(--topbar-h,0px)] z-50 bg-[var(--background)]">
       <div className="site-header hidden lg:grid">
         <div className="site-header-cell site-header-logo">
           <Link

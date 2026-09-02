@@ -19,26 +19,29 @@ export function LegalDocument({ title, description, intro, sections }: Props) {
           description={description}
         />
 
-        <p className="section-header-gap prose-muted text-[14px] leading-relaxed md:text-[15px]">
-          {intro}
-        </p>
-        <p className="mt-3 text-[12px] text-[var(--muted-light)]">Stand: {LEGAL_UPDATED}</p>
+        <div className="section-header-gap legal-intro">
+          <p className="prose-muted text-[14px] leading-relaxed md:text-[15px]">{intro}</p>
+          <span className="legal-intro__stamp">Stand: {LEGAL_UPDATED}</span>
+        </div>
 
-        <div className="mt-10 divide-y divide-[var(--border)] border-y border-[var(--border)] md:mt-12">
-          {sections.map((section) => (
-            <section key={section.title} className="py-7 md:py-8">
-              <h2 className="text-[15px] font-normal text-[var(--foreground)]">
-                {section.title}
-              </h2>
-              <div className="mt-3 space-y-3">
-                {section.paragraphs.map((paragraph, index) => (
-                  <p
-                    key={`${section.title}-${index}`}
-                    className="prose-muted text-[14px] leading-relaxed"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+        <div className="mt-10 space-y-3 md:mt-12">
+          {sections.map((section, index) => (
+            <section key={section.title} className="legal-section">
+              <span className="legal-section__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="legal-section__body">
+                <h2 className="legal-section__title">{section.title}</h2>
+                <div className="mt-3 space-y-3">
+                  {section.paragraphs.map((paragraph, pIndex) => (
+                    <p
+                      key={`${section.title}-${pIndex}`}
+                      className="prose-muted text-[14px] leading-relaxed"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
             </section>
           ))}

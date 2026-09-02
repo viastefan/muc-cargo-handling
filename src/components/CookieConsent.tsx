@@ -203,12 +203,17 @@ export function CookieConsent() {
                     Hilft uns, die Nutzung der Website anonym zu analysieren.
                   </p>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={analytics}
-                  onChange={(event) => setAnalytics(event.target.checked)}
-                  className="cookie-settings__checkbox"
-                />
+                <span className="cookie-toggle">
+                  <input
+                    type="checkbox"
+                    checked={analytics}
+                    onChange={(event) => setAnalytics(event.target.checked)}
+                    className="cookie-toggle__input"
+                  />
+                  <span className="cookie-toggle__track" aria-hidden="true">
+                    <span className="cookie-toggle__thumb" />
+                  </span>
+                </span>
               </label>
 
               <label className="cookie-settings__item cookie-settings__item--toggle">
@@ -218,12 +223,17 @@ export function CookieConsent() {
                     Ermöglicht optionale, relevante Marketing-Funktionen.
                   </p>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={marketing}
-                  onChange={(event) => setMarketing(event.target.checked)}
-                  className="cookie-settings__checkbox"
-                />
+                <span className="cookie-toggle">
+                  <input
+                    type="checkbox"
+                    checked={marketing}
+                    onChange={(event) => setMarketing(event.target.checked)}
+                    className="cookie-toggle__input"
+                  />
+                  <span className="cookie-toggle__track" aria-hidden="true">
+                    <span className="cookie-toggle__thumb" />
+                  </span>
+                </span>
               </label>
             </div>
 

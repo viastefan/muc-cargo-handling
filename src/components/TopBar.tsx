@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { COMPANY } from "@/lib/company";
 
 const STORAGE_KEY = "muc-top-bar-dismissed";
@@ -36,6 +36,23 @@ export function TopBar() {
     () => true,
     () => false,
   );
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  // Schreibt die tatsaechliche Leistenhoehe als CSS-Variable auf <html>,
+  // damit die Kopfzeile direkt darunter andocken kann (sticky top: var(...)),
+  // statt beim Scrollen zu verschwinden. Reagiert auch auf die Auf/Zu-
+  // Animation und auf Umbrueche bei schmalen Bildschirmen.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const set = () => {
+      document.documentElement.style.setProperty("--topbar-h", `${el.offsetHeight}px`);
+    };
+    set();
+    const observer = new ResizeObserver(set);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const dismiss = () => {
     try {
@@ -48,6 +65,7 @@ export function TopBar() {
 
   return (
     <div
+      ref={rootRef}
       className={`top-bar${open ? "" : " is-closed"}${ready ? " is-ready" : ""}`}
       role="region"
       aria-label="Schnellkontakt"
@@ -81,18 +99,21 @@ export function TopBar() {
               </div>
             </div>
           </div>
+
+          {/* War zuvor absolut ueber der animierten Hoehe positioniert und
+              driftete dabei sichtbar aus der Leiste heraus. Jetzt normales
+              Flex-Kind – bleibt dadurch immer exakt im Zeilenraster. */}
+          <button
+            type="button"
+            className="top-bar__close"
+            aria-label="Kontaktleiste schließen"
+            onClick={dismiss}
+            tabIndex={open ? 0 : -1}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
       </div>
-
-      <button
-        type="button"
-        className="top-bar__close"
-        aria-label="Kontaktleiste schließen"
-        onClick={dismiss}
-        tabIndex={open ? 0 : -1}
-      >
-        <span aria-hidden="true">×</span>
-      </button>
     </div>
   );
 }

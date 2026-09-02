@@ -70,6 +70,9 @@
   --duration-fast: 140ms;
   --duration-normal: 240ms;
   --reveal-distance: 12px;
+  /* Fallback bis TopBar per ResizeObserver die echte Hoehe schreibt (SSR /
+     vor Hydration). Naeherungswert fuer die einzeilige Desktop-Leiste. */
+  --topbar-h: 45px;
 }
 
 /*
@@ -147,6 +150,11 @@
 .scroll-reveal {
   --reveal-delay: 0ms;
   --reveal-duration: 480ms;
+  /* Grid-Items stretchen per Default, aber nur die WRAPPER-Divs — ohne
+     height:100% blieb der sichtbare Karteninhalt darin bei seiner
+     eigenen Content-Hoehe (sichtbar bei .team-card: ungleich hohe
+     Karten je nach Textmenge). */
+  height: 100%;
   opacity: 0;
   transition:
     opacity var(--reveal-duration) var(--ease-out),
@@ -271,11 +279,17 @@ a {
 /* Site header – 6-column grid (desktop) */
 .site-header-wrap {
   border-bottom: 1px solid var(--border);
+  /* Folgt sanft, wenn die Leiste darueber sich schliesst/oeffnet. */
+  transition: top var(--duration-normal) var(--ease-out);
 }
 
-/* Top utility bar — scrolls away (not sticky); header below stays sticky */
+/* Top utility bar — sticky above the header; the header docks directly
+   below it via top: var(--topbar-h), so together they always stay visible
+   while scrolling instead of the bar disappearing behind the header. */
 .top-bar {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 51;
   display: grid;
   grid-template-rows: 1fr;
   background: var(--surface);
@@ -316,7 +330,6 @@ a {
      dadurch eine Zeile statt zwei und rund die halbe Bauhoehe. */
   min-height: 2.1rem;
   padding-block: 0.3rem;
-  padding-right: 2.5rem;
 }
 
 .top-bar__items {
@@ -375,17 +388,15 @@ a {
 }
 
 /*
- * Schliessen-Schaltflaeche: war blass (muted-light bei 72% Deckkraft),
- * randlos und mit 24px unter jeder sinnvollen Trefferflaeche. Jetzt als
- * erkennbarer Button mit Kante, vollem Kontrast und groesserem Ziel.
+ * Schliessen-Schaltflaeche: war absolut ueber dem animierten Container
+ * positioniert (top:50% relativ zu .top-bar) und driftete beim Auf-/
+ * Zuklappen bzw. bei umbrechendem Inhalt auf Schmalbildschirmen sichtbar
+ * aus der Leiste heraus. Jetzt ein normales Flex-Kind am Zeilenende –
+ * dadurch immer exakt im Raster, kein Sonderfall mehr noetig.
  */
 .top-bar__close {
-  position: absolute;
-  top: 50%;
-  right: 0.5rem;
-  transform: translateY(-50%);
-  z-index: 2;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 1.75rem;
@@ -398,7 +409,6 @@ a {
   font-size: 1.1rem;
   font-weight: 400;
   line-height: 1;
-  opacity: 1;
   cursor: pointer;
   transition:
     color var(--duration-fast) var(--ease-out),
@@ -417,18 +427,10 @@ a {
   outline-offset: 2px;
 }
 
-@media (min-width: 1024px) {
-  .top-bar__inner {
-    padding-right: 2.75rem;
-  }
-  /* Frueher wurde das X hier auf 1.35rem und 55% Deckkraft verkleinert –
-     die Schaltflaeche behaelt jetzt auf allen Breiten dieselbe Groesse. */
-}
-
 @media (max-width: 639px) {
   .top-bar__inner {
     justify-content: flex-start;
-    padding-right: 2rem;
+    align-items: flex-start;
   }
 
   .top-bar__items {
@@ -450,7 +452,7 @@ a {
   }
 
   .top-bar__close {
-    right: 0.25rem;
+    margin-top: 0.15rem;
   }
 }
 
@@ -1233,6 +1235,259 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .contact-action__backdrop,
   .contact-action__panel {
+    animation: none;
+  }
+}
+
+/*
+ * Schwebendes Anfrage-Widget (Launcher-Button + Teaser + Slide-in-
+ * Formular). Erscheint unten rechts, sobald die Cookie-Entscheidung
+ * getroffen ist — beide Elemente sitzen sonst an derselben Stelle.
+ */
+.lead-fab {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.22);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.lead-fab:hover {
+  background: var(--brand-dark);
+  transform: translateY(-2px);
+}
+
+.lead-fab:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.lead-fab__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@keyframes lead-teaser-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.lead-teaser {
+  position: fixed;
+  right: 1.25rem;
+  bottom: calc(1.25rem + 3.25rem + 0.75rem);
+  z-index: 69;
+  width: min(17.5rem, calc(100vw - 2.5rem));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.16);
+  animation: lead-teaser-in 0.3s var(--ease-out);
+}
+
+.lead-teaser__close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: transparent;
+  color: var(--muted-light);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lead-teaser__close:hover {
+  color: var(--foreground);
+}
+
+.lead-teaser__body {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.75rem 1rem 1rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lead-teaser__text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--foreground);
+}
+
+.lead-teaser__cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--brand-text);
+}
+
+.lead-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.lead-drawer__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgb(0 0 0 / 0.45);
+  cursor: pointer;
+  animation: contact-action-fade-in 0.28s var(--ease-out);
+}
+
+.lead-drawer__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-height: min(92svh, 640px);
+  overflow-y: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: 0 -6px 24px rgb(0 0 0 / 0.08);
+  animation: contact-action-sheet-in 0.36s var(--ease-out);
+}
+
+.lead-drawer__handle-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 0.625rem 0 0.25rem;
+}
+
+.lead-drawer__handle {
+  display: block;
+  width: 2.5rem;
+  height: 0.25rem;
+  border-radius: 999px;
+  background: var(--handle);
+}
+
+.lead-drawer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem 1rem;
+}
+
+.lead-drawer__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.lead-drawer__title {
+  margin: 0.25rem 0 0;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.lead-drawer__close {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.lead-drawer__close:hover {
+  color: var(--foreground);
+}
+
+.lead-drawer__body {
+  padding: 0 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+
+@media (min-width: 768px) {
+  /* Ab hier ein seitlich einschiebendes Panel statt eines Bottom-Sheets —
+     naeher am Vorbild (AVS-Chat-Widget oeffnet ebenfalls seitlich am
+     Bildschirmrand statt als Sheet von unten). */
+  .lead-drawer {
+    align-items: stretch;
+    justify-content: flex-end;
+  }
+
+  .lead-drawer__panel {
+    width: min(26rem, 100%);
+    max-height: none;
+    height: 100%;
+    border-width: 0 0 0 1px;
+    box-shadow: -12px 0 32px rgb(0 0 0 / 0.14);
+    animation: lead-drawer-slide-in 0.34s var(--ease-out);
+  }
+
+  .lead-drawer__handle-wrap {
+    display: none;
+  }
+
+  .lead-drawer__header {
+    padding: 1.5rem 1.75rem 1.25rem;
+  }
+
+  .lead-drawer__body {
+    padding: 0 1.75rem 2rem;
+  }
+}
+
+@keyframes lead-drawer-slide-in {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lead-teaser,
+  .lead-drawer__backdrop,
+  .lead-drawer__panel {
     animation: none;
   }
 }
@@ -3037,6 +3292,58 @@ textarea.field__control {
   color: var(--brand-text);
 }
 
+/*
+ * Rechtsseiten (Impressum/Datenschutz/AGB): waren eine ungegliederte
+ * Fliesstextliste ohne jede visuelle Struktur. Nummerierte Abschnitte mit
+ * eigener Karte holen sie ins Formensystem der uebrigen Seite.
+ */
+.legal-intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+}
+
+.legal-intro__stamp {
+  flex-shrink: 0;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted-light);
+  white-space: nowrap;
+}
+
+.legal-section {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.legal-section__index {
+  flex-shrink: 0;
+  padding-top: 0.1rem;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--muted-light);
+}
+
+.legal-section__body {
+  min-width: 0;
+}
+
+.legal-section__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
 .value-pillar__index {
   margin: 0;
   font-size: 12px;
@@ -3222,18 +3529,27 @@ textarea.field__control {
   transform: translateY(-2px);
 }
 
+/*
+ * War nur 1.35rem freischwebendes Icon ohne eigene Flaeche, oben links auf
+ * einer grossen dunklen Karte — dadurch wirkte es verloren und zu klein.
+ * Jetzt eine erkennbare Kachel mit Kante und Flaeche (--icon-tile-*, bisher
+ * ungenutzte Tokens), Icon selbst deutlich groesser.
+ */
 .feature-card__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  color: var(--foreground);
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--icon-tile-border);
+  border-radius: 10px;
+  background: var(--icon-tile-bg);
+  color: var(--icon-tile-ink);
 }
 
 .feature-card__icon-svg {
-  width: 1.35rem;
-  height: 1.35rem;
+  width: 1.6rem;
+  height: 1.6rem;
   display: block;
 }
 
@@ -3285,6 +3601,9 @@ textarea.field__control {
 }
 
 .team-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
   background: var(--surface);
   padding: 1.75rem 2rem;
   transition: background-color var(--duration-normal) var(--ease-out);
@@ -3598,6 +3917,60 @@ textarea.field__control {
   flex-wrap: wrap;
   align-items: center;
   gap: 1.25rem;
+}
+
+/*
+ * Hell/Dunkel-Schalter im Footer. Sonne links, Mond rechts, ein Punkt
+ * wandert dazwischen. Die Seite startet standardmaessig dunkel; dieser
+ * Schalter ist der einzige Weg, dauerhaft auf Hell zu wechseln.
+ */
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  width: 3.25rem;
+  height: 1.75rem;
+  padding: 0 0.4rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.06);
+  color: rgb(255 255 255 / 0.55);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  border-color: rgb(255 255 255 / 0.32);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  position: relative;
+  z-index: 1;
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.theme-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.75rem - 6px);
+  height: calc(1.75rem - 6px);
+  border-radius: 50%;
+  background: var(--brand);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+/* Standard = dunkel: Punkt liegt beim Mond (rechts). */
+.theme-toggle[aria-checked="true"] .theme-toggle__thumb {
+  transform: translateX(calc(3.25rem - 1.75rem - 4px));
 }
 
 @media (min-width: 640px) {
@@ -5079,19 +5452,24 @@ textarea.field__control {
 /* Legacy security-overview hooks removed — see .security-band */
 
 /* Location map */
+/*
+ * War ein randloses iframe direkt auf der Seitenflaeche - vor allem im
+ * Dunkelmodus wirkte die helle Google-Maps-Kachel dadurch wie versehentlich
+ * dort abgelegt statt gestaltet. Jetzt eine gerahmte Karte mit eigener
+ * Kante/Ecke, die das iframe bewusst einfasst.
+ */
 .location-map {
   overflow: hidden;
-  border: none;
-  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
   display: grid;
 }
 
 .location-map__frame {
   position: relative;
-  /* Zuvor 16/7 – der Standortblock war damit mit 1024px der hoechste
-     Abschnitt der Startseite, hoeher als der Hero. */
-  aspect-ratio: 21 / 6;
-  min-height: 13rem;
+  aspect-ratio: 16 / 10;
+  min-height: 15rem;
   background: var(--surface-2);
 }
 
@@ -5101,30 +5479,58 @@ textarea.field__control {
   height: 100%;
   width: 100%;
   border: 0;
+  /* Nimmt der hellen Kartenkachel im Dunkelmodus die Haerte, ohne die
+     Lesbarkeit von Strassennamen/Pin zu beeintraechtigen. */
+  filter: contrast(0.94) brightness(0.98);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .location-map__frame iframe {
+    filter: contrast(0.9) brightness(0.86) saturate(0.9);
+  }
+}
+
+:root[data-theme="dark"] .location-map__frame iframe {
+  filter: contrast(0.9) brightness(0.86) saturate(0.9);
 }
 
 .location-map__info {
   display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  padding: 1.25rem 1.5rem;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+}
+
+.location-map__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
   background: var(--surface);
+  color: var(--brand-text);
 }
 
 .location-map__name {
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--foreground);
 }
 
 .location-map__address {
+  margin-top: 0.2rem;
   font-size: 13px;
   line-height: 1.6;
   color: var(--muted);
 }
 
 .location-map__directions {
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
+  display: inline-block;
   width: fit-content;
   font-size: 13px;
   font-weight: 400;
@@ -5135,18 +5541,20 @@ textarea.field__control {
 
 @media (min-width: 900px) {
   .location-map {
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
     align-items: stretch;
   }
 
   .location-map__frame {
     aspect-ratio: auto;
-    min-height: 17rem;
+    min-height: 20rem;
   }
 
   .location-map__info {
-    justify-content: center;
-    padding: 1.75rem 2rem;
+    align-items: center;
+    border-top: none;
+    border-left: 1px solid var(--border);
+    padding: 2rem;
   }
 }
 
@@ -5297,6 +5705,17 @@ textarea.field__control {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  /* Ab hier ein zentriertes Kartenfenster statt eines vollbreiten
+     Bottom-Sheets — der Bottom-Sheet-Zuschnitt war fuer Desktop nie
+     gedacht und wirkte dort unfertig. */
+  .cookie-settings {
+    align-items: center;
+    padding: 1.5rem;
+  }
 }
 
 .cookie-settings__backdrop {
@@ -5318,6 +5737,15 @@ textarea.field__control {
   background: var(--card);
   box-shadow: 0 -8px 32px rgb(0 0 0 / 0.08);
   animation: download-sheet-in 0.34s var(--ease-out);
+}
+
+@media (min-width: 640px) {
+  .cookie-settings__panel {
+    max-width: 28rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgb(0 0 0 / 0.22);
+  }
 }
 
 .cookie-settings__header {
@@ -5405,12 +5833,62 @@ textarea.field__control {
   color: var(--muted);
 }
 
-.cookie-settings__checkbox {
+/* Echter Schalter statt nackter Checkbox — Vorbild fuer "besser machen". */
+.cookie-toggle {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.cookie-toggle__input {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.cookie-toggle__track {
+  display: block;
+  width: 2.5rem;
+  height: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.cookie-toggle__thumb {
+  display: block;
   width: 1.125rem;
   height: 1.125rem;
-  margin-top: 0.15rem;
-  accent-color: var(--brand);
-  cursor: pointer;
+  margin: 3px;
+  border-radius: 50%;
+  background: var(--muted-light);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.cookie-toggle__input:checked + .cookie-toggle__track {
+  border-color: var(--brand);
+  background: var(--brand);
+}
+
+.cookie-toggle__input:checked + .cookie-toggle__track .cookie-toggle__thumb {
+  background: #ffffff;
+  transform: translateX(1rem);
+}
+
+.cookie-toggle__input:focus-visible + .cookie-toggle__track {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
 .cookie-settings__actions {

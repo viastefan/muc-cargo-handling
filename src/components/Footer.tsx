@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import { BrandLogo } from "./BrandLogo";
 import { CookieSettingsButton } from "./CookieSettingsButton";
 import { ScrollReveal } from "./ScrollReveal";
+import { ThemeToggle } from "./ThemeToggle";
 import { COMPANY, FOOTER_NAV } from "@/lib/company";
 import { media } from "@/lib/media";
 
@@ -174,6 +175,7 @@ export function SiteFooter() {
             <FooterLink href="/datenschutz">Datenschutz</FooterLink>
             <FooterLink href="/agb">AGB</FooterLink>
             <CookieSettingsButton className="footer-link site-footer-cookie-btn" />
+            <ThemeToggle className="site-footer-theme-toggle" />
           </nav>
         </div>
       </div>
