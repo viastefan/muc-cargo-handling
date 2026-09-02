@@ -3429,25 +3429,12 @@ textarea.field__control {
   color: white;
 }
 
-/* Footer liegt in beiden Modi auf Schwarz – dort immer weiss. */
-.brand-logo-inverted {
-  filter: brightness(0) invert(1);
-}
-
 /*
- * Das Logo ist schwarze Strichgrafik. Im Dunkelmodus waere es auf dem
- * dunklen Header unsichtbar, deshalb dort umkehren. Das bereits invertierte
- * Footer-Logo ist ausgenommen, sonst waere es doppelt gedreht.
+ * Das rote Markenlogo hat eine weisse Innen- und schwarze Aussenkontur und
+ * liegt transparent vor. Dadurch liest es sich auf hellem wie dunklem Grund
+ * (Header, dunkler Hero, schwarzer Footer, Dunkelmodus) ohne Umkehrung – die
+ * fruehere Invert-Logik fuer das rein schwarze Logo ist deshalb entfallen.
  */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .brand-logo:not(.brand-logo-inverted) {
-    filter: brightness(0) invert(1);
-  }
-}
-
-:root[data-theme="dark"] .brand-logo:not(.brand-logo-inverted) {
-  filter: brightness(0) invert(1);
-}
 
 .site-footer-main {
   display: grid;

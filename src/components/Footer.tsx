@@ -100,10 +100,9 @@ export function SiteFooter() {
         <div className="site-footer-brand">
           <Link href="/" className="site-footer-logo-link">
             <BrandLogo
-              inverted
               priority={false}
-              width={220}
-              height={64}
+              width={200}
+              height={102}
               className="site-footer-logo"
             />
           </Link>
