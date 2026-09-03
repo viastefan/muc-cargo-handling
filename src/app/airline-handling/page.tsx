@@ -99,14 +99,6 @@ export default function AirlineHandlingPage() {
         </div>
       </PageSection>
 
-      <PageSection muted borderTop>
-        <SectionHeader
-          dark="Am Standort"
-          light="Flughafen München"
-          description="Kurze Wege, direkte Abstimmung mit Partnern und ein Team, das den lokalen Cargo-Betrieb kennt – für verlässliche Airline-Prozesse vor Ort."
-        />
-      </PageSection>
-
       <FooterCta />
     </>
   );
