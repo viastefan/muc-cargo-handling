@@ -7,6 +7,7 @@ import { BrandLogo } from "./BrandLogo";
 import { HeaderContactMenu } from "./HeaderContactMenu";
 import { Button } from "./Button";
 import { COMPANY } from "@/lib/company";
+import { openInquiry } from "@/lib/inquiry-store";
 
 const NAV = [
   { href: "/unternehmen", label: "Unternehmen" },
@@ -101,7 +102,16 @@ export function Header() {
               );
             })}
             <div className="mobile-nav-item pt-4">
-              <Button href="/kontakt" fullWidth onClick={() => setOpen(false)}>
+              <Button
+                href="/kontakt"
+                fullWidth
+                onClick={(event) => {
+                  setOpen(false);
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault();
+                  openInquiry();
+                }}
+              >
                 Anfrage stellen
               </Button>
             </div>

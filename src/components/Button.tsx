@@ -11,7 +11,7 @@ type Props = {
   size?: Size;
   className?: string;
   type?: "button" | "submit";
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   arrow?: boolean;
   fullWidth?: boolean;
   download?: boolean | string;

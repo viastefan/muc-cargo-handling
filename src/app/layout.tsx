@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/Header";
+import { InquiryFlow } from "@/components/InquiryFlow";
 import { LeadCaptureWidget } from "@/components/LeadCaptureWidget";
 import { RouteScrollReset } from "@/components/RouteScrollReset";
 import { SiteFooter } from "@/components/Footer";
@@ -43,6 +44,7 @@ export default function RootLayout({
         <SiteFooter />
         <CookieConsent />
         <LeadCaptureWidget />
+        <InquiryFlow />
       </body>
     </html>
   );

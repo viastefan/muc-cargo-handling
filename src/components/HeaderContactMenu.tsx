@@ -7,6 +7,7 @@ import {
   ContactActionModal,
   type ContactAction,
 } from "./ContactActionModal";
+import { openInquiry } from "@/lib/inquiry-store";
 
 type Props = {
   label?: string;
@@ -56,7 +57,15 @@ export function HeaderContactMenu({
           <Link
             href={href}
             className="header-contact-menu__label"
-            onClick={() => setOpen(false)}
+            onClick={(event) => {
+              setOpen(false);
+              // Normaler Klick oeffnet den kurzen Anfrage-Flow; der href bleibt
+              // erhalten, damit Cmd/Ctrl-Klick, Mittelklick und Crawler weiter
+              // auf der vollstaendigen Kontaktseite landen.
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+              event.preventDefault();
+              openInquiry();
+            }}
           >
             {label}
           </Link>
