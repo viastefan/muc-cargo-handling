@@ -85,12 +85,12 @@ export default function RoentgenPage() {
         <SectionHeader eyebrow="Röntgen" dark="Unsere" light="Kontrollverfahren" />
         <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
-            image="/images/roentgen/kontrolle-roentgen.jpg"
+            image="/images/roentgen/xray-checkpoint.jpg"
             title="Röntgenkontrolle"
             description="Schnelle, bildgebende Prüfung großer Sendungsvolumina durch geschulte Operatoren."
           />
           <ServiceCard
-            image="/images/roentgen/kontrolle-sicht.jpg"
+            image="/images/roentgen/tag-check.jpg"
             title="Sichtkontrolle"
             description="Äußere Prüfung auf Unversehrtheit, Kennzeichnung und Auffälligkeiten."
           />
@@ -100,7 +100,7 @@ export default function RoentgenPage() {
             description="Manuelle Vertiefung, wenn Technik allein nicht ausreicht oder die Sendung es erfordert."
           />
           <ServiceCard
-            image="/images/roentgen/kontrolle-etd.jpg"
+            image="/images/roentgen/trace-verification.jpg"
             title="Sprengstoff-Spurendetektion"
             description="ETD als ergänzendes Verfahren zur Spurensuche im Sicherheitsprozess."
           />
