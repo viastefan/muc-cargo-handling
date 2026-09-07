@@ -46,7 +46,15 @@ export function TopBar() {
     const el = rootRef.current;
     if (!el || typeof ResizeObserver === "undefined") return;
     const set = () => {
-      document.documentElement.style.setProperty("--topbar-h", `${el.offsetHeight}px`);
+      // getBoundingClientRect() statt offsetHeight: liefert die echte
+      // Nachkommastelle. offsetHeight rundet auf ganze Pixel und war damit
+      // z.B. 38px statt 37.59px — der Header dockte dadurch 0.4px zu tief
+      // an und liess einen hauchduennen Spalt (Seiten-Hintergrund blitzte
+      // durch), je nach Zoom/Aufloesung sichtbar als Linie.
+      document.documentElement.style.setProperty(
+        "--topbar-h",
+        `${el.getBoundingClientRect().height}px`,
+      );
     };
     set();
     const observer = new ResizeObserver(set);
@@ -110,7 +118,18 @@ export function TopBar() {
             onClick={dismiss}
             tabIndex={open ? 0 : -1}
           >
-            <span aria-hidden="true">×</span>
+            {/* SVG statt "×"-Textzeichen: Glyphen sitzen je nach Font-Metrik
+                optisch nie exakt mittig im Kreis (wie hier zuvor sichtbar
+                zu hoch) — ein Pfad laesst sich dagegen exakt zentrieren,
+                gleiches Muster wie .inq__close. */}
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="m6 6 12 12M18 6 6 18"
+                stroke="currentColor"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+              />
+            </svg>
           </button>
         </div>
       </div>

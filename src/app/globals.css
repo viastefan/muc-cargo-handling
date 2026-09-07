@@ -405,14 +405,16 @@ a {
   border-radius: 50%;
   background: var(--surface);
   color: var(--foreground);
-  font-size: 1.1rem;
-  font-weight: 400;
-  line-height: 1;
   cursor: pointer;
   transition:
     color var(--duration-fast) var(--ease-out),
     background-color var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out);
+}
+
+.top-bar__close svg {
+  width: 0.85rem;
+  height: 0.85rem;
 }
 
 .top-bar__close:hover {
@@ -4109,10 +4111,18 @@ textarea.field__control {
   height: 100%;
   min-height: 12.75rem;
   border: none;
+  /* War die einzige Karte im System ohne jede Rundung (harte 90°-Ecken)
+     — bricht auffaellig mit allen anderen Repeatern (service-card,
+     team-card, location-map, legal-section, security-band__item, …).
+     16px statt der sonst ueblichen 14px, da die Karte als volle Flaeche
+     ohne eigenen Rahmen etwas mehr Rundung vertraegt. */
+  border-radius: 16px;
   background: var(--surface);
   padding: 1.35rem 1.35rem 1.4rem;
+  box-shadow: 0 0 0 rgb(0 0 0 / 0);
   transition:
     background-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
     transform var(--duration-normal) var(--ease-out);
 }
 
@@ -4126,25 +4136,33 @@ textarea.field__control {
 
 .feature-card:hover {
   background: var(--surface-2);
-  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -10px rgb(0 0 0 / 0.18);
+  transform: translateY(-3px);
 }
 
 /*
  * War nur 1.35rem freischwebendes Icon ohne eigene Flaeche, oben links auf
  * einer grossen dunklen Karte — dadurch wirkte es verloren und zu klein.
  * Jetzt eine erkennbare Kachel mit Kante und Flaeche (--icon-tile-*, bisher
- * ungenutzte Tokens), Icon selbst deutlich groesser.
+ * ungenutzte Tokens), Icon selbst deutlich groesser. Radius auf 12px an
+ * die weichere "Squircle"-Rundung der umgebenden Karte angeglichen.
  */
 .feature-card__icon {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 3rem;
   height: 3rem;
   border: 1px solid var(--icon-tile-border);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--icon-tile-bg);
   color: var(--icon-tile-ink);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.feature-card:hover .feature-card__icon {
+  transform: scale(1.05);
 }
 
 .feature-card__icon-svg {
@@ -4790,8 +4808,8 @@ textarea.field__control {
   right: 0;
   bottom: 0;
   z-index: 1;
-  width: min(100vw, 34rem);
-  height: clamp(16rem, 68%, 24rem);
+  width: min(100vw, 40rem);
+  height: clamp(18rem, 80%, 28rem);
   pointer-events: none;
   transform-origin: 85% 90%;
   transform: translate(28%, 14%) rotate(-16deg);
@@ -4799,16 +4817,16 @@ textarea.field__control {
 
 @media (min-width: 768px) {
   .footer-cta__visual {
-    width: min(55vw, 40rem);
-    height: clamp(18rem, 72%, 28rem);
+    width: min(62vw, 46rem);
+    height: clamp(20rem, 84%, 32rem);
     transform: translate(22%, 12%) rotate(-14deg);
   }
 }
 
 @media (min-width: 1024px) {
   .footer-cta__visual {
-    width: min(42vw, 44rem);
-    height: clamp(20rem, 78%, 30rem);
+    width: min(48vw, 50rem);
+    height: clamp(22rem, 90%, 34rem);
     transform: translate(20%, 10%) rotate(-14deg);
   }
 }

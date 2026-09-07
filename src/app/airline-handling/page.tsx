@@ -47,7 +47,7 @@ export default function AirlineHandlingPage() {
         <SectionHeader dark="Leistungen" light="im Überblick" />
         <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
-            image="/images/airline-handling/import-export.jpg"
+            image="/images/airline-handling/cargo-tarmac.jpg"
             title="Import & Export Handling"
             bullets={[
               "Annahme und Übergabe von Sendungen",
@@ -56,7 +56,7 @@ export default function AirlineHandlingPage() {
             ]}
           />
           <ServiceCard
-            image="/images/airline-handling/dokumente.jpg"
+            image="/images/airline-handling/warehouse-check.jpg"
             title="Dokumentenmanagement"
             bullets={[
               "Vollständige Frachtdokumentation",
@@ -65,7 +65,7 @@ export default function AirlineHandlingPage() {
             ]}
           />
           <ServiceCard
-            image="/images/airline-handling/zoll.jpg"
+            image="/images/airline-handling/crate-inspection.jpg"
             title="Zoll & Compliance"
             bullets={[
               "Unterstützung bei zollrelevanten Prozessen",
@@ -74,7 +74,7 @@ export default function AirlineHandlingPage() {
             ]}
           />
           <ServiceCard
-            image="/images/airline-handling/uld.jpg"
+            image="/images/airline-handling/aircraft-loading.jpg"
             title="Sicherheits- und ULD-Handling"
             bullets={[
               "ULD-Handling und Vorbereitung",
