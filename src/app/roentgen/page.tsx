@@ -41,7 +41,7 @@ export default function RoentgenPage() {
   return (
     <>
       <Hero
-        image="/images/roentgen/hero.jpg"
+        image="/images/roentgen/cargo-hold.jpg"
         title="Sichere Luftfracht nach höchsten Sicherheitsstandards."
         subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für die sichere und regelkonforme Abfertigung Ihrer Sendungen am Flughafen München."
       />
