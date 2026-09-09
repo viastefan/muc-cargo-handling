@@ -38,8 +38,15 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-full flex-col font-sans">
         <RouteScrollReset />
-        <TopBar />
-        <Header />
+        {/* Kontaktleiste und Kopfzeile kleben gemeinsam als ein Block am
+            Viewport. Frueher waren es zwei getrennt sticky Elemente, die ueber
+            eine per ResizeObserver gemessene --topbar-h aneinander andockten —
+            sobald der Messwert kurz nicht zur Layouthoehe passte (Umbruch,
+            Zoom, Auf-/Zuklapp-Animation), klaffte dazwischen ein Spalt. */}
+        <div className="site-chrome">
+          <TopBar />
+          <Header />
+        </div>
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <CookieConsent />

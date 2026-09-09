@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { COMPANY } from "@/lib/company";
+import { MailIcon, PhoneIcon } from "./ArrowIcon";
 
 const STORAGE_KEY = "muc-top-bar-dismissed";
 const listeners = new Set<() => void>();
@@ -36,32 +37,6 @@ export function TopBar() {
     () => true,
     () => false,
   );
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  // Schreibt die tatsaechliche Leistenhoehe als CSS-Variable auf <html>,
-  // damit die Kopfzeile direkt darunter andocken kann (sticky top: var(...)),
-  // statt beim Scrollen zu verschwinden. Reagiert auch auf die Auf/Zu-
-  // Animation und auf Umbrueche bei schmalen Bildschirmen.
-  useEffect(() => {
-    const el = rootRef.current;
-    if (!el || typeof ResizeObserver === "undefined") return;
-    const set = () => {
-      // getBoundingClientRect() statt offsetHeight: liefert die echte
-      // Nachkommastelle. offsetHeight rundet auf ganze Pixel und war damit
-      // z.B. 38px statt 37.59px — der Header dockte dadurch 0.4px zu tief
-      // an und liess einen hauchduennen Spalt (Seiten-Hintergrund blitzte
-      // durch), je nach Zoom/Aufloesung sichtbar als Linie.
-      document.documentElement.style.setProperty(
-        "--topbar-h",
-        `${el.getBoundingClientRect().height}px`,
-      );
-    };
-    set();
-    const observer = new ResizeObserver(set);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   const dismiss = () => {
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
@@ -73,7 +48,6 @@ export function TopBar() {
 
   return (
     <div
-      ref={rootRef}
       className={`top-bar${open ? "" : " is-closed"}${ready ? " is-ready" : ""}`}
       role="region"
       aria-label="Schnellkontakt"
@@ -105,6 +79,32 @@ export function TopBar() {
                   {COMPANY.email}
                 </a>
               </div>
+            </div>
+          </div>
+
+          {/* Ab 639px abwaerts: die ausgeschriebene Variante oben (Label +
+              voller Wert je Zeile) wurde auf Telefonbreite zu einem
+              dreizeiligen Textblock, der einen Grossteil des ersten
+              Bildschirms fuellte. Hier stattdessen eine einzige kompakte
+              Zeile — Zulassungsnummer knapp, Telefon/E-Mail als Icon-
+              Ziele statt ausgeschriebener Adressen. */}
+          <div className="top-bar__mobile-row">
+            <span className="top-bar__mobile-cert">{COMPANY.regAgent}</span>
+            <div className="top-bar__mobile-actions">
+              <a
+                href={`tel:${COMPANY.phoneTel}`}
+                className="top-bar__mobile-action"
+                aria-label={`Anrufen: ${COMPANY.phone}`}
+              >
+                <PhoneIcon />
+              </a>
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="top-bar__mobile-action"
+                aria-label={`E-Mail an ${COMPANY.email}`}
+              >
+                <MailIcon />
+              </a>
             </div>
           </div>
 

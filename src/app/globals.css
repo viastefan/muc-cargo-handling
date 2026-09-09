@@ -70,9 +70,6 @@
   --duration-fast: 140ms;
   --duration-normal: 240ms;
   --reveal-distance: 12px;
-  /* Fallback bis TopBar per ResizeObserver die echte Hoehe schreibt (SSR /
-     vor Hydration). Naeherungswert fuer die einzeilige Desktop-Leiste. */
-  --topbar-h: 45px;
 }
 
 /*
@@ -277,21 +274,32 @@ a {
 }
 
 /* Site header – 6-column grid (desktop) */
-.site-header-wrap {
-  border-bottom: 1px solid var(--border);
-  /* Folgt sanft, wenn die Leiste darueber sich schliesst/oeffnet. */
-  transition: top var(--duration-normal) var(--ease-out);
-}
-
-/* Top utility bar — sticky above the header; the header docks directly
-   below it via top: var(--topbar-h), so together they always stay visible
-   while scrolling instead of the bar disappearing behind the header.
-   Same background as the header (not --surface) and no border between
-   them — the two bars read as one continuous chrome block instead of
-   two stacked strips with a seam. */
-.top-bar {
+/*
+ * Kontaktleiste + Kopfzeile als ein Stueck. Nur dieser Wrapper klebt am
+ * Viewport; die beiden Leisten darin liegen im normalen Fluss und koennen
+ * deshalb gar nicht mehr auseinanderdriften.
+ */
+.site-chrome {
   position: sticky;
   top: 0;
+  z-index: 51;
+}
+
+/* z-index nur noch innerhalb von .site-chrome: der Menue-Hintergrund
+   (.mobile-nav-backdrop, z-40) liegt im selben Stapelkontext und wuerde
+   sonst ueber den Leisten liegen. */
+.site-header-wrap {
+  position: relative;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Top utility bar — sitzt im gemeinsamen sticky Block (.site-chrome) direkt
+   ueber der Kopfzeile. Gleicher Hintergrund wie der Header (nicht --surface)
+   und keine Trennlinie dazwischen — beide lesen sich als ein durchgehender
+   Chrome-Block statt als zwei gestapelte Streifen mit Naht. */
+.top-bar {
+  position: relative;
   z-index: 51;
   display: grid;
   grid-template-rows: 1fr;
@@ -428,32 +436,78 @@ a {
   outline-offset: 2px;
 }
 
+/* Kompakte Telefonbreiten-Zeile — per Default versteckt, ersetzt
+   .top-bar__items erst unter 640px (siehe Media Query unten). */
+.top-bar__mobile-row {
+  display: none;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 0.75rem;
+}
+
+.top-bar__mobile-cert {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.top-bar__mobile-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.top-bar__mobile-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--foreground);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.top-bar__mobile-action svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.top-bar__mobile-action:hover {
+  background: var(--brand);
+  color: #ffffff;
+}
+
 @media (max-width: 639px) {
   .top-bar__inner {
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
   }
 
+  /* Die ausgeschriebene Variante (Label + voller Wert je Zeile) wurde auf
+     Telefonbreite zu einem dreizeiligen Textblock — Zulassung, Telefon
+     und E-Mail liefen je auf einer eigenen vollen Zeile untereinander
+     und fuellten einen Grossteil des ersten Bildschirms. Ersetzt durch
+     die kompakte Zeile oben (Zulassungsnummer + Icon-Ziele). */
   .top-bar__items {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 0.7rem;
-    width: 100%;
+    display: none;
   }
 
-  .top-bar__contact-row {
-    width: 100%;
-    justify-content: flex-start;
-    gap: 0.85rem 1.25rem;
-  }
-
-  .top-bar__value {
-    font-size: 12px;
-  }
-
-  .top-bar__close {
-    margin-top: 0.15rem;
+  .top-bar__mobile-row {
+    display: flex;
   }
 }
 
@@ -464,12 +518,12 @@ a {
 }
 
 /* Keep header flush with hero on mobile; restore bottom rule on desktop. */
-.site-header-wrap:has(+ main > :first-child.hero-wrap) {
+.site-chrome:has(+ main > :first-child.hero-wrap) .site-header-wrap {
   border-bottom: none;
 }
 
 @media (min-width: 1024px) {
-  .site-header-wrap:has(+ main > :first-child.hero-wrap) {
+  .site-chrome:has(+ main > :first-child.hero-wrap) .site-header-wrap {
     border-bottom: 1px solid var(--border);
   }
 }
@@ -651,16 +705,16 @@ a {
   border-top: none;
 }
 
-.site-header-wrap:has(+ main > :first-child.hero-wrap) + main > .hero-wrap:first-child {
+.site-chrome:has(+ main > :first-child.hero-wrap) + main > .hero-wrap:first-child {
   margin-top: 0;
   padding-top: 0;
 }
 
-.site-header-wrap:has(+ main > :first-child.hero-wrap) .site-header-cta {
+.site-chrome:has(+ main > :first-child.hero-wrap) .site-header-wrap .site-header-cta {
   margin-bottom: 0;
 }
 
-.site-header-wrap:has(+ main > :first-child.hero-wrap) .site-header-cta .header-contact-menu__button {
+.site-chrome:has(+ main > :first-child.hero-wrap) .site-header-wrap .site-header-cta .header-contact-menu__button {
   height: calc(72px + 1px);
   min-height: calc(72px + 1px);
   margin-bottom: -1px;
