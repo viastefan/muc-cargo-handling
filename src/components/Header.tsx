@@ -62,7 +62,7 @@ export function Header() {
         </div>
       </div>
 
-      <div className="flex h-[68px] items-center justify-between gap-3 px-[var(--page-x)] sm:h-[72px] lg:hidden">
+      <div className="flex h-[56px] items-center justify-between gap-3 px-[var(--page-x)] sm:h-[64px] lg:hidden">
         <Link href="/" className="shrink-0 transition-opacity duration-300 hover:opacity-80" onClick={() => setOpen(false)}>
           <BrandLogo priority />
         </Link>

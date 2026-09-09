@@ -164,7 +164,7 @@ export function ContactForm() {
 
       <div className="form-section">
         <p className="form-section-label">Ihre Kontaktdaten</p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           <FormField
             label="Vorname"
             name="firstName"
@@ -186,7 +186,7 @@ export function ContactForm() {
             autoComplete="family-name"
           />
         </div>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        <div className="mt-5 grid gap-5 sm:grid-cols-2">
           <FormField
             label="Unternehmen (optional)"
             name="company"
@@ -206,7 +206,7 @@ export function ContactForm() {
             autoComplete="email"
           />
         </div>
-        <div className="mt-4">
+        <div className="mt-5">
           <FormField
             label="Telefon (optional)"
             name="phone"

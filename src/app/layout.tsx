@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
 import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/Header";
 import { InquiryFlow } from "@/components/InquiryFlow";
@@ -8,6 +9,12 @@ import { SiteFooter } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import "./globals.css";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -24,7 +31,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className="h-full antialiased" suppressHydrationWarning>
+    <html
+      lang="de"
+      className={`h-full antialiased ${geist.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Setzt data-theme vor dem ersten Paint (Standard: dunkel, siehe
             src/lib/theme.ts) — verhindert einen hell/dunkel-Flash. */}

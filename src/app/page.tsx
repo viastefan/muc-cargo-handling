@@ -45,6 +45,7 @@ export default function HomePage() {
 
       <PageSection>
         <ScrollReveal duration={1100}>
+          <p className="section-eyebrow">Über uns</p>
           <SectionTitle dark={HOME_STORY.titleDark} light={HOME_STORY.titleLight} />
           <p className="prose-lead mt-5 max-w-3xl">{HOME_STORY.subtitle}</p>
         </ScrollReveal>
