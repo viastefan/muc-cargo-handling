@@ -1093,8 +1093,11 @@ a {
   /* Kraeftiger Weichzeichner + Saettigungs-Boost statt nur einer dunklen
      Flaeche — das "Vibrancy"-Glaseffekt-Rezept, das macOS/iOS-Dialoge
      erkennbar macht, statt eines platten Abdunklers. */
+  /* Praefix bewusst nicht von Hand mitschreiben — der Build-Prozess
+     (Lightning CSS) hat beim manuellen Duplikat zuvor nur die
+     -webkit-Variante ausgegeben und die Standardeigenschaft verworfen,
+     wodurch der Weichzeichner in modernen Browsern gar nicht griff. */
   backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
   cursor: pointer;
   animation: inq-fade 0.24s var(--ease-out);
 }
