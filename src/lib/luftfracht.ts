@@ -84,7 +84,7 @@ export const LUFTFRACHT_SERVICES = [
     ],
   },
   {
-    image: "/images/luftfracht/service-2.jpg",
+    image: "/images/luftfracht/documentation-desk.jpg",
     title: "Dokumentation & Zollunterstützung",
     bullets: [
       "Vollständige Frachtdokumentation",
@@ -93,7 +93,7 @@ export const LUFTFRACHT_SERVICES = [
     ],
   },
   {
-    image: "/images/luftfracht/service-3.jpg",
+    image: "/images/luftfracht/security-checkpoint.jpg",
     title: "Sicherheitskontrolle",
     bullets: [
       "Röntgen, Sichtkontrolle und ergänzende Verfahren",

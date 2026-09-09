@@ -85,7 +85,7 @@ export default function RoentgenPage() {
         <SectionHeader eyebrow="Röntgen" dark="Unsere" light="Kontrollverfahren" />
         <div className="section-header-gap grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8">
           <ServiceCard
-            image="/images/roentgen/xray-checkpoint.jpg"
+            image="/images/roentgen/security-checkpoint.jpg"
             title="Röntgenkontrolle"
             description="Schnelle, bildgebende Prüfung großer Sendungsvolumina durch geschulte Operatoren."
           />
