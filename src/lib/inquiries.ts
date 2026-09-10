@@ -282,6 +282,24 @@ export async function updateInquiry(
   return rows[0] ? toRecord(rows[0]) : null;
 }
 
+/** Anfrage endgültig löschen (DSGVO — nach abgeschlossener Bearbeitung). */
+export async function deleteInquiry(reference: string): Promise<boolean> {
+  if (!inquiriesStorageReady) return false;
+  try {
+    const params = new URLSearchParams({
+      reference: `eq.${reference.replace(/[^A-Za-z0-9-]/g, "")}`,
+    });
+    await rest(`/inquiries?${params.toString()}`, {
+      method: "DELETE",
+      prefer: "return=minimal",
+    });
+    return true;
+  } catch (error) {
+    console.error("[inquiries] delete failed", error);
+    return false;
+  }
+}
+
 export type InquiryStats = {
   total: number;
   new: number;

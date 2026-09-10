@@ -7,6 +7,7 @@ import { ADMIN_COOKIE } from "@/lib/admin-auth";
 import { requireAdmin } from "@/lib/admin-session";
 import {
   INQUIRY_STATUSES,
+  deleteInquiry,
   updateInquiry,
   type InquiryStatus,
 } from "@/lib/inquiries";
@@ -32,6 +33,15 @@ export async function saveNoteAction(formData: FormData): Promise<void> {
   if (!reference) return;
   await updateInquiry(reference, { adminNote: note });
   revalidatePath(`/admin/${reference}`);
+}
+
+export async function deleteInquiryAction(formData: FormData): Promise<void> {
+  await requireAdmin();
+  const reference = cleanRef(formData.get("reference"));
+  if (!reference) return;
+  await deleteInquiry(reference);
+  revalidatePath("/admin");
+  redirect("/admin");
 }
 
 export async function logoutAction(): Promise<void> {

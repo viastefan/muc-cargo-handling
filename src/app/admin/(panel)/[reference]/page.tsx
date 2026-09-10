@@ -8,6 +8,7 @@ import {
 } from "@/lib/inquiries";
 import { hasAdminSession } from "@/lib/admin-session";
 import { StatusBadge } from "../StatusBadge";
+import { DeleteInquiryButton } from "../DeleteInquiryButton";
 import { setStatusAction, saveNoteAction } from "../actions";
 
 function fullDate(iso: string | null) {
@@ -150,6 +151,14 @@ export default async function InquiryDetail({
                 {inquiry.userAgent || "—"}
               </dd>
             </dl>
+          </div>
+
+          <div className="admin-card">
+            <p className="admin-card__title">Datenschutz</p>
+            <p className="admin-hint" style={{ marginTop: 0, marginBottom: "0.75rem" }}>
+              Nach abgeschlossener Bearbeitung löschen (DSGVO-Datenminimierung).
+            </p>
+            <DeleteInquiryButton reference={inquiry.reference} />
           </div>
         </div>
       </div>
