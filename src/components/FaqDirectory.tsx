@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useState } from "react";
 import type { FaqCategory } from "@/lib/faq";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 
 type Props = {
   categories: readonly FaqCategory[];
@@ -41,9 +42,7 @@ export function FaqDirectory({ categories }: Props) {
 
   useEffect(() => {
     if (!menuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    lockScroll();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeMenu();
@@ -51,7 +50,7 @@ export function FaqDirectory({ categories }: Props) {
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      unlockScroll();
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [menuOpen, closeMenu]);

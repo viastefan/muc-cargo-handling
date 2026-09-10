@@ -11,7 +11,7 @@ type Props = {
 
 export function LegalDocument({ title, description, intro, sections }: Props) {
   return (
-    <PageSection className="!pt-16 md:!pt-20">
+    <PageSection className="!pt-10 sm:!pt-14 md:!pt-20">
       <div className="mx-auto max-w-3xl">
         <SectionHeader
           eyebrow="Rechtliches"

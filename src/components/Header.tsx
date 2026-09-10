@@ -62,14 +62,14 @@ export function Header() {
         </div>
       </div>
 
-      <div className="flex h-[68px] items-center justify-between gap-3 px-[var(--page-x)] sm:h-[72px] lg:hidden">
+      <div className="flex h-[60px] items-center justify-between gap-3 px-3.5 sm:h-[64px] lg:hidden">
         <Link href="/" className="shrink-0 transition-opacity duration-300 hover:opacity-80" onClick={() => setOpen(false)}>
           <BrandLogo priority />
         </Link>
 
         <button
           type="button"
-          className="menu-toggle -mr-1"
+          className="menu-toggle"
           aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
           aria-controls="mobile-nav-panel"

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <PageSection className="!pt-16 md:!pt-20">
+      <PageSection className="!pt-10 sm:!pt-14 md:!pt-20">
         <div className="faq-page">
           <SectionHeader
             eyebrow="FAQ"
