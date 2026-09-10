@@ -295,17 +295,21 @@ a {
 }
 
 /* Top utility bar — sitzt im gemeinsamen sticky Block (.site-chrome) direkt
-   ueber der Kopfzeile. Gleicher Hintergrund wie der Header (nicht --surface)
-   und keine Trennlinie dazwischen — beide lesen sich als ein durchgehender
-   Chrome-Block statt als zwei gestapelte Streifen mit Naht. */
+   ueber der Kopfzeile. Leicht abgesetzter grauer Grund (--surface) mit feiner
+   Trennlinie: die Kontaktleiste liest sich als eigener, ruhiger Streifen und
+   hebt sich sichtbar von der weissen Kopfzeile darunter ab. */
 .top-bar {
   position: relative;
   z-index: 51;
   display: grid;
   grid-template-rows: 1fr;
-  background: var(--background);
+  background: var(--surface);
   color: var(--foreground);
   overflow: hidden;
+}
+
+.top-bar:not(.is-closed) {
+  border-bottom: 1px solid var(--border);
 }
 
 .top-bar.is-ready {
@@ -411,7 +415,7 @@ a {
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--card);
   color: var(--foreground);
   cursor: pointer;
   transition:
@@ -473,8 +477,9 @@ a {
   width: 2rem;
   height: 2rem;
   flex-shrink: 0;
+  border: 1px solid var(--border);
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--card);
   color: var(--foreground);
   transition:
     background-color var(--duration-fast) var(--ease-out),
@@ -831,15 +836,17 @@ a {
   margin-top: 40px;
 }
 
-/* Header: split button + Kontakt-Dropdown (Desktop) */
-/*
- * War ein zweigeteilter Button mit eigenem Dropdown (E-Mail/Anrufen/
- * Kontaktformular) hinter der Eckflaeche — ein zweiter, inkonsistenter
- * Weg zum Anfrage-Flow neben dem Label-Klick. Jetzt ein einziger Link:
- * die ganze Flaeche oeffnet denselben Anfrage-Flow wie der schwebende
- * Chat-Button. Die zweifarbige Eckoptik (Label + Akzent-Ecke) bleibt rein
- * visuell erhalten.
- */
+/* Header-CTA "Anfrage stellen" mit Auswahl-Popover (Desktop).
+ * Der Button behält seine zweifarbige Eckoptik; ein Klick klappt darunter
+ * ein Panel mit den Kontaktwegen auf, das sich ohne Auswahl wieder schliessen
+ * laesst. */
+.header-contact-menu {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .header-contact-menu__button {
   position: relative;
   display: block;
@@ -847,8 +854,10 @@ a {
   height: 100%;
   min-height: 72px;
   min-width: 0;
+  border: none;
   background: var(--brand);
   text-decoration: none;
+  cursor: pointer;
   transition:
     background-color var(--duration-normal) var(--ease-out),
     box-shadow var(--duration-normal) var(--ease-out);
@@ -898,6 +907,129 @@ a {
   height: 0.75rem;
   font-size: 0.75rem;
   opacity: 0.84;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.header-contact-menu__corner.is-open .btn-corner-symbol {
+  transform: rotate(45deg);
+}
+
+/* Auswahl-Panel unter dem CTA */
+.header-contact-menu__panel {
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  z-index: 60;
+  width: 20rem;
+  max-width: calc(100vw - 2rem);
+  padding: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.28);
+  transform-origin: top right;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+  opacity: 0;
+  transform: translateY(-6px) scale(0.985);
+  pointer-events: none;
+}
+
+.header-contact-menu__panel[data-open="true"] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.header-contact-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  text-align: left;
+  text-decoration: none;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.header-contact-menu__item:hover,
+.header-contact-menu__item:focus-visible {
+  background: var(--surface-2);
+  outline: none;
+}
+
+.header-contact-menu__item--primary {
+  background: color-mix(in srgb, var(--brand) 8%, var(--card));
+}
+
+.header-contact-menu__item--primary:hover,
+.header-contact-menu__item--primary:focus-visible {
+  background: color-mix(in srgb, var(--brand) 14%, var(--card));
+}
+
+.header-contact-menu__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.header-contact-menu__item-title {
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--foreground);
+}
+
+.header-contact-menu__item-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.header-contact-menu__item-arrow.btn-corner-symbol {
+  color: var(--muted-light);
+  opacity: 1;
+  transform: none;
+  flex-shrink: 0;
+}
+
+.header-contact-menu__item:hover .header-contact-menu__item-arrow.btn-corner-symbol {
+  transform: translateX(2px);
+  color: var(--brand-text);
+}
+
+.header-contact-menu__item--compact {
+  padding: 0.55rem 0.75rem;
+}
+
+.header-contact-menu__item--compact .header-contact-menu__item-title {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-contact-menu__item-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  color: var(--muted-light);
+}
+
+.header-contact-menu__divider {
+  height: 1px;
+  margin: 0.35rem 0.5rem;
+  background: var(--border);
 }
 
 @keyframes contact-action-fade-in {
@@ -1121,6 +1253,151 @@ a {
 @media (max-width: 639px) {
   .lead-teaser {
     display: none;
+  }
+}
+
+/* ── Standort-Peek unten links ─────────────────────────────────────────── */
+.location-peek {
+  position: fixed;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 68;
+  display: flex;
+  flex-direction: column;
+  width: min(17.5rem, calc(100vw - 2.5rem));
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--card);
+  box-shadow:
+    0 20px 48px -14px rgb(0 0 0 / 0.28),
+    0 4px 14px rgb(0 0 0 / 0.1);
+  animation: location-peek-in 0.4s var(--ease-out);
+}
+
+.location-peek.is-leaving {
+  animation: location-peek-out 0.22s var(--ease-out) forwards;
+}
+
+@keyframes location-peek-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes location-peek-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+.location-peek__close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.location-peek__close svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.location-peek__close:hover {
+  background: var(--surface-2);
+}
+
+.location-peek__map {
+  height: 5.25rem;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+}
+
+.location-peek__map svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.location-peek__body {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.location-peek__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.location-peek__title {
+  margin: 0.2rem 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.location-peek__addr {
+  margin: 0.35rem 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.location-peek__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--brand-text);
+}
+
+.location-peek__cta:hover {
+  color: var(--brand-text-hover);
+}
+
+.location-peek__cta svg {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.location-peek__cta:hover svg {
+  transform: translateX(2px);
+}
+
+/* Auf Telefonbreite zurueckhaltender: kein Platz fuer zwei schwebende
+   Elemente — die Startseite/Unterseiten haben den Kontakt-Einstieg ohnehin
+   im Blick. */
+@media (max-width: 767px) {
+  .location-peek {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .location-peek,
+  .location-peek.is-leaving {
+    animation: none;
   }
 }
 
@@ -3556,35 +3833,47 @@ textarea.field__control {
   display: none;
 }
 
-/* Value pillars — white cards on muted section, no red accent */
+/* Value pillars — eigenständige Karten auf grauem Abschnitt, ruhiger
+   Marken-Akzent über der Ziffer. */
 .value-pillars {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.875rem;
   align-items: stretch;
 }
 
 @media (min-width: 768px) {
   .value-pillars {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.875rem;
+    gap: 1rem;
   }
 }
 
-/* Listentyp – nummeriert, ohne Kasten. */
 .value-pillar {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: transparent;
-  border-top: 1px solid var(--border);
-  padding: 1.1rem 0 0;
+  padding: 1.5rem 1.4rem 1.55rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out);
 }
 
 @media (min-width: 768px) {
   .value-pillar {
-    min-height: 12.75rem;
-    padding: 1.5rem 1.5rem 1.6rem;
+    min-height: 12.5rem;
+    padding: 1.65rem 1.6rem 1.7rem;
   }
+}
+
+.value-pillar:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--border));
+  box-shadow: 0 14px 32px -14px rgb(0 0 0 / 0.2);
 }
 
 .value-pillar:hover .value-pillar__title {
@@ -3644,25 +3933,34 @@ textarea.field__control {
 }
 
 .value-pillar__index {
-  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0 1.1rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--brand) 12%, var(--card));
   font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
   line-height: 1;
-  color: var(--muted-light);
+  color: var(--brand-text);
 }
 
 .value-pillar__title {
-  margin: 1rem 0 0;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  line-height: 1.3;
   color: var(--foreground);
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 .value-pillar__text {
-  margin: 0.7rem 0 0;
+  margin: 0.6rem 0 0;
   font-size: 14px;
   line-height: 1.65;
   color: var(--muted);
@@ -3803,10 +4101,10 @@ textarea.field__control {
   flex: 1 1 auto;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 1.15rem;
   width: 100%;
   height: 100%;
-  min-height: 12.75rem;
+  min-height: 11rem;
   border: none;
   /* War die einzige Karte im System ohne jede Rundung (harte 90°-Ecken)
      — bricht auffaellig mit allen anderen Repeatern (service-card,
@@ -3825,9 +4123,9 @@ textarea.field__control {
 
 @media (min-width: 768px) {
   .feature-card {
-    min-height: 14rem;
+    min-height: 12rem;
     padding: 1.5rem 1.5rem 1.55rem;
-    gap: 1.75rem;
+    gap: 1.35rem;
   }
 }
 
@@ -3849,10 +4147,10 @@ textarea.field__control {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid var(--icon-tile-border);
-  border-radius: 12px;
+  border-radius: 11px;
   background: var(--icon-tile-bg);
   color: var(--icon-tile-ink);
   transition: transform var(--duration-normal) var(--ease-out);
@@ -3863,8 +4161,8 @@ textarea.field__control {
 }
 
 .feature-card__icon-svg {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
   display: block;
 }
 
@@ -3875,18 +4173,24 @@ textarea.field__control {
 
 .feature-card__title {
   margin: 0;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.3;
   color: var(--foreground);
 }
 
 .feature-card__text {
-  margin: 0.65rem 0 0;
-  font-size: 13px;
+  margin: 0.55rem 0 0;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .feature-card__title {
+    font-size: 17px;
+  }
 }
 
 /* legacy accent removed — kept inert if referenced elsewhere */
@@ -5465,18 +5769,21 @@ textarea.field__control {
   color: var(--brand-text-hover);
 }
 
-/* Cookie consent banner + floating fingerprint */
+/* Cookie consent banner */
 .cookie-banner {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
   left: 1rem;
   z-index: 100;
-  max-width: 40rem;
+  max-width: 34rem;
   margin-inline: auto;
   border: 1px solid var(--border);
+  border-radius: 16px;
   background: var(--card);
-  box-shadow: 0 10px 36px rgb(0 0 0 / 0.12);
+  box-shadow:
+    0 24px 56px -12px rgb(0 0 0 / 0.24),
+    0 4px 14px rgb(0 0 0 / 0.1);
   animation: download-sheet-in 0.34s var(--ease-out);
 }
 
@@ -5485,7 +5792,7 @@ textarea.field__control {
     right: 1.5rem;
     bottom: 1.5rem;
     left: auto;
-    width: min(28rem, calc(100vw - 3rem));
+    width: min(26rem, calc(100vw - 3rem));
     max-width: none;
     margin-inline: 0;
   }
@@ -5534,45 +5841,52 @@ textarea.field__control {
 }
 
 .cookie-banner__actions {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
   flex-shrink: 0;
   width: 100%;
 }
 
 .cookie-banner__btn {
-  position: relative;
   display: inline-flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  flex: 0 0 auto;
-  width: 100%;
-  min-width: 0;
-  min-height: 3rem;
-  padding: 0 1.25rem 8px 8px;
-  border: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
   font-family: inherit;
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.04em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
   line-height: 1.2;
-  text-transform: uppercase;
-  text-align: left;
-  white-space: nowrap;
+  text-transform: none;
+  text-align: center;
   cursor: pointer;
   transition:
     background-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out),
-    filter var(--duration-fast) var(--ease-out);
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
-@media (min-width: 768px) {
-  .cookie-banner__btn {
-    min-height: 2.75rem;
-  }
+/* "Einstellungen" spannt sich unter die beiden gleichrangigen Optionen. */
+.cookie-banner__btn--secondary {
+  grid-column: 1 / -1;
+  order: 3;
+  min-height: 2.4rem;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
+.cookie-banner__btn--secondary:hover {
+  color: var(--foreground);
+}
+
+/* Akzeptieren und Ablehnen: gleiches Gewicht (DSGVO). */
 .cookie-banner__btn--primary {
   background: var(--brand);
   color: #ffffff;
@@ -5582,23 +5896,13 @@ textarea.field__control {
   background: var(--brand-dark);
 }
 
-.cookie-banner__btn--secondary {
-  background: var(--surface);
-  color: var(--foreground);
-}
-
-.cookie-banner__btn--secondary:hover {
-  background: var(--surface-2);
-}
-
 .cookie-banner__btn--ghost {
-  background: transparent;
+  background: var(--surface-2);
   color: var(--foreground);
-  box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .cookie-banner__btn--ghost:hover {
-  background: var(--surface);
+  background: var(--surface-3);
 }
 
 .cookie-settings {

@@ -24,12 +24,6 @@ export default function RootLayout({
         {/* Setzt data-theme vor dem ersten Paint (Standard: dunkel, siehe
             src/lib/theme.ts) — verhindert einen hell/dunkel-Flash. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=arrow_forward_ios&display=swap"
-        />
       </head>
       <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>

@@ -12,6 +12,7 @@ import {
   persistConsent,
   readCookie,
 } from "@/lib/consent-cookies";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 
 type PanelMode = "banner" | "settings" | "hidden";
 
@@ -66,8 +67,7 @@ export function CookieConsent() {
 
   useEffect(() => {
     if (resolvedMode !== "settings") return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    lockScroll();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -77,7 +77,7 @@ export function CookieConsent() {
 
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = previous;
+      unlockScroll();
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [resolvedMode, existing]);

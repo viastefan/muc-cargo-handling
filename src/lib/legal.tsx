@@ -96,10 +96,9 @@ export function getDatenschutzSections(): LegalSection[] {
       ],
     },
     {
-      title: "7. Icon-Schriftarten (Google Fonts / Material Symbols)",
+      title: "7. Schriftarten und Icons",
       paragraphs: [
-        "Zur Darstellung einzelner UI-Icons wird der Dienst „Material Symbols“ über Google Fonts (fonts.googleapis.com / fonts.gstatic.com) geladen. Dabei stellt Ihr Browser eine Verbindung zu Servern von Google her; dabei kann Ihre IP-Adresse verarbeitet werden.",
-        "Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer einheitlichen, performanten Darstellung von Icons). Weitere Informationen: https://policies.google.com/privacy",
+        "Schriftarten und Icons dieser Website werden ausschließlich lokal von unserem Server ausgeliefert. Es besteht dabei kein Verbindungsaufbau zu externen Anbietern (z. B. Google Fonts), und es werden hierfür keine personenbezogenen Daten an Dritte übermittelt.",
       ],
     },
     {

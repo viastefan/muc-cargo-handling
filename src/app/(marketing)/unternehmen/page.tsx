@@ -220,7 +220,7 @@ export default function UnternehmenPage() {
           light="zuverlässige Cargo-Prozesse"
         />
 
-        <div className="section-header-gap grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+        <div className="section-header-gap grid gap-10 sm:grid-cols-3 sm:gap-8 lg:gap-12">
           <StatCard
             value="20+"
             label="Jahre Erfahrung"
@@ -229,7 +229,7 @@ export default function UnternehmenPage() {
           <StatCard
             value="24/7"
             label="Verfügbarkeit"
-            footer="Für zeitkritische Frachtsendungen und Sonderabwicklungen"
+            footer="Für zeitkritische Sendungen und Sonderabwicklungen"
           />
           <StatCard
             value="MUC"
@@ -238,15 +238,15 @@ export default function UnternehmenPage() {
               <>
                 Direkt am Flughafen München.{" "}
                 <Link href="/kontakt" className="link-underline">
-                  {COMPANY.office.line1}, {COMPANY.office.line2}
+                  {COMPANY.office.line1}
                 </Link>
               </>
             }
           />
         </div>
-
-        <InternationalGlobeSection />
       </PageSection>
+
+      <InternationalGlobeSection />
 
       <FooterCta title="Gemeinsam für sichere und effiziente Luftfrachtprozesse." />
     </>

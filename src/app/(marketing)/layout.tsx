@@ -2,6 +2,7 @@ import { CookieConsent } from "@/components/CookieConsent";
 import { Header } from "@/components/Header";
 import { InquiryFlow } from "@/components/InquiryFlow";
 import { LeadCaptureWidget } from "@/components/LeadCaptureWidget";
+import { LocationPeek } from "@/components/LocationPeek";
 import { RouteScrollReset } from "@/components/RouteScrollReset";
 import { SiteFooter } from "@/components/Footer";
 import { TopBar } from "@/components/TopBar";
@@ -27,6 +28,7 @@ export default function MarketingLayout({
       <SiteFooter />
       <CookieConsent />
       <LeadCaptureWidget />
+      <LocationPeek />
       <InquiryFlow />
     </>
   );

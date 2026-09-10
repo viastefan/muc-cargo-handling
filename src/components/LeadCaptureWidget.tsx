@@ -82,8 +82,29 @@ export function LeadCaptureWidget() {
       /* ignore */
     }
     if (dismissed) return;
-    const timer = setTimeout(() => setTeaserVisible(true), TEASER_DELAY_MS);
-    return () => clearTimeout(timer);
+
+    // Erst zeigen, wenn der Hero durchgescrollt ist — sonst konkurriert die
+    // Sprechblase unten rechts mit dem Telefon-Feld im Hero.
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const past = () => window.scrollY > window.innerHeight * 0.6;
+    const reveal = () => {
+      timer = setTimeout(() => setTeaserVisible(true), TEASER_DELAY_MS);
+    };
+    if (past()) {
+      reveal();
+      return () => timer && clearTimeout(timer);
+    }
+    const onScroll = () => {
+      if (past()) {
+        window.removeEventListener("scroll", onScroll);
+        reveal();
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (timer) clearTimeout(timer);
+    };
   }, [consentDecided]);
 
   const dismissTeaser = useCallback(() => {

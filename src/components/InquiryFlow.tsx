@@ -17,6 +17,7 @@ import {
   subscribeInquiry,
   type InquiryTopic,
 } from "@/lib/inquiry-store";
+import { lockScroll, unlockScroll } from "@/lib/scroll-lock";
 
 /**
  * Anfrage-Flow: eine Frage pro Schritt statt eines langen Formulars.
@@ -240,14 +241,13 @@ export function InquiryFlow() {
 
   useEffect(() => {
     if (!open) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    lockScroll();
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
     };
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = previousOverflow;
+      unlockScroll();
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open, close]);

@@ -92,7 +92,11 @@ export default async function InquiryDetail({
         <div>
           <div className="admin-card">
             <p className="admin-card__title">Status</p>
-            <form action={setStatusAction} className="admin-inline-form">
+            <form
+              action={setStatusAction}
+              className="admin-inline-form"
+              key={inquiry.status}
+            >
               <input type="hidden" name="reference" value={inquiry.reference} />
               <select
                 name="status"

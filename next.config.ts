@@ -15,9 +15,9 @@ const isProd = process.env.NODE_ENV === "production";
 const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline'" + (isProd ? "" : " 'unsafe-eval'"),
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data: blob: https:",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self'",
+  "img-src 'self' data: blob:",
   "frame-src https://www.google.com https://maps.google.com",
   "connect-src 'self'" + (isProd ? "" : " ws: http://localhost:*"),
   "form-action 'self'",
