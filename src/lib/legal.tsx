@@ -91,8 +91,9 @@ export function getDatenschutzSections(): LegalSection[] {
     {
       title: "6. Karten und Anfahrt (Google Maps)",
       paragraphs: [
-        "Auf einzelnen Seiten binden wir eine Kartenansicht über Google Maps (Google Ireland Limited / Google LLC) ein und verlinken auf Google Maps zur Anfahrt. Beim Laden der eingebetteten Karte kann Google personenbezogene Daten (insbesondere Ihre IP-Adresse und Geräteinformationen) verarbeiten und Cookies setzen.",
-        "Die Einbindung dient der Darstellung unseres Standorts und der Nutzerfreundlichkeit (Art. 6 Abs. 1 lit. f DSGVO). Bitte beachten Sie die Datenschutzhinweise von Google: https://policies.google.com/privacy",
+        "Auf der Kontaktseite bieten wir eine Kartenansicht über Google Maps (Google Ireland Limited / Google LLC) an. Die Karte wird nicht automatisch geladen: Sie erscheint erst, nachdem Sie aktiv auf „Karte laden“ geklickt oder zuvor eine entsprechende Einwilligung erteilt haben. Vorher werden keine Daten an Google übermittelt.",
+        "Nach Ihrer Zustimmung kann Google beim Laden der Karte personenbezogene Daten (insbesondere Ihre IP-Adresse und Geräteinformationen) verarbeiten und Cookies setzen. Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG; die Einwilligung gilt für die jeweilige Sitzung und kann durch erneutes Laden der Seite widerrufen werden.",
+        "Unabhängig davon verlinken wir auf Google Maps zur Anfahrt. Beim Aufruf dieses Links gelten die Datenschutzhinweise von Google: https://policies.google.com/privacy",
       ],
     },
     {

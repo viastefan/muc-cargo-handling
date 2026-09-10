@@ -101,7 +101,7 @@ export function Header() {
                 </Link>
               );
             })}
-            <div className="mobile-nav-item pt-4">
+            <div className="mobile-nav-item flex flex-col gap-2.5 pt-4">
               <Button
                 href="/kontakt"
                 fullWidth
@@ -114,6 +114,13 @@ export function Header() {
               >
                 Anfrage stellen
               </Button>
+              <Link
+                href="/kontakt"
+                onClick={() => setOpen(false)}
+                className="text-center text-[13px] text-[var(--muted)] underline underline-offset-4 transition-colors hover:text-[var(--foreground)]"
+              >
+                Zum Kontaktformular
+              </Link>
             </div>
           </nav>
         </div>

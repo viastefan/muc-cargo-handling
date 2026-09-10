@@ -5701,6 +5701,76 @@ textarea.field__control {
   filter: contrast(0.9) brightness(0.86) saturate(0.9);
 }
 
+/* Zwei-Klick-Platzhalter, solange die Karte nicht geladen ist */
+.location-map__consent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1.25rem;
+  text-align: center;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.location-map__consent-grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 34px 34px;
+  opacity: 0.5;
+  transform: rotate(-8deg);
+  mask-image: radial-gradient(ellipse at center, #000 40%, transparent 78%);
+}
+
+.location-map__consent-title {
+  position: relative;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.location-map__consent-text {
+  position: relative;
+  margin: 0;
+  max-width: min(22rem, 100%);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.location-map__consent-link {
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.location-map__consent-btn {
+  position: relative;
+  margin-top: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 9px;
+  background: var(--brand);
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.location-map__consent-btn:hover {
+  background: var(--brand-dark);
+}
+
 .location-map__info {
   display: flex;
   align-items: flex-start;
