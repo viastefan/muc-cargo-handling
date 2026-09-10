@@ -208,8 +208,10 @@ async function listInquiriesUnsafe(
     params.set("topic", `eq.${query.topic}`);
   }
   if (query.search) {
-    // PostgREST or-Filter; Sonderzeichen für den Filterausdruck entschärfen.
-    const term = query.search.replace(/[(),*"\\]/g, " ").trim().slice(0, 80);
+    // PostgREST or-Filter: alle Zeichen entfernen, mit denen sich der
+    // Filterausdruck manipulieren ließe (Klammern, Komma, Punkt, Stern,
+    // Quotes, Backslash) — übrig bleibt ein reiner Suchbegriff.
+    const term = query.search.replace(/[(),.*:"\\]/g, " ").trim().slice(0, 80);
     if (term) {
       const like = `*${term}*`;
       params.set(

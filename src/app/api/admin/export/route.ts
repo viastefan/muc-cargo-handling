@@ -5,8 +5,13 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 function csvCell(value: unknown): string {
-  const str = value == null ? "" : String(value);
-  return `"${str.replace(/"/g, '""').replace(/\r?\n/g, " ")}"`;
+  let str = value == null ? "" : String(value);
+  str = str.replace(/\r?\n/g, " ");
+  // CSV-/Formel-Injection: Zellen, die mit = + - @ oder einem Steuerzeichen
+  // beginnen, würden von Excel/LibreOffice als Formel ausgewertet. Mit einem
+  // vorangestellten Apostroph bleibt der Inhalt reiner Text.
+  if (/^[=+\-@\t\r]/.test(str)) str = `'${str}`;
+  return `"${str.replace(/"/g, '""')}"`;
 }
 
 export async function GET() {
