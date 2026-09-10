@@ -129,8 +129,9 @@ export default function ImpressumPage() {
               <a href="https://unsplash.com/@hdbernd" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Bernd Dittrich</a>,{" "}
               <a href="https://unsplash.com/@remapstudio" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">remapstudio</a>,{" "}
               <a href="https://unsplash.com/@mpetrucho" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Petr Magera</a>,{" "}
-              <a href="https://unsplash.com/@jayrheike" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Jay Heike</a> und{" "}
-              <a href="https://unsplash.com/@dashxatami" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Dash Khatami</a>{" "}
+              <a href="https://unsplash.com/@jayrheike" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Jay Heike</a>,{" "}
+              <a href="https://unsplash.com/@dashxatami" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Dash Khatami</a> und{" "}
+              <a href="https://unsplash.com/@clh_foo" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Can Tekin</a>{" "}
               auf{" "}
               <a href="https://unsplash.com" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Unsplash</a>.
               Weitere Aufnahmen: MUC Cargohandling GmbH.
