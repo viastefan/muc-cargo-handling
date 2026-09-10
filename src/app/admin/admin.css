@@ -1,0 +1,435 @@
+/* Internes Anfragen-Panel — bewusst nüchtern, dicht, funktional.
+   Nutzt die Farb-Tokens aus globals.css, aber nicht die Marketing-Typo. */
+
+.admin-root {
+  --admin-gap: 1rem;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--foreground);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.admin-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.admin-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-bar__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.admin-bar__brand span {
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: 1.5rem 1.25rem 4rem;
+}
+
+/* ---- Login ---- */
+.admin-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+}
+
+.admin-login__card {
+  width: 100%;
+  max-width: 22rem;
+  padding: 1.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px -12px rgb(0 0 0 / 0.18);
+}
+
+.admin-login__title {
+  margin: 0 0 0.35rem;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.admin-login__hint {
+  margin: 0 0 1.25rem;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ---- Form controls ---- */
+.admin-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-light);
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  outline: none;
+  transition: border-color 140ms ease;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.admin-textarea {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.admin-btn:hover {
+  background: var(--surface-2);
+}
+
+.admin-btn--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  width: 100%;
+}
+
+.admin-btn--primary:hover {
+  background: var(--brand-dark);
+}
+
+.admin-btn--sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 13px;
+}
+
+.admin-error {
+  margin: 0 0 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--brand) 10%, var(--card));
+  color: var(--brand-text);
+  font-size: 13px;
+}
+
+/* ---- Stats ---- */
+.admin-stats {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .admin-stats {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.admin-stat {
+  padding: 0.9rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+}
+
+.admin-stat__value {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.admin-stat__label {
+  margin-top: 0.15rem;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ---- Filters ---- */
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.admin-filters__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-filters__group--grow {
+  flex: 1 1 12rem;
+}
+
+/* ---- Table ---- */
+.admin-table-wrap {
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.admin-table th {
+  padding: 0.7rem 0.9rem;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-light);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+  vertical-align: top;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.admin-table__msg {
+  max-width: 22rem;
+  color: var(--muted);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.admin-empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+/* ---- Status badges ---- */
+.admin-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.admin-badge::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.admin-badge--new {
+  color: #b45309;
+  background: color-mix(in srgb, #f59e0b 16%, var(--card));
+}
+.admin-badge--in_progress {
+  color: #1d4ed8;
+  background: color-mix(in srgb, #3b82f6 16%, var(--card));
+}
+.admin-badge--done {
+  color: #15803d;
+  background: color-mix(in srgb, #22c55e 16%, var(--card));
+}
+.admin-badge--archived {
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+:root[data-theme="dark"] .admin-badge--new,
+:root:not([data-theme="light"]) .admin-badge--new {
+  color: #fbbf24;
+}
+:root[data-theme="dark"] .admin-badge--in_progress,
+:root:not([data-theme="light"]) .admin-badge--in_progress {
+  color: #93c5fd;
+}
+:root[data-theme="dark"] .admin-badge--done,
+:root:not([data-theme="light"]) .admin-badge--done {
+  color: #86efac;
+}
+
+/* ---- Detail ---- */
+.admin-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.admin-back:hover {
+  color: var(--foreground);
+}
+
+.admin-detail {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .admin-detail {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.admin-card {
+  padding: 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.admin-card + .admin-card {
+  margin-top: 1rem;
+}
+
+.admin-card__title {
+  margin: 0 0 0.9rem;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-light);
+}
+
+.admin-dl {
+  display: grid;
+  grid-template-columns: minmax(6rem, auto) 1fr;
+  gap: 0.55rem 1rem;
+  margin: 0;
+  font-size: 13.5px;
+}
+
+.admin-dl dt {
+  color: var(--muted);
+}
+
+.admin-dl dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.admin-dl a {
+  color: var(--brand-text);
+}
+
+.admin-message {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.admin-field + .admin-field {
+  margin-top: 1rem;
+}
+
+.admin-inline-form {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-hint {
+  margin: 0.5rem 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.admin-note-meta {
+  margin-top: 0.5rem;
+  font-size: 12px;
+  color: var(--muted);
+}

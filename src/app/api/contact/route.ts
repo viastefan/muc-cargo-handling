@@ -1,14 +1,28 @@
 import { NextResponse } from "next/server";
+import { clientIp, hashIp, RateLimiter } from "@/lib/request-meta";
+import {
+  saveInquiry,
+  inquiriesStorageReady,
+  type InquirySource,
+  type InquiryTopic,
+} from "@/lib/inquiries";
+import { notifyNewInquiry } from "@/lib/notify";
 
-const TOPICS = new Set(["luftfracht", "airline", "roentgen", "allgemein"]);
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+const TOPICS = new Set<InquiryTopic>(["luftfracht", "airline", "roentgen", "allgemein"]);
+const SOURCES = new Set<InquirySource>(["inquiry-flow", "contact-form"]);
+
 const MAX_MESSAGE = 2000;
+const MIN_MESSAGE = 20;
 const MAX_FIELD = 120;
-const RATE_WINDOW_MS = 60_000;
-const RATE_MAX = 5;
-const DELIVERY_ERROR = "Versand fehlgeschlagen. Bitte später erneut versuchen.";
+
+const limiter = new RateLimiter(60_000, 5);
 
 type Body = {
   topic?: string;
+  source?: string;
   firstName?: string;
   lastName?: string;
   company?: string;
@@ -16,132 +30,177 @@ type Body = {
   phone?: string;
   message?: string;
   privacy?: boolean;
-  /** Honeypot — must stay empty */
+  /** Honeypot — muss leer bleiben */
   website?: string;
 };
 
-type RateEntry = { count: number; resetAt: number };
-
-const rateMap = new Map<string, RateEntry>();
-
 function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) && email.length <= 180;
 }
 
-function clip(value: string | undefined, max: number) {
-  return (value ?? "").trim().slice(0, max);
+function clip(value: unknown, max: number) {
+  return (typeof value === "string" ? value : "").trim().slice(0, max);
 }
 
-function clientKey(request: Request) {
-  const forwarded = request.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0]?.trim() || "unknown";
-  return request.headers.get("x-real-ip") || "unknown";
+/** Grobe Spam-Heuristik: viele Links oder Links in Namensfeldern. */
+function looksLikeSpam(fields: {
+  firstName: string;
+  lastName: string;
+  company: string;
+  message: string;
+}) {
+  const linkRe = /\b(?:https?:\/\/|www\.)\S+/gi;
+  const links = fields.message.match(linkRe) ?? [];
+  if (links.length >= 4) return true;
+  if (linkRe.test(fields.firstName) || linkRe.test(fields.lastName)) return true;
+  if (/\[url=|\bbbcode\b|<a\s+href=/i.test(fields.message)) return true;
+  return false;
 }
 
-function allowRequest(key: string) {
-  const now = Date.now();
-  const entry = rateMap.get(key);
-  if (!entry || now >= entry.resetAt) {
-    rateMap.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return true;
-  }
-  if (entry.count >= RATE_MAX) return false;
-  entry.count += 1;
-  return true;
+function makeReference() {
+  return `MUC-${Date.now().toString(36).toUpperCase()}-${Math.random()
+    .toString(36)
+    .slice(2, 5)
+    .toUpperCase()}`;
 }
 
 export async function POST(request: Request) {
-  if (!allowRequest(clientKey(request))) {
+  const ip = clientIp(request);
+
+  const rate = limiter.check(ip);
+  if (!rate.ok) {
     return NextResponse.json(
       { ok: false, error: "Zu viele Anfragen. Bitte kurz warten und erneut versuchen." },
-      { status: 429 },
+      { status: 429, headers: { "Retry-After": String(rate.retryAfter) } },
     );
   }
 
   let body: Body;
-
   try {
     body = (await request.json()) as Body;
   } catch {
     return NextResponse.json({ ok: false, error: "Ungültige Anfrage" }, { status: 400 });
   }
-
-  // Honeypot: bots fill hidden fields; real users leave them empty.
-  if (clip(body.website, 200)) {
-    return NextResponse.json({ ok: true, reference: `MUC-${Date.now().toString(36).toUpperCase()}` });
+  if (!body || typeof body !== "object") {
+    return NextResponse.json({ ok: false, error: "Ungültige Anfrage" }, { status: 400 });
   }
 
-  const topic = clip(body.topic, 40);
+  // Honeypot: Bots füllen versteckte Felder. Wir antworten wie bei Erfolg,
+  // ohne irgendetwas zu speichern oder zu versenden.
+  if (clip(body.website, 200)) {
+    return NextResponse.json({ ok: true, reference: makeReference() });
+  }
+
+  const topic = clip(body.topic, 40) as InquiryTopic;
+  const sourceRaw = clip(body.source, 40) as InquirySource;
+  const source: InquirySource = SOURCES.has(sourceRaw) ? sourceRaw : "contact-form";
   const firstName = clip(body.firstName, MAX_FIELD);
   const lastName = clip(body.lastName, MAX_FIELD);
   const company = clip(body.company, MAX_FIELD);
-  const email = clip(body.email, 180);
+  const email = clip(body.email, 180).toLowerCase();
   const phone = clip(body.phone, 60);
   const message = clip(body.message, MAX_MESSAGE);
 
-  if (!topic || !TOPICS.has(topic) || !firstName || !lastName || !email || !message || body.privacy !== true) {
-    return NextResponse.json({ ok: false, error: "Pflichtfelder fehlen oder ungültig" }, { status: 400 });
+  if (
+    !TOPICS.has(topic) ||
+    !firstName ||
+    !lastName ||
+    !email ||
+    !message ||
+    body.privacy !== true
+  ) {
+    return NextResponse.json(
+      { ok: false, error: "Pflichtfelder fehlen oder ungültig" },
+      { status: 400 },
+    );
   }
-
   if (!isValidEmail(email)) {
     return NextResponse.json({ ok: false, error: "Ungültige E-Mail" }, { status: 400 });
   }
-
-  if (message.length < 20) {
+  if (message.length < MIN_MESSAGE) {
     return NextResponse.json({ ok: false, error: "Nachricht zu kurz" }, { status: 400 });
   }
-
-  const reference = `MUC-${Date.now().toString(36).toUpperCase()}`;
-  const payload = {
-    reference,
-    topic,
-    name: `${firstName} ${lastName}`,
-    company: company || null,
-    email,
-    phone: phone || null,
-    message,
-  };
-
-  const webhook = process.env.CONTACT_WEBHOOK_URL?.trim();
-  const isProd = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
-
-  if (!webhook) {
-    if (isProd) {
-      console.error("[contact] CONTACT_WEBHOOK_URL missing in production");
-      return NextResponse.json(
-        {
-          ok: false,
-          error:
-            "Anfragen können derzeit nicht zugestellt werden. Bitte rufen Sie uns an oder schreiben Sie eine E-Mail.",
-        },
-        { status: 503 },
-      );
-    }
-    // Local / preview without webhook: keep validated payload for manual checks.
-    console.info("[contact] webhook unset — logged only", payload);
-    return NextResponse.json({ ok: true, reference, delivered: false });
+  if (looksLikeSpam({ firstName, lastName, company, message })) {
+    // Wie Honeypot: still verwerfen.
+    return NextResponse.json({ ok: true, reference: makeReference() });
   }
 
-  const deliveryFailed = () =>
-    NextResponse.json(
-      { ok: false, error: DELIVERY_ERROR },
-      { status: 502 },
+  const reference = makeReference();
+  const createdAt = new Date();
+  const name = `${firstName} ${lastName}`;
+
+  let persisted = false;
+  try {
+    const result = await saveInquiry({
+      reference,
+      topic,
+      source,
+      firstName,
+      lastName,
+      company: company || null,
+      email,
+      phone: phone || null,
+      message,
+      ipHash: hashIp(ip),
+      userAgent: clip(request.headers.get("user-agent"), 400) || null,
+    });
+    persisted = result.persisted;
+  } catch (error) {
+    console.error("[contact] persist failed", error);
+  }
+
+  let notify;
+  try {
+    notify = await notifyNewInquiry({
+      reference,
+      topic,
+      name,
+      company: company || null,
+      email,
+      phone: phone || null,
+      message,
+      createdAt,
+      source,
+    });
+  } catch (error) {
+    console.error("[contact] notify failed", error);
+  }
+
+  const delivered =
+    persisted ||
+    Boolean(
+      notify &&
+        (notify.teamEmail === "sent" ||
+          notify.webhook === "sent" ||
+          notify.sms === "sent"),
     );
 
-  try {
-    const response = await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!response.ok) {
-      console.error("[contact] webhook failed", response.status);
-      return deliveryFailed();
-    }
-  } catch (error) {
-    console.error("[contact] webhook error", error);
-    return deliveryFailed();
+  const anythingConfigured =
+    inquiriesStorageReady ||
+    Boolean(process.env.RESEND_API_KEY || process.env.CONTACT_WEBHOOK_URL);
+
+  const isProd =
+    process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
+
+  if (!delivered && anythingConfigured && isProd) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "Anfragen können derzeit nicht zugestellt werden. Bitte rufen Sie uns an oder schreiben Sie eine E-Mail.",
+      },
+      { status: 503 },
+    );
   }
 
-  return NextResponse.json({ ok: true, reference, delivered: true });
+  if (!anythingConfigured) {
+    console.info("[contact] no delivery channel configured — logged only", {
+      reference,
+      topic,
+      name,
+      email,
+    });
+  }
+
+  return NextResponse.json({ ok: true, reference, delivered });
 }

@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { CookieConsent } from "@/components/CookieConsent";
-import { Header } from "@/components/Header";
-import { InquiryFlow } from "@/components/InquiryFlow";
-import { LeadCaptureWidget } from "@/components/LeadCaptureWidget";
-import { RouteScrollReset } from "@/components/RouteScrollReset";
-import { SiteFooter } from "@/components/Footer";
-import { TopBar } from "@/components/TopBar";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "MUC Cargohandling | Luftfracht am Flughafen München",
     template: "%s | MUC Cargohandling",
@@ -36,23 +31,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&icon_names=arrow_forward_ios&display=swap"
         />
       </head>
-      <body className="flex min-h-full flex-col font-sans">
-        <RouteScrollReset />
-        {/* Kontaktleiste und Kopfzeile kleben gemeinsam als ein Block am
-            Viewport. Frueher waren es zwei getrennt sticky Elemente, die ueber
-            eine per ResizeObserver gemessene --topbar-h aneinander andockten —
-            sobald der Messwert kurz nicht zur Layouthoehe passte (Umbruch,
-            Zoom, Auf-/Zuklapp-Animation), klaffte dazwischen ein Spalt. */}
-        <div className="site-chrome">
-          <TopBar />
-          <Header />
-        </div>
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-        <CookieConsent />
-        <LeadCaptureWidget />
-        <InquiryFlow />
-      </body>
+      <body className="flex min-h-full flex-col font-sans">{children}</body>
     </html>
   );
 }

@@ -101,7 +101,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, source: "contact-form" }),
       });
       const json = (await res.json()) as { ok?: boolean; reference?: string; error?: string };
       if (!res.ok || !json.ok) throw new Error(json.error ?? "Senden fehlgeschlagen");
