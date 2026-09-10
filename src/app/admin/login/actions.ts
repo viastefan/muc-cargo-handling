@@ -4,14 +4,17 @@ import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import {
   ADMIN_COOKIE,
+  MASTER_EMAIL,
+  ROOT_UID,
   adminConfigured,
   clearLoginAttempts,
   createSessionToken,
   loginBlockedFor,
   registerFailedLogin,
   sessionCookieOptions,
-  verifyPassword,
+  verifyMasterPassword,
 } from "@/lib/admin-auth";
+import { authenticate, touchLogin } from "@/lib/admin-users";
 
 export type LoginState = { error?: string };
 
@@ -34,17 +37,36 @@ export async function loginAction(
     };
   }
 
+  const emailRaw = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = emailRaw || MASTER_EMAIL; // leeres Feld → Master-Login
   const password = String(formData.get("password") ?? "");
-  // Kleine künstliche Verzögerung — bremst Online-Brute-Force zusätzlich.
+
+  // Bremse gegen Online-Brute-Force
   await new Promise((resolve) => setTimeout(resolve, 250));
 
-  if (!verifyPassword(password)) {
+  let uid: string | null = null;
+  let target = "/admin";
+
+  // 1. Master-/Notfall-Login
+  if (email === MASTER_EMAIL && verifyMasterPassword(password)) {
+    uid = ROOT_UID;
+  } else if (email !== MASTER_EMAIL) {
+    // 2. Regulärer Benutzer
+    const user = await authenticate(email, password);
+    if (user) {
+      uid = user.id;
+      await touchLogin(user.id);
+      if (user.mustChangePw) target = "/admin/konto?first=1";
+    }
+  }
+
+  if (!uid) {
     registerFailedLogin(ip);
-    return { error: "Passwort ist nicht korrekt." };
+    return { error: "E-Mail oder Passwort ist nicht korrekt." };
   }
 
   clearLoginAttempts(ip);
   const store = await cookies();
-  store.set(ADMIN_COOKIE, createSessionToken(), sessionCookieOptions);
-  redirect("/admin");
+  store.set(ADMIN_COOKIE, createSessionToken(uid), sessionCookieOptions);
+  redirect(target);
 }

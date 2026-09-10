@@ -15,7 +15,9 @@ export default async function AdminLoginPage({
     <div className="admin-login">
       <div className="admin-login__card">
         <p className="admin-login__title">MUC Cargohandling — Anfragen</p>
-        <p className="admin-login__hint">Interner Bereich. Bitte anmelden.</p>
+        <p className="admin-login__hint">
+          Team: E-Mail + eigenes Passwort. Master-Zugang: E-Mail leer lassen.
+        </p>
         <LoginForm configError={config === "1" || !adminConfigured} />
       </div>
     </div>

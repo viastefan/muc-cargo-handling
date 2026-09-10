@@ -1,29 +1,30 @@
 import { createHmac, timingSafeEqual, randomBytes, createHash } from "node:crypto";
 
 /**
- * Minimaler, abhängigkeitsfreier Session-Schutz für das Admin-Panel.
+ * Session- und Login-Grundlagen fürs Admin-Panel.
  *
- *   ADMIN_PASSWORD         – Pflicht. Ohne diesen Wert ist /admin komplett gesperrt.
- *   ADMIN_SESSION_SECRET   – HMAC-Schlüssel für das Session-Cookie. Fehlt er,
- *                            wird er aus dem Passwort abgeleitet (funktioniert,
- *                            invalidiert Sessions aber bei Passwortwechsel).
+ *   ADMIN_PASSWORD        – Master-/Notfall-Passwort. Loggt als „Administrator"
+ *                           ein, auch ohne angelegte Benutzer. Pflicht.
+ *   ADMIN_EMAIL           – E-Mail für den Master-Login (Default: "admin").
+ *   ADMIN_SESSION_SECRET  – HMAC-Schlüssel fürs Session-Cookie. Fehlt er, wird
+ *                           er aus ADMIN_PASSWORD abgeleitet.
  *
- * Das Cookie enthält nur einen Ablaufzeitpunkt + Signatur — keine
- * personenbezogenen Daten, kein Passwort.
+ * Reguläre Benutzer kommen aus der Tabelle `admin_users` (siehe admin-users.ts).
+ * Das Cookie speichert nur { uid, exp } + Signatur.
  */
 
 export const ADMIN_COOKIE = "muc_admin";
-const SESSION_TTL_MS = 8 * 60 * 60 * 1000; // 8 Stunden
+export const ROOT_UID = "root";
+const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
 export const adminConfigured = ADMIN_PASSWORD.length >= 8;
+export const MASTER_EMAIL = (process.env.ADMIN_EMAIL?.trim() || "admin").toLowerCase();
 
 function secret(): string {
   const explicit = process.env.ADMIN_SESSION_SECRET?.trim();
   if (explicit && explicit.length >= 16) return explicit;
-  return createHash("sha256")
-    .update(`muc-admin::${ADMIN_PASSWORD}`)
-    .digest("hex");
+  return createHash("sha256").update(`muc-admin::${ADMIN_PASSWORD}`).digest("hex");
 }
 
 function sign(payload: string): string {
@@ -34,37 +35,38 @@ function safeEqual(a: string, b: string): boolean {
   const bufA = Buffer.from(a);
   const bufB = Buffer.from(b);
   if (bufA.length !== bufB.length) {
-    // trotzdem einen Vergleich fahren, um Timing-Leaks zu vermeiden
     timingSafeEqual(bufA, Buffer.alloc(bufA.length));
     return false;
   }
   return timingSafeEqual(bufA, bufB);
 }
 
-/** Timing-sicherer Passwortvergleich. */
-export function verifyPassword(input: string): boolean {
+/** Master-/Notfall-Passwort prüfen (timing-sicher). */
+export function verifyMasterPassword(input: string): boolean {
   if (!adminConfigured) return false;
   return safeEqual(input, ADMIN_PASSWORD);
 }
 
-/** Neues Session-Token erzeugen (Wert fürs Cookie). */
-export function createSessionToken(): string {
+/** Session-Token für eine Benutzer-ID (oder ROOT_UID) erzeugen. */
+export function createSessionToken(uid: string): string {
   const exp = Date.now() + SESSION_TTL_MS;
   const nonce = randomBytes(9).toString("base64url");
-  const payload = `${exp}.${nonce}`;
+  const cleanUid = uid.replace(/[^A-Za-z0-9-]/g, "").slice(0, 40) || ROOT_UID;
+  const payload = `${exp}.${cleanUid}.${nonce}`;
   return `${payload}.${sign(payload)}`;
 }
 
-/** Session-Token prüfen (Signatur + Ablauf). */
-export function verifySessionToken(token: string | undefined | null): boolean {
-  if (!token || !adminConfigured) return false;
+/** Benutzer-ID aus dem Cookie lesen (Signatur + Ablauf geprüft), sonst null. */
+export function readSessionUid(token: string | undefined | null): string | null {
+  if (!token || !adminConfigured) return null;
   const parts = token.split(".");
-  if (parts.length !== 3) return false;
-  const [exp, nonce, mac] = parts;
-  const payload = `${exp}.${nonce}`;
-  if (!safeEqual(mac, sign(payload))) return false;
+  if (parts.length !== 4) return null;
+  const [exp, uid, nonce, mac] = parts;
+  const payload = `${exp}.${uid}.${nonce}`;
+  if (!safeEqual(mac, sign(payload))) return null;
   const expiry = Number(exp);
-  return Number.isFinite(expiry) && expiry > Date.now();
+  if (!Number.isFinite(expiry) || expiry <= Date.now()) return null;
+  return uid;
 }
 
 export const sessionCookieOptions = {
@@ -75,7 +77,7 @@ export const sessionCookieOptions = {
   maxAge: Math.floor(SESSION_TTL_MS / 1000),
 };
 
-/* ----------------------------------------------- Brute-Force-Bremse (IP) --- */
+/* ── Brute-Force-Bremse pro IP+Kennung ──────────────────────────────────── */
 
 type Attempt = { count: number; blockedUntil: number };
 const attempts = new Map<string, Attempt>();
@@ -104,7 +106,6 @@ export function clearLoginAttempts(key: string): void {
 }
 
 if (attempts.size === 0) {
-  // periodisches Aufräumen alter Einträge (verhindert unbegrenztes Wachstum)
   setInterval(() => {
     const now = Date.now();
     for (const [key, entry] of attempts) {

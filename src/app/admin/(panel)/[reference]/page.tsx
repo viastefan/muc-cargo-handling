@@ -5,20 +5,31 @@ import {
   STATUS_LABEL,
   TOPIC_LABEL,
   getInquiry,
+  listInquiryEvents,
+  type InquiryEvent,
 } from "@/lib/inquiries";
-import { hasAdminSession } from "@/lib/admin-session";
+import { requireAdmin } from "@/lib/admin-session";
+import { listUsers } from "@/lib/admin-users";
 import { StatusBadge } from "../StatusBadge";
 import { DeleteInquiryButton } from "../DeleteInquiryButton";
-import { setStatusAction, saveNoteAction } from "../actions";
+import { Assignee } from "../Assignee";
+import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
 
 function fullDate(iso: string | null) {
   if (!iso) return "—";
   return new Intl.DateTimeFormat("de-DE", {
-    dateStyle: "full",
+    dateStyle: "medium",
     timeStyle: "short",
     timeZone: "Europe/Berlin",
   }).format(new Date(iso));
 }
+
+const EVENT_ICON: Record<InquiryEvent["kind"], string> = {
+  created: "＋",
+  status: "◉",
+  assign: "→",
+  note: "✎",
+};
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -34,12 +45,20 @@ export default async function InquiryDetail({
 }: {
   params: Promise<{ reference: string }>;
 }) {
-  if (!(await hasAdminSession())) return null;
+  await requireAdmin();
 
   const { reference } = await params;
-  const inquiry = await getInquiry(reference);
+  const [inquiry, events, users] = await Promise.all([
+    getInquiry(reference),
+    listInquiryEvents(reference),
+    listUsers(),
+  ]);
   if (!inquiry) notFound();
 
+  const activeUsers = users.filter((u) => u.active);
+  const assignedUser = inquiry.assignedTo
+    ? users.find((u) => u.id === inquiry.assignedTo)
+    : null;
   const telHref = inquiry.phone
     ? `tel:${inquiry.phone.replace(/[^+\d]/g, "")}`
     : null;
@@ -86,11 +105,35 @@ export default async function InquiryDetail({
                 </div>
               </form>
             </div>
-            {inquiry.handledAt ? (
-              <p className="admin-note-meta">
-                Erledigt / archiviert am {fullDate(inquiry.handledAt)}
-              </p>
-            ) : null}
+          </div>
+
+          <div className="admin-card">
+            <p className="admin-card__title">Verlauf</p>
+            <div className="admin-card__body">
+              {events.length === 0 ? (
+                <p className="admin-hint" style={{ margin: 0 }}>
+                  Noch keine Aktivität.
+                </p>
+              ) : (
+                <ol className="admin-timeline">
+                  {events.map((e) => (
+                    <li key={e.id}>
+                      <span className="admin-timeline__icon" aria-hidden="true">
+                        {EVENT_ICON[e.kind]}
+                      </span>
+                      <span className="admin-timeline__body">
+                        <span className="admin-timeline__detail">
+                          {e.detail ?? e.kind}
+                        </span>
+                        <span className="admin-timeline__meta">
+                          {e.actorName} · {fullDate(e.createdAt)}
+                        </span>
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
           </div>
         </div>
 
@@ -98,11 +141,7 @@ export default async function InquiryDetail({
           <div className="admin-card">
             <p className="admin-card__title">Status</p>
             <div className="admin-card__body">
-              <form
-                action={setStatusAction}
-                className="admin-inline-form"
-                key={inquiry.status}
-              >
+              <form action={setStatusAction} className="admin-inline-form" key={inquiry.status}>
                 <input type="hidden" name="reference" value={inquiry.reference} />
                 <select
                   name="status"
@@ -124,6 +163,45 @@ export default async function InquiryDetail({
           </div>
 
           <div className="admin-card">
+            <p className="admin-card__title">Zuständigkeit</p>
+            <div className="admin-card__body">
+              {assignedUser ? (
+                <p style={{ margin: "0 0 0.6rem" }}>
+                  <Assignee name={assignedUser.name} />
+                </p>
+              ) : null}
+              <form
+                action={assignInquiryAction}
+                className="admin-inline-form"
+                key={inquiry.assignedTo ?? "none"}
+              >
+                <input type="hidden" name="reference" value={inquiry.reference} />
+                <select
+                  name="assignee"
+                  className="admin-select"
+                  defaultValue={inquiry.assignedTo ?? "none"}
+                  style={{ flex: "1 1 auto" }}
+                >
+                  <option value="none">— niemand —</option>
+                  {activeUsers.map((u) => (
+                    <option key={u.id} value={u.id}>
+                      {u.name}
+                    </option>
+                  ))}
+                </select>
+                <button type="submit" className="admin-btn admin-btn--sm">
+                  Zuweisen
+                </button>
+              </form>
+              {activeUsers.length === 0 ? (
+                <p className="admin-hint" style={{ marginBottom: 0 }}>
+                  Noch keine Team-Benutzer angelegt.
+                </p>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="admin-card">
             <p className="admin-card__title">Kontakt</p>
             <div className="admin-card__body">
               <dl className="admin-dl">
@@ -139,6 +217,9 @@ export default async function InquiryDetail({
                 <Row label="Firma">{inquiry.company || "—"}</Row>
                 <Row label="Eingang">{fullDate(inquiry.createdAt)}</Row>
                 <Row label="Quelle">{inquiry.source}</Row>
+                {inquiry.handledAt ? (
+                  <Row label="Erledigt">{fullDate(inquiry.handledAt)}</Row>
+                ) : null}
               </dl>
             </div>
           </div>

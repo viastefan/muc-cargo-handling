@@ -77,6 +77,7 @@ export type InquiryRecord = {
   status: InquiryStatus;
   adminNote: string | null;
   handledAt: string | null;
+  assignedTo: string | null;
   ipHash: string | null;
   userAgent: string | null;
 };
@@ -96,6 +97,7 @@ type Row = {
   status: InquiryStatus;
   admin_note: string | null;
   handled_at: string | null;
+  assigned_to: string | null;
   ip_hash: string | null;
   user_agent: string | null;
 };
@@ -116,6 +118,7 @@ function toRecord(row: Row): InquiryRecord {
     status: row.status,
     adminNote: row.admin_note,
     handledAt: row.handled_at,
+    assignedTo: row.assigned_to,
     ipHash: row.ip_hash,
     userAgent: row.user_agent,
   };
@@ -168,6 +171,11 @@ export async function saveInquiry(
       user_agent: input.userAgent,
     }),
   });
+  await logInquiryEvent(input.reference, {
+    actorName: "Website",
+    kind: "created",
+    detail: `${TOPIC_LABEL[input.topic]} · ${input.source}`,
+  });
   return { persisted: true };
 }
 
@@ -175,6 +183,8 @@ export type InquiryQuery = {
   status?: InquiryStatus | "all";
   topic?: InquiryTopic | "all";
   search?: string;
+  /** Nur Anfragen, die dieser Benutzer-ID zugewiesen sind. */
+  assignedTo?: string;
   limit?: number;
   offset?: number;
 };
@@ -206,6 +216,9 @@ async function listInquiriesUnsafe(
   }
   if (query.topic && query.topic !== "all") {
     params.set("topic", `eq.${query.topic}`);
+  }
+  if (query.assignedTo && /^[0-9a-f-]{10,}$/i.test(query.assignedTo)) {
+    params.set("assigned_to", `eq.${query.assignedTo}`);
   }
   if (query.search) {
     // PostgREST or-Filter: alle Zeichen entfernen, mit denen sich der
@@ -252,9 +265,17 @@ async function getInquiryUnsafe(reference: string): Promise<InquiryRecord | null
   return rows[0] ? toRecord(rows[0]) : null;
 }
 
+function cleanRef(reference: string): string {
+  return reference.replace(/[^A-Za-z0-9-]/g, "").slice(0, 40);
+}
+
 export async function updateInquiry(
   reference: string,
-  patch: { status?: InquiryStatus; adminNote?: string | null },
+  patch: {
+    status?: InquiryStatus;
+    adminNote?: string | null;
+    assignedTo?: string | null;
+  },
 ): Promise<InquiryRecord | null> {
   if (!inquiriesStorageReady) return null;
   const body: Record<string, unknown> = {};
@@ -268,31 +289,103 @@ export async function updateInquiry(
   if (patch.adminNote !== undefined) {
     body.admin_note = patch.adminNote?.slice(0, 4000) || null;
   }
+  if (patch.assignedTo !== undefined) {
+    body.assigned_to =
+      patch.assignedTo && /^[0-9a-f-]{10,}$/i.test(patch.assignedTo)
+        ? patch.assignedTo
+        : null;
+  }
   if (Object.keys(body).length === 0) return getInquiry(reference);
 
-  const params = new URLSearchParams({
-    reference: `eq.${reference.replace(/[^A-Za-z0-9-]/g, "")}`,
-  });
-  const res = await rest(`/inquiries?${params.toString()}`, {
-    method: "PATCH",
-    prefer: "return=representation",
-    body: JSON.stringify(body),
-  });
-  const rows = (await res.json()) as Row[];
-  return rows[0] ? toRecord(rows[0]) : null;
+  try {
+    const params = new URLSearchParams({ reference: `eq.${cleanRef(reference)}` });
+    const res = await rest(`/inquiries?${params.toString()}`, {
+      method: "PATCH",
+      prefer: "return=representation",
+      body: JSON.stringify(body),
+    });
+    const rows = (await res.json()) as Row[];
+    return rows[0] ? toRecord(rows[0]) : null;
+  } catch (error) {
+    console.error("[inquiries] update failed", error);
+    return null;
+  }
+}
+
+/* ── Aktivitätsprotokoll ─────────────────────────────────────────────────── */
+
+export type InquiryEvent = {
+  id: number;
+  createdAt: string;
+  actorName: string;
+  kind: "created" | "status" | "assign" | "note";
+  detail: string | null;
+};
+
+export async function logInquiryEvent(
+  reference: string,
+  event: { actorName: string; kind: InquiryEvent["kind"]; detail?: string | null },
+): Promise<void> {
+  if (!inquiriesStorageReady) return;
+  try {
+    await rest("/inquiry_events", {
+      method: "POST",
+      prefer: "return=minimal",
+      body: JSON.stringify({
+        inquiry_ref: cleanRef(reference),
+        actor_name: event.actorName.slice(0, 120),
+        kind: event.kind,
+        detail: event.detail?.slice(0, 500) ?? null,
+      }),
+    });
+  } catch (error) {
+    console.error("[inquiries] event log failed", error);
+  }
+}
+
+export async function listInquiryEvents(reference: string): Promise<InquiryEvent[]> {
+  if (!inquiriesStorageReady) return [];
+  try {
+    const params = new URLSearchParams({
+      select: "id,created_at,actor_name,kind,detail",
+      inquiry_ref: `eq.${cleanRef(reference)}`,
+      order: "created_at.desc",
+      limit: "50",
+    });
+    const res = await rest(`/inquiry_events?${params.toString()}`);
+    const rows = (await res.json()) as {
+      id: number;
+      created_at: string;
+      actor_name: string;
+      kind: InquiryEvent["kind"];
+      detail: string | null;
+    }[];
+    return rows.map((r) => ({
+      id: r.id,
+      createdAt: r.created_at,
+      actorName: r.actor_name,
+      kind: r.kind,
+      detail: r.detail,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 /** Anfrage endgültig löschen (DSGVO — nach abgeschlossener Bearbeitung). */
 export async function deleteInquiry(reference: string): Promise<boolean> {
   if (!inquiriesStorageReady) return false;
+  const ref = cleanRef(reference);
   try {
-    const params = new URLSearchParams({
-      reference: `eq.${reference.replace(/[^A-Za-z0-9-]/g, "")}`,
-    });
-    await rest(`/inquiries?${params.toString()}`, {
+    await rest(`/inquiries?reference=eq.${ref}`, {
       method: "DELETE",
       prefer: "return=minimal",
     });
+    // Verlaufseinträge derselben Referenz mitentfernen.
+    await rest(`/inquiry_events?inquiry_ref=eq.${ref}`, {
+      method: "DELETE",
+      prefer: "return=minimal",
+    }).catch(() => {});
     return true;
   } catch (error) {
     console.error("[inquiries] delete failed", error);

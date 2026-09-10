@@ -8,10 +8,12 @@ Admin-Panel bearbeitbar und per E-Mail/SMS zugestellt.
 
 Projekt: `MUC CARGOHANDLING` · Ref `cjlvghyrmcbrnekqszwr`
 
-**Migration** (einmalig, Supabase → SQL Editor → New query → Run):
-Inhalt von `supabase/migrations/0001_inquiries.sql` einfügen und ausführen.
-Die Tabelle `inquiries` hat RLS aktiviert **ohne Policy** → nur der Server mit
-dem Secret Key kommt an die Daten, der publishable Key nicht.
+**Migrationen** (einmalig, Supabase → SQL Editor → New query → Run — nacheinander):
+1. `supabase/migrations/0001_inquiries.sql` — Anfragen-Tabelle
+2. `supabase/migrations/0002_admin_users.sql` — Panel-Benutzer, Zuweisung, Verlauf
+
+Alle Tabellen haben RLS aktiviert **ohne Policy** → nur der Server mit dem
+Secret Key kommt an die Daten, der publishable Key nicht.
 
 **Keys** (Supabase → Project Settings → API Keys):
 
@@ -27,9 +29,22 @@ dem Secret Key kommt an die Daten, der publishable Key nicht.
 
 | Env-Variable | Wert |
 |---|---|
-| `ADMIN_PASSWORD` | mind. 12 Zeichen, zufällig |
+| `ADMIN_PASSWORD` | Master-/Notfall-Passwort, mind. 12 Zeichen, zufällig |
+| `ADMIN_EMAIL` | optional, Default `admin` (Feld beim Master-Login leer lassen) |
 | `ADMIN_SESSION_SECRET` | `openssl rand -hex 32` |
 | `IP_HASH_SALT` | `openssl rand -hex 16` (salzt den IP-Hash in der DB) |
+
+**Zugang & Benutzer:**
+- **Master-Zugang:** Login mit leerem E-Mail-Feld + `ADMIN_PASSWORD`. Funktioniert
+  immer (auch wenn Supabase mal nicht erreichbar ist) und dient zum Anlegen des
+  ersten Team-Benutzers.
+- **Team-Benutzer:** unter `/admin/team` anlegen (Name + E-Mail + Rolle). Es wird
+  ein Einmal-Passwort erzeugt und **einmalig angezeigt** — an die Person
+  weitergeben. Diese meldet sich mit E-Mail + Passwort an und vergibt beim ersten
+  Login unter `/admin/konto` ein eigenes Passwort.
+- **Rollen:** *Admin* darf die Team-Verwaltung sehen; *Mitglied* nur Anfragen.
+- Benutzer können jederzeit unter `/admin/team` deaktiviert werden — Zugriff endet
+  sofort (spätestens beim nächsten Seitenaufruf).
 
 Login: `https://<domain>/admin/login`. Session-Cookie 8 h, HttpOnly, Secure.
 Ohne `ADMIN_PASSWORD` ist `/admin` komplett gesperrt.

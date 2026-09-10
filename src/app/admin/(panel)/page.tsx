@@ -8,9 +8,11 @@ import {
   type InquiryStatus,
   type InquiryTopic,
 } from "@/lib/inquiries";
-import { hasAdminSession } from "@/lib/admin-session";
+import { requireAdmin } from "@/lib/admin-session";
+import { listUsers } from "@/lib/admin-users";
 import { InquiryRow } from "./InquiryRow";
 import { StatusBadge } from "./StatusBadge";
+import { Assignee } from "./Assignee";
 
 const PAGE_SIZE = 40;
 const TOPICS = Object.keys(TOPIC_LABEL) as InquiryTopic[];
@@ -25,14 +27,14 @@ function dateFmt(iso: string) {
   }).format(new Date(iso));
 }
 
-type SP = { status?: string; topic?: string; q?: string; page?: string };
+type SP = { status?: string; topic?: string; q?: string; page?: string; mine?: string };
 
 export default async function AdminDashboard({
   searchParams,
 }: {
   searchParams: Promise<SP>;
 }) {
-  if (!(await hasAdminSession())) return null;
+  const principal = await requireAdmin();
 
   const sp = await searchParams;
   const status = (INQUIRY_STATUSES as string[]).includes(sp.status ?? "")
@@ -43,19 +45,23 @@ export default async function AdminDashboard({
     : "all";
   const search = (sp.q ?? "").slice(0, 80);
   const page = Math.max(1, Number(sp.page) || 1);
+  const mine = sp.mine === "1" && !principal.isRoot;
 
-  const [stats, list] = await Promise.all([
+  const [stats, list, users] = await Promise.all([
     inquiryStats(),
     listInquiries({
       status,
       topic,
       search,
+      assignedTo: mine ? principal.uid : undefined,
       limit: PAGE_SIZE,
       offset: (page - 1) * PAGE_SIZE,
     }),
+    listUsers(),
   ]);
   const { rows, total, error: listError } = list;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const userMap = new Map(users.map((u) => [u.id, u]));
 
   const widgets = [
     { label: "Gesamt", value: stats.total },
@@ -75,7 +81,13 @@ export default async function AdminDashboard({
 
   const query = (next: Partial<SP>) => {
     const params = new URLSearchParams();
-    const merged = { status, topic, q: search, ...next } as Record<string, string>;
+    const merged = {
+      status,
+      topic,
+      q: search,
+      mine: mine ? "1" : "",
+      ...next,
+    } as Record<string, string>;
     for (const [k, v] of Object.entries(merged)) {
       if (v && v !== "all") params.set(k, v);
     }
@@ -114,6 +126,15 @@ export default async function AdminDashboard({
 
       <form className="admin-filters" method="get">
         {status !== "all" ? <input type="hidden" name="status" value={status} /> : null}
+        {mine ? <input type="hidden" name="mine" value="1" /> : null}
+        {!principal.isRoot ? (
+          <Link
+            href={query({ mine: mine ? "" : "1", page: undefined })}
+            className={`admin-btn admin-btn--sm${mine ? "" : " admin-btn--plain"}`}
+          >
+            Mir zugewiesen
+          </Link>
+        ) : null}
         <select name="topic" defaultValue={topic} className="admin-select" aria-label="Thema">
           <option value="all">Alle Themen</option>
           {TOPICS.map((t) => (
@@ -142,8 +163,8 @@ export default async function AdminDashboard({
       {listError ? (
         <p className="admin-error">
           Speicher verbunden, aber Zugriff fehlgeschlagen — wahrscheinlich fehlt
-          die Tabelle. Migration <code>supabase/migrations/0001_inquiries.sql</code>{" "}
-          im Supabase-SQL-Editor ausführen.
+          eine Tabelle. Migrationen <code>0001_inquiries.sql</code> und{" "}
+          <code>0002_admin_users.sql</code> im Supabase-SQL-Editor ausführen.
         </p>
       ) : null}
 
@@ -159,51 +180,58 @@ export default async function AdminDashboard({
                   <th>Eingang</th>
                   <th>Thema</th>
                   <th>Absender</th>
-                  <th>Nachricht</th>
+                  <th>Zugewiesen</th>
                   <th>Status</th>
                   <th aria-hidden="true" />
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row) => (
-                  <InquiryRow key={row.id} reference={row.reference}>
-                    <td className="admin-table__ref">{row.reference}</td>
-                    <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
-                      {dateFmt(row.createdAt)}
-                    </td>
-                    <td>{TOPIC_LABEL[row.topic]}</td>
-                    <td>
-                      <div style={{ fontWeight: 550 }}>
-                        {row.firstName} {row.lastName}
-                      </div>
-                      <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
-                        {row.company || row.email}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="admin-table__msg">{row.message}</div>
-                    </td>
-                    <td>
-                      <StatusBadge status={row.status} />
-                    </td>
-                    <td>
-                      <svg
-                        className="admin-table__chev"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M6 3.5 10.5 8 6 12.5"
-                          stroke="currentColor"
-                          strokeWidth="1.8"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </td>
-                  </InquiryRow>
-                ))}
+                {rows.map((row) => {
+                  const u = row.assignedTo ? userMap.get(row.assignedTo) : null;
+                  return (
+                    <InquiryRow key={row.id} reference={row.reference}>
+                      <td className="admin-table__ref">{row.reference}</td>
+                      <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
+                        {dateFmt(row.createdAt)}
+                      </td>
+                      <td>{TOPIC_LABEL[row.topic]}</td>
+                      <td>
+                        <div style={{ fontWeight: 550 }}>
+                          {row.firstName} {row.lastName}
+                        </div>
+                        <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
+                          {row.company || row.email}
+                        </div>
+                      </td>
+                      <td>
+                        {u ? (
+                          <Assignee name={u.name} />
+                        ) : (
+                          <span style={{ color: "var(--muted-light)" }}>—</span>
+                        )}
+                      </td>
+                      <td>
+                        <StatusBadge status={row.status} />
+                      </td>
+                      <td>
+                        <svg
+                          className="admin-table__chev"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M6 3.5 10.5 8 6 12.5"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </td>
+                    </InquiryRow>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -220,10 +248,7 @@ export default async function AdminDashboard({
           }}
         >
           {page > 1 ? (
-            <Link
-              href={query({ page: String(page - 1) })}
-              className="admin-btn admin-btn--sm"
-            >
+            <Link href={query({ page: String(page - 1) })} className="admin-btn admin-btn--sm">
               Zurück
             </Link>
           ) : null}
@@ -231,10 +256,7 @@ export default async function AdminDashboard({
             Seite {page} / {pages} · {total} Anfragen
           </span>
           {page < pages ? (
-            <Link
-              href={query({ page: String(page + 1) })}
-              className="admin-btn admin-btn--sm"
-            >
+            <Link href={query({ page: String(page + 1) })} className="admin-btn admin-btn--sm">
               Weiter
             </Link>
           ) : null}

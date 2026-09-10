@@ -18,6 +18,21 @@ export function LoginForm({ configError }: { configError: boolean }) {
           {error}
         </p>
       ) : null}
+
+      <label className="admin-label" htmlFor="admin-email">
+        E-Mail
+      </label>
+      <input
+        id="admin-email"
+        name="email"
+        type="email"
+        className="admin-input"
+        autoComplete="username"
+        autoFocus
+        style={{ marginBottom: "0.9rem" }}
+        placeholder="name@muc-cargo.de"
+      />
+
       <label className="admin-label" htmlFor="admin-password">
         Passwort
       </label>
@@ -27,13 +42,13 @@ export function LoginForm({ configError }: { configError: boolean }) {
         type="password"
         className="admin-input"
         autoComplete="current-password"
-        autoFocus
         required
       />
+
       <button
         type="submit"
         className="admin-btn admin-btn--primary"
-        style={{ marginTop: "1rem" }}
+        style={{ marginTop: "1.1rem" }}
         disabled={pending}
       >
         {pending ? "Anmelden…" : "Anmelden"}
