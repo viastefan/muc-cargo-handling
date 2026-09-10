@@ -85,7 +85,7 @@ export function getDatenschutzSections(): LegalSection[] {
         "Wenn Sie uns über das Kontaktformular oder per E-Mail kontaktieren, verarbeiten wir die von Ihnen mitgeteilten Daten (z. B. Name, Unternehmen, E-Mail-Adresse, Telefonnummer, Anliegen/Nachricht) zur Bearbeitung Ihrer Anfrage und für etwaige Anschlussfragen.",
         "Pflichtangaben im Formular sind als solche gekennzeichnet. Ohne diese Angaben können wir Ihre Anfrage ggf. nicht bearbeiten. Die Übermittlung setzt zudem die Bestätigung der Kenntnisnahme unserer Datenschutzhinweise voraus.",
         "Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen bzw. Vertragserfüllung), soweit die Anfrage auf den Abschluss oder die Durchführung eines Vertrags gerichtet ist; im Übrigen Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen) bzw. Art. 6 Abs. 1 lit. a DSGVO, soweit eine Einwilligung eingeholt wird.",
-        "Zur Zustellung Ihrer Anfrage kann ein von uns genutzter Webhook-/E-Mail-Dienst eingesetzt werden. Eine Weitergabe an Dritte erfolgt nur, soweit dies zur Bearbeitung erforderlich ist oder gesetzliche Pflichten bestehen. Wir geben Ihre Daten nicht zu Werbezwecken an Dritte weiter.",
+        "Ihre Anfrage wird in einer Datenbank unseres Auftragsverarbeiters Supabase (gehostet in einem Rechenzentrum innerhalb der EU) gespeichert und ausschließlich unseren berechtigten Mitarbeiterinnen und Mitarbeitern über einen passwortgeschützten internen Bereich zugänglich gemacht. Zusätzlich kann zur Benachrichtigung ein E-Mail-Dienstleister eingesetzt werden. Eine Weitergabe an Dritte erfolgt nur, soweit dies zur Bearbeitung erforderlich ist oder gesetzliche Pflichten bestehen. Wir geben Ihre Daten nicht zu Werbezwecken an Dritte weiter.",
       ],
     },
     {
@@ -111,7 +111,7 @@ export function getDatenschutzSections(): LegalSection[] {
     {
       title: "9. Empfänger und Auftragsverarbeitung",
       paragraphs: [
-        "Personenbezogene Daten können an technische Dienstleister übermittelt werden, die uns beim Betrieb der Website und der Kommunikation unterstützen (z. B. Hosting, ggf. E-Mail-/Webhook-Dienste). Diese Stellen verarbeiten Daten nur im Rahmen unserer Weisungen bzw. geltender Auftragsverarbeitungsverträge, soweit erforderlich.",
+        "Personenbezogene Daten können an technische Dienstleister übermittelt werden, die uns beim Betrieb der Website und der Kommunikation unterstützen: Hosting und Auslieferung der Website (Vercel Inc.), Speicherung von Kontaktanfragen (Supabase, EU-Rechenzentrum) sowie ggf. ein E-Mail-Dienst zur Zustellung von Benachrichtigungen. Diese Stellen verarbeiten Daten nur im Rahmen unserer Weisungen und geltender Auftragsverarbeitungsverträge (Art. 28 DSGVO), soweit erforderlich.",
       ],
     },
     {
