@@ -117,6 +117,25 @@ export default function ImpressumPage() {
               entfernen.
             </p>
           </section>
+
+          <section>
+            <h2 className="text-[15px] font-normal text-[var(--foreground)]">
+              Bildnachweise
+            </h2>
+            <p className="mt-3">
+              Fotos von{" "}
+              <a href="https://unsplash.com/@peaky_82" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Peaky_82</a>,{" "}
+              <a href="https://unsplash.com/@jkmatt" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Jon Matthews</a>,{" "}
+              <a href="https://unsplash.com/@hdbernd" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Bernd Dittrich</a>,{" "}
+              <a href="https://unsplash.com/@nci" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">National Cancer Institute</a>,{" "}
+              <a href="https://unsplash.com/@tomonogi" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Karori Production</a>,{" "}
+              <a href="https://unsplash.com/@waldemarbrandt67w" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Waldemar Brandt</a> und{" "}
+              <a href="https://unsplash.com/@remapstudio" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">remapstudio</a>{" "}
+              auf{" "}
+              <a href="https://unsplash.com" className="link-underline text-[var(--foreground)]" target="_blank" rel="noopener noreferrer nofollow">Unsplash</a>.
+              Weitere Aufnahmen: MUC Cargohandling GmbH.
+            </p>
+          </section>
         </div>
         </div>
       </PageSection>
