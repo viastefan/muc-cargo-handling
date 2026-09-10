@@ -25,6 +25,17 @@ export const COMPANY = {
   },
   /** Exakte Bürokoordinaten – der Google-Places-Eintrag sitzt derzeit falsch. */
   coordinates: { lat: 48.350443, lng: 11.767121 },
+  /**
+   * Bürozeiten für die Live-Statusanzeige („Jetzt geöffnet" / „Geschlossen").
+   * Werktags mo–fr; Wochenende geschlossen. Zeitzone Europe/Berlin.
+   * Für zeitkritische Fracht (AOG/Express) gilt zusätzlich 24/7-Bereitschaft
+   * über die Mobilnummer — daher der Zusatz `alwaysReachable`.
+   * >>> Zeiten bei Bedarf an die echten Bürozeiten anpassen. <<<
+   */
+  hours: {
+    weekdays: { open: "08:00", close: "17:00" },
+    note: "Für zeitkritische Sendungen 24/7 erreichbar",
+  },
   /** Schwesterunternehmen am selben Standort, volle Firmierung laut Auftraggeber. */
   partners: [
     {

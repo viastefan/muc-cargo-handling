@@ -25,6 +25,9 @@
   --brand-text-hover: #b50b30;
   --focus: #007aff;
   --focus-ring: rgba(0, 122, 255, 0.22);
+  /* Link-Blau (Apple System Blue), fuer externe Verweise mit Icon. */
+  --link: #0a63e0;
+  --link-hover: #0a4fb4;
   /* Dritte Flaechenstufe – nur fuer Hover auf --surface-2 (Buttons, Nav).
      Vorher standen hier harte Hellgrau-Werte, die im Dunkelmodus zu
      Weiss-auf-Weiss fuehrten. */
@@ -96,6 +99,8 @@
     --brand-text-hover: #ff8ea3;
     --focus: #4d9bff;
     --focus-ring: rgba(77, 155, 255, 0.28);
+    --link: #5aa2ff;
+    --link-hover: #8ec2ff;
     --surface-3: #2b2b31;
     --ring-subtle: rgb(255 255 255 / 0.09);
     --ring-subtle-strong: rgb(255 255 255 / 0.14);
@@ -128,6 +133,8 @@
   --brand-text-hover: #ff8ea3;
   --focus: #4d9bff;
   --focus-ring: rgba(77, 155, 255, 0.28);
+  --link: #5aa2ff;
+  --link-hover: #8ec2ff;
   --surface-3: #2b2b31;
   --ring-subtle: rgb(255 255 255 / 0.09);
   --ring-subtle-strong: rgb(255 255 255 / 0.14);
@@ -1264,14 +1271,22 @@ a {
   z-index: 68;
   display: flex;
   flex-direction: column;
-  width: min(17.5rem, calc(100vw - 2.5rem));
+  width: min(18.5rem, calc(100vw - 2.5rem));
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 18px;
   background: var(--card);
   box-shadow:
-    0 20px 48px -14px rgb(0 0 0 / 0.28),
-    0 4px 14px rgb(0 0 0 / 0.1);
-  animation: location-peek-in 0.4s var(--ease-out);
+    0 1px 0 rgb(255 255 255 / 0.04) inset,
+    0 24px 60px -16px rgb(0 0 0 / 0.32),
+    0 6px 18px rgb(0 0 0 / 0.12);
+  animation: location-peek-in 0.42s var(--ease-out);
+}
+
+:root:not([data-theme="light"]) .location-peek {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.06),
+    0 24px 60px -16px rgb(0 0 0 / 0.6),
+    0 6px 18px rgb(0 0 0 / 0.35);
 }
 
 .location-peek.is-leaving {
@@ -1324,65 +1339,106 @@ a {
 }
 
 .location-peek__map {
-  height: 5.25rem;
+  position: relative;
+  height: 6rem;
   width: 100%;
   border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
 }
 
-.location-peek__map svg {
+.location-peek__map svg,
+.location-peek__map iframe {
   display: block;
   width: 100%;
   height: 100%;
+  border: 0;
+}
+
+/* Echte Karte nicht scrollbar/klickbar im Mini-Format — Interaktion via
+   „Route öffnen". */
+.location-peek__map iframe {
+  pointer-events: none;
+  filter: saturate(0.92);
+}
+
+:root:not([data-theme="light"]) .location-peek__map iframe {
+  filter: saturate(0.85) brightness(0.82) contrast(0.95);
 }
 
 .location-peek__body {
-  padding: 0.9rem 1rem 1rem;
+  padding: 0.95rem 1.05rem 1.05rem;
 }
 
 .location-peek__eyebrow {
   margin: 0;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--muted-light);
 }
 
 .location-peek__title {
-  margin: 0.2rem 0 0;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  margin: 0.25rem 0 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--foreground);
 }
 
 .location-peek__addr {
-  margin: 0.35rem 0 0;
+  margin: 0.3rem 0 0;
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--muted);
 }
 
+.location-peek__status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0.7rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.location-peek__status strong {
+  font-weight: 600;
+  color: var(--muted-light);
+}
+
+.location-peek__status.is-open strong {
+  color: #1f9d55;
+}
+
+:root:not([data-theme="light"]) .location-peek__status.is-open strong {
+  color: #34d17a;
+}
+
+.location-peek__dot {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.28rem;
+  border-radius: 50%;
+  background: var(--muted-light);
+}
+
+.location-peek__status.is-open .location-peek__dot {
+  background: #22c55e;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 22%, transparent);
+}
+
+.location-peek__status-detail {
+  color: var(--muted-light);
+}
+
 .location-peek__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
+  margin-top: 0.85rem;
   font-size: 12.5px;
-  font-weight: 500;
-  color: var(--brand-text);
-}
-
-.location-peek__cta:hover {
-  color: var(--brand-text-hover);
-}
-
-.location-peek__cta svg {
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-
-.location-peek__cta:hover svg {
-  transform: translateX(2px);
 }
 
 /* Auf Telefonbreite zurueckhaltender: kein Platz fuer zwei schwebende
@@ -3027,6 +3083,40 @@ body:has(.cookie-banner) .faq-toc-fab {
 
 .link-underline:hover {
   color: var(--brand-text);
+}
+
+/* Externer Verweis — Apple-Blau, unterstrichen, mit „öffnet extern"-Icon */
+.link-ext {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  color: var(--link);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.link-ext:hover {
+  color: var(--link-hover);
+}
+
+.link-ext svg {
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.link-ext:hover svg {
+  transform: translate(1px, -1px);
+}
+
+.link-ext:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 /* Buttons — corner layout: label bottom-left 8px, small arrow top-right 8px */
@@ -5805,15 +5895,52 @@ textarea.field__control {
   color: var(--muted);
 }
 
+/* Live-Öffnungsstatus neben der Adresse */
+.location-map__status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.location-map__status strong {
+  font-weight: 600;
+  color: var(--muted-light);
+}
+
+.location-map__status.is-open strong {
+  color: #1f9d55;
+}
+
+:root:not([data-theme="light"]) .location-map__status.is-open strong {
+  color: #34d17a;
+}
+
+.location-map__status-dot {
+  flex-shrink: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.3rem;
+  border-radius: 50%;
+  background: var(--muted-light);
+}
+
+.location-map__status.is-open .location-map__status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 22%, transparent);
+}
+
+.location-map__status-note {
+  color: var(--muted-light);
+}
+
 .location-map__directions {
-  margin-top: 0.6rem;
-  display: inline-block;
+  margin-top: 0.75rem;
   width: fit-content;
   font-size: 13px;
-  font-weight: 400;
-  color: var(--brand-text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 @media (min-width: 900px) {
@@ -5833,10 +5960,6 @@ textarea.field__control {
     border-left: 1px solid var(--border);
     padding: 2rem;
   }
-}
-
-.location-map__directions:hover {
-  color: var(--brand-text-hover);
 }
 
 /* Cookie consent banner */

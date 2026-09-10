@@ -2,41 +2,59 @@
 
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { COMPANY, MAPS_LINK } from "@/lib/company";
-import { CONSENT_COOKIE, CONSENT_EVENT, readCookie } from "@/lib/consent-cookies";
+import { COMPANY, MAPS_EMBED, MAPS_LINK } from "@/lib/company";
+import {
+  CONSENT_COOKIE,
+  CONSENT_EVENT,
+  hasMarketingConsent,
+  readConsent,
+  readCookie,
+} from "@/lib/consent-cookies";
+import { getOpenStatus } from "@/lib/hours";
 
 const DISMISS_KEY = "muc-location-peek-dismissed";
 const DELAY_MS = 2600;
 
-// Hydration-Gate nach demselben Muster wie LeadCaptureWidget/CookieConsent —
-// vermeidet setState-in-Effect.
 const noopSubscribe = () => () => {};
 const getMounted = () => true;
 const getMountedServer = () => false;
 
+function subscribeConsent(onChange: () => void) {
+  window.addEventListener(CONSENT_EVENT, onChange);
+  return () => window.removeEventListener(CONSENT_EVENT, onChange);
+}
+
 /**
- * Kleiner Standort-Hinweis unten links. Erscheint einmal pro Session kurz
- * nach dem Laden (sofern die Cookie-Entscheidung gefallen ist) und zeigt
- * kompakt, wo MUC Cargohandling sitzt — mit direktem Weg zur Route.
- * Gegenstück zum Anfrage-Widget unten rechts, kollidiert nicht damit.
+ * Standort-Karte unten links. Erscheint einmal pro Session kurz nach dem
+ * Laden. Zeigt eine echte Google-Karte (nur mit Marketing-Einwilligung — sonst
+ * eine stilisierte Vorschau), die Adresse, den Live-Öffnungsstatus und einen
+ * direkten Routen-Link.
  */
 export function LocationPeek() {
   const pathname = usePathname();
   const mounted = useSyncExternalStore(noopSubscribe, getMounted, getMountedServer);
+  const consent = useSyncExternalStore(
+    subscribeConsent,
+    () => (hasMarketingConsent(readConsent()) ? "yes" : "no"),
+    () => "no",
+  );
   const [visible, setVisible] = useState(false);
   const [leaving, setLeaving] = useState(false);
+  const [status, setStatus] = useState<ReturnType<typeof getOpenStatus> | null>(null);
 
-  const consentDecided = () => {
-    try {
-      return readCookie(CONSENT_COOKIE) !== null;
-    } catch {
-      return false;
-    }
-  };
+  useEffect(() => {
+    if (!visible) return;
+    const update = () => setStatus(getOpenStatus());
+    const first = setTimeout(update, 0);
+    const id = setInterval(update, 60_000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
+  }, [visible]);
 
   useEffect(() => {
     if (!mounted) return;
-    // Auf der Kontaktseite gibt es die volle Karte bereits.
     if (pathname === "/kontakt" || pathname.startsWith("/admin")) return;
 
     let dismissed = false;
@@ -48,11 +66,16 @@ export function LocationPeek() {
     if (dismissed) return;
 
     let timer: number | undefined;
-    const arm = () => {
-      if (!consentDecided()) return;
-      timer = window.setTimeout(() => setVisible(true), DELAY_MS);
+    const decided = () => {
+      try {
+        return readCookie(CONSENT_COOKIE) !== null;
+      } catch {
+        return false;
+      }
     };
-
+    const arm = () => {
+      if (decided()) timer = window.setTimeout(() => setVisible(true), DELAY_MS);
+    };
     arm();
     const onConsent = () => {
       if (!timer && !visible) arm();
@@ -77,7 +100,10 @@ export function LocationPeek() {
   if (!mounted || !visible) return null;
 
   return (
-    <aside className={`location-peek${leaving ? " is-leaving" : ""}`} aria-label="Standort">
+    <aside
+      className={`location-peek${leaving ? " is-leaving" : ""}`}
+      aria-label="Standort MUC Cargohandling"
+    >
       <button
         type="button"
         className="location-peek__close"
@@ -89,24 +115,35 @@ export function LocationPeek() {
         </svg>
       </button>
 
-      <div className="location-peek__map" aria-hidden="true">
-        <svg viewBox="0 0 120 96" preserveAspectRatio="xMidYMid slice">
-          <rect width="120" height="96" fill="var(--surface-2)" />
-          <path
-            d="M-4 66 L44 44 L82 60 L128 40 M20 -4 L36 40 L26 100 M76 -4 L70 52 L96 100"
-            stroke="var(--border)"
-            strokeWidth="6"
-            fill="none"
+      <div className="location-peek__map">
+        {consent === "yes" ? (
+          <iframe
+            title={`Standort ${COMPANY.legalName}`}
+            src={MAPS_EMBED}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            aria-hidden="true"
+            tabIndex={-1}
           />
-          <path d="M52 8 L120 44" stroke="var(--border)" strokeWidth="3" fill="none" strokeDasharray="5 5" />
-          <g transform="translate(60 48)">
-            <circle r="13" fill="color-mix(in srgb, var(--brand) 22%, transparent)">
-              <animate attributeName="r" values="10;18;10" dur="2.6s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.7;0;0.7" dur="2.6s" repeatCount="indefinite" />
-            </circle>
-            <circle r="5.5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
-          </g>
-        </svg>
+        ) : (
+          <svg viewBox="0 0 120 84" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="120" height="84" fill="var(--surface-2)" />
+            <path
+              d="M-4 58 L44 38 L82 52 L128 34 M20 -4 L34 36 L24 90 M74 -4 L68 46 L92 90"
+              stroke="var(--border)"
+              strokeWidth="6"
+              fill="none"
+            />
+            <path d="M50 6 L120 40" stroke="var(--border)" strokeWidth="3" fill="none" strokeDasharray="5 5" />
+            <g transform="translate(60 42)">
+              <circle r="12" fill="color-mix(in srgb, var(--brand) 22%, transparent)">
+                <animate attributeName="r" values="9;16;9" dur="2.6s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.7;0;0.7" dur="2.6s" repeatCount="indefinite" />
+              </circle>
+              <circle r="5" fill="var(--brand)" stroke="#fff" strokeWidth="2" />
+            </g>
+          </svg>
+        )}
       </div>
 
       <div className="location-peek__body">
@@ -117,18 +154,29 @@ export function LocationPeek() {
           <br />
           {COMPANY.office.line2}
         </p>
+
+        {status ? (
+          <p className={`location-peek__status${status.open ? " is-open" : ""}`}>
+            <span className="location-peek__dot" aria-hidden="true" />
+            <span>
+              <strong>{status.label}</strong>
+              <span className="location-peek__status-detail"> · {status.detail}</span>
+            </span>
+          </p>
+        ) : null}
+
         <a
           href={MAPS_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="location-peek__cta"
+          className="link-ext location-peek__cta"
         >
-          Route öffnen
-          <svg viewBox="0 0 16 16" fill="none" width="13" height="13" aria-hidden="true">
+          <span>Route öffnen</span>
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path
-              d="M5.5 2.5 11 8l-5.5 5.5"
+              d="M6 3.5h6.5V10M12.5 3.5 7 9M11 9.5v2A1.5 1.5 0 0 1 9.5 13h-5A1.5 1.5 0 0 1 3 11.5v-5A1.5 1.5 0 0 1 4.5 5h2"
               stroke="currentColor"
-              strokeWidth="2.2"
+              strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

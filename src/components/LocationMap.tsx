@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { PinIcon } from "@/components/ArrowIcon";
+import { ExternalLink } from "@/components/ExternalLink";
 import { COMPANY, MAPS_LINK } from "@/lib/company";
 import {
   CONSENT_EVENT,
   hasMarketingConsent,
   readConsent,
 } from "@/lib/consent-cookies";
+import { getOpenStatus } from "@/lib/hours";
 
 function subscribeConsent(onChange: () => void) {
   window.addEventListener(CONSENT_EVENT, onChange);
@@ -27,6 +29,17 @@ export function LocationMap({ embedSrc }: { embedSrc: string }) {
   );
   const [manualLoad, setManualLoad] = useState(false);
   const showMap = manualLoad || consentValue === "yes";
+
+  const [status, setStatus] = useState<ReturnType<typeof getOpenStatus> | null>(null);
+  useEffect(() => {
+    const update = () => setStatus(getOpenStatus());
+    const first = setTimeout(update, 0);
+    const id = setInterval(update, 60_000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
+  }, []);
 
   return (
     <div className="location-map">
@@ -71,14 +84,19 @@ export function LocationMap({ embedSrc }: { embedSrc: string }) {
             <br />
             {COMPANY.office.line2}
           </p>
-          <a
-            href={MAPS_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="location-map__directions"
-          >
+          {status ? (
+            <p className={`location-map__status${status.open ? " is-open" : ""}`}>
+              <span className="location-map__status-dot" aria-hidden="true" />
+              <span>
+                <strong>{status.label}</strong> · {status.detail}
+                <br />
+                <span className="location-map__status-note">{COMPANY.hours.note}</span>
+              </span>
+            </p>
+          ) : null}
+          <ExternalLink href={MAPS_LINK} className="location-map__directions">
             Anfahrt in Google Maps
-          </a>
+          </ExternalLink>
         </div>
       </div>
     </div>
