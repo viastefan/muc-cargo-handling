@@ -11,6 +11,7 @@ import {
   readCookie,
 } from "@/lib/consent-cookies";
 import { getOpenStatus } from "@/lib/hours";
+import { ExternalLink } from "@/components/ExternalLink";
 
 const DISMISS_KEY = "muc-location-peek-dismissed";
 const DELAY_MS = 2600;
@@ -165,23 +166,9 @@ export function LocationPeek() {
           </p>
         ) : null}
 
-        <a
-          href={MAPS_LINK}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link-ext location-peek__cta"
-        >
-          <span>Route öffnen</span>
-          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path
-              d="M6 3.5h6.5V10M12.5 3.5 7 9M11 9.5v2A1.5 1.5 0 0 1 9.5 13h-5A1.5 1.5 0 0 1 3 11.5v-5A1.5 1.5 0 0 1 4.5 5h2"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
+        <ExternalLink href={MAPS_LINK} className="location-peek__cta">
+          Route öffnen
+        </ExternalLink>
       </div>
     </aside>
   );

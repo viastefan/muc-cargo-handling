@@ -6,16 +6,11 @@ type Props = {
   iconBefore?: boolean;
 };
 
-function BoxArrowIcon() {
+/** Material-Symbols „open_in_new" — als Inline-SVG (kein Google-Fonts-Request). */
+export function OpenInNewIcon() {
   return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M6 3.5h6.5V10M12.5 3.5 7 9M11 9.5v2A1.5 1.5 0 0 1 9.5 13h-5A1.5 1.5 0 0 1 3 11.5v-5A1.5 1.5 0 0 1 4.5 5h2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
     </svg>
   );
 }
@@ -32,9 +27,9 @@ export function ExternalLink({ href, children, className = "", iconBefore }: Pro
       rel="noopener noreferrer"
       className={`link-ext ${className}`.trim()}
     >
-      {iconBefore ? <BoxArrowIcon /> : null}
+      {iconBefore ? <OpenInNewIcon /> : null}
       <span>{children}</span>
-      {iconBefore ? null : <BoxArrowIcon />}
+      {iconBefore ? null : <OpenInNewIcon />}
     </a>
   );
 }
