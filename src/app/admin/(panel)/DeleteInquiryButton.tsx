@@ -24,16 +24,12 @@ export function DeleteInquiryButton({ reference }: { reference: string }) {
       <span style={{ fontSize: "13px", color: "var(--muted)" }}>
         Endgültig löschen?
       </span>
-      <button
-        type="submit"
-        className="admin-btn admin-btn--sm"
-        style={{ borderColor: "var(--brand)", color: "var(--brand-text)" }}
-      >
+      <button type="submit" className="admin-btn admin-btn--sm admin-btn--danger">
         Ja, löschen
       </button>
       <button
         type="button"
-        className="admin-btn admin-btn--sm"
+        className="admin-btn admin-btn--sm admin-btn--plain"
         onClick={() => setArmed(false)}
       >
         Abbrechen

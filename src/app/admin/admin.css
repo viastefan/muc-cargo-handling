@@ -1,13 +1,37 @@
-/* Internes Anfragen-Panel — bewusst nüchtern, dicht, funktional.
-   Nutzt die Farb-Tokens aus globals.css, aber nicht die Marketing-Typo. */
+/* ───────────────────────────────────────────────────────────────────────────
+   MUC Cargohandling — internes Anfragen-Panel
+   Design: SwiftUI / Apple — gruppierte Inset-Listen, SF-Typografie,
+   System-Blau als Tint, MUC-Rot als Marken-Akzent. Ruhig, luftig, nativ.
+   ─────────────────────────────────────────────────────────────────────────── */
 
 .admin-root {
-  --admin-gap: 1rem;
+  --a-tint: #0a63e0;
+  --a-tint-weak: color-mix(in srgb, #0a63e0 10%, var(--card));
+  --a-radius: 14px;
+  --a-radius-sm: 9px;
+  --a-row-pad-x: 1rem;
+  --a-green: #1f9d55;
+  --a-amber: #b26a00;
+  --a-red: #c8102e;
+
   min-height: 100vh;
   background: var(--surface);
   color: var(--foreground);
+  font-family:
+    "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", system-ui, sans-serif;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.45;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root:not([data-theme="light"]) .admin-root {
+  --a-tint: #4d9bff;
+  --a-tint-weak: color-mix(in srgb, #4d9bff 16%, var(--card));
+  --a-green: #34d17a;
+  --a-amber: #e0a33a;
+  --a-red: #ff5c78;
 }
 
 .admin-shell {
@@ -16,33 +40,38 @@
   min-height: 100vh;
 }
 
+/* ── Frosted top bar ─────────────────────────────────────────────────────── */
 .admin-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 1.25rem;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1.25rem;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
 }
 
 .admin-bar__brand {
   display: flex;
   align-items: baseline;
-  gap: 0.6rem;
+  gap: 0.55rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
 }
 
 .admin-bar__brand span {
-  font-weight: 400;
-  font-size: 12px;
-  color: var(--muted);
+  font-size: 11px;
+  font-weight: 590;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
+  color: var(--muted);
 }
 
 .admin-bar__actions {
@@ -54,12 +83,131 @@
 .admin-main {
   flex: 1;
   width: 100%;
-  max-width: 1180px;
+  max-width: 1040px;
   margin-inline: auto;
-  padding: 1.5rem 1.25rem 4rem;
+  padding: 1.75rem 1.25rem 5rem;
 }
 
-/* ---- Login ---- */
+.admin-page-title {
+  margin: 0 0 1.25rem;
+  font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 640;
+  letter-spacing: -0.021em;
+}
+
+/* ── Buttons (Apple) ────────────────────────────────────────────────────── */
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
+  border: none;
+  border-radius: 980px;
+  background: var(--a-tint-weak);
+  color: var(--a-tint);
+  font: inherit;
+  font-weight: 590;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: filter 120ms ease, background-color 120ms ease, opacity 120ms ease;
+}
+
+.admin-btn:hover {
+  filter: brightness(0.97);
+}
+
+.admin-btn:active {
+  opacity: 0.7;
+}
+
+.admin-btn--primary {
+  background: var(--a-tint);
+  color: #fff;
+  width: 100%;
+  padding-block: 0.62rem;
+}
+
+.admin-btn--primary:hover {
+  filter: brightness(1.05);
+}
+
+.admin-btn--plain {
+  background: transparent;
+  color: var(--a-tint);
+  padding-inline: 0.5rem;
+}
+
+.admin-btn--plain:hover {
+  background: var(--a-tint-weak);
+}
+
+.admin-btn--danger {
+  background: color-mix(in srgb, var(--a-red) 12%, var(--card));
+  color: var(--a-red);
+}
+
+.admin-btn--sm {
+  padding: 0.34rem 0.7rem;
+  font-size: 13px;
+}
+
+/* ── Form controls ─────────────────────────────────────────────────────── */
+.admin-label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 12px;
+  font-weight: 590;
+  color: var(--muted);
+  letter-spacing: -0.005em;
+}
+
+.admin-input,
+.admin-select,
+.admin-textarea {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--a-radius-sm);
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.admin-input:focus,
+.admin-select:focus,
+.admin-textarea:focus {
+  border-color: var(--a-tint);
+  box-shadow: 0 0 0 3.5px color-mix(in srgb, var(--a-tint) 22%, transparent);
+}
+
+.admin-textarea {
+  min-height: 6rem;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.admin-error {
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--a-radius-sm);
+  background: color-mix(in srgb, var(--a-red) 10%, var(--card));
+  color: var(--a-red);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.admin-error code {
+  font-size: 12px;
+  background: color-mix(in srgb, var(--a-red) 14%, transparent);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+/* ── Login ─────────────────────────────────────────────────────────────── */
 .admin-login {
   display: flex;
   align-items: center;
@@ -70,167 +218,157 @@
 
 .admin-login__card {
   width: 100%;
-  max-width: 22rem;
-  padding: 1.75rem;
+  max-width: 21rem;
+  padding: 1.9rem 1.75rem;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 12px 40px -12px rgb(0 0 0 / 0.18);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px -18px rgb(0 0 0 / 0.22);
+  text-align: center;
+}
+
+:root:not([data-theme="light"]) .admin-login__card {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05), 0 24px 64px -18px rgb(0 0 0 / 0.6);
 }
 
 .admin-login__title {
-  margin: 0 0 0.35rem;
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  margin: 0 0 0.3rem;
+  font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 640;
+  letter-spacing: -0.02em;
 }
 
 .admin-login__hint {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.4rem;
   font-size: 13px;
   color: var(--muted);
 }
 
-/* ---- Form controls ---- */
-.admin-label {
-  display: block;
-  margin-bottom: 0.35rem;
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--muted-light);
+.admin-login__card .admin-label {
+  text-align: left;
 }
 
-.admin-input,
-.admin-select,
-.admin-textarea {
-  width: 100%;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--card);
-  color: var(--foreground);
-  font: inherit;
-  outline: none;
-  transition: border-color 140ms ease;
-}
-
-.admin-input:focus,
-.admin-select:focus,
-.admin-textarea:focus {
-  border-color: var(--focus);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.admin-textarea {
-  min-height: 5.5rem;
-  resize: vertical;
-}
-
-.admin-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: var(--card);
-  color: var(--foreground);
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 140ms ease, border-color 140ms ease;
-}
-
-.admin-btn:hover {
-  background: var(--surface-2);
-}
-
-.admin-btn--primary {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: #fff;
-  width: 100%;
-}
-
-.admin-btn--primary:hover {
-  background: var(--brand-dark);
-}
-
-.admin-btn--sm {
-  padding: 0.3rem 0.6rem;
-  font-size: 13px;
-}
-
-.admin-error {
-  margin: 0 0 1rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--brand) 10%, var(--card));
-  color: var(--brand-text);
-  font-size: 13px;
-}
-
-/* ---- Stats ---- */
-.admin-stats {
+/* ── Widgets (stat cards) ──────────────────────────────────────────────── */
+.admin-widgets {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.7rem;
   grid-template-columns: repeat(2, 1fr);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 @media (min-width: 720px) {
-  .admin-stats {
+  .admin-widgets {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
-.admin-stat {
-  padding: 0.9rem 1rem;
+.admin-widget {
+  padding: 0.95rem 1rem 0.9rem;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 11px;
+  border-radius: var(--a-radius);
 }
 
-.admin-stat__value {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+.admin-widget__value {
+  font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
+  font-size: 25px;
+  font-weight: 640;
+  letter-spacing: -0.025em;
 }
 
-.admin-stat__label {
+.admin-widget__label {
   margin-top: 0.15rem;
   font-size: 12px;
+  font-weight: 500;
   color: var(--muted);
 }
 
-/* ---- Filters ---- */
+.admin-widget--accent .admin-widget__value {
+  color: var(--brand-text);
+}
+
+/* ── Segmented control (status filter) ─────────────────────────────────── */
+.admin-segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  background: var(--surface-2);
+  border-radius: 11px;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.admin-segmented::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-segmented a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 550;
+  white-space: nowrap;
+  color: var(--muted);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.admin-segmented a:hover {
+  color: var(--foreground);
+}
+
+.admin-segmented a[data-active="true"] {
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.12), 0 0 0 0.5px rgb(0 0 0 / 0.04);
+}
+
+.admin-segmented a[data-active="true"] .admin-seg-count {
+  color: var(--a-tint);
+}
+
+.admin-seg-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--muted-light);
+}
+
+/* ── Secondary filters ─────────────────────────────────────────────────── */
 .admin-filters {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.9rem 0 1.1rem;
 }
 
-.admin-filters__group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.admin-filters .admin-select {
+  width: auto;
+  min-width: 8rem;
+  border-radius: 980px;
+  padding-block: 0.4rem;
 }
 
-.admin-filters__group--grow {
-  flex: 1 1 12rem;
+.admin-filters .admin-input {
+  flex: 1 1 14rem;
+  border-radius: 980px;
+  padding-block: 0.45rem;
 }
 
-/* ---- Table ---- */
-.admin-table-wrap {
-  overflow-x: auto;
+/* ── Grouped inset list (table) ───────────────────────────────────────── */
+.admin-group {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--a-radius);
+  overflow: hidden;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
 }
 
 .admin-table {
@@ -240,34 +378,47 @@
 }
 
 .admin-table th {
-  padding: 0.7rem 0.9rem;
+  padding: 0.65rem var(--a-row-pad-x);
   text-align: left;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--muted-light);
+  background: color-mix(in srgb, var(--surface-2) 55%, var(--card));
   border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 
 .admin-table td {
-  padding: 0.7rem 0.9rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
-  vertical-align: top;
+  padding: 0.7rem var(--a-row-pad-x);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  vertical-align: middle;
 }
 
-.admin-table tr:last-child td {
+.admin-table tbody tr:last-child td {
   border-bottom: none;
 }
 
 .admin-table tbody tr {
   cursor: pointer;
-  transition: background-color 120ms ease;
+  transition: background-color 110ms ease;
 }
 
 .admin-table tbody tr:hover {
-  background: var(--surface-2);
+  background: color-mix(in srgb, var(--a-tint) 6%, var(--card));
+}
+
+.admin-table tbody tr:focus-visible {
+  outline: 2px solid var(--a-tint);
+  outline-offset: -2px;
+}
+
+.admin-table__ref {
+  font-variant-numeric: tabular-nums;
+  font-weight: 590;
+  color: var(--a-tint);
+  letter-spacing: -0.01em;
 }
 
 .admin-table__msg {
@@ -279,23 +430,29 @@
   -webkit-box-orient: vertical;
 }
 
+.admin-table__chev {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--muted-light);
+}
+
 .admin-empty {
-  padding: 3rem 1rem;
+  padding: 3.5rem 1rem;
   text-align: center;
   color: var(--muted);
 }
 
-/* ---- Status badges ---- */
+/* ── Status pills ─────────────────────────────────────────────────────── */
 .admin-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
+  gap: 0.32rem;
+  padding: 0.16rem 0.6rem;
+  border-radius: 980px;
   font-size: 11.5px;
-  font-weight: 500;
+  font-weight: 590;
+  letter-spacing: -0.005em;
   white-space: nowrap;
-  border: 1px solid transparent;
 }
 
 .admin-badge::before {
@@ -307,88 +464,121 @@
 }
 
 .admin-badge--new {
-  color: #b45309;
-  background: color-mix(in srgb, #f59e0b 16%, var(--card));
+  color: var(--a-amber);
+  background: color-mix(in srgb, var(--a-amber) 14%, var(--card));
 }
+
 .admin-badge--in_progress {
-  color: #1d4ed8;
-  background: color-mix(in srgb, #3b82f6 16%, var(--card));
+  color: var(--a-tint);
+  background: color-mix(in srgb, var(--a-tint) 13%, var(--card));
 }
+
 .admin-badge--done {
-  color: #15803d;
-  background: color-mix(in srgb, #22c55e 16%, var(--card));
+  color: var(--a-green);
+  background: color-mix(in srgb, var(--a-green) 14%, var(--card));
 }
+
 .admin-badge--archived {
   color: var(--muted);
   background: var(--surface-2);
 }
 
-:root[data-theme="dark"] .admin-badge--new,
-:root:not([data-theme="light"]) .admin-badge--new {
-  color: #fbbf24;
-}
-:root[data-theme="dark"] .admin-badge--in_progress,
-:root:not([data-theme="light"]) .admin-badge--in_progress {
-  color: #93c5fd;
-}
-:root[data-theme="dark"] .admin-badge--done,
-:root:not([data-theme="light"]) .admin-badge--done {
-  color: #86efac;
-}
-
-/* ---- Detail ---- */
+/* ── Detail ───────────────────────────────────────────────────────────── */
 .admin-back {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 1rem;
-  font-size: 13px;
-  color: var(--muted);
+  gap: 0.3rem;
+  margin-bottom: 1.1rem;
+  font-size: 13.5px;
+  font-weight: 550;
+  color: var(--a-tint);
 }
 
-.admin-back:hover {
-  color: var(--foreground);
+.admin-detail-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.admin-detail-head h1 {
+  margin: 0;
+  font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 640;
+  letter-spacing: -0.021em;
+}
+
+.admin-detail-head__ref {
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: var(--muted);
 }
 
 .admin-detail {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.1rem;
   grid-template-columns: 1fr;
 }
 
-@media (min-width: 860px) {
+@media (min-width: 880px) {
   .admin-detail {
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
     align-items: start;
   }
 }
 
+/* gruppierte Inset-Sektion */
 .admin-card {
-  padding: 1.25rem;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--a-radius);
+  overflow: hidden;
 }
 
 .admin-card + .admin-card {
-  margin-top: 1rem;
+  margin-top: 1.1rem;
 }
 
 .admin-card__title {
-  margin: 0 0 0.9rem;
-  font-size: 12px;
+  margin: 0;
+  padding: 0.7rem 1rem 0.55rem;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted-light);
 }
 
+.admin-card__body {
+  padding: 0.2rem 1rem 1rem;
+}
+
+.admin-message {
+  margin: 0;
+  padding: 0.2rem 1rem 1.1rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
 .admin-dl {
   display: grid;
-  grid-template-columns: minmax(6rem, auto) 1fr;
-  gap: 0.55rem 1rem;
+  grid-template-columns: minmax(5.5rem, auto) 1fr;
   margin: 0;
   font-size: 13.5px;
+}
+
+.admin-dl > div {
+  display: contents;
+}
+
+.admin-dl dt,
+.admin-dl dd {
+  padding: 0.5rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
 }
 
 .admin-dl dt {
@@ -397,39 +587,35 @@
 
 .admin-dl dd {
   margin: 0;
+  padding-left: 1rem;
   overflow-wrap: anywhere;
+}
+
+.admin-dl > div:first-child dt,
+.admin-dl > div:first-child dd {
+  border-top: none;
 }
 
 .admin-dl a {
-  color: var(--brand-text);
-}
-
-.admin-message {
-  margin: 0;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.admin-field + .admin-field {
-  margin-top: 1rem;
+  color: var(--a-tint);
 }
 
 .admin-inline-form {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .admin-hint {
   margin: 0.5rem 0 0;
   font-size: 12px;
   color: var(--muted);
+  line-height: 1.5;
 }
 
 .admin-note-meta {
-  margin-top: 0.5rem;
+  margin: 0.6rem 1rem 0.9rem;
   font-size: 12px;
   color: var(--muted);
 }

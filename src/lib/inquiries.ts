@@ -305,11 +305,12 @@ export type InquiryStats = {
   new: number;
   inProgress: number;
   done: number;
+  archived: number;
   last7Days: number;
 };
 
 export async function inquiryStats(): Promise<InquiryStats> {
-  const empty = { total: 0, new: 0, inProgress: 0, done: 0, last7Days: 0 };
+  const empty = { total: 0, new: 0, inProgress: 0, done: 0, archived: 0, last7Days: 0 };
   if (!inquiriesStorageReady) return empty;
   try {
     return await inquiryStatsUnsafe();
@@ -329,12 +330,13 @@ async function inquiryStatsUnsafe(): Promise<InquiryStats> {
     return Number((res.headers.get("content-range") ?? "").split("/")[1]) || 0;
   };
   const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const [total, newCount, inProgress, done, last7Days] = await Promise.all([
+  const [total, newCount, inProgress, done, archived, last7Days] = await Promise.all([
     countOnly("id=not.is.null"),
     countOnly("status=eq.new"),
     countOnly("status=eq.in_progress"),
     countOnly("status=eq.done"),
+    countOnly("status=eq.archived"),
     countOnly(`created_at=gte.${since}`),
   ]);
-  return { total, new: newCount, inProgress, done, last7Days };
+  return { total, new: newCount, inProgress, done, archived, last7Days };
 }

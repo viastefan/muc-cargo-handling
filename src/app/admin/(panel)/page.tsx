@@ -25,20 +25,13 @@ function dateFmt(iso: string) {
   }).format(new Date(iso));
 }
 
-type SP = {
-  status?: string;
-  topic?: string;
-  q?: string;
-  page?: string;
-};
+type SP = { status?: string; topic?: string; q?: string; page?: string };
 
 export default async function AdminDashboard({
   searchParams,
 }: {
   searchParams: Promise<SP>;
 }) {
-  // Das Layout leitet Unangemeldete um; hier zusätzlich, damit bei einem
-  // (parallel gerenderten) Fremdzugriff keine DB-Abfragen anlaufen.
   if (!(await hasAdminSession())) return null;
 
   const sp = await searchParams;
@@ -62,19 +55,25 @@ export default async function AdminDashboard({
     }),
   ]);
   const { rows, total, error: listError } = list;
-
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 
-
-  const statCards = [
+  const widgets = [
     { label: "Gesamt", value: stats.total },
-    { label: STATUS_LABEL.new, value: stats.new },
+    { label: STATUS_LABEL.new, value: stats.new, accent: true },
     { label: STATUS_LABEL.in_progress, value: stats.inProgress },
     { label: STATUS_LABEL.done, value: stats.done },
     { label: "Letzte 7 Tage", value: stats.last7Days },
   ];
 
-  const buildQuery = (next: Partial<SP>) => {
+  const statusCounts: Record<string, number> = {
+    all: stats.total,
+    new: stats.new,
+    in_progress: stats.inProgress,
+    done: stats.done,
+    archived: stats.archived,
+  };
+
+  const query = (next: Partial<SP>) => {
     const params = new URLSearchParams();
     const merged = { status, topic, q: search, ...next } as Record<string, string>;
     for (const [k, v] of Object.entries(merged)) {
@@ -86,123 +85,128 @@ export default async function AdminDashboard({
 
   return (
     <>
-      {listError ? (
-        <p className="admin-error" style={{ marginBottom: "1.5rem" }}>
-          Speicher verbunden, aber Zugriff fehlgeschlagen. Wahrscheinlich fehlt
-          die Tabelle — Migration <code>supabase/migrations/0001_inquiries.sql</code>{" "}
-          im Supabase-SQL-Editor ausführen.
-        </p>
-      ) : null}
+      <h1 className="admin-page-title">Anfragen</h1>
 
-      <div className="admin-stats">
-        {statCards.map((card) => (
-          <div key={card.label} className="admin-stat">
-            <div className="admin-stat__value">{card.value}</div>
-            <div className="admin-stat__label">{card.label}</div>
+      <div className="admin-widgets">
+        {widgets.map((w) => (
+          <div
+            key={w.label}
+            className={`admin-widget${w.accent ? " admin-widget--accent" : ""}`}
+          >
+            <div className="admin-widget__value">{w.value}</div>
+            <div className="admin-widget__label">{w.label}</div>
           </div>
         ))}
       </div>
 
+      <div className="admin-segmented">
+        {(["all", ...INQUIRY_STATUSES] as const).map((s) => (
+          <Link
+            key={s}
+            href={query({ status: s, page: undefined })}
+            data-active={status === s}
+          >
+            {s === "all" ? "Alle" : STATUS_LABEL[s]}
+            <span className="admin-seg-count">{statusCounts[s] ?? 0}</span>
+          </Link>
+        ))}
+      </div>
+
       <form className="admin-filters" method="get">
-        <div className="admin-filters__group">
-          <label className="admin-label" htmlFor="f-status">
-            Status
-          </label>
-          <select
-            id="f-status"
-            name="status"
-            defaultValue={status}
-            className="admin-select"
-          >
-            <option value="all">Alle</option>
-            {INQUIRY_STATUSES.map((s) => (
-              <option key={s} value={s}>
-                {STATUS_LABEL[s]}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="admin-filters__group">
-          <label className="admin-label" htmlFor="f-topic">
-            Thema
-          </label>
-          <select
-            id="f-topic"
-            name="topic"
-            defaultValue={topic}
-            className="admin-select"
-          >
-            <option value="all">Alle</option>
-            {TOPICS.map((t) => (
-              <option key={t} value={t}>
-                {TOPIC_LABEL[t]}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="admin-filters__group admin-filters__group--grow">
-          <label className="admin-label" htmlFor="f-q">
-            Suche
-          </label>
-          <input
-            id="f-q"
-            name="q"
-            defaultValue={search}
-            className="admin-input"
-            placeholder="Name, Firma, E-Mail, Referenz, Text"
-          />
-        </div>
-        <button type="submit" className="admin-btn">
-          Filtern
+        {status !== "all" ? <input type="hidden" name="status" value={status} /> : null}
+        <select name="topic" defaultValue={topic} className="admin-select" aria-label="Thema">
+          <option value="all">Alle Themen</option>
+          {TOPICS.map((t) => (
+            <option key={t} value={t}>
+              {TOPIC_LABEL[t]}
+            </option>
+          ))}
+        </select>
+        <input
+          name="q"
+          defaultValue={search}
+          className="admin-input"
+          placeholder="Name, Firma, E-Mail, Referenz, Text …"
+          aria-label="Suche"
+        />
+        <button type="submit" className="admin-btn admin-btn--sm">
+          Suchen
         </button>
-        {(status !== "all" || topic !== "all" || search) && (
-          <Link href="/admin" className="admin-btn admin-btn--sm">
+        {(topic !== "all" || search) && (
+          <Link href={query({ topic: "all", q: "" })} className="admin-btn admin-btn--plain admin-btn--sm">
             Zurücksetzen
           </Link>
         )}
       </form>
 
-      <div className="admin-table-wrap">
+      {listError ? (
+        <p className="admin-error">
+          Speicher verbunden, aber Zugriff fehlgeschlagen — wahrscheinlich fehlt
+          die Tabelle. Migration <code>supabase/migrations/0001_inquiries.sql</code>{" "}
+          im Supabase-SQL-Editor ausführen.
+        </p>
+      ) : null}
+
+      <div className="admin-group">
         {rows.length === 0 ? (
           <p className="admin-empty">Keine Anfragen für diese Auswahl.</p>
         ) : (
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Referenz</th>
-                <th>Eingang</th>
-                <th>Thema</th>
-                <th>Absender</th>
-                <th>Nachricht</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <InquiryRow key={row.id} reference={row.reference}>
-                  <td style={{ fontWeight: 600, color: "var(--brand-text)" }}>
-                    {row.reference}
-                  </td>
-                  <td>{dateFmt(row.createdAt)}</td>
-                  <td>{TOPIC_LABEL[row.topic]}</td>
-                  <td>
-                    <div style={{ fontWeight: 500 }}>
-                      {row.firstName} {row.lastName}
-                    </div>
-                    <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
-                      {row.company || row.email}
-                    </div>
-                  </td>
-                  <td>
-                    <div className="admin-table__msg">{row.message}</div>
-                  </td>
-                  <td>
-                    <StatusBadge status={row.status} />
-                  </td>
-                </InquiryRow>
-              ))}
-            </tbody>
-          </table>
+          <div className="admin-table-wrap">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Referenz</th>
+                  <th>Eingang</th>
+                  <th>Thema</th>
+                  <th>Absender</th>
+                  <th>Nachricht</th>
+                  <th>Status</th>
+                  <th aria-hidden="true" />
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <InquiryRow key={row.id} reference={row.reference}>
+                    <td className="admin-table__ref">{row.reference}</td>
+                    <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
+                      {dateFmt(row.createdAt)}
+                    </td>
+                    <td>{TOPIC_LABEL[row.topic]}</td>
+                    <td>
+                      <div style={{ fontWeight: 550 }}>
+                        {row.firstName} {row.lastName}
+                      </div>
+                      <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
+                        {row.company || row.email}
+                      </div>
+                    </td>
+                    <td>
+                      <div className="admin-table__msg">{row.message}</div>
+                    </td>
+                    <td>
+                      <StatusBadge status={row.status} />
+                    </td>
+                    <td>
+                      <svg
+                        className="admin-table__chev"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M6 3.5 10.5 8 6 12.5"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </td>
+                  </InquiryRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
@@ -210,14 +214,14 @@ export default async function AdminDashboard({
         <div
           style={{
             display: "flex",
-            gap: "0.5rem",
+            gap: "0.6rem",
             marginTop: "1rem",
             alignItems: "center",
           }}
         >
           {page > 1 ? (
             <Link
-              href={buildQuery({ page: String(page - 1) })}
+              href={query({ page: String(page - 1) })}
               className="admin-btn admin-btn--sm"
             >
               Zurück
@@ -228,7 +232,7 @@ export default async function AdminDashboard({
           </span>
           {page < pages ? (
             <Link
-              href={buildQuery({ page: String(page + 1) })}
+              href={query({ page: String(page + 1) })}
               className="admin-btn admin-btn--sm"
             >
               Weiter
