@@ -182,7 +182,13 @@ export async function POST(request: Request) {
   const isProd =
     process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production";
 
-  if (!delivered && anythingConfigured && isProd) {
+  // In Produktion NIE Erfolg melden, wenn die Anfrage nirgends angekommen ist
+  // (weder gespeichert noch zugestellt) — sonst geht sie stillschweigend
+  // verloren. Lokal/Preview ohne Konfiguration: als "geloggt" durchlassen.
+  if (!delivered && isProd) {
+    if (!anythingConfigured) {
+      console.error("[contact] PRODUCTION: kein Speicher-/Zustellkanal konfiguriert");
+    }
     return NextResponse.json(
       {
         ok: false,
