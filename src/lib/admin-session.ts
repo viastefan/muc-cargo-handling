@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import {
@@ -26,8 +27,8 @@ const ROOT_PRINCIPAL: Principal = {
   mustChangePw: false,
 };
 
-/** Aktuell angemeldeter Principal oder null. */
-export async function readPrincipal(): Promise<Principal | null> {
+/** Aktuell angemeldeter Principal oder null. Pro Request memoisiert. */
+export const readPrincipal = cache(async (): Promise<Principal | null> => {
   const store = await cookies();
   const uid = readSessionUid(store.get(ADMIN_COOKIE)?.value);
   if (!uid) return null;
@@ -43,7 +44,7 @@ export async function readPrincipal(): Promise<Principal | null> {
     isRoot: false,
     mustChangePw: user.mustChangePw,
   };
-}
+});
 
 export async function hasAdminSession(): Promise<boolean> {
   return (await readPrincipal()) !== null;

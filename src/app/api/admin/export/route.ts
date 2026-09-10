@@ -1,5 +1,6 @@
 import { hasAdminSession } from "@/lib/admin-session";
 import { listInquiries, TOPIC_LABEL, STATUS_LABEL } from "@/lib/inquiries";
+import { listUsers } from "@/lib/admin-users";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -7,9 +8,6 @@ export const dynamic = "force-dynamic";
 function csvCell(value: unknown): string {
   let str = value == null ? "" : String(value);
   str = str.replace(/\r?\n/g, " ");
-  // CSV-/Formel-Injection: Zellen, die mit = + - @ oder einem Steuerzeichen
-  // beginnen, würden von Excel/LibreOffice als Formel ausgewertet. Mit einem
-  // vorangestellten Apostroph bleibt der Inhalt reiner Text.
   if (/^[=+\-@\t\r]/.test(str)) str = `'${str}`;
   return `"${str.replace(/"/g, '""')}"`;
 }
@@ -19,7 +17,12 @@ export async function GET() {
     return new Response("Nicht autorisiert", { status: 401 });
   }
 
-  const { rows } = await listInquiries({ limit: 200 });
+  const [{ rows }, users] = await Promise.all([
+    listInquiries({ limit: 200 }),
+    listUsers(),
+  ]);
+  const userName = new Map(users.map((u) => [u.id, u.name]));
+
   const header = [
     "Referenz",
     "Eingang",
@@ -31,6 +34,7 @@ export async function GET() {
     "E-Mail",
     "Telefon",
     "Quelle",
+    "Zugewiesen",
     "Nachricht",
     "Notiz",
   ];
@@ -48,6 +52,7 @@ export async function GET() {
         r.email,
         r.phone,
         r.source,
+        r.assignedTo ? userName.get(r.assignedTo) ?? "" : "",
         r.message,
         r.adminNote,
       ]
@@ -56,7 +61,6 @@ export async function GET() {
     );
   }
 
-  // BOM für korrektes Excel-Encoding
   const body = "﻿" + lines.join("\r\n");
   const stamp = new Date().toISOString().slice(0, 10);
   return new Response(body, {
