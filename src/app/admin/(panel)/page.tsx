@@ -13,6 +13,7 @@ import { listUsers } from "@/lib/admin-users";
 import { InquiryRow } from "./InquiryRow";
 import { StatusBadge } from "./StatusBadge";
 import { Assignee } from "./Assignee";
+import { PushToggle } from "./PushToggle";
 
 const PAGE_SIZE = 40;
 const TOPICS = Object.keys(TOPIC_LABEL) as InquiryTopic[];
@@ -61,6 +62,7 @@ export default async function AdminDashboard({
   ]);
   const { rows, total, error: listError } = list;
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const vapidPublicKey = process.env.VAPID_PUBLIC_KEY?.trim() ?? "";
   const userMap = new Map(users.map((u) => [u.id, u]));
 
   const widgets = [
@@ -110,6 +112,8 @@ export default async function AdminDashboard({
           </div>
         ))}
       </div>
+
+      {vapidPublicKey ? <PushToggle vapidPublicKey={vapidPublicKey} /> : null}
 
       <div className="admin-segmented">
         {(["all", ...INQUIRY_STATUSES] as const).map((s) => (

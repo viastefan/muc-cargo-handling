@@ -6,6 +6,7 @@ import {
   type InquiryEmailData,
 } from "@/lib/email-templates";
 import { TOPIC_LABEL } from "@/lib/inquiries";
+import { broadcastPush, pushReady, type PushMessage } from "@/lib/push";
 
 /**
  * Zustellkanäle für neue Anfragen. Alles ist optional und wird über
@@ -59,7 +60,19 @@ export type NotifyResult = {
   customerEmail: ChannelResult;
   sms: ChannelResult;
   webhook: ChannelResult;
+  push: ChannelResult;
 };
+
+async function sendPushNotification(message: PushMessage): Promise<ChannelResult> {
+  if (!pushReady) return "skipped";
+  try {
+    const { sent } = await broadcastPush(message);
+    return sent > 0 ? "sent" : "failed";
+  } catch (error) {
+    console.error("[notify] push failed", error);
+    return "failed";
+  }
+}
 
 async function sendEmail(params: {
   to: string[];
@@ -160,7 +173,7 @@ export async function notifyNewInquiry(
     `${data.company ? ` / ${data.company}` : ""}. ` +
     `${data.email}${data.phone ? ` · ${data.phone}` : ""}. Ref ${data.reference}`;
 
-  const [teamEmail, customerEmail, sms, webhook] = await Promise.all([
+  const [teamEmail, customerEmail, sms, webhook, push] = await Promise.all([
     sendEmail({
       to: NOTIFY_TO,
       subject: team.subject,
@@ -187,7 +200,15 @@ export async function notifyNewInquiry(
       source: data.source,
       receivedAt: data.createdAt.toISOString(),
     }),
+    sendPushNotification({
+      title: `Neue Anfrage — ${TOPIC_LABEL[data.topic]}`,
+      body:
+        `${data.name}${data.company ? ` · ${data.company}` : ""}\n` +
+        data.message.slice(0, 140),
+      url: `/admin/${encodeURIComponent(data.reference)}`,
+      tag: data.reference,
+    }),
   ]);
 
-  return { teamEmail, customerEmail, sms, webhook };
+  return { teamEmail, customerEmail, sms, webhook, push };
 }
