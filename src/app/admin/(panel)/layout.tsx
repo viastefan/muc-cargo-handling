@@ -22,7 +22,12 @@ export default async function PanelLayout({
           </Link>
           <nav className="admin-nav">
             <Link href="/admin">Anfragen</Link>
-            {principal.role === "admin" ? <Link href="/admin/team">Team</Link> : null}
+            {principal.role === "admin" ? (
+              <>
+                <Link href="/admin/team">Team</Link>
+                <Link href="/admin/system">Einrichtung</Link>
+              </>
+            ) : null}
           </nav>
         </div>
         <div className="admin-bar__actions">

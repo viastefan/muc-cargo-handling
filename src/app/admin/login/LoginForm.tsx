@@ -29,6 +29,7 @@ export function LoginForm({ configError }: { configError: boolean }) {
         className="admin-input"
         autoComplete="username"
         autoFocus
+        required
         style={{ marginBottom: "0.9rem" }}
         placeholder="name@muc-cargo.de"
       />

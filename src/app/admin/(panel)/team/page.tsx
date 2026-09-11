@@ -1,3 +1,4 @@
+import { MASTER_EMAIL } from "@/lib/admin-auth";
 import { requireAdminRole } from "@/lib/admin-session";
 import { adminUsersStorageReady, listUsers } from "@/lib/admin-users";
 import { TeamManager } from "./TeamManager";
@@ -19,9 +20,8 @@ export default async function TeamPage() {
         <>
           <p className="admin-hint" style={{ marginTop: 0, marginBottom: "1.25rem", maxWidth: "42rem" }}>
             Team-Mitglieder melden sich mit <strong>E-Mail + persönlichem Passwort</strong>{" "}
-            an. Der <strong>Master-Zugang</strong> (E-Mail-Feld leer lassen, Passwort ={" "}
-            <code>ADMIN_PASSWORD</code>) funktioniert immer als Notfall-Login und zum
-            Anlegen des ersten Benutzers.
+            an. Der <strong>Master-Zugang</strong> (<code>{MASTER_EMAIL}</code>) funktioniert
+            immer als Notfall-Login und zum Anlegen des ersten Benutzers.
           </p>
           <TeamManager users={users} />
         </>

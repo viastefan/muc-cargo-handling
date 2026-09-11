@@ -497,8 +497,10 @@
 /* ── Login ─────────────────────────────────────────────────────────────── */
 .admin-login {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1.1rem;
   min-height: 100vh;
   padding: 1.5rem;
 }
@@ -518,18 +520,34 @@
   box-shadow: 0 0 0 1px rgb(255 255 255 / 0.05), 0 24px 64px -18px rgb(0 0 0 / 0.6);
 }
 
+.admin-login__eyebrow {
+  margin: 0 0 0.45rem;
+  font-size: 11px;
+  font-weight: 590;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
 .admin-login__title {
   margin: 0 0 0.3rem;
   font-family: "SF Pro Display", -apple-system, system-ui, sans-serif;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 640;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.021em;
 }
 
 .admin-login__hint {
   margin: 0 0 1.4rem;
   font-size: 13px;
   color: var(--muted);
+}
+
+.admin-login__foot {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--muted);
+  opacity: 0.75;
 }
 
 .admin-login__card .admin-label {
@@ -900,6 +918,81 @@
   flex-wrap: wrap;
   align-items: center;
   margin-top: 0.6rem;
+}
+
+/* ── Einrichtungs-Checkliste ───────────────────────────────────────────── */
+.admin-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-check {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--border);
+}
+
+.admin-check:first-child {
+  border-top: none;
+}
+
+.admin-check__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+
+.admin-check__icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.admin-check__icon.is-ok {
+  background: var(--a-green);
+}
+
+.admin-check__icon.is-missing {
+  background: var(--a-amber);
+}
+
+.admin-check__icon.is-info {
+  background: transparent;
+  color: var(--muted);
+}
+
+.admin-check__body {
+  min-width: 0;
+}
+
+.admin-check__label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--foreground);
+}
+
+.admin-check__detail {
+  margin: 0.15rem 0 0;
+  font-size: 13px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.admin-check__fix {
+  margin: 0.4rem 0 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--foreground);
 }
 
 .admin-push {

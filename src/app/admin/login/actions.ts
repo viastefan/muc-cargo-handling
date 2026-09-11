@@ -37,8 +37,10 @@ export async function loginAction(
     };
   }
 
+  // Leeres Feld fällt auf den Master-Zugang zurück. Das Formular verlangt eine
+  // E-Mail; der Rückfall existiert nur, damit ein Aussperren unmöglich ist.
   const emailRaw = String(formData.get("email") ?? "").trim().toLowerCase();
-  const email = emailRaw || MASTER_EMAIL; // leeres Feld → Master-Login
+  const email = emailRaw || MASTER_EMAIL;
   const password = String(formData.get("password") ?? "");
 
   // Bremse gegen Online-Brute-Force

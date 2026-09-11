@@ -5,7 +5,8 @@ import { createHmac, timingSafeEqual, randomBytes, createHash } from "node:crypt
  *
  *   ADMIN_PASSWORD        – Master-/Notfall-Passwort. Loggt als „Administrator"
  *                           ein, auch ohne angelegte Benutzer. Pflicht.
- *   ADMIN_EMAIL           – E-Mail für den Master-Login (Default: "admin").
+ *   ADMIN_EMAIL           – E-Mail des Master-Logins
+ *                           (Default: "admin@muc-cargo.de").
  *   ADMIN_SESSION_SECRET  – HMAC-Schlüssel fürs Session-Cookie. Fehlt er, wird
  *                           er aus ADMIN_PASSWORD abgeleitet.
  *
@@ -19,7 +20,13 @@ const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
 export const adminConfigured = ADMIN_PASSWORD.length >= 8;
-export const MASTER_EMAIL = (process.env.ADMIN_EMAIL?.trim() || "admin").toLowerCase();
+/**
+ * Adresse des Master-/Notfallzugangs. Bewusst eine echte E-Mail-Adresse, damit
+ * der Login wie ein normaler Konto-Login aussieht und keine Sonderregel braucht.
+ */
+export const MASTER_EMAIL = (
+  process.env.ADMIN_EMAIL?.trim() || "admin@muc-cargo.de"
+).toLowerCase();
 
 function secret(): string {
   const explicit = process.env.ADMIN_SESSION_SECRET?.trim();

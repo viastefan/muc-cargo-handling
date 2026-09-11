@@ -30,7 +30,7 @@ Secret Key kommt an die Daten, der publishable Key nicht.
 | Env-Variable | Wert |
 |---|---|
 | `ADMIN_PASSWORD` | Master-/Notfall-Passwort, mind. 12 Zeichen, zufällig |
-| `ADMIN_EMAIL` | optional, Default `admin` (Feld beim Master-Login leer lassen) |
+| `ADMIN_EMAIL` | optional, Default `admin@muc-cargo.de` — E-Mail des Master-Logins |
 | `ADMIN_SESSION_SECRET` | `openssl rand -hex 32` |
 | `IP_HASH_SALT` | `openssl rand -hex 16` (salzt den IP-Hash in der DB) |
 

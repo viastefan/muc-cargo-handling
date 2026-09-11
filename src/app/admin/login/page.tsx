@@ -14,12 +14,14 @@ export default async function AdminLoginPage({
   return (
     <div className="admin-login">
       <div className="admin-login__card">
-        <p className="admin-login__title">MUC Cargohandling — Anfragen</p>
+        <p className="admin-login__eyebrow">MUC Cargohandling</p>
+        <p className="admin-login__title">Anfragen</p>
         <p className="admin-login__hint">
-          Team: E-Mail + eigenes Passwort. Master-Zugang: E-Mail leer lassen.
+          Bitte mit Ihren Zugangsdaten anmelden.
         </p>
         <LoginForm configError={config === "1" || !adminConfigured} />
       </div>
+      <p className="admin-login__foot">Interner Bereich · Zugriff protokolliert</p>
     </div>
   );
 }
