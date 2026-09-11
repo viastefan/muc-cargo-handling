@@ -7,6 +7,8 @@ export const COMPANY = {
   legalName: "MUC Cargohandling GmbH",
   brandName: "MUC Cargohandling",
   regAgent: "DE/RA/01278-01",
+  /** Pflichtangabe im Impressum (§ 5 DDG), Quelle: Impressum muc-cargo.de. */
+  vatId: "DE290703412",
   email: "info@muc-cargo.de",
   phone: "+49 (0)89 – 975 94 877",
   phoneTel: "+498997594877",

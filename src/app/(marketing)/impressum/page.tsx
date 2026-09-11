@@ -80,6 +80,15 @@ export default function ImpressumPage() {
 
           <section>
             <h2 className="text-[15px] font-normal text-[var(--foreground)]">
+              Umsatzsteuer-Identifikationsnummer
+            </h2>
+            <p className="mt-3">
+              Gemäß § 27 a Umsatzsteuergesetz: {COMPANY.vatId}
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[15px] font-normal text-[var(--foreground)]">
               Reglementierter Beauftragter
             </h2>
             <p className="mt-3">{COMPANY.regAgent}</p>
