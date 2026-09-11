@@ -28,11 +28,14 @@ export const COMPANY = {
   /**
    * Bürozeiten für die Live-Statusanzeige („Jetzt geöffnet" / „Geschlossen").
    * Werktags mo–fr; Wochenende geschlossen. Zeitzone Europe/Berlin.
-   * Für zeitkritische Fracht (AOG/Express) gilt zusätzlich 24/7-Bereitschaft
-   * über die Mobilnummer — daher der Zusatz `alwaysReachable`.
-   * >>> Zeiten bei Bedarf an die echten Bürozeiten anpassen. <<<
+   *
+   * `confirmed` steuert, ob die Anzeige überhaupt erscheint: Solange die Zeiten
+   * nicht vom Auftraggeber bestätigt sind, bleibt sie aus — eine falsche
+   * Öffnungszeit auf der Live-Seite wäre schlimmer als gar keine. Nach der
+   * Bestätigung hier die echten Werte eintragen und `confirmed: true` setzen.
    */
   hours: {
+    confirmed: false,
     weekdays: { open: "08:00", close: "17:00" },
     note: "Für zeitkritische Sendungen 24/7 erreichbar",
   },

@@ -34,8 +34,13 @@ function berlinNow(): { day: number; minutes: number } {
   return { day: dayMap[wd] ?? 1, minutes: hour * 60 + minute };
 }
 
-/** Live-Öffnungsstatus des Büros (Mo–Fr). */
-export function getOpenStatus(): OpenStatus {
+/**
+ * Live-Öffnungsstatus des Büros (Mo–Fr). `null`, solange die Zeiten nicht
+ * bestätigt sind — die Anzeige entfällt dann ersatzlos.
+ */
+export function getOpenStatus(): OpenStatus | null {
+  if (!COMPANY.hours.confirmed) return null;
+
   const { day, minutes } = berlinNow();
   const open = toMinutes(COMPANY.hours.weekdays.open);
   const close = toMinutes(COMPANY.hours.weekdays.close);
