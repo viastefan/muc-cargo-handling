@@ -82,6 +82,20 @@ export async function assignInquiryAction(formData: FormData): Promise<void> {
   revalidatePath(`/admin/${reference}`);
 }
 
+export async function saveReplyAction(reference: string, message: string): Promise<void> {
+  const principal = await requireAdmin();
+  const ref = cleanRef(reference);
+  const text = message.trim().slice(0, 4000);
+  if (!ref || !text) return;
+
+  await logInquiryEvent(ref, {
+    actorName: principal.name,
+    kind: "reply",
+    detail: text,
+  });
+  revalidatePath(`/admin/${ref}`);
+}
+
 export async function deleteInquiryAction(formData: FormData): Promise<void> {
   await requireAdmin();
   const reference = cleanRef(formData.get("reference"));

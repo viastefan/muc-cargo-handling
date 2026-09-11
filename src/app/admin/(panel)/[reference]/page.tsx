@@ -10,9 +10,11 @@ import {
 } from "@/lib/inquiries";
 import { requireAdmin } from "@/lib/admin-session";
 import { listUsers } from "@/lib/admin-users";
+import { COMPANY } from "@/lib/company";
 import { StatusBadge } from "../StatusBadge";
 import { DeleteInquiryButton } from "../DeleteInquiryButton";
 import { Assignee } from "../Assignee";
+import { ReplyForm } from "../ReplyForm";
 import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
 
 function fullDate(iso: string | null) {
@@ -29,6 +31,7 @@ const EVENT_ICON: Record<InquiryEvent["kind"], string> = {
   status: "◉",
   assign: "→",
   note: "✎",
+  reply: "↩",
 };
 
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
@@ -85,6 +88,17 @@ export default async function InquiryDetail({
           <div className="admin-card">
             <p className="admin-card__title">Nachricht</p>
             <p className="admin-message">{inquiry.message}</p>
+          </div>
+
+          <div className="admin-card">
+            <p className="admin-card__title">Antworten</p>
+            <div className="admin-card__body">
+              <ReplyForm
+                reference={inquiry.reference}
+                to={inquiry.email}
+                defaultBody={`Sehr geehrte(r) ${inquiry.firstName} ${inquiry.lastName},\n\nvielen Dank für Ihre Anfrage.\n\n\n\nMit freundlichen Grüßen\n${COMPANY.legalName}`}
+              />
+            </div>
           </div>
 
           <div className="admin-card">

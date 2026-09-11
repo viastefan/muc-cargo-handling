@@ -318,7 +318,7 @@ export type InquiryEvent = {
   id: number;
   createdAt: string;
   actorName: string;
-  kind: "created" | "status" | "assign" | "note";
+  kind: "created" | "status" | "assign" | "note" | "reply";
   detail: string | null;
 };
 
@@ -335,7 +335,7 @@ export async function logInquiryEvent(
         inquiry_ref: cleanRef(reference),
         actor_name: event.actorName.slice(0, 120),
         kind: event.kind,
-        detail: event.detail?.slice(0, 500) ?? null,
+        detail: event.detail?.slice(0, 4000) ?? null,
       }),
     });
   } catch (error) {

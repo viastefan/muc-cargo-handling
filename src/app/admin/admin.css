@@ -851,6 +851,18 @@
   align-items: center;
 }
 
+.admin-reply__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.6rem;
+}
+
+.admin-reply__actions .admin-hint {
+  margin: 0;
+}
+
 .admin-hint {
   margin: 0.5rem 0 0;
   font-size: 12px;
