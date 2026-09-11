@@ -16,7 +16,9 @@ export default async function PanelLayout({
       <header className="admin-bar">
         <div className="admin-bar__left">
           <Link href="/admin" className="admin-bar__brand">
-            MUC Cargohandling <span>Anfragen</span>
+            <span className="admin-bar__brand-full">MUC Cargohandling</span>
+            <span className="admin-bar__brand-short" aria-hidden="true">MUC</span>
+            <span className="admin-bar__brand-tag">Anfragen</span>
           </Link>
           <nav className="admin-nav">
             <Link href="/admin">Anfragen</Link>

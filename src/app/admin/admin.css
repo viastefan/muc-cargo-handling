@@ -64,14 +64,19 @@
   font-size: 15px;
   letter-spacing: -0.02em;
   color: var(--foreground);
+  white-space: nowrap;
 }
 
-.admin-bar__brand span {
+.admin-bar__brand-tag {
   font-size: 11px;
   font-weight: 590;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   color: var(--muted);
+}
+
+.admin-bar__brand-short {
+  display: none;
 }
 
 .admin-bar__left {
@@ -104,6 +109,44 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex: none;
+}
+
+/* Auf dem Handy ist die Leiste zu eng für Marke + Navigation + Aktionen:
+   Der Zusatz neben der Marke entfällt, die Abstände rücken zusammen. */
+@media (max-width: 640px) {
+  .admin-bar {
+    gap: 0.5rem;
+    padding: 0.6rem 0.9rem;
+  }
+
+  .admin-bar__left {
+    gap: 0.6rem;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .admin-bar__brand {
+    font-size: 15px;
+  }
+
+  .admin-bar__brand-full,
+  .admin-bar__brand-tag {
+    display: none;
+  }
+
+  .admin-bar__brand-short {
+    display: inline;
+  }
+
+  .admin-nav {
+    flex: none;
+  }
+
+  .admin-nav a {
+    padding: 0.3rem 0.5rem;
+    font-size: 12.5px;
+  }
 }
 
 /* ── Account-Menü ─────────────────────────────────────────────────────── */
