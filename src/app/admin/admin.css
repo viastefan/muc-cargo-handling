@@ -139,13 +139,23 @@
     display: inline;
   }
 
+  /* Schrumpfbar und notfalls horizontal scrollbar — so kollidiert die
+     Navigation auch bei weiteren Einträgen nie mit den Aktionen rechts. */
   .admin-nav {
-    flex: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .admin-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .admin-nav a {
-    padding: 0.3rem 0.5rem;
+    padding: 0.3rem 0.45rem;
     font-size: 12.5px;
+    white-space: nowrap;
   }
 }
 
