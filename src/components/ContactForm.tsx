@@ -46,11 +46,7 @@ function validate(data: FormData): FormErrors {
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) {
     errors.email = "Bitte geben Sie eine gültige E-Mail ein.";
   }
-  if (!data.message.trim()) {
-    errors.message = "Bitte beschreiben Sie Ihr Anliegen.";
-  } else if (data.message.trim().length < 20) {
-    errors.message = "Mindestens 20 Zeichen für eine aussagekräftige Anfrage.";
-  }
+  // Die Nachricht ist optional — eine Anfrage nur mit Kontaktdaten ist gültig.
   if (!data.privacy) errors.privacy = "Zustimmung erforderlich.";
   return errors;
 }
@@ -221,9 +217,8 @@ export function ContactForm() {
 
       <div className="form-section">
         <FormTextarea
-          label="Ihre Nachricht"
+          label="Ihre Nachricht (optional)"
           name="message"
-          required
           value={data.message}
           onChange={(v) => patch("message", v)}
           onBlur={() => touch("message")}

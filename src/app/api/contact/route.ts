@@ -15,7 +15,6 @@ const TOPICS = new Set<InquiryTopic>(["luftfracht", "airline", "roentgen", "allg
 const SOURCES = new Set<InquirySource>(["inquiry-flow", "contact-form"]);
 
 const MAX_MESSAGE = 2000;
-const MIN_MESSAGE = 20;
 const MAX_FIELD = 120;
 
 const limiter = new RateLimiter(60_000, 5);
@@ -101,12 +100,13 @@ export async function POST(request: Request) {
   const phone = clip(body.phone, 60);
   const message = clip(body.message, MAX_MESSAGE);
 
+  // Die Nachricht ist bewusst optional: Wer nur um Rückruf bittet, soll die
+  // Anfrage abschicken können, ohne sich einen Text ausdenken zu müssen.
   if (
     !TOPICS.has(topic) ||
     !firstName ||
     !lastName ||
     !email ||
-    !message ||
     body.privacy !== true
   ) {
     return NextResponse.json(
@@ -116,9 +116,6 @@ export async function POST(request: Request) {
   }
   if (!isValidEmail(email)) {
     return NextResponse.json({ ok: false, error: "Ungültige E-Mail" }, { status: 400 });
-  }
-  if (message.length < MIN_MESSAGE) {
-    return NextResponse.json({ ok: false, error: "Nachricht zu kurz" }, { status: 400 });
   }
   if (looksLikeSpam({ firstName, lastName, company, message })) {
     // Wie Honeypot: still verwerfen.

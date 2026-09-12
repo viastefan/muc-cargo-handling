@@ -53,7 +53,7 @@ const QUESTIONS: Record<StepId, { title: string; hint: string }> = {
   },
   message: {
     title: "Was können wir für Sie tun?",
-    hint: "Sendung, Zeitfenster, besondere Anforderungen – ein paar Sätze genügen.",
+    hint: "Sendung, Zeitfenster, besondere Anforderungen – oder einfach überspringen.",
   },
   confirm: {
     title: "Passt alles?",
@@ -61,7 +61,6 @@ const QUESTIONS: Record<StepId, { title: string; hint: string }> = {
   },
 };
 
-const MESSAGE_MIN = 20;
 const MESSAGE_MAX = 2000;
 /** Ab hier ist der Griff aktiv und das Panel liegt als Sheet unten. */
 const SHEET_QUERY = "(max-width: 767px)";
@@ -115,14 +114,8 @@ function validateStep(step: StepId, data: FormState): Errors {
     }
   }
 
-  if (step === "message") {
-    const length = data.message.trim().length;
-    if (!length) {
-      errors.message = "Bitte kurz Ihr Anliegen beschreiben.";
-    } else if (length < MESSAGE_MIN) {
-      errors.message = `Noch ${MESSAGE_MIN - length} Zeichen bis zum Minimum.`;
-    }
-  }
+  // Der Nachrichten-Schritt lässt sich überspringen: Kontaktdaten und Thema
+  // reichen für eine Anfrage, den Rest klärt der Rückruf.
 
   if (step === "confirm" && !data.privacy) {
     errors.privacy = "Zustimmung erforderlich.";
@@ -391,6 +384,9 @@ export function InquiryFlow() {
       { label: "Firma", value: data.company.trim() || "—" },
       { label: "E-Mail", value: data.email.trim() || "—" },
       { label: "Telefon", value: data.phone.trim() || "—" },
+      ...(data.message.trim()
+        ? [{ label: "Nachricht", value: data.message.trim() }]
+        : []),
     ],
     [data],
   );
@@ -452,7 +448,13 @@ export function InquiryFlow() {
           aria-valuenow={status === "success" ? STEPS.length : index + 1}
           aria-label="Fortschritt"
         >
-          <span className="inq__progress-bar" style={{ transform: `scaleX(${progress})` }} />
+          {STEPS.map((id, i) => (
+            <span
+              key={id}
+              className="inq__progress-seg"
+              data-done={status === "success" || i <= index ? "true" : undefined}
+            />
+          ))}
         </div>
 
         {status === "success" ? (
@@ -588,7 +590,10 @@ export function InquiryFlow() {
                     <label
                       className={`inq-field${errors.message ? " inq-field--error" : ""}`}
                     >
-                      <span className="inq-field__label">Ihre Nachricht</span>
+                      <span className="inq-field__label">
+                        Ihre Nachricht
+                        <span className="inq-field__optional"> optional</span>
+                      </span>
                       <textarea
                         className="inq-field__input inq-field__input--area"
                         rows={5}
@@ -608,9 +613,9 @@ export function InquiryFlow() {
                           </span>
                         ) : (
                           <span className="inq-field__counter">
-                            {messageLength < MESSAGE_MIN
-                              ? `mindestens ${MESSAGE_MIN} Zeichen`
-                              : `${messageLength} Zeichen`}
+                            {messageLength
+                              ? `${messageLength} Zeichen`
+                              : "Sie können diesen Schritt überspringen"}
                           </span>
                         )}
                       </span>
