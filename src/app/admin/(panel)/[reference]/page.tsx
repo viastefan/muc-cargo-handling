@@ -17,6 +17,9 @@ import { Assignee } from "../Assignee";
 import { ReplyForm } from "../ReplyForm";
 import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
 
+/** Status, Notiz und Verlauf aendern sich laufend — nie aus dem Cache. */
+export const dynamic = "force-dynamic";
+
 function fullDate(iso: string | null) {
   if (!iso) return "—";
   return new Intl.DateTimeFormat("de-DE", {
@@ -87,7 +90,14 @@ export default async function InquiryDetail({
         <div>
           <div className="admin-card">
             <p className="admin-card__title">Nachricht</p>
-            <p className="admin-message">{inquiry.message}</p>
+            {inquiry.message.trim() ? (
+              <p className="admin-message">{inquiry.message}</p>
+            ) : (
+              <p className="admin-message admin-message--empty">
+                Ohne Nachricht abgeschickt — bitte telefonisch oder per E-Mail
+                nachfassen.
+              </p>
+            )}
           </div>
 
           <div className="admin-card">

@@ -15,6 +15,13 @@ import { StatusBadge } from "./StatusBadge";
 import { Assignee } from "./Assignee";
 import { PushToggle } from "./PushToggle";
 
+/**
+ * Nie aus dem Cache bedienen: Anfragen treffen von aussen ein, ohne dass in
+ * dieser Sitzung etwas revalidiert wird. Eine zwischengespeicherte Liste wuerde
+ * nach einer Push-Meldung eine leere Uebersicht zeigen.
+ */
+export const dynamic = "force-dynamic";
+
 const PAGE_SIZE = 40;
 const TOPICS = Object.keys(TOPIC_LABEL) as InquiryTopic[];
 
