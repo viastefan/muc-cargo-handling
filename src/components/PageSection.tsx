@@ -42,6 +42,7 @@ export function SectionHeader({
   className = "",
   breakTitle = true,
   descriptionClassName = "",
+  as: Tag = "h2",
 }: {
   dark: string;
   light?: string;
@@ -52,6 +53,11 @@ export function SectionHeader({
   /** When false, dark + light title stay on one line. */
   breakTitle?: boolean;
   descriptionClassName?: string;
+  /**
+   * Seiten ohne Hero (FAQ, Rechtstexte) haben sonst gar keine H1 — Google
+   * wertet die Hauptüberschrift einer Seite aus, darum dort `as="h1"`.
+   */
+  as?: "h1" | "h2";
 }) {
   return (
     <div
@@ -66,9 +72,9 @@ export function SectionHeader({
           className={`section-header__title ${align === "center" ? "mx-auto" : ""}`.trim()}
         />
       ) : (
-        <h2 className="section-header__title heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
+        <Tag className="section-header__title heading-display text-[clamp(1.5rem,4vw,2.375rem)] text-[var(--foreground)]">
           {dark}
-        </h2>
+        </Tag>
       )}
       {description ? (
         <p

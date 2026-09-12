@@ -14,6 +14,7 @@ import { COMPANY } from "@/lib/company";
 import { COMPANY_VALUES } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/unternehmen" },
   title: "Unternehmen",
   description:
     "Über MUC Cargohandling – Erfahrung, Team und Prozesse für professionelle Luftfracht am Flughafen München seit 2003.",

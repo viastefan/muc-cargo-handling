@@ -5,6 +5,7 @@ import { LeadCaptureWidget } from "@/components/LeadCaptureWidget";
 import { LocationPeek } from "@/components/LocationPeek";
 import { RouteScrollReset } from "@/components/RouteScrollReset";
 import { SiteFooter } from "@/components/Footer";
+import { StructuredData } from "@/components/StructuredData";
 import { TopBar } from "@/components/TopBar";
 
 export default function MarketingLayout({
@@ -15,6 +16,7 @@ export default function MarketingLayout({
   return (
     <>
       <RouteScrollReset />
+      <StructuredData />
       {/* Kontaktleiste und Kopfzeile kleben gemeinsam als ein Block am
           Viewport. Frueher waren es zwei getrennt sticky Elemente, die ueber
           eine per ResizeObserver gemessene --topbar-h aneinander andockten —

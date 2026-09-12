@@ -3,6 +3,7 @@ import { LegalDocument } from "@/components/LegalDocument";
 import { AGB_INTRO, getAgbSections } from "@/lib/legal";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/agb" },
   title: "AGB",
   description:
     "Allgemeine Geschäftsbedingungen der MUC Cargohandling GmbH für Handling-Leistungen und die Nutzung dieser Website.",

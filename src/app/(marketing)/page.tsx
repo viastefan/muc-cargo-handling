@@ -25,6 +25,7 @@ import {
 
 // Titel kommt aus dem `default` in app/layout.tsx – hier nicht wiederholen.
 export const metadata: Metadata = {
+  alternates: { canonical: "/" },
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
 };

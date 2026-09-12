@@ -3,6 +3,7 @@ import { LegalDocument } from "@/components/LegalDocument";
 import { DATENSCHUTZ_INTRO, getDatenschutzSections } from "@/lib/legal";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/datenschutz" },
   title: "Datenschutz",
   description:
     "Datenschutzerklärung der MUC Cargohandling GmbH – Informationen zur Verarbeitung personenbezogener Daten.",

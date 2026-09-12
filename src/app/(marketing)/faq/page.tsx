@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { FaqDirectory } from "@/components/FaqDirectory";
 import { FooterCta } from "@/components/Footer";
 import { PageSection, SectionHeader } from "@/components/PageSection";
+import { FaqStructuredData } from "@/components/StructuredData";
 import { FAQ_CATEGORIES } from "@/lib/faq";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ",
   description:
     "Häufige Fragen zu Luftfracht, Airline Handling und Sicherheitskontrollen am Flughafen München – Antworten von MUC Cargohandling.",
@@ -13,9 +15,13 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
+      <FaqStructuredData
+        items={FAQ_CATEGORIES.flatMap((category) => category.items)}
+      />
       <PageSection className="!pt-10 sm:!pt-14 md:!pt-20">
         <div className="faq-page">
           <SectionHeader
+            as="h1"
             eyebrow="FAQ"
             dark="Häufige Fragen"
             description="Antworten zu Leistungen, Abläufen und Sicherheitsprozessen am Flughafen München – für eine schnelle Orientierung vor Ihrer Anfrage."

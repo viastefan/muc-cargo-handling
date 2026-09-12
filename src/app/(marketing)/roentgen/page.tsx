@@ -10,6 +10,7 @@ import {
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/roentgen" },
   title: "Röntgen",
   description:
     "Röntgen- und Sicherheitskontrollen am Flughafen München – LBA-konform, modern und als reglementierter Beauftragter.",

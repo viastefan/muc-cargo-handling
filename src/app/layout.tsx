@@ -3,14 +3,37 @@ import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
+const TITLE = "MUC Cargohandling | Luftfracht am Flughafen München";
+const DESCRIPTION =
+  "Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München. Import, Export, Airline Handling und Röntgenkontrolle.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "MUC Cargohandling | Luftfracht am Flughafen München",
+    default: TITLE,
     template: "%s | MUC Cargohandling",
   },
-  description:
-    "Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München. Import, Export, Airline Handling und Röntgenkontrolle.",
+  description: DESCRIPTION,
+  applicationName: "MUC Cargohandling",
+  authors: [{ name: "MUC Cargohandling GmbH" }],
+  // Vorschaukarte beim Teilen in WhatsApp, LinkedIn, Slack & Co. Ohne diese
+  // Angaben zeigen die Dienste nur die nackte URL.
+  // Titel und Beschreibung bewusst NICHT hier setzen: Next.js uebernimmt sonst
+  // diese Werte auf jeder Unterseite, und alle geteilten Links saehen gleich
+  // aus. Ohne die Felder erbt og:title automatisch den Seitentitel.
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    siteName: "MUC Cargohandling",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export default function RootLayout({

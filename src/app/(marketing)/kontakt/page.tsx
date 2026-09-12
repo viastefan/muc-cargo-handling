@@ -9,6 +9,7 @@ import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon"
 import { COMPANY, MAPS_EMBED } from "@/lib/company";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/kontakt" },
   title: "Kontakt",
   description:
     "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.",

@@ -6,6 +6,7 @@ import { FeatureCard, PageSection, SectionHeader } from "@/components/PageSectio
 import { ServiceCard } from "@/components/ServiceCard";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/airline-handling" },
   title: "Airline Handling",
   description:
     "Airline Handling am Flughafen München – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle.",

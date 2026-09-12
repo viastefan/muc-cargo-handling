@@ -25,6 +25,7 @@ import {
 } from "@/lib/luftfracht";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/luftfracht" },
   title: "Luftfracht Import Export",
   description:
     "Import- und Export-Handling am Flughafen München – Annahme, Dokumentation, Sicherheit und Übergabe mit klaren Prozessen.",

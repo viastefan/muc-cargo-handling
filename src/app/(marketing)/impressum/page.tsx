@@ -3,6 +3,7 @@ import { PageSection, SectionHeader } from "@/components/PageSection";
 import { COMPANY } from "@/lib/company";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/impressum" },
   title: "Impressum",
   description: "Impressum der MUC Cargohandling GmbH am Flughafen München.",
 };
@@ -13,6 +14,7 @@ export default function ImpressumPage() {
       <PageSection className="!pt-10 sm:!pt-14 md:!pt-20">
         <div className="mx-auto max-w-3xl">
           <SectionHeader
+            as="h1"
             eyebrow="Rechtliches"
             dark="Impressum"
             description="Angaben gemäß § 5 DDG"
