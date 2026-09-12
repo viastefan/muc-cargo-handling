@@ -128,12 +128,34 @@ export async function listUsers(): Promise<AdminUser[]> {
   }
 }
 
+/**
+ * Benutzer-IDs landen als Filter direkt in der PostgREST-Abfrage. Nur
+ * UUID-Zeichen zulassen, damit sich niemand über die ID zusätzliche
+ * Query-Parameter einschleusen kann — auch dann nicht, wenn ein künftiger
+ * Aufrufer die Prüfung davor vergisst.
+ */
+function isValidUserId(id: string): boolean {
+  return /^[0-9a-f-]{10,64}$/i.test(id);
+}
+
 export async function getUserById(id: string): Promise<AdminUser | null> {
-  if (!adminUsersStorageReady || !/^[0-9a-f-]{10,}$/i.test(id)) return null;
+  if (!adminUsersStorageReady || !isValidUserId(id)) return null;
   try {
     const res = await rest(`/admin_users?select=*&id=eq.${id}&limit=1`);
     const rows = (await res.json()) as Row[];
     return rows[0] ? toUser(rows[0]) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Wie getUserById, liefert aber die Rohzeile inklusive Passwort-Hash. */
+async function getRowById(id: string): Promise<Row | null> {
+  if (!adminUsersStorageReady || !isValidUserId(id)) return null;
+  try {
+    const res = await rest(`/admin_users?select=*&id=eq.${id}&limit=1`);
+    const rows = (await res.json()) as Row[];
+    return rows[0] ?? null;
   } catch {
     return null;
   }
@@ -218,7 +240,7 @@ export async function createUser(input: {
 }
 
 export async function setUserActive(id: string, active: boolean): Promise<boolean> {
-  if (!adminUsersStorageReady) return false;
+  if (!adminUsersStorageReady || !isValidUserId(id)) return false;
   try {
     await rest(`/admin_users?id=eq.${id}`, {
       method: "PATCH",
@@ -234,7 +256,7 @@ export async function setUserActive(id: string, active: boolean): Promise<boolea
 export async function resetUserPassword(
   id: string,
 ): Promise<{ tempPassword: string } | null> {
-  if (!adminUsersStorageReady) return null;
+  if (!adminUsersStorageReady || !isValidUserId(id)) return null;
   try {
     const tempPassword = generatePassword();
     await rest(`/admin_users?id=eq.${id}`, {
@@ -251,8 +273,29 @@ export async function resetUserPassword(
   }
 }
 
-export async function changeOwnPassword(id: string, next: string): Promise<boolean> {
-  if (!adminUsersStorageReady || next.length < 8) return false;
+/**
+ * Passwortwechsel verlangt das aktuelle Passwort. Sonst koennte jeder, der
+ * kurz an einem angemeldeten Geraet sitzt, das Konto uebernehmen und den
+ * rechtmaessigen Nutzer aussperren.
+ */
+export async function changeOwnPassword(
+  id: string,
+  current: string,
+  next: string,
+): Promise<"ok" | "wrong-current" | "failed"> {
+  if (!adminUsersStorageReady || !isValidUserId(id) || next.length < 8) {
+    return "failed";
+  }
+
+  const row = await getRowById(id);
+  if (!row) return "failed";
+  if (!(await verifyPassword(current, row.password_hash))) return "wrong-current";
+
+  return (await writeNewPassword(id, next)) ? "ok" : "failed";
+}
+
+async function writeNewPassword(id: string, next: string): Promise<boolean> {
+  if (!adminUsersStorageReady || !isValidUserId(id)) return false;
   try {
     await rest(`/admin_users?id=eq.${id}`, {
       method: "PATCH",

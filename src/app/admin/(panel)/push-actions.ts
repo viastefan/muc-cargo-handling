@@ -10,6 +10,31 @@ import {
 
 export type PushActionResult = { ok: boolean; message: string };
 
+/**
+ * Der Server schickt spaeter selbst Anfragen an jede gespeicherte Endpoint-URL.
+ * Ohne Einschraenkung liesse sich der Server damit als Absender gegen beliebige
+ * Adressen richten (SSRF) — deshalb nur die echten Push-Dienste der Browser.
+ */
+const PUSH_HOSTS = [
+  /\.push\.services\.mozilla\.com$/, // Firefox
+  /^fcm\.googleapis\.com$/, // Chrome, Edge, Android
+  /^updates\.push\.services\.mozilla\.com$/,
+  /\.notify\.windows\.com$/, // Windows
+  /\.push\.apple\.com$/, // Safari, iOS
+];
+
+function isKnownPushService(endpoint: string): boolean {
+  if (endpoint.length > 1000) return false;
+  let url: URL;
+  try {
+    url = new URL(endpoint);
+  } catch {
+    return false;
+  }
+  if (url.protocol !== "https:") return false;
+  return PUSH_HOSTS.some((pattern) => pattern.test(url.hostname));
+}
+
 export async function subscribePushAction(subscription: {
   endpoint: string;
   p256dh: string;
@@ -22,7 +47,7 @@ export async function subscribePushAction(subscription: {
   }
 
   const endpoint = subscription.endpoint.trim();
-  if (!/^https:\/\//.test(endpoint) || endpoint.length > 1000) {
+  if (!isKnownPushService(endpoint)) {
     return { ok: false, message: "Ungültiger Endpoint." };
   }
 

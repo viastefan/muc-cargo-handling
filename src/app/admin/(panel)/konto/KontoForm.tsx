@@ -16,6 +16,17 @@ export function KontoForm() {
         </p>
       ) : null}
 
+      <label className="admin-label" htmlFor="k-current">Aktuelles Passwort</label>
+      <input
+        id="k-current"
+        name="current"
+        type="password"
+        className="admin-input"
+        autoComplete="current-password"
+        required
+        style={{ marginBottom: "0.9rem" }}
+      />
+
       <label className="admin-label" htmlFor="k-next">Neues Passwort</label>
       <input
         id="k-next"
