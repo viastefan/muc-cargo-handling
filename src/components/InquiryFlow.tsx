@@ -393,7 +393,6 @@ export function InquiryFlow() {
 
   if (!open) return null;
 
-  const progress = status === "success" ? 1 : (index + 1) / STEPS.length;
   const question = QUESTIONS[step];
   const messageLength = data.message.trim().length;
 

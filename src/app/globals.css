@@ -4713,6 +4713,27 @@ textarea.field__control {
   transition: color var(--duration-fast) var(--ease-out);
 }
 
+/* Mit dem Daumen sind 15 px hohe Textlinks kaum zu treffen. Auf Touch-Geraeten
+   waechst die Trefferflaeche ueber Innenabstand, waehrend der Zeilenabstand
+   entsprechend schrumpft — das Schriftbild bleibt damit unveraendert. */
+@media (hover: none) and (pointer: coarse) {
+  .footer-link,
+  .site-footer-legal a {
+    display: inline-block;
+    padding-block: 0.5rem;
+  }
+
+  .site-footer-contact {
+    gap: 0;
+  }
+
+  .top-bar__close,
+  .top-bar__mobile-action {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
 .footer-link:hover {
   color: white;
 }
