@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { deleteInquiryAction } from "./actions";
+import { AdminSubmitButton } from "./AdminSubmitButton";
 
 export function DeleteInquiryButton({ reference }: { reference: string }) {
   const [armed, setArmed] = useState(false);
@@ -24,9 +25,9 @@ export function DeleteInquiryButton({ reference }: { reference: string }) {
       <span style={{ fontSize: "13px", color: "var(--muted)" }}>
         Endgültig löschen?
       </span>
-      <button type="submit" className="admin-btn admin-btn--sm admin-btn--danger">
+      <AdminSubmitButton pendingLabel="Wird gelöscht …" className="admin-btn admin-btn--sm admin-btn--danger">
         Ja, löschen
-      </button>
+      </AdminSubmitButton>
       <button
         type="button"
         className="admin-btn admin-btn--sm admin-btn--plain"

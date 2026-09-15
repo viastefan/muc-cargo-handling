@@ -16,6 +16,7 @@ import { DeleteInquiryButton } from "../DeleteInquiryButton";
 import { Assignee } from "../Assignee";
 import { ReplyForm } from "../ReplyForm";
 import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
+import { AdminSubmitButton } from "../AdminSubmitButton";
 
 /** Status, Notiz und Verlauf aendern sich laufend — nie aus dem Cache. */
 export const dynamic = "force-dynamic";
@@ -123,9 +124,9 @@ export default async function InquiryDetail({
                   placeholder="Nur intern — Gesprächsnotizen, nächste Schritte …"
                 />
                 <div style={{ marginTop: "0.6rem" }}>
-                  <button type="submit" className="admin-btn admin-btn--sm">
+                  <AdminSubmitButton pendingLabel="Wird gespeichert …">
                     Notiz speichern
-                  </button>
+                  </AdminSubmitButton>
                 </div>
               </form>
             </div>
@@ -179,9 +180,7 @@ export default async function InquiryDetail({
                     </option>
                   ))}
                 </select>
-                <button type="submit" className="admin-btn admin-btn--sm">
-                  Setzen
-                </button>
+                <AdminSubmitButton pendingLabel="Wird gesetzt …">Setzen</AdminSubmitButton>
               </form>
             </div>
           </div>
@@ -213,9 +212,7 @@ export default async function InquiryDetail({
                     </option>
                   ))}
                 </select>
-                <button type="submit" className="admin-btn admin-btn--sm">
-                  Zuweisen
-                </button>
+                <AdminSubmitButton pendingLabel="Wird zugewiesen …">Zuweisen</AdminSubmitButton>
               </form>
               {activeUsers.length === 0 ? (
                 <p className="admin-hint" style={{ marginBottom: 0 }}>

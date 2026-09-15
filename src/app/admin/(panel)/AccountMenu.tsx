@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 function initials(name: string) {
   const parts = name.trim().split(/\s+/);
@@ -61,6 +62,10 @@ export function AccountMenu({
             Passwort ändern
           </Link>
         ) : null}
+        <div className="admin-account__row">
+          <span className="admin-account__row-label">Darstellung</span>
+          <ThemeToggle className="theme-toggle--admin" />
+        </div>
         <form action={logoutAction}>
           <button type="submit" className="admin-account__item admin-account__item--danger" role="menuitem">
             Abmelden

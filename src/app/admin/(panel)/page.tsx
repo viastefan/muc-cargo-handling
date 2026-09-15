@@ -201,7 +201,6 @@ export default async function AdminDashboard({
                   const u = row.assignedTo ? userMap.get(row.assignedTo) : null;
                   return (
                     <InquiryRow key={row.id} reference={row.reference}>
-                      <td className="admin-table__ref">{row.reference}</td>
                       <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
                         {dateFmt(row.createdAt)}
                       </td>

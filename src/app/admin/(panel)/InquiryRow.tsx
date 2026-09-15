@@ -1,10 +1,11 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 /**
- * Klickbare Tabellenzeile. Die Zellen kommen als `children` (<td>…</td>) von
- * der Server-Komponente — hier wird nur das Navigationsverhalten ergänzt.
+ * Tabellenzeile mit echtem Link statt Klick-Handler: die Referenz-Zelle
+ * enthaelt ein <a href>, das per ::after (admin.css) auf die ganze Zeile
+ * gestreckt wird. Dadurch funktionieren Rechtsklick/Mittelklick/Prefetch/
+ * Tastaturfokus wie bei jedem normalen Link — vorher gab es keinen href,
+ * nur `router.push` per onClick.
  */
 export function InquiryRow({
   reference,
@@ -13,18 +14,14 @@ export function InquiryRow({
   reference: string;
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const href = `/admin/${encodeURIComponent(reference)}`;
   return (
-    <tr
-      onClick={() => router.push(href)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") router.push(href);
-      }}
-      tabIndex={0}
-      role="link"
-      aria-label={`Anfrage ${reference} öffnen`}
-    >
+    <tr>
+      <td className="admin-table__ref">
+        <Link href={href} className="admin-row-link" aria-label={`Anfrage ${reference} öffnen`}>
+          {reference}
+        </Link>
+      </td>
       {children}
     </tr>
   );
