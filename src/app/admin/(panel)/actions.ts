@@ -8,6 +8,7 @@ import { requireAdmin } from "@/lib/admin-session";
 import {
   INQUIRY_STATUSES,
   STATUS_LABEL,
+  TOPIC_LABEL,
   deleteInquiry,
   getInquiry,
   logInquiryEvent,
@@ -15,6 +16,7 @@ import {
   type InquiryStatus,
 } from "@/lib/inquiries";
 import { getUserById } from "@/lib/admin-users";
+import { sendPushToUser } from "@/lib/push";
 
 function cleanRef(value: FormDataEntryValue | null): string {
   return String(value ?? "").replace(/[^A-Za-z0-9-]/g, "").slice(0, 40);
@@ -78,6 +80,25 @@ export async function assignInquiryAction(formData: FormData): Promise<void> {
     kind: "assign",
     detail: target ? `zugewiesen an ${target.name}` : "Zuweisung entfernt",
   });
+
+  // Gezielt nur die Geraete der/des Zugewiesenen wecken statt aller — wer
+  // sich selbst zuweist, weiss es bereits und muss nicht benachrichtigt
+  // werden. Bewusst await statt fire-and-forget: eine serverlose Funktion
+  // kann nach dem Rueckgabewert jederzeit beendet werden, ein nicht
+  // abgewarteter Versand koennte dadurch nie ankommen.
+  if (assignee && assignee !== principal.uid) {
+    try {
+      await sendPushToUser(assignee, {
+        title: "Dir zugewiesen",
+        body: `${before.firstName} ${before.lastName}${before.company ? ` · ${before.company}` : ""} — ${TOPIC_LABEL[before.topic]}`,
+        url: `/admin/${encodeURIComponent(reference)}`,
+        tag: reference,
+      });
+    } catch (error) {
+      console.error("[assign] push failed", error);
+    }
+  }
+
   revalidatePath("/admin");
   revalidatePath(`/admin/${reference}`);
 }

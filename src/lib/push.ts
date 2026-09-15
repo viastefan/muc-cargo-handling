@@ -24,6 +24,7 @@ export const pushReady = Boolean(RAW_URL && SERVICE_KEY && VAPID_PUBLIC && VAPID
 export type PushSubscriptionRecord = PushSubscriptionKeys & {
   id: string;
   label: string | null;
+  userId: string | null;
   createdAt: string;
 };
 
@@ -48,9 +49,14 @@ async function rest(path: string, init: RequestInit & { prefer?: string } = {}) 
   return res;
 }
 
-/** Abo anlegen oder auffrischen (Endpoint ist eindeutig). */
+/**
+ * Abo anlegen oder auffrischen (Endpoint ist eindeutig). userId ordnet das
+ * Gerät einem Panel-Benutzer zu, damit eine Zuweisung gezielt dessen
+ * Geräte weckt statt aller — null für den Master-/Notfall-Zugang, der
+ * keine Zeile in admin_users hat (bekommt dann nur noch Broadcasts).
+ */
 export async function saveSubscription(
-  subscription: PushSubscriptionKeys & { label?: string | null },
+  subscription: PushSubscriptionKeys & { label?: string | null; userId?: string | null },
 ): Promise<boolean> {
   if (!pushReady) return false;
   try {
@@ -62,6 +68,7 @@ export async function saveSubscription(
         p256dh: subscription.p256dh,
         auth: subscription.auth,
         label: subscription.label?.slice(0, 120) ?? null,
+        user_id: subscription.userId ?? null,
         fail_count: 0,
       }),
     });
@@ -86,8 +93,13 @@ export async function listSubscriptions(): Promise<PushSubscriptionRecord[]> {
   if (!pushReady) return [];
   try {
     return await withRetry(async () => {
+      // select=* statt einer benannten Spaltenliste: PostgREST lehnt eine
+      // explizit benannte, aber (noch) nicht existierende Spalte komplett
+      // ab. Fehlt user_id (Migration 0006 noch nicht gelaufen), liefert *
+      // die Zeilen trotzdem — nur ohne dieses Feld (unten auf null
+      // zurueckfallen) statt die ganze Liste scheitern zu lassen.
       const params = new URLSearchParams({
-        select: "id,endpoint,p256dh,auth,label,created_at",
+        select: "*",
         order: "created_at.desc",
         limit: "100",
       });
@@ -98,6 +110,7 @@ export async function listSubscriptions(): Promise<PushSubscriptionRecord[]> {
         p256dh: string;
         auth: string;
         label: string | null;
+        user_id?: string | null;
         created_at: string;
       }[];
       return rows.map((r) => ({
@@ -106,6 +119,7 @@ export async function listSubscriptions(): Promise<PushSubscriptionRecord[]> {
         p256dh: r.p256dh,
         auth: r.auth,
         label: r.label,
+        userId: r.user_id ?? null,
         createdAt: r.created_at,
       }));
     });
@@ -163,14 +177,10 @@ export type PushMessage = {
   tag?: string;
 };
 
-/**
- * Stellt eine Nachricht an alle registrierten Geräte zu. Abgelaufene Abos
- * (404/410 vom Push-Dienst) werden dabei aufgeräumt.
- */
-export async function broadcastPush(message: PushMessage): Promise<{ sent: number; failed: number }> {
-  if (!pushReady) return { sent: 0, failed: 0 };
-
-  const subscriptions = await listSubscriptions();
+async function deliverToSubscriptions(
+  subscriptions: PushSubscriptionRecord[],
+  message: PushMessage,
+): Promise<{ sent: number; failed: number }> {
   if (subscriptions.length === 0) return { sent: 0, failed: 0 };
 
   const payload = JSON.stringify(message);
@@ -198,6 +208,34 @@ export async function broadcastPush(message: PushMessage): Promise<{ sent: numbe
     if (result.status === "fulfilled" && result.value.ok) sent += 1;
     else failed += 1;
   }
-  if (failed) console.error(`[push] ${failed} von ${subscriptions.length} Zustellungen fehlgeschlagen`);
   return { sent, failed };
+}
+
+/**
+ * Stellt eine Nachricht an alle registrierten Geräte zu. Abgelaufene Abos
+ * (404/410 vom Push-Dienst) werden dabei aufgeräumt.
+ */
+export async function broadcastPush(message: PushMessage): Promise<{ sent: number; failed: number }> {
+  if (!pushReady) return { sent: 0, failed: 0 };
+  const subscriptions = await listSubscriptions();
+  const result = await deliverToSubscriptions(subscriptions, message);
+  if (result.failed) {
+    console.error(`[push] ${result.failed} von ${subscriptions.length} Zustellungen fehlgeschlagen`);
+  }
+  return result;
+}
+
+/**
+ * Stellt eine Nachricht gezielt nur an die Geräte eines Benutzers zu (z. B.
+ * "dir wurde eine Anfrage zugewiesen") statt alle zu wecken. Geräte ohne
+ * Besitzer (Master-Zugang, oder registriert bevor Migration 0006 lief)
+ * werden dabei nie getroffen.
+ */
+export async function sendPushToUser(
+  userId: string,
+  message: PushMessage,
+): Promise<{ sent: number; failed: number }> {
+  if (!pushReady) return { sent: 0, failed: 0 };
+  const subscriptions = (await listSubscriptions()).filter((s) => s.userId === userId);
+  return deliverToSubscriptions(subscriptions, message);
 }

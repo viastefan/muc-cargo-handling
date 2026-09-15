@@ -41,7 +41,7 @@ export async function subscribePushAction(subscription: {
   auth: string;
   label?: string;
 }): Promise<PushActionResult> {
-  await requireAdmin();
+  const principal = await requireAdmin();
   if (!pushReady) {
     return { ok: false, message: "Push ist auf dem Server nicht konfiguriert." };
   }
@@ -56,6 +56,10 @@ export async function subscribePushAction(subscription: {
     p256dh: subscription.p256dh.trim().slice(0, 200),
     auth: subscription.auth.trim().slice(0, 100),
     label: subscription.label?.slice(0, 120) ?? null,
+    // Root hat keine Zeile in admin_users — dessen Geraete bleiben ohne
+    // Besitzer und bekommen dadurch nur Broadcasts, keine gezielten
+    // Zuweisungs-Benachrichtigungen.
+    userId: principal.isRoot ? null : principal.uid,
   });
 
   return saved
