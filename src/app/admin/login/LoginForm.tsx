@@ -12,44 +12,47 @@ export function LoginForm({ configError }: { configError: boolean }) {
     : state.error;
 
   return (
-    <form action={action}>
+    <form action={action} className="admin-login__form">
       {error ? (
         <p className="admin-error" role="alert">
           {error}
         </p>
       ) : null}
 
-      <label className="admin-label" htmlFor="admin-email">
-        E-Mail
-      </label>
-      <input
-        id="admin-email"
-        name="email"
-        type="email"
-        className="admin-input"
-        autoComplete="username"
-        autoFocus
-        required
-        style={{ marginBottom: "0.9rem" }}
-        placeholder="name@muc-cargo.de"
-      />
-
-      <label className="admin-label" htmlFor="admin-password">
-        Passwort
-      </label>
-      <input
-        id="admin-password"
-        name="password"
-        type="password"
-        className="admin-input"
-        autoComplete="current-password"
-        required
-      />
+      <div className="admin-login__fields">
+        <label className="admin-login__field" htmlFor="admin-email">
+          <span>E-Mail</span>
+          <input
+            id="admin-email"
+            name="email"
+            type="email"
+            className="admin-login__input"
+            autoComplete="username"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            autoFocus
+            required
+            placeholder="name@muc-cargo.de"
+          />
+        </label>
+        <label className="admin-login__field" htmlFor="admin-password">
+          <span>Passwort</span>
+          <input
+            id="admin-password"
+            name="password"
+            type="password"
+            className="admin-login__input"
+            autoComplete="current-password"
+            required
+            placeholder="••••••••"
+          />
+        </label>
+      </div>
 
       <button
         type="submit"
         className="admin-btn admin-btn--primary"
-        style={{ marginTop: "1.1rem" }}
         disabled={pending}
       >
         {pending ? "Anmelden…" : "Anmelden"}

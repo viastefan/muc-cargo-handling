@@ -75,7 +75,7 @@ export default async function InquiryDetail({
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M10 3.5 5.5 8 10 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        Alle Anfragen
+        Anfragen
       </Link>
 
       <div className="admin-detail-head">

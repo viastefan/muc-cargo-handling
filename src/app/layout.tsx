@@ -1,9 +1,8 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
-import "./apple-ui.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,11 +23,6 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   applicationName: "MUC Cargohandling",
   authors: [{ name: "MUC Cargohandling GmbH" }],
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: "MUC Cargo",
-  },
   // Vorschaukarte beim Teilen in WhatsApp, LinkedIn, Slack & Co. Ohne diese
   // Angaben zeigen die Dienste nur die nackte URL.
   // Titel und Beschreibung bewusst NICHT hier setzen: Next.js uebernimmt sonst
@@ -47,16 +41,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F2F2F7" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
 };
 
 export default function RootLayout({

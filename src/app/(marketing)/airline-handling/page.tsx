@@ -17,7 +17,6 @@ export default function AirlineHandlingPage() {
     <>
       <Hero
         image="/images/airline-handling/hero.jpg"
-        eyebrow="Airline Handling"
         title={
           <>
             Die Schnittstelle zwischen Airline,

@@ -66,7 +66,6 @@ export default function KontaktPage() {
     <>
       <Hero
         image="/images/kontakt/hero.jpg"
-        eyebrow="Kontakt"
         title="Schreiben Sie uns"
         subtitle="Schildern Sie kurz Ihr Anliegen – wir melden uns zeitnah mit den nächsten Schritten für Ihre Luftfracht am Flughafen München."
         ctaHref="#anfrage"
@@ -85,7 +84,7 @@ export default function KontaktPage() {
 
           <aside className="lg:pt-2" id="standort">
             <div className="sticky top-24 space-y-4">
-              <div className="border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
+              <div className="surface-card p-6 md:p-8">
                 <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
                   Direktkontakt
                 </p>
@@ -115,7 +114,7 @@ export default function KontaktPage() {
                 </p>
               </div>
 
-              <div className="border border-[var(--border)] bg-[var(--card)] p-6 md:p-8">
+              <div className="surface-card surface-card--raised p-6 md:p-8">
                 <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
                   Zertifizierung
                 </p>
