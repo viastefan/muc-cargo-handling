@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 const TITLE = "MUC Cargohandling | Luftfracht am Flughafen München";
 const DESCRIPTION =
@@ -42,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className="h-full antialiased" suppressHydrationWarning>
+    <html lang="de" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {/* Setzt data-theme vor dem ersten Paint (Standard: dunkel, siehe
             src/lib/theme.ts) — verhindert einen hell/dunkel-Flash. */}

@@ -36,6 +36,7 @@ export default function LuftfrachtPage() {
     <>
       <Hero
         image="/images/luftfracht/hero.jpg"
+        eyebrow="Import & Export"
         title="Luftfracht Import und Export"
         subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
       />

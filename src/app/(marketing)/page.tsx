@@ -35,6 +35,7 @@ export default function HomePage() {
     <>
       <Hero
         image="/images/home/hero.jpg"
+        eyebrow="Seit 2003 · Flughafen München"
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
