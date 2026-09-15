@@ -76,7 +76,6 @@
   /* Feiner Glanz auf Karten und Glaesern. */
   --sheen-highlight: rgb(255 255 255 / 0.62);
   --page-glow: color-mix(in srgb, var(--brand) 6%, transparent);
-  --chrome-bg: color-mix(in srgb, var(--background) 88%, transparent);
   --brand-sheen:
     radial-gradient(90% 70% at 100% 0%, rgb(255 255 255 / 0.16), transparent 52%),
     linear-gradient(165deg, #ef1a4c 0%, var(--brand) 46%, #a30a2c 100%);
@@ -124,7 +123,6 @@
     --icon-tile-ink: #e2e2e2;
     --sheen-highlight: rgb(255 255 255 / 0.08);
     --page-glow: color-mix(in srgb, var(--brand) 14%, transparent);
-    --chrome-bg: color-mix(in srgb, var(--background) 72%, transparent);
   }
 }
 
@@ -161,7 +159,6 @@
   --icon-tile-ink: #e2e2e2;
   --sheen-highlight: rgb(255 255 255 / 0.08);
   --page-glow: color-mix(in srgb, var(--brand) 14%, transparent);
-  --chrome-bg: color-mix(in srgb, var(--background) 72%, transparent);
 }
 
 /* Scroll reveal — snappy, GPU-light */
@@ -315,15 +312,6 @@ a {
   position: sticky;
   top: 0;
   z-index: 51;
-  background: var(--background);
-}
-
-@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .site-chrome {
-    background: var(--chrome-bg);
-    backdrop-filter: saturate(1.4) blur(18px);
-    -webkit-backdrop-filter: saturate(1.4) blur(18px);
-  }
 }
 
 /* z-index nur noch innerhalb von .site-chrome: der Menue-Hintergrund
@@ -333,7 +321,7 @@ a {
   position: relative;
   z-index: 50;
   border-bottom: 1px solid var(--border);
-  background: transparent;
+  background: var(--background);
 }
 
 /* Top utility bar — sitzt im gemeinsamen sticky Block (.site-chrome) direkt
@@ -345,7 +333,7 @@ a {
   z-index: 51;
   display: grid;
   grid-template-rows: 1fr;
-  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  background: var(--surface);
   color: var(--foreground);
   overflow: hidden;
 }
