@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-session";
-import { inquiriesStorageReady } from "@/lib/inquiries";
+import { probeConnection } from "@/lib/system-check";
 import { logoutAction } from "./actions";
 import { AccountMenu } from "./AccountMenu";
 import { AdminTabBar } from "./AdminTabBar";
+import { ConnectionBanner } from "./ConnectionBanner";
 
 export default async function PanelLayout({
   children,
@@ -12,6 +13,7 @@ export default async function PanelLayout({
 }) {
   const principal = await requireAdmin();
   const isAdmin = principal.role === "admin";
+  const probe = await probeConnection();
 
   return (
     <div className="admin-shell">
@@ -35,6 +37,27 @@ export default async function PanelLayout({
           </nav>
         </div>
         <div className="admin-bar__actions">
+          <span
+            className="admin-bar__conn"
+            title={probe.detail}
+            aria-label={
+              probe.state === "ok"
+                ? `Datenbank verbunden${probe.latencyMs != null ? `, ${probe.latencyMs} Millisekunden` : ""}`
+                : "Verbindung gestört"
+            }
+          >
+            <span
+              className={`admin-bar__pulse${probe.state === "ok" ? " is-ok" : " is-bad"}`}
+              aria-hidden="true"
+            />
+            <span className="admin-bar__conn-label" aria-hidden="true">
+              {probe.state === "ok"
+                ? probe.latencyMs != null
+                  ? `${probe.latencyMs} ms`
+                  : "Online"
+                : "Offline"}
+            </span>
+          </span>
           <a
             href="/api/admin/export"
             className="admin-btn admin-btn--sm admin-bar__export"
@@ -52,12 +75,8 @@ export default async function PanelLayout({
       </header>
 
       <main className="admin-main">
-        {!inquiriesStorageReady ? (
-          <p className="admin-error" style={{ marginBottom: "1.5rem" }}>
-            Kein Datenspeicher verbunden — <code>SUPABASE_URL</code> /{" "}
-            <code>SUPABASE_SERVICE_ROLE_KEY</code> setzen und die Migrationen
-            ausführen. Bis dahin bleibt die Liste leer.
-          </p>
+        {probe.state === "missing" ? (
+          <ConnectionBanner probe={probe} showSetupLink={isAdmin} />
         ) : null}
 
         {principal.mustChangePw ? (

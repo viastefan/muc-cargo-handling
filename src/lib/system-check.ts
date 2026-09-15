@@ -20,6 +20,76 @@ export type Check = {
   fix?: string;
 };
 
+export type ConnectionProbe = {
+  state: "ok" | "missing";
+  detail: string;
+  fix?: string;
+  latencyMs: number | null;
+  host: string | null;
+};
+
+function hostFromUrl(url: string): string | null {
+  try {
+    return new URL(url).host;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Live-Ping gegen PostgREST — misst Latenz und erkennt fehlende Secrets
+ * bzw. unerreichbare Projekte, ohne Tabellen vorauszusetzen.
+ */
+export async function probeConnection(): Promise<ConnectionProbe> {
+  const host = hostFromUrl(RAW_URL);
+
+  if (!inquiriesStorageReady) {
+    return {
+      state: "missing",
+      detail: "Kein Datenspeicher verbunden",
+      fix: "SUPABASE_URL und SUPABASE_SERVICE_ROLE_KEY setzen, danach Redeploy.",
+      latencyMs: null,
+      host,
+    };
+  }
+
+  const started = performance.now();
+  try {
+    const res = await fetch(`${RAW_URL}/rest/v1/`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+      headers: {
+        apikey: SERVICE_KEY,
+        Authorization: `Bearer ${SERVICE_KEY}`,
+      },
+    });
+    const latencyMs = Math.round(performance.now() - started);
+    if (!res.ok) {
+      return {
+        state: "missing",
+        detail: `Supabase antwortet mit ${res.status}`,
+        fix: "Service-Role-Key und Projekt-URL prüfen.",
+        latencyMs,
+        host,
+      };
+    }
+    return {
+      state: "ok",
+      detail: "Supabase erreichbar",
+      latencyMs,
+      host,
+    };
+  } catch {
+    return {
+      state: "missing",
+      detail: "Supabase nicht erreichbar",
+      fix: "Netzwerk, Projektstatus und SUPABASE_URL prüfen.",
+      latencyMs: null,
+      host,
+    };
+  }
+}
+
 /** Prüft, ob eine Tabelle über PostgREST erreichbar ist. */
 async function tableReachable(table: string): Promise<boolean> {
   if (!inquiriesStorageReady) return false;
@@ -62,7 +132,8 @@ async function countRows(table: string): Promise<number | null> {
 }
 
 export async function runSystemChecks(): Promise<Check[]> {
-  const [inquiries, adminUsers, events, pushTable, deviceCount] = await Promise.all([
+  const [probe, inquiries, adminUsers, events, pushTable, deviceCount] = await Promise.all([
+    probeConnection(),
     tableReachable("inquiries"),
     tableReachable("admin_users"),
     tableReachable("inquiry_events"),
@@ -77,11 +148,12 @@ export async function runSystemChecks(): Promise<Check[]> {
   const checks: Check[] = [
     {
       label: "Datenbank verbunden",
-      state: inquiriesStorageReady ? "ok" : "missing",
-      detail: inquiriesStorageReady
-        ? "Supabase erreichbar."
-        : "Keine Zugangsdaten hinterlegt.",
-      fix: "SUPABASE_URL und SUPABASE_SERVICE_ROLE_KEY in Vercel setzen, danach Redeploy.",
+      state: probe.state,
+      detail:
+        probe.state === "ok"
+          ? `${probe.detail}${probe.latencyMs != null ? ` · ${probe.latencyMs} ms` : ""}${probe.host ? ` · ${probe.host}` : ""}`
+          : probe.detail,
+      fix: probe.fix,
     },
     {
       label: "Anfragen-Tabelle",

@@ -39,9 +39,11 @@ Kopiere deine Bilder in die passenden Ordner. **Dateinamen exakt einhalten.**
 
 | Datei | Verwendung |
 |-------|------------|
-| `hero.jpg` | Hero Luftfracht |
-| `band.jpg` | Breites Bild unter „Zwei Prozesse“ (Beladung / Handling) |
-| `service-1.jpg` … `service-4.jpg` | Service-Kacheln |
+| `hero.jpg` / `intro-band.jpg` | _(nicht mehr verwendet — Seitenkopf ist textbasiert)_ |
+| `service-1.jpg` | Editorial-Band + Service-Kachel Annahme |
+| `documentation-desk.jpg` | Service-Kachel Dokumentation |
+| `security-checkpoint.jpg` | Service-Kachel Sicherheitskontrolle |
+| `service-4.jpg` | Service-Kachel Übergabe |
 
 ## Airline Handling (`airline-handling/`)
 

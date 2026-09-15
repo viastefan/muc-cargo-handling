@@ -197,7 +197,13 @@ export default async function AdminDashboard({
 
       <div className="admin-group">
         {rows.length === 0 ? (
-          <p className="admin-empty">Keine Anfragen für diese Auswahl.</p>
+          <div className="admin-empty">
+            <p className="admin-empty__title">Keine Anfragen</p>
+            <p className="admin-empty__text">
+              Für diese Auswahl liegt nichts vor. Filter zurücksetzen oder auf neue
+              Eingänge warten.
+            </p>
+          </div>
         ) : (
           <>
             <div className="admin-inbox">

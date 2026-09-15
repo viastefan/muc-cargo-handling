@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  INQUIRY_STATUSES,
-  STATUS_LABEL,
   TOPIC_LABEL,
   getInquiry,
   listInquiryEvents,
@@ -12,10 +10,11 @@ import { requireAdmin } from "@/lib/admin-session";
 import { listUsers } from "@/lib/admin-users";
 import { COMPANY } from "@/lib/company";
 import { StatusBadge } from "../StatusBadge";
+import { StatusPicker } from "../StatusPicker";
 import { DeleteInquiryButton } from "../DeleteInquiryButton";
 import { Assignee } from "../Assignee";
 import { ReplyForm } from "../ReplyForm";
-import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
+import { saveNoteAction, assignInquiryAction } from "../actions";
 
 /** Status, Notiz und Verlauf aendern sich laufend — nie aus dem Cache. */
 export const dynamic = "force-dynamic";
@@ -165,24 +164,7 @@ export default async function InquiryDetail({
           <div className="admin-card">
             <p className="admin-card__title">Status</p>
             <div className="admin-card__body">
-              <form action={setStatusAction} className="admin-inline-form" key={inquiry.status}>
-                <input type="hidden" name="reference" value={inquiry.reference} />
-                <select
-                  name="status"
-                  className="admin-select"
-                  defaultValue={inquiry.status}
-                  style={{ flex: "1 1 auto" }}
-                >
-                  {INQUIRY_STATUSES.map((s) => (
-                    <option key={s} value={s}>
-                      {STATUS_LABEL[s]}
-                    </option>
-                  ))}
-                </select>
-                <button type="submit" className="admin-btn admin-btn--sm">
-                  Setzen
-                </button>
-              </form>
+              <StatusPicker reference={inquiry.reference} current={inquiry.status} />
             </div>
           </div>
 
