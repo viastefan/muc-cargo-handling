@@ -5,7 +5,7 @@ import {
   ADMIN_COOKIE,
   ROOT_UID,
   adminConfigured,
-  readSessionUid,
+  readSessionPayload,
 } from "@/lib/admin-auth";
 import { getUserById } from "@/lib/admin-users";
 
@@ -30,12 +30,15 @@ const ROOT_PRINCIPAL: Principal = {
 /** Aktuell angemeldeter Principal oder null. Pro Request memoisiert. */
 export const readPrincipal = cache(async (): Promise<Principal | null> => {
   const store = await cookies();
-  const uid = readSessionUid(store.get(ADMIN_COOKIE)?.value);
-  if (!uid) return null;
-  if (uid === ROOT_UID) return ROOT_PRINCIPAL;
+  const session = readSessionPayload(store.get(ADMIN_COOKIE)?.value);
+  if (!session) return null;
+  if (session.uid === ROOT_UID) return ROOT_PRINCIPAL;
 
-  const user = await getUserById(uid);
+  const user = await getUserById(session.uid);
   if (!user || !user.active) return null;
+  // Token seit Ausstellung widerrufen (Passwortwechsel, "Auf allen anderen
+  // Geräten abmelden") — abgelaufen im Sinne der Sitzung, nicht nur der Zeit.
+  if (user.tokenVersion !== session.tokenVersion) return null;
   return {
     uid: user.id,
     name: user.name,

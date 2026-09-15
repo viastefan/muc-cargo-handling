@@ -1,5 +1,6 @@
 import {
   randomBytes,
+  randomInt,
   scrypt as scryptCb,
   timingSafeEqual,
   type BinaryLike,
@@ -39,6 +40,7 @@ export type AdminUser = {
   createdAt: string;
   lastLoginAt: string | null;
   mustChangePw: boolean;
+  tokenVersion: number;
 };
 
 type Row = {
@@ -51,6 +53,7 @@ type Row = {
   created_at: string;
   last_login_at: string | null;
   must_change_pw: boolean;
+  token_version: number;
 };
 
 function toUser(r: Row): AdminUser {
@@ -63,6 +66,11 @@ function toUser(r: Row): AdminUser {
     createdAt: r.created_at,
     lastLoginAt: r.last_login_at,
     mustChangePw: r.must_change_pw,
+    // Fehlt die Spalte (Migration 0004 noch nicht gelaufen), faellt der Wert
+    // auf 0 zurueck — Widerruf ist dann noch nicht moeglich, aber bestehende
+    // Anmeldungen brechen dadurch nicht, statt jede Sitzung sofort fuer
+    // ungueltig zu erklaeren.
+    tokenVersion: r.token_version ?? 0,
   };
 }
 
@@ -108,10 +116,12 @@ export async function verifyPassword(password: string, stored: string): Promise<
 
 /** Lesbares Einmal-Passwort für neu angelegte Benutzer. */
 export function generatePassword(): string {
-  // 4 Blöcke à 4 Zeichen, ohne verwechselbare Zeichen
+  // 4 Blöcke à 4 Zeichen, ohne verwechselbare Zeichen. randomInt statt
+  // Math.random() — Kryptozufall wie bei jedem anderen Secret hier
+  // (Salts, Session-Nonces), nicht der vorhersagbare PRNG von Math.random().
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const pick = () =>
-    Array.from({ length: 4 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join("");
+    Array.from({ length: 4 }, () => alphabet[randomInt(alphabet.length)]).join("");
   return `${pick()}-${pick()}-${pick()}`;
 }
 
@@ -170,6 +180,20 @@ async function getRowByEmail(email: string): Promise<Row | null> {
   return rows[0] ?? null;
 }
 
+/**
+ * Fester Dummy-Hash, gegen den ein Passwort geprüft wird, wenn es gar keinen
+ * echten gibt — die scrypt-Kosten fallen trotzdem an, damit die Antwortzeit
+ * nicht verrät, ob ein Benutzer/eine Rolle existiert.
+ */
+const DUMMY_HASH = `${"0".repeat(32)}:${"0".repeat(128)}`;
+
+/** Zahlt dieselben scrypt-Kosten wie eine echte Prüfung, ohne einen echten
+ *  Hash zu benötigen — für Aufrufer, die selbst entscheiden, ob überhaupt
+ *  über authenticate() geprüft wird (z. B. der Master-Login-Zweig). */
+export async function dummyPasswordCost(password: string): Promise<void> {
+  await verifyPassword(password, DUMMY_HASH);
+}
+
 /** Login-Prüfung. Liefert den Benutzer bei korrektem Passwort und aktiv. */
 export async function authenticate(
   email: string,
@@ -181,7 +205,7 @@ export async function authenticate(
     if (!row || !row.active) {
       // Dummy-Hash prüfen, damit die Antwortzeit nicht verrät, ob es den
       // Benutzer gibt.
-      await verifyPassword(password, `${"0".repeat(32)}:${"0".repeat(128)}`);
+      await dummyPasswordCost(password);
       return null;
     }
     if (!(await verifyPassword(password, row.password_hash))) return null;
@@ -253,6 +277,13 @@ export async function setUserActive(id: string, active: boolean): Promise<boolea
   }
 }
 
+/**
+ * Neue token_version — jeder Aufruf erzeugt einen frischen, garantiert
+ * höheren Wert (Zeitstempel statt Zähler): kein vorheriges Lesen nötig, und
+ * jedes vor diesem Moment ausgestellte Sitzungs-Token wird beim nächsten
+ * Request ungültig (admin-session.ts vergleicht den im Token stehenden Wert
+ * mit dem hier gespeicherten).
+ */
 export async function resetUserPassword(
   id: string,
 ): Promise<{ tempPassword: string } | null> {
@@ -265,6 +296,7 @@ export async function resetUserPassword(
       body: JSON.stringify({
         password_hash: await hashPassword(tempPassword),
         must_change_pw: true,
+        token_version: Date.now(),
       }),
     });
     return { tempPassword };
@@ -282,20 +314,29 @@ export async function changeOwnPassword(
   id: string,
   current: string,
   next: string,
-): Promise<"ok" | "wrong-current" | "failed"> {
+): Promise<
+  { ok: true; tokenVersion: number } | { ok: false; reason: "wrong-current" | "failed" }
+> {
   if (!adminUsersStorageReady || !isValidUserId(id) || next.length < 8) {
-    return "failed";
+    return { ok: false, reason: "failed" };
   }
 
   const row = await getRowById(id);
-  if (!row) return "failed";
-  if (!(await verifyPassword(current, row.password_hash))) return "wrong-current";
+  if (!row) return { ok: false, reason: "failed" };
+  if (!(await verifyPassword(current, row.password_hash))) {
+    return { ok: false, reason: "wrong-current" };
+  }
 
-  return (await writeNewPassword(id, next)) ? "ok" : "failed";
+  const tokenVersion = await writeNewPassword(id, next);
+  return tokenVersion !== null ? { ok: true, tokenVersion } : { ok: false, reason: "failed" };
 }
 
-async function writeNewPassword(id: string, next: string): Promise<boolean> {
-  if (!adminUsersStorageReady || !isValidUserId(id)) return false;
+/** Setzt ein neues Passwort und liefert die neue token_version zurück, damit
+ *  der Aufrufer die eigene, gerade genutzte Sitzung darauf ummünzen kann —
+ *  sonst wäre man nach dem eigenen Passwortwechsel sofort ausgeloggt. */
+async function writeNewPassword(id: string, next: string): Promise<number | null> {
+  if (!adminUsersStorageReady || !isValidUserId(id)) return null;
+  const tokenVersion = Date.now();
   try {
     await rest(`/admin_users?id=eq.${id}`, {
       method: "PATCH",
@@ -303,10 +344,32 @@ async function writeNewPassword(id: string, next: string): Promise<boolean> {
       body: JSON.stringify({
         password_hash: await hashPassword(next),
         must_change_pw: false,
+        token_version: tokenVersion,
       }),
     });
-    return true;
+    return tokenVersion;
   } catch {
-    return false;
+    return null;
+  }
+}
+
+/**
+ * "Auf allen anderen Geräten abmelden" — entwertet jedes bestehende Token
+ * dieses Benutzers ohne das Passwort zu ändern. Aufrufer muss die eigene
+ * Sitzung mit der zurückgegebenen Version neu ausstellen, sonst meldet sie
+ * sich selbst mit ab.
+ */
+export async function bumpTokenVersion(id: string): Promise<number | null> {
+  if (!adminUsersStorageReady || !isValidUserId(id)) return null;
+  const tokenVersion = Date.now();
+  try {
+    await rest(`/admin_users?id=eq.${id}`, {
+      method: "PATCH",
+      prefer: "return=minimal",
+      body: JSON.stringify({ token_version: tokenVersion }),
+    });
+    return tokenVersion;
+  } catch {
+    return null;
   }
 }

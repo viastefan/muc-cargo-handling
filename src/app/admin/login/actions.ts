@@ -14,7 +14,7 @@ import {
   sessionCookieOptions,
   verifyMasterPassword,
 } from "@/lib/admin-auth";
-import { authenticate, touchLogin } from "@/lib/admin-users";
+import { authenticate, dummyPasswordCost, touchLogin } from "@/lib/admin-users";
 
 export type LoginState = { error?: string };
 
@@ -47,16 +47,22 @@ export async function loginAction(
   await new Promise((resolve) => setTimeout(resolve, 250));
 
   let uid: string | null = null;
+  let tokenVersion = 0;
   let target = "/admin";
 
-  // 1. Master-/Notfall-Login
-  if (email === MASTER_EMAIL && verifyMasterPassword(password)) {
-    uid = ROOT_UID;
-  } else if (email !== MASTER_EMAIL) {
+  // 1. Master-/Notfall-Login. Zahlt ueber dummyPasswordCost dieselben
+  // scrypt-Kosten wie der reguläre Zweig — sonst waere die Antwortzeit ein
+  // Signal dafuer, ob die eingegebene Adresse die Master-Adresse ist
+  // (verifyMasterPassword ist ein reiner, sehr schneller HMAC-Vergleich).
+  if (email === MASTER_EMAIL) {
+    await dummyPasswordCost(password);
+    if (verifyMasterPassword(password)) uid = ROOT_UID;
+  } else {
     // 2. Regulärer Benutzer
     const user = await authenticate(email, password);
     if (user) {
       uid = user.id;
+      tokenVersion = user.tokenVersion;
       await touchLogin(user.id);
       if (user.mustChangePw) target = "/admin/konto?first=1";
     }
@@ -69,6 +75,6 @@ export async function loginAction(
 
   clearLoginAttempts(ip);
   const store = await cookies();
-  store.set(ADMIN_COOKIE, createSessionToken(uid), sessionCookieOptions);
+  store.set(ADMIN_COOKIE, createSessionToken(uid, tokenVersion), sessionCookieOptions);
   redirect(target);
 }

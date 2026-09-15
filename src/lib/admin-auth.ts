@@ -19,7 +19,10 @@ export const ROOT_UID = "root";
 const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
-export const adminConfigured = ADMIN_PASSWORD.length >= 8;
+// 12+ wie in docs/BACKEND-SETUP.md dokumentiert — ein kuerzeres Passwort
+// schwaecht auch den Session-Signierschluessel, der ohne eigenes
+// ADMIN_SESSION_SECRET daraus abgeleitet wird (siehe secret() unten).
+export const adminConfigured = ADMIN_PASSWORD.length >= 12;
 /**
  * Adresse des Master-/Notfallzugangs. Bewusst eine echte E-Mail-Adresse, damit
  * der Login wie ein normaler Konto-Login aussieht und keine Sonderregel braucht.
@@ -54,26 +57,38 @@ export function verifyMasterPassword(input: string): boolean {
   return safeEqual(input, ADMIN_PASSWORD);
 }
 
-/** Session-Token für eine Benutzer-ID (oder ROOT_UID) erzeugen. */
-export function createSessionToken(uid: string): string {
+/**
+ * Session-Token für eine Benutzer-ID (oder ROOT_UID) erzeugen. Trägt die
+ * token_version zum Ausstellungszeitpunkt mit — admin-session.ts vergleicht
+ * sie bei jedem Request gegen den aktuellen Stand in admin_users und
+ * verwirft das Token bei Abweichung. Das ist der einzige Weg, ein einmal
+ * ausgestelltes, sonst zustandsloses Token vor Ablauf zu widerrufen (Login
+ * nach Passwortwechsel, "Auf allen anderen Geräten abmelden").
+ */
+export function createSessionToken(uid: string, tokenVersion: number): string {
   const exp = Date.now() + SESSION_TTL_MS;
   const nonce = randomBytes(9).toString("base64url");
   const cleanUid = uid.replace(/[^A-Za-z0-9-]/g, "").slice(0, 40) || ROOT_UID;
-  const payload = `${exp}.${cleanUid}.${nonce}`;
+  const version = Number.isFinite(tokenVersion) ? Math.trunc(tokenVersion) : 0;
+  const payload = `${exp}.${cleanUid}.${version}.${nonce}`;
   return `${payload}.${sign(payload)}`;
 }
 
-/** Benutzer-ID aus dem Cookie lesen (Signatur + Ablauf geprüft), sonst null. */
-export function readSessionUid(token: string | undefined | null): string | null {
+export type SessionPayload = { uid: string; tokenVersion: number };
+
+/** Cookie-Inhalt lesen (Signatur + Ablauf geprüft), sonst null. */
+export function readSessionPayload(token: string | undefined | null): SessionPayload | null {
   if (!token || !adminConfigured) return null;
   const parts = token.split(".");
-  if (parts.length !== 4) return null;
-  const [exp, uid, nonce, mac] = parts;
-  const payload = `${exp}.${uid}.${nonce}`;
+  if (parts.length !== 5) return null;
+  const [exp, uid, version, nonce, mac] = parts;
+  const payload = `${exp}.${uid}.${version}.${nonce}`;
   if (!safeEqual(mac, sign(payload))) return null;
   const expiry = Number(exp);
   if (!Number.isFinite(expiry) || expiry <= Date.now()) return null;
-  return uid;
+  const tokenVersion = Number(version);
+  if (!Number.isFinite(tokenVersion)) return null;
+  return { uid, tokenVersion };
 }
 
 export const sessionCookieOptions = {

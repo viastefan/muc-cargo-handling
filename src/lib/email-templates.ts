@@ -27,6 +27,16 @@ export type InquiryEmailData = {
   createdAt: Date;
 };
 
+/**
+ * Fuer Werte, die in eine Betreffzeile eingesetzt werden (hier: der vom
+ * Formular stammende Name) — ein eingebettetes CR/LF waere sonst ein Kanal
+ * fuer Header-Injection, selbst wenn der Versandweg (Resend-API statt
+ * rohem SMTP) das aktuell nicht ausnutzbar macht.
+ */
+function subjectSafe(value: string): string {
+  return value.replace(/[\r\n\t\x00-\x1f\x7f]+/g, " ").trim();
+}
+
 function esc(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -137,7 +147,7 @@ Diese E-Mail wurde automatisch erzeugt — Sie können direkt darauf antworten.
 export function teamNotificationEmail(
   data: InquiryEmailData & { source: string; adminUrl?: string },
 ): { subject: string; html: string; text: string } {
-  const subject = `Neue Anfrage · ${TOPIC_LABEL[data.topic]} · ${data.name}`;
+  const subject = `Neue Anfrage · ${TOPIC_LABEL[data.topic]} · ${subjectSafe(data.name)}`;
   const adminButton = data.adminUrl
     ? `<tr><td style="padding:4px 32px 30px;">
 <a href="${esc(data.adminUrl)}" style="display:inline-block;background:${BRAND};color:#ffffff;font-size:13px;font-weight:600;text-decoration:none;padding:11px 20px;border-radius:9px;">Im Panel öffnen</a>
