@@ -16,7 +16,7 @@ export function ImageCtaBand({ title, ctaLabel, ctaHref, image }: Props) {
           <h2 id="image-cta-band-title" className="image-cta-band__title heading-display">
             {title}
           </h2>
-          <Button href={ctaHref} variant="white" size="md" className="image-cta-band__btn">
+          <Button href={ctaHref} variant="primary" size="md" className="image-cta-band__btn">
             {ctaLabel}
           </Button>
         </div>

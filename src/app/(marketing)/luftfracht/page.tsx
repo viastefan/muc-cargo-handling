@@ -3,7 +3,6 @@ import { Button } from "@/components/Button";
 import { FlowTracks, FlowTracksIntro } from "@/components/FlowTracks";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { IntroSplitBand } from "@/components/IntroSplitBand";
 import { MetricRow } from "@/components/MetricRow";
 import {
   FeatureCard,
@@ -38,14 +37,6 @@ export default function LuftfrachtPage() {
         image="/images/luftfracht/hero.jpg"
         title="Luftfracht Import und Export"
         subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
-      />
-
-      <IntroSplitBand
-        titleDark="Zwei Prozesse."
-        titleLight="Ein hoher Qualitätsanspruch."
-        description="Ob eingehend oder ausgehend – jeder Auftrag läuft nach klar definierten Prozessen. In enger Abstimmung mit Airlines, Behörden und Logistikpartnern."
-        image="/images/luftfracht/intro-band.jpg"
-        imageAlt="Luftfracht-Handling am Flughafen München"
       />
 
       <PageSection>
