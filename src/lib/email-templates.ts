@@ -33,11 +33,13 @@ export type InquiryEmailData = {
  * fuer Header-Injection, selbst wenn der Versandweg (Resend-API statt
  * rohem SMTP) das aktuell nicht ausnutzbar macht.
  */
-function subjectSafe(value: string): string {
+/** Exportiert fürs Testen (email-templates.test.ts). */
+export function subjectSafe(value: string): string {
   return value.replace(/[\r\n\t\x00-\x1f\x7f]+/g, " ").trim();
 }
 
-function esc(value: string): string {
+/** Exportiert fürs Testen der HTML-Escaping (email-templates.test.ts). */
+export function esc(value: string): string {
   return value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

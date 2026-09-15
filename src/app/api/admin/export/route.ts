@@ -5,7 +5,8 @@ import { listUsers } from "@/lib/admin-users";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function csvCell(value: unknown): string {
+/** Exportiert fürs Testen der Formel-Injection-Härtung (export/route.test.ts). */
+export function csvCell(value: unknown): string {
   let str = value == null ? "" : String(value);
   str = str.replace(/\r?\n/g, " ");
   if (/^[=+\-@\t\r]/.test(str)) str = `'${str}`;
