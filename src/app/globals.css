@@ -28,6 +28,16 @@
   /* Link-Blau (Apple System Blue), fuer externe Verweise mit Icon. */
   --link: #0a63e0;
   --link-hover: #0a4fb4;
+  /* Semantische Status-Farben — gemeinsam fuer Marketing-Seite und
+     Admin-Panel (admin.css referenziert dieselben Werte statt eigener
+     --a-green/--a-amber/--a-red-Definitionen). --success ist der
+     kontraststarke Textwert; --success-dot der kraeftigere Volltonwert
+     fuer Punkte/Badges ohne Fliesstext-Kontrastpflicht (aendert sich nicht
+     zwischen den Themes). */
+  --success: #1f9d55;
+  --success-dot: #22c55e;
+  --warning: #b26a00;
+  --danger: #c8102e;
   /* Dritte Flaechenstufe – nur fuer Hover auf --surface-2 (Buttons, Nav).
      Vorher standen hier harte Hellgrau-Werte, die im Dunkelmodus zu
      Weiss-auf-Weiss fuehrten. */
@@ -101,6 +111,9 @@
     --focus-ring: rgba(77, 155, 255, 0.28);
     --link: #5aa2ff;
     --link-hover: #8ec2ff;
+    --success: #34d17a;
+    --warning: #e0a33a;
+    --danger: #ff5c78;
     --surface-3: #2b2b31;
     --ring-subtle: rgb(255 255 255 / 0.09);
     --ring-subtle-strong: rgb(255 255 255 / 0.14);
@@ -135,6 +148,9 @@
   --focus-ring: rgba(77, 155, 255, 0.28);
   --link: #5aa2ff;
   --link-hover: #8ec2ff;
+  --success: #34d17a;
+  --warning: #e0a33a;
+  --danger: #ff5c78;
   --surface-3: #2b2b31;
   --ring-subtle: rgb(255 255 255 / 0.09);
   --ring-subtle-strong: rgb(255 255 255 / 0.14);
@@ -564,7 +580,9 @@ a {
   white-space: nowrap;
 }
 
-/* Erst einblenden, wenn die Zelle wirklich Platz dafuer hat. */
+/* Erst einblenden, wenn die Zelle wirklich Platz dafuer hat. Bewusst kein
+   Vielfaches der 640/768/1024-Skala — dieser Wert ist auf die Spaltenbreiten
+   der Kopfzeile geeicht, nicht auf Geraeteklassen. */
 @media (min-width: 1380px) {
   .site-header-cert {
     display: block;
@@ -1074,7 +1092,7 @@ a {
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 50%;
-  background: #22c55e;
+  background: var(--success-dot);
   border: 2px solid var(--background);
 }
 
@@ -1342,11 +1360,7 @@ a {
 }
 
 .location-peek__status.is-open strong {
-  color: #1f9d55;
-}
-
-:root:not([data-theme="light"]) .location-peek__status.is-open strong {
-  color: #34d17a;
+  color: var(--success);
 }
 
 .location-peek__dot {
@@ -1359,8 +1373,8 @@ a {
 }
 
 .location-peek__status.is-open .location-peek__dot {
-  background: #22c55e;
-  box-shadow: 0 0 0 2.5px color-mix(in srgb, #22c55e 22%, transparent);
+  background: var(--success-dot);
+  box-shadow: 0 0 0 2.5px color-mix(in srgb, var(--success-dot) 22%, transparent);
 }
 
 .location-peek__status-detail {
@@ -3128,12 +3142,15 @@ body:has(.cookie-banner) .faq-toc-fab {
   border-radius: 3px;
 }
 
-/* Buttons — corner layout: label bottom-left 8px, small arrow top-right 8px */
+/* Buttons — corner layout: label bottom-left 8px, small arrow top-right 8px.
+   Radius matcht die Karten-Skala (12px) — vorher die einzige komplett
+   scharfkantige Flaeche in einem sonst durchgehend abgerundeten System. */
 .btn-corner {
   position: relative;
   display: inline-block;
   max-width: 100%;
   border: none;
+  border-radius: 12px;
   cursor: pointer;
   text-align: left;
   text-decoration: none;
@@ -4974,6 +4991,24 @@ textarea.field__control {
   transform: translateX(calc(3.25rem - 1.75rem - 4px));
 }
 
+/* Variante fuers Admin-Panel: die Basisvariante ist fest auf den
+   dauerdunklen Footer gemuenzt (weisse Alpha-Werte) — hier stattdessen
+   Theme-Tokens, weil der Panel-Hintergrund selbst zwischen hell/dunkel
+   wechselt. Akzent folgt dem Panel-eigenen Blau statt Markenrot. */
+.theme-toggle--admin {
+  border-color: var(--border);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.theme-toggle--admin:hover {
+  border-color: var(--muted-light);
+}
+
+.theme-toggle--admin .theme-toggle__thumb {
+  background: var(--a-tint);
+}
+
 @media (min-width: 640px) {
   .site-footer-bar-inner {
     flex-direction: row;
@@ -6119,11 +6154,7 @@ textarea.field__control {
 }
 
 .location-map__status.is-open strong {
-  color: #1f9d55;
-}
-
-:root:not([data-theme="light"]) .location-map__status.is-open strong {
-  color: #34d17a;
+  color: var(--success);
 }
 
 .location-map__status-dot {
@@ -6136,8 +6167,8 @@ textarea.field__control {
 }
 
 .location-map__status.is-open .location-map__status-dot {
-  background: #22c55e;
-  box-shadow: 0 0 0 3px color-mix(in srgb, #22c55e 22%, transparent);
+  background: var(--success-dot);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-dot) 22%, transparent);
 }
 
 .location-map__status-note {
@@ -6150,6 +6181,9 @@ textarea.field__control {
   font-size: 13px;
 }
 
+/* 900px statt 1024px: die zweispaltige Karte braucht weniger Breite als eine
+   volle Desktop-Navigation, daher bewusst ein eigener Wert statt der
+   640/768/1024-Skala. */
 @media (min-width: 900px) {
   .location-map {
     grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
