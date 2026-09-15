@@ -39,12 +39,12 @@ export function Button({
 }: Props) {
   const content = (
     <>
+      <span className="btn-corner-label">{children}</span>
       {arrow && (
         <span className="btn-corner-icon" aria-hidden="true">
           <ButtonArrowIcon light={iconLight(variant)} />
         </span>
       )}
-      <span className="btn-corner-label">{children}</span>
     </>
   );
 
