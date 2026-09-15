@@ -4,6 +4,9 @@ import "./admin.css";
 export const metadata: Metadata = {
   title: "Admin",
   robots: { index: false, follow: false, nocache: true },
+  // Eigene App-Identitaet fuers "Zum Home-Bildschirm hinzufuegen" — sonst
+  // erbt das Panel das oeffentliche Marketing-Manifest (app/manifest.ts).
+  manifest: "/admin/manifest.webmanifest",
 };
 
 // Immer frisch rendern — nie statisch cachen.
