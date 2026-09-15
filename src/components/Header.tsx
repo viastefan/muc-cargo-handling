@@ -27,7 +27,7 @@ export function Header() {
 
   return (
     <>
-      <header className="site-header-wrap bg-[var(--background)]">
+      <header className="site-header-wrap">
       <div className="site-header hidden lg:grid">
         <div className="site-header-cell site-header-logo">
           <Link

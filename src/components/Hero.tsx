@@ -9,6 +9,7 @@ type Props = {
   subtitle: string;
   ctaLabel?: string;
   ctaHref?: string;
+  eyebrow?: string;
 };
 
 export function Hero({
@@ -18,6 +19,7 @@ export function Hero({
   subtitle,
   ctaLabel = "Schreiben Sie uns",
   ctaHref = "/kontakt",
+  eyebrow = "Flughafen München",
 }: Props) {
   return (
     <section className="hero-wrap">
@@ -27,13 +29,14 @@ export function Hero({
           alt={imageAlt}
           fill
           priority
-          className="object-cover object-[center_32%] lg:object-center"
+          className="hero-image object-cover object-[center_32%] lg:object-center"
           sizes="100vw"
         />
         <div className="hero-overlay" />
 
         <div className="hero-content">
           <div className="hero-copy">
+            {eyebrow ? <p className="hero-eyebrow">{eyebrow}</p> : null}
             <h1 className="hero-title heading-display text-white">{title}</h1>
             <p className="hero-subtitle">{subtitle}</p>
             <div className="hero-cta-slot">
