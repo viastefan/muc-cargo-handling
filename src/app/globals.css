@@ -2239,13 +2239,14 @@ a {
     position: absolute;
     justify-content: flex-end;
     min-height: 0;
-    padding: 1.5rem 1.15rem calc(1.35rem + 4.5rem);
+    padding: 2.25rem 1.15rem calc(1.15rem + 4.25rem);
     gap: 0;
   }
 
   .hero-copy {
     width: 100%;
     max-width: 100%;
+    margin-top: auto;
   }
 
   .hero-title {
@@ -2361,7 +2362,7 @@ a {
     /* Kompakter Hero auf dem Telefon — der Rahmen waechst per min-height
        mit, wenn ein Titel mehrzeilig ist; bei kurzem Titel keine grosse
        Leerflaeche mehr. */
-    --hero-min: 30rem;
+    --hero-min: 36rem;
     --hero-action-height: 3rem;
     --hero-action-toggle: 2.25rem;
     --hero-action-min-width: 13.25rem;
