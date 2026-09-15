@@ -160,6 +160,16 @@ body {
   .apple-nav__logo {
     height: 2.05rem !important;
   }
+
+  .site-header-wrap {
+    background: var(--background);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .hero-copy {
+    max-width: min(52rem, 92%);
+  }
 }
 
 /* Header-CTA als iOS-Kapsel statt voller Rasterzelle */
@@ -238,11 +248,11 @@ body {
   display: none;
 }
 
-@media (max-width: 1023px) {
-  .top-bar {
-    display: none;
-  }
+.top-bar {
+  display: none !important;
+}
 
+@media (max-width: 1023px) {
   .app-tabbar {
     display: block;
     position: fixed;
@@ -617,7 +627,13 @@ body {
     padding: 4rem 3.5rem 3.25rem;
   }
 
+  .hero-copy {
+    max-width: min(54rem, 92%);
+  }
+
   .hero-title {
+    width: 100%;
+    max-width: none;
     font-size: clamp(2.75rem, 4.4vw, 4.25rem);
   }
 
