@@ -164,7 +164,7 @@ export function TopicSelector({
   return (
     <fieldset>
       <legend className="form-label">Worum geht es?</legend>
-      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+      <div className="mt-3 grid grid-cols-2 gap-2">
         {options.map((opt) => {
           const selected = value === opt.id;
           return (
@@ -173,7 +173,7 @@ export function TopicSelector({
               type="button"
               onClick={() => onChange(opt.id)}
               aria-pressed={selected}
-              className={`min-h-[64px] rounded-[10px] border px-4 py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
+              className={`flex min-h-[64px] flex-col justify-start rounded-[10px] border px-3.5 py-3 sm:px-4 sm:py-3.5 text-left outline-none transition-[border-color,background-color,box-shadow,color] duration-200 ease-out ${
                 selected
                   ? "border-[var(--focus)] bg-[color-mix(in_srgb,var(--focus)_10%,var(--card))] text-[var(--foreground)] shadow-[0_0_0_1px_var(--focus)]"
                   : "border-transparent bg-[var(--surface)] text-[var(--foreground)] hover:bg-[var(--surface-2)] focus-visible:border-[var(--focus)] focus-visible:shadow-[0_0_0_3px_var(--focus-ring)]"

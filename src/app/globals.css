@@ -292,9 +292,8 @@ a {
   z-index: 51;
 }
 
-/* z-index nur noch innerhalb von .site-chrome: der Menue-Hintergrund
-   (.mobile-nav-backdrop, z-40) liegt im selben Stapelkontext und wuerde
-   sonst ueber den Leisten liegen. */
+/* z-index nur noch innerhalb von .site-chrome — das mobile Menue haengt
+   an der Kopfzeile und liegt im selben Stapelkontext. */
 .site-header-wrap {
   position: relative;
   z-index: 50;
@@ -447,79 +446,11 @@ a {
   outline-offset: 2px;
 }
 
-/* Kompakte Telefonbreiten-Zeile — per Default versteckt, ersetzt
-   .top-bar__items erst unter 640px (siehe Media Query unten). */
-.top-bar__mobile-row {
-  display: none;
-  flex: 1 1 auto;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 0;
-  gap: 0.75rem;
-}
-
-.top-bar__mobile-cert {
-  flex: 1 1 auto;
-  min-width: 0;
-  overflow: hidden;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.top-bar__mobile-actions {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.top-bar__mobile-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  flex-shrink: 0;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--card);
-  color: var(--foreground);
-  transition:
-    background-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
-}
-
-.top-bar__mobile-action svg {
-  width: 0.95rem;
-  height: 0.95rem;
-}
-
-.top-bar__mobile-action:hover {
-  background: var(--brand);
-  color: #ffffff;
-}
-
-@media (max-width: 639px) {
-  .top-bar__inner {
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  /* Die ausgeschriebene Variante (Label + voller Wert je Zeile) wurde auf
-     Telefonbreite zu einem dreizeiligen Textblock — Zulassung, Telefon
-     und E-Mail liefen je auf einer eigenen vollen Zeile untereinander
-     und fuellten einen Grossteil des ersten Bildschirms. Ersetzt durch
-     die kompakte Zeile oben (Zulassungsnummer + Icon-Ziele). */
-  .top-bar__items {
+/* Unter lg traegt die mobile Kopfzeile Telefon + Menue und das Menue die
+   Zulassung — eine zusaetzliche Leiste mit Icon-Kreisen war dort nur Unruhe. */
+@media (max-width: 1023px) {
+  .top-bar {
     display: none;
-  }
-
-  .top-bar__mobile-row {
-    display: flex;
   }
 }
 
@@ -2147,70 +2078,103 @@ a {
   margin: 0;
 }
 
-/* Mobile: CTA + phone stacked, left-aligned, full-bleed scaled */
+/* Mobile: Text und Aktionen unten verankert, beide Aktionen als eine Gruppe
+   (gleiche Hoehe, 8px Abstand) direkt unter dem Text. */
 @media (max-width: 1023px) {
-  /* Inhalt liegt im Fluss (nicht absolut) — der Rahmen waechst mit, wenn der
-     Titel mehrzeilig wird, statt oben unter die Kopfzeile geklemmt zu werden. */
   .hero-frame {
     height: auto;
   }
 
+  .hero-overlay {
+    background: linear-gradient(
+      to top,
+      rgb(0 0 0 / 0.82) 0%,
+      rgb(0 0 0 / 0.55) 45%,
+      rgb(0 0 0 / 0.22) 100%
+    );
+  }
+
   .hero-content {
     position: relative;
-    justify-content: space-between;
+    justify-content: flex-end;
     min-height: var(--hero-min);
-    /* Klarer Abstand unter der Kopfzeile. */
-    padding-top: 2.25rem;
-    /* +4.25rem wie in der unverschachtelten Basisregel — reserviert Platz
-       fuer den fixen Anfrage-Button (.lead-fab) unten rechts, sonst
-       ueberlappt er den Telefon-Pill am unteren Rand. */
-    padding-bottom: calc(var(--hero-pad-bottom-mobile) + 2.25rem);
-    gap: 1.75rem;
+    padding: 3rem var(--page-x) 1.5rem;
+    gap: 0;
   }
 
-  .hero-copy {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .hero-title {
-    width: 100%;
-    max-width: 100%;
-  }
-
+  .hero-copy,
+  .hero-title,
   .hero-subtitle {
     width: 100%;
     max-width: 100%;
   }
 
+  .hero-subtitle {
+    margin-top: 1rem;
+    font-size: 15px;
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.82);
+  }
+
   .hero-cta-slot {
     width: 100%;
     max-width: 100%;
-    margin-top: 1.9rem;
+    margin-top: 1.75rem;
   }
 
   .hero-cta-slot .hero-cta-btn.btn-corner--hero {
-    display: block;
     width: 100%;
     min-width: 0;
-    min-height: 3.5rem;
+    min-height: 3.25rem;
   }
 
   .hero-phone-slot {
     position: static;
     width: 100%;
     max-width: 100%;
-    margin-top: 0.75rem;
-    align-self: stretch;
+    margin-top: 0.5rem;
   }
 
+  /* Zweite Aktion als ruhige Glasflaeche statt dunkler Kachel. */
   .hero-phone-slot .phone-box-hero {
     display: flex;
     width: 100%;
     min-width: 0;
     max-width: none;
-    min-height: 3.5rem;
-    box-sizing: border-box;
+    min-height: 3.25rem;
+    gap: 0.625rem;
+    padding: 0 1rem;
+    border-radius: 0;
+    background: rgb(255 255 255 / 0.1);
+    color: #ffffff;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.24);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .hero-phone-slot .phone-box-hero:hover {
+    background: rgb(255 255 255 / 0.16);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.32);
+  }
+
+  .hero-phone-slot .phone-box-hero .phone-box-icon {
+    width: auto;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: #ffffff;
+  }
+
+  .hero-phone-slot .phone-box-hero .phone-box-label {
+    display: none;
+  }
+
+  .hero-phone-slot .phone-box-hero .phone-box-number {
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: #ffffff;
   }
 }
 
@@ -2226,7 +2190,7 @@ a {
   .hero-cta-slot,
   .hero-phone-slot {
     width: 100%;
-    max-width: 100%;
+    max-width: 26rem;
   }
 }
 
@@ -2306,9 +2270,9 @@ a {
   /* Hero-Titel auf schmalen Displays kleiner — 36px waren als 5-Zeiler zu
      wuchtig und liefen an die Kopfzeile. */
   .hero-title {
-    font-size: clamp(1.95rem, 8vw, 2.6rem);
-    line-height: 1.14;
-    letter-spacing: -0.028em;
+    font-size: clamp(1.875rem, 8vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
   }
 }
 
@@ -3411,6 +3375,49 @@ body:has(.cookie-banner) .faq-toc-fab {
   box-shadow: none;
 }
 
+/* Unter lg: Beschriftung links, Pfeil rechts, beide vertikal mittig. Die
+   Eck-Anordnung (Text unten links, Pfeil oben rechts) wirkte auf voller
+   Breite wie ein verrutschter Kasten. */
+@media (max-width: 1023px) {
+  .btn-corner {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .btn-corner--full,
+  .hero-cta-slot .hero-cta-btn.btn-corner--hero {
+    display: flex;
+  }
+
+  .btn-corner .btn-corner-label,
+  .btn-corner .btn-corner-icon {
+    position: static;
+  }
+
+  .btn-corner--md .btn-corner-label,
+  .btn-corner--hero .btn-corner-label {
+    font-size: 15px;
+  }
+
+  /* Pfeil zeigt in Leserichtung statt schraeg in die Ecke. */
+  .btn-corner .btn-corner-symbol,
+  .btn-motion:hover .btn-corner-symbol {
+    transform: none;
+  }
+}
+
+/* Offenes Menue verdeckt die Seite — schwebende Elemente gehoeren dann nicht
+   darueber. */
+body.menu-open :is(.lead-fab, .lead-teaser, .location-peek, .faq-toc-fab) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 /* Material Symbols – arrow_forward_ios */
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
@@ -3433,124 +3440,81 @@ body:has(.cookie-banner) .faq-toc-fab {
 
 /* Material icon base — positioning handled by .btn-corner-icon */
 
-/* Mobile nav */
-.mobile-nav-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  border: none;
-  padding: 0;
-  background: rgb(0 0 0 / 0.42);
-  opacity: 0;
-  pointer-events: none;
-  cursor: pointer;
-  transition: opacity 0.28s var(--ease-out);
+/* Mobile Kopfzeile */
+.mobile-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 4rem;
+  padding-inline: var(--page-x);
 }
 
-.mobile-nav-backdrop[data-open="true"] {
-  opacity: 1;
-  pointer-events: auto;
+.mobile-bar__logo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
-.mobile-nav-panel {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  transition: grid-template-rows var(--duration-normal) var(--ease-out);
+.mobile-bar__logo-img {
+  width: auto;
+  height: 2.125rem;
 }
 
-.mobile-nav-panel[data-open="false"] {
-  grid-template-rows: 0fr;
-  border-top: none;
+.mobile-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  /* Trefferflaeche 44px, optisch buendig mit dem Seitenrand. */
+  margin-right: -0.625rem;
 }
 
-.mobile-nav-panel[data-open="true"] {
-  grid-template-rows: 1fr;
-  border-top: 1px solid var(--border);
-}
-
-.mobile-nav-inner {
-  overflow: hidden;
-}
-
-.mobile-nav-item {
-  opacity: 0;
-  transform: translateY(-6px);
-  transition:
-    opacity var(--duration-normal) var(--ease-out),
-    transform var(--duration-normal) var(--ease-out);
-}
-
-.mobile-nav-panel[data-open="true"] .mobile-nav-item {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(1) { transition-delay: 40ms; }
-.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(2) { transition-delay: 70ms; }
-.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(3) { transition-delay: 100ms; }
-.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(4) { transition-delay: 130ms; }
-.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(5) { transition-delay: 160ms; }
-
-@media (prefers-reduced-motion: reduce) {
-  .mobile-nav-backdrop,
-  .mobile-nav-panel,
-  .mobile-nav-item {
-    transition: none;
-  }
-}
-
-/*
- * Menue-Umschalter: zwei Striche statt drei, die sich zum X drehen.
- * Ruhiger als der klassische Burger und laesst sich sauber animieren,
- * weil kein Strich ausgeblendet werden muss.
- */
-/* Menü-Umschalter — „Squircle"-Button im selben Formsystem wie die
-   Icon-Kacheln (feature-card__icon) und das Admin-Panel. Zwei kräftige
-   Striche, die sich sauber zum X drehen. */
+.mobile-bar__icon,
 .menu-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--card);
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    background-color var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out),
-    transform var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
+.mobile-bar__icon:active,
 .menu-toggle:active {
-  transform: scale(0.94);
-}
-
-.menu-toggle[aria-expanded="true"] {
   background: var(--surface-2);
-  border-color: var(--surface-3);
 }
 
+.mobile-bar__icon-svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Zwei feine Striche, der untere kuerzer — drehen sich zum X. */
 .menu-toggle__box {
   position: relative;
-  width: 1.05rem;
-  height: 0.7rem;
+  width: 1.375rem;
+  height: 0.5rem;
 }
 
 .menu-toggle-line {
   position: absolute;
-  left: 0;
+  right: 0;
   display: block;
-  height: 2px;
   width: 100%;
-  border-radius: 2px;
-  background: var(--foreground);
+  height: 1.5px;
+  border-radius: 1px;
+  background: currentColor;
+  transform-origin: center;
   transition:
     transform var(--duration-normal) var(--ease-in-out),
     width var(--duration-normal) var(--ease-in-out);
-  transform-origin: center;
 }
 
 .menu-toggle-line:first-child {
@@ -3559,14 +3523,151 @@ body:has(.cookie-banner) .faq-toc-fab {
 
 .menu-toggle-line:last-child {
   bottom: 0;
+  width: 64%;
 }
 
 .menu-toggle[aria-expanded="true"] .menu-toggle-line:first-child {
-  transform: translateY(5px) rotate(45deg);
+  transform: translateY(3.25px) rotate(45deg);
 }
 
 .menu-toggle[aria-expanded="true"] .menu-toggle-line:last-child {
-  transform: translateY(-5px) rotate(-45deg);
+  width: 100%;
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* Mobiles Menue: volle Hoehe unter der Kopfzeile. */
+.mobile-nav-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  height: calc(100dvh - 4rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out),
+    visibility 0s linear var(--duration-normal);
+}
+
+.mobile-nav-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0.5rem var(--page-x) calc(1.5rem + env(safe-area-inset-bottom));
+}
+
+.mobile-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.05rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.3125rem;
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.mobile-nav__link.is-active {
+  color: var(--brand-text);
+}
+
+.mobile-nav__arrow.btn-corner-symbol {
+  color: var(--muted-light);
+  transform: none;
+}
+
+.mobile-nav__link.is-active .mobile-nav__arrow.btn-corner-symbol {
+  color: currentColor;
+}
+
+.mobile-nav__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+.mobile-nav__contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.mobile-nav__contact-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--ring-subtle);
+  font-size: 15px;
+  color: var(--foreground);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.mobile-nav__contact-link:active {
+  background: var(--surface-2);
+}
+
+.mobile-nav__cert {
+  margin-top: 0.75rem;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--muted-light);
+}
+
+.mobile-nav-item {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
+}
+
+.mobile-nav-panel[data-open="true"] .mobile-nav-item {
+  opacity: 1;
+  transform: none;
+}
+
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(1) { transition-delay: 30ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(2) { transition-delay: 60ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(3) { transition-delay: 90ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(4) { transition-delay: 120ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav-item:nth-child(5) { transition-delay: 150ms; }
+.mobile-nav-panel[data-open="true"] .mobile-nav__footer { transition-delay: 180ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-panel,
+  .mobile-nav-item,
+  .menu-toggle-line {
+    transition: none;
+  }
 }
 
 /*
@@ -3768,6 +3869,39 @@ textarea.field__control {
 
 .form-section--tight {
   border-bottom: none;
+}
+
+/* Telefonbreite: kein Kasten hinter den Feldern — die Felder nutzen die
+   volle Inhaltsbreite, Abschnitte trennt nur eine Haarlinie. */
+@media (max-width: 639px) {
+  .form-shell {
+    margin-top: 2rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .form-section {
+    padding: 0 0 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .form-section--tight {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .form-actions {
+    align-items: stretch;
+    margin-top: 1.75rem;
+    padding: 0;
+    border-top: 0;
+    background: transparent;
+  }
+
+  .form-actions__hint {
+    max-width: none;
+    text-align: center;
+  }
 }
 
 .form-success {
@@ -4727,8 +4861,7 @@ textarea.field__control {
     gap: 0;
   }
 
-  .top-bar__close,
-  .top-bar__mobile-action {
+  .top-bar__close {
     width: 2.5rem;
     height: 2.5rem;
   }
