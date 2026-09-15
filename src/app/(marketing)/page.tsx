@@ -36,12 +36,7 @@ export default function HomePage() {
       <Hero
         image="/images/home/hero.jpg"
         eyebrow="Seit 2003 · Flughafen München"
-        title={
-          <>
-            Präzise Abwicklung und Sicherheit für Ihre
-            <br className="max-lg:hidden" /> Luftfracht am Flughafen München
-          </>
-        }
+        title="Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München"
         subtitle="Mit strukturierten Abläufen, erfahrenem Personal und hohen Qualitätsstandards begleiten wir Ihre Sendungen – von der Annahme bis zur Sicherheitskontrolle."
       />
 

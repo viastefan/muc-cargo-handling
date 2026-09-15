@@ -39,14 +39,12 @@ export function Hero({
             {eyebrow ? <p className="hero-eyebrow">{eyebrow}</p> : null}
             <h1 className="hero-title heading-display text-white">{title}</h1>
             <p className="hero-subtitle">{subtitle}</p>
-            <div className="hero-cta-slot">
+            <div className="hero-actions">
               <Button href={ctaHref} variant="primary" size="hero" className="hero-cta-btn">
                 {ctaLabel}
               </Button>
+              <PhoneBox variant="hero" />
             </div>
-          </div>
-          <div className="hero-phone-slot">
-            <PhoneBox variant="hero" />
           </div>
         </div>
       </div>
