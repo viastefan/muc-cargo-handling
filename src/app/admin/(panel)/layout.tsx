@@ -3,6 +3,7 @@ import { requireAdmin } from "@/lib/admin-session";
 import { inquiriesStorageReady } from "@/lib/inquiries";
 import { logoutAction } from "./actions";
 import { AccountMenu } from "./AccountMenu";
+import { AdminTabBar } from "./AdminTabBar";
 
 export default async function PanelLayout({
   children,
@@ -10,6 +11,7 @@ export default async function PanelLayout({
   children: React.ReactNode;
 }) {
   const principal = await requireAdmin();
+  const isAdmin = principal.role === "admin";
 
   return (
     <div className="admin-shell">
@@ -17,12 +19,14 @@ export default async function PanelLayout({
         <div className="admin-bar__left">
           <Link href="/admin" className="admin-bar__brand">
             <span className="admin-bar__brand-full">MUC Cargohandling</span>
-            <span className="admin-bar__brand-short" aria-hidden="true">MUC</span>
+            <span className="admin-bar__brand-short" aria-hidden="true">
+              Anfragen
+            </span>
             <span className="admin-bar__brand-tag">Anfragen</span>
           </Link>
           <nav className="admin-nav">
             <Link href="/admin">Anfragen</Link>
-            {principal.role === "admin" ? (
+            {isAdmin ? (
               <>
                 <Link href="/admin/team">Team</Link>
                 <Link href="/admin/system">Einrichtung</Link>
@@ -31,7 +35,11 @@ export default async function PanelLayout({
           </nav>
         </div>
         <div className="admin-bar__actions">
-          <a href="/api/admin/export" className="admin-btn admin-btn--sm" download>
+          <a
+            href="/api/admin/export"
+            className="admin-btn admin-btn--sm admin-bar__export"
+            download
+          >
             CSV
           </a>
           <AccountMenu
@@ -63,6 +71,8 @@ export default async function PanelLayout({
 
         {children}
       </main>
+
+      <AdminTabBar isAdmin={isAdmin} />
     </div>
   );
 }
