@@ -8,6 +8,7 @@
  */
 
 import { sendPush, type PushSubscriptionKeys } from "@/lib/push-crypto";
+import { withRetry } from "@/lib/retry";
 
 const RAW_URL = process.env.SUPABASE_URL?.trim().replace(/\/+$/, "") ?? "";
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ?? "";
@@ -84,30 +85,74 @@ export async function removeSubscription(endpoint: string): Promise<void> {
 export async function listSubscriptions(): Promise<PushSubscriptionRecord[]> {
   if (!pushReady) return [];
   try {
-    const params = new URLSearchParams({
-      select: "id,endpoint,p256dh,auth,label,created_at",
-      order: "created_at.desc",
-      limit: "100",
+    return await withRetry(async () => {
+      const params = new URLSearchParams({
+        select: "id,endpoint,p256dh,auth,label,created_at",
+        order: "created_at.desc",
+        limit: "100",
+      });
+      const res = await rest(`/push_subscriptions?${params.toString()}`);
+      const rows = (await res.json()) as {
+        id: string;
+        endpoint: string;
+        p256dh: string;
+        auth: string;
+        label: string | null;
+        created_at: string;
+      }[];
+      return rows.map((r) => ({
+        id: r.id,
+        endpoint: r.endpoint,
+        p256dh: r.p256dh,
+        auth: r.auth,
+        label: r.label,
+        createdAt: r.created_at,
+      }));
     });
-    const res = await rest(`/push_subscriptions?${params.toString()}`);
-    const rows = (await res.json()) as {
-      id: string;
-      endpoint: string;
-      p256dh: string;
-      auth: string;
-      label: string | null;
-      created_at: string;
-    }[];
-    return rows.map((r) => ({
-      id: r.id,
-      endpoint: r.endpoint,
-      p256dh: r.p256dh,
-      auth: r.auth,
-      label: r.label,
-      createdAt: r.created_at,
-    }));
   } catch {
     return [];
+  }
+}
+
+const MAX_FAIL_COUNT = 5;
+
+/**
+ * Schreibt fail_count/last_ok_at fort — bisher in der Datenbank vorgesehene,
+ * aber nie befüllte Spalten. Ein Gerät, dessen Push-Dienst nie sauber
+ * 404/410 ("gone") meldet, aber dauerhaft fehlschlägt, wird so trotzdem nach
+ * ein paar Versuchen als tot erkannt statt für immer angeschrieben zu
+ * bleiben.
+ */
+async function recordDeliveryOutcome(endpoint: string, ok: boolean): Promise<void> {
+  if (!pushReady) return;
+  try {
+    if (ok) {
+      await rest(`/push_subscriptions?endpoint=eq.${encodeURIComponent(endpoint)}`, {
+        method: "PATCH",
+        prefer: "return=minimal",
+        body: JSON.stringify({ last_ok_at: new Date().toISOString(), fail_count: 0 }),
+      });
+      return;
+    }
+    const params = new URLSearchParams({
+      endpoint: `eq.${endpoint}`,
+      select: "fail_count",
+      limit: "1",
+    });
+    const res = await rest(`/push_subscriptions?${params.toString()}`);
+    const rows = (await res.json()) as { fail_count: number }[];
+    const failCount = (rows[0]?.fail_count ?? 0) + 1;
+    if (failCount >= MAX_FAIL_COUNT) {
+      await removeSubscription(endpoint);
+    } else {
+      await rest(`/push_subscriptions?endpoint=eq.${encodeURIComponent(endpoint)}`, {
+        method: "PATCH",
+        prefer: "return=minimal",
+        body: JSON.stringify({ fail_count: failCount }),
+      });
+    }
+  } catch {
+    /* nicht kritisch — beim naechsten Versand erneut versucht */
   }
 }
 
@@ -138,7 +183,11 @@ export async function broadcastPush(message: PushMessage): Promise<{ sent: numbe
   const results = await Promise.allSettled(
     subscriptions.map(async (subscription) => {
       const result = await sendPush(subscription, payload, vapid);
-      if (result.gone) await removeSubscription(subscription.endpoint);
+      if (result.gone) {
+        await removeSubscription(subscription.endpoint);
+      } else {
+        await recordDeliveryOutcome(subscription.endpoint, result.ok);
+      }
       return result;
     }),
   );

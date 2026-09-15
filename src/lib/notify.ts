@@ -7,6 +7,15 @@ import {
 } from "@/lib/email-templates";
 import { TOPIC_LABEL } from "@/lib/inquiries";
 import { broadcastPush, pushReady, type PushMessage } from "@/lib/push";
+import { NonRetryableError, withRetry } from "@/lib/retry";
+
+/** 4xx (ausser 429 Rate-Limit) sind durch Wiederholen nicht loesbar. */
+function throwForFailedResponse(service: string, status: number, body: string): never {
+  if (status >= 400 && status < 500 && status !== 429) {
+    throw new NonRetryableError(`${service} ${status}: ${body.slice(0, 200)}`);
+  }
+  throw new Error(`${service} ${status}: ${body.slice(0, 200)}`);
+}
 
 /**
  * Zustellkanäle für neue Anfragen. Alles ist optional und wird über
@@ -30,9 +39,11 @@ const MAIL_FROM =
   `${COMPANY.brandName} <onboarding@resend.dev>`;
 const MAIL_REPLY_TO = process.env.MAIL_REPLY_TO?.trim();
 
-const NOTIFY_TO = splitList(
-  process.env.INQUIRY_NOTIFY_TO ?? `${COMPANY.email},stefandirnberger@viawen.com`,
-);
+// Kein hart codierter Zusatz-Empfaenger mehr: eine vergessene/verlorene
+// INQUIRY_NOTIFY_TO-Variable in einer Deployment-Umgebung darf Kunden-PII
+// nicht still an eine feste persoenliche Adresse zustellen. Wer eine Kopie
+// will, traegt sie explizit in INQUIRY_NOTIFY_TO ein (siehe .env.example).
+const NOTIFY_TO = splitList(process.env.INQUIRY_NOTIFY_TO ?? COMPANY.email);
 const SMS_TO = splitList(process.env.INQUIRY_SMS_TO ?? "");
 
 const TWILIO_SID = process.env.TWILIO_ACCOUNT_SID?.trim();
@@ -83,26 +94,25 @@ async function sendEmail(params: {
 }): Promise<ChannelResult> {
   if (!RESEND_API_KEY || params.to.length === 0) return "skipped";
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: MAIL_FROM,
-        to: params.to,
-        subject: params.subject,
-        html: params.html,
-        text: params.text,
-        ...(params.replyTo ? { reply_to: params.replyTo } : {}),
-      }),
+    await withRetry(async () => {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+        headers: {
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: MAIL_FROM,
+          to: params.to,
+          subject: params.subject,
+          html: params.html,
+          text: params.text,
+          ...(params.replyTo ? { reply_to: params.replyTo } : {}),
+        }),
+      });
+      if (!res.ok) throwForFailedResponse("resend", res.status, await res.text().catch(() => ""));
     });
-    if (!res.ok) {
-      console.error("[notify] resend failed", res.status, await res.text().catch(() => ""));
-      return "failed";
-    }
     return "sent";
   } catch (error) {
     console.error("[notify] resend error", error);
@@ -118,24 +128,23 @@ async function sendSms(body: string): Promise<ChannelResult> {
   let anyFailed = false;
   for (const to of SMS_TO) {
     try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-        headers: {
-          Authorization: `Basic ${auth}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          To: to,
-          From: TWILIO_FROM as string,
-          Body: body.slice(0, 480),
-        }),
+      await withRetry(async () => {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          signal: AbortSignal.timeout(TIMEOUT_MS),
+          headers: {
+            Authorization: `Basic ${auth}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            To: to,
+            From: TWILIO_FROM as string,
+            Body: body.slice(0, 480),
+          }),
+        });
+        if (!res.ok) throwForFailedResponse("twilio", res.status, await res.text().catch(() => ""));
       });
-      if (res.ok) anySent = true;
-      else {
-        anyFailed = true;
-        console.error("[notify] twilio failed", res.status, await res.text().catch(() => ""));
-      }
+      anySent = true;
     } catch (error) {
       anyFailed = true;
       console.error("[notify] twilio error", error);
@@ -147,13 +156,16 @@ async function sendSms(body: string): Promise<ChannelResult> {
 async function postWebhook(payload: unknown): Promise<ChannelResult> {
   if (!WEBHOOK_URL) return "skipped";
   try {
-    const res = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+    await withRetry(async () => {
+      const res = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        signal: AbortSignal.timeout(TIMEOUT_MS),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throwForFailedResponse("webhook", res.status, await res.text().catch(() => ""));
     });
-    return res.ok ? "sent" : "failed";
+    return "sent";
   } catch (error) {
     console.error("[notify] webhook error", error);
     return "failed";

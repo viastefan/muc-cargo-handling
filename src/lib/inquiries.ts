@@ -15,6 +15,8 @@
  * weitergereicht.
  */
 
+import { withRetry } from "@/lib/retry";
+
 const RAW_URL = process.env.SUPABASE_URL?.trim().replace(/\/+$/, "") ?? "";
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim() ?? "";
 
@@ -194,7 +196,7 @@ export async function listInquiries(
 ): Promise<{ rows: InquiryRecord[]; total: number; error?: string }> {
   if (!inquiriesStorageReady) return { rows: [], total: 0 };
   try {
-    return await listInquiriesUnsafe(query);
+    return await withRetry(() => listInquiriesUnsafe(query));
   } catch (error) {
     console.error("[inquiries] list failed", error);
     return { rows: [], total: 0, error: String(error) };
@@ -247,7 +249,7 @@ async function listInquiriesUnsafe(
 export async function getInquiry(reference: string): Promise<InquiryRecord | null> {
   if (!inquiriesStorageReady) return null;
   try {
-    return await getInquiryUnsafe(reference);
+    return await withRetry(() => getInquiryUnsafe(reference));
   } catch (error) {
     console.error("[inquiries] get failed", error);
     return null;
@@ -346,33 +348,43 @@ export async function logInquiryEvent(
 export async function listInquiryEvents(reference: string): Promise<InquiryEvent[]> {
   if (!inquiriesStorageReady) return [];
   try {
-    const params = new URLSearchParams({
-      select: "id,created_at,actor_name,kind,detail",
-      inquiry_ref: `eq.${cleanRef(reference)}`,
-      order: "created_at.desc",
-      limit: "50",
+    return await withRetry(async () => {
+      const params = new URLSearchParams({
+        select: "id,created_at,actor_name,kind,detail",
+        inquiry_ref: `eq.${cleanRef(reference)}`,
+        order: "created_at.desc",
+        limit: "50",
+      });
+      const res = await rest(`/inquiry_events?${params.toString()}`);
+      const rows = (await res.json()) as {
+        id: number;
+        created_at: string;
+        actor_name: string;
+        kind: InquiryEvent["kind"];
+        detail: string | null;
+      }[];
+      return rows.map((r) => ({
+        id: r.id,
+        createdAt: r.created_at,
+        actorName: r.actor_name,
+        kind: r.kind,
+        detail: r.detail,
+      }));
     });
-    const res = await rest(`/inquiry_events?${params.toString()}`);
-    const rows = (await res.json()) as {
-      id: number;
-      created_at: string;
-      actor_name: string;
-      kind: InquiryEvent["kind"];
-      detail: string | null;
-    }[];
-    return rows.map((r) => ({
-      id: r.id,
-      createdAt: r.created_at,
-      actorName: r.actor_name,
-      kind: r.kind,
-      detail: r.detail,
-    }));
   } catch {
     return [];
   }
 }
 
-/** Anfrage endgültig löschen (DSGVO — nach abgeschlossener Bearbeitung). */
+/**
+ * Anfrage endgültig löschen (DSGVO — nach abgeschlossener Bearbeitung).
+ * Seit Migration 0005 entfernt die Datenbank Verlaufseinträge selbst per
+ * ON DELETE CASCADE; der zweite Aufruf hier ist nur noch ein Sicherheitsnetz
+ * für Umgebungen, in denen diese Migration noch nicht gelaufen ist (dann wie
+ * zuvor: still verschluckt statt den Löschvorgang selbst scheitern zu
+ * lassen). Sobald die Migration ueberall gelaufen ist, findet er nichts mehr
+ * und kann entfernt werden.
+ */
 export async function deleteInquiry(reference: string): Promise<boolean> {
   if (!inquiriesStorageReady) return false;
   const ref = cleanRef(reference);
@@ -381,7 +393,6 @@ export async function deleteInquiry(reference: string): Promise<boolean> {
       method: "DELETE",
       prefer: "return=minimal",
     });
-    // Verlaufseinträge derselben Referenz mitentfernen.
     await rest(`/inquiry_events?inquiry_ref=eq.${ref}`, {
       method: "DELETE",
       prefer: "return=minimal",
@@ -406,7 +417,7 @@ export async function inquiryStats(): Promise<InquiryStats> {
   const empty = { total: 0, new: 0, inProgress: 0, done: 0, archived: 0, last7Days: 0 };
   if (!inquiriesStorageReady) return empty;
   try {
-    return await inquiryStatsUnsafe();
+    return await withRetry(() => inquiryStatsUnsafe());
   } catch (error) {
     console.error("[inquiries] stats failed", error);
     return empty;
