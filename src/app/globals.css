@@ -5126,7 +5126,7 @@ textarea.field__control {
   }
 }
 
-/* Footer CTA — runder Abschluss-Container, ohne Rot-Verlauf */
+/* Footer CTA — roter Abschluss-Container mit Weltkugel (runde Ecken) */
 .footer-cta {
   --footer-cta-inset-y: clamp(2.5rem, 5vw, 3.5rem);
   position: relative;
@@ -5151,9 +5151,22 @@ textarea.field__control {
   padding: var(--footer-cta-inset-y) clamp(1.5rem, 4vw, 2.75rem);
   grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: none;
   border-radius: var(--radius-container);
-  background: var(--card);
+  background: var(--brand-sheen);
+  color: #fff;
+}
+
+.footer-cta__layout::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: var(--grain-image);
+  background-size: 180px 180px;
 }
 
 @media (min-width: 768px) {
@@ -5188,7 +5201,7 @@ textarea.field__control {
   font-size: clamp(1.5rem, 3.2vw, 2.25rem);
   line-height: 1.2;
   letter-spacing: -0.026em;
-  color: var(--foreground);
+  color: #fff;
 }
 
 .footer-cta__description {
@@ -5197,7 +5210,7 @@ textarea.field__control {
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: -0.01em;
-  color: var(--muted);
+  color: rgb(255 255 255 / 0.9);
 }
 
 .footer-cta__action {
@@ -5244,7 +5257,7 @@ textarea.field__control {
 .footer-cta__globe {
   object-fit: contain;
   object-position: right bottom;
-  opacity: 0.22;
+  opacity: 1;
   transition: transform var(--duration-normal) var(--ease-out);
 }
 
