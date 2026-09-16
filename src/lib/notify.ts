@@ -2,6 +2,7 @@ import { COMPANY } from "@/lib/company";
 import { SITE_URL } from "@/lib/site";
 import {
   customerConfirmationEmail,
+  customerReplyEmail,
   teamNotificationEmail,
   type InquiryEmailData,
 } from "@/lib/email-templates";
@@ -45,6 +46,8 @@ export const emailReady = Boolean(RESEND_API_KEY);
 export const smsReady = Boolean(
   TWILIO_SID && TWILIO_TOKEN && TWILIO_FROM && SMS_TO.length,
 );
+export const webhookReady = Boolean(WEBHOOK_URL);
+export const mailFromIsOnboarding = /onboarding@resend\.dev/i.test(MAIL_FROM);
 
 function splitList(value: string): string[] {
   return value
@@ -62,6 +65,10 @@ export type NotifyResult = {
   webhook: ChannelResult;
   push: ChannelResult;
 };
+
+export type ReplySendResult =
+  | { ok: true }
+  | { ok: false; reason: "not_configured" | "failed" };
 
 async function sendPushNotification(message: PushMessage): Promise<ChannelResult> {
   if (!pushReady) return "skipped";
@@ -142,6 +149,37 @@ async function sendSms(body: string): Promise<ChannelResult> {
     }
   }
   return anySent ? "sent" : anyFailed ? "failed" : "skipped";
+}
+
+/**
+ * Direkte Kundenantwort aus dem Panel (Resend). Ohne API-Key: not_configured.
+ */
+export async function sendCustomerReply(params: {
+  to: string;
+  reference: string;
+  name: string;
+  body: string;
+  actorName: string;
+}): Promise<ReplySendResult> {
+  if (!emailReady) return { ok: false, reason: "not_configured" };
+
+  const mail = customerReplyEmail({
+    reference: params.reference,
+    name: params.name,
+    body: params.body,
+    actorName: params.actorName,
+  });
+
+  const result = await sendEmail({
+    to: [params.to],
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+    replyTo: MAIL_REPLY_TO || COMPANY.email,
+  });
+
+  if (result === "sent") return { ok: true };
+  return { ok: false, reason: "failed" };
 }
 
 async function postWebhook(payload: unknown): Promise<ChannelResult> {

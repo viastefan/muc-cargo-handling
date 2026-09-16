@@ -5,6 +5,7 @@ import { FooterCta } from "@/components/Footer";
 import { Button } from "@/components/Button";
 import { Hero } from "@/components/Hero";
 import { ImageCtaBand } from "@/components/ImageCtaBand";
+import { LocationMap } from "@/components/LocationMap";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
@@ -12,7 +13,8 @@ import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
-import { COMPANY } from "@/lib/company";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
+import { COMPANY, MAPS_EMBED } from "@/lib/company";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
 import {
@@ -22,20 +24,30 @@ import {
   HOME_TEAM_INTRO,
   SECURITY_METHODS,
 } from "@/lib/home";
+import { pageMeta } from "@/lib/seo";
 
-// Titel kommt aus dem `default` in app/layout.tsx – hier nicht wiederholen.
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+export const metadata: Metadata = pageMeta({
+  path: "/",
+  bareTitle: true,
+  title: "MUC Cargohandling | Luftfracht am Flughafen München",
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
-};
+});
 
 export default function HomePage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[{ name: "Startseite", path: "/" }]}
+      />
       <Hero
         image="/images/home/hero.jpg"
-        eyebrow="Seit 2003 · Flughafen München"
+        images={[
+          "/images/home/hero.jpg",
+          "/images/airline-handling/cargo-tarmac.jpg",
+          "/images/home/team-band.jpg",
+          "/images/airline-handling/aircraft-loading.jpg",
+        ]}
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
@@ -128,6 +140,24 @@ export default function HomePage() {
       <ScrollReveal variant="fade" duration={1100}>
         <SecurityOverview items={SECURITY_METHODS} />
       </ScrollReveal>
+
+      <PageSection id="standort" compact>
+        <ScrollReveal duration={1000}>
+          <SectionHeader
+            eyebrow="Standort"
+            dark="Direkt am"
+            light="Flughafen München"
+            breakTitle={false}
+            description="Kurze Wege zum Cargo-Drehkreuz – für effiziente Abläufe und schnelle Abstimmung vor Ort."
+            descriptionClassName="max-w-xl"
+          />
+        </ScrollReveal>
+        <ScrollReveal delay={140} duration={1100}>
+          <div className="section-header-gap">
+            <LocationMap embedSrc={MAPS_EMBED} />
+          </div>
+        </ScrollReveal>
+      </PageSection>
 
       <PageSection muted compact id="faq">
         <div className="faq-home">

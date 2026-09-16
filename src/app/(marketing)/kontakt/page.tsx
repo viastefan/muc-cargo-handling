@@ -6,14 +6,21 @@ import { LocationMap } from "@/components/LocationMap";
 import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
+import {
+  BreadcrumbStructuredData,
+  ContactPageStructuredData,
+} from "@/components/StructuredData";
 import { COMPANY, MAPS_EMBED } from "@/lib/company";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/kontakt" },
+const DESCRIPTION =
+  "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/kontakt",
   title: "Kontakt",
-  description:
-    "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
-};
+  description: DESCRIPTION,
+});
 
 const CONTACT = [
   {
@@ -64,9 +71,20 @@ const CONTACT = [
 export default function KontaktPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Kontakt", path: "/kontakt" },
+        ]}
+      />
+      <ContactPageStructuredData />
       <Hero
         image="/images/kontakt/hero.jpg"
-        eyebrow="Kontakt"
+        images={[
+          "/images/kontakt/hero.jpg",
+          "/images/unternehmen/hero.jpg",
+          "/images/home/team-band.jpg",
+        ]}
         title="Schreiben Sie uns"
         subtitle="Schildern Sie kurz Ihr Anliegen – wir melden uns zeitnah mit den nächsten Schritten für Ihre Luftfracht am Flughafen München."
         ctaHref="#anfrage"
@@ -85,7 +103,7 @@ export default function KontaktPage() {
 
           <aside className="lg:pt-2" id="standort">
             <div className="sticky top-24 space-y-4">
-              <div className="border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
+              <div className="surface-card p-6 md:p-8">
                 <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
                   Direktkontakt
                 </p>
@@ -115,7 +133,7 @@ export default function KontaktPage() {
                 </p>
               </div>
 
-              <div className="border border-[var(--border)] bg-[var(--card)] p-6 md:p-8">
+              <div className="surface-card surface-card--raised p-6 md:p-8">
                 <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
                   Zertifizierung
                 </p>

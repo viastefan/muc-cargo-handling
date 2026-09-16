@@ -28,6 +28,16 @@ export const COMPANY = {
   /** Exakte Bürokoordinaten – der Google-Places-Eintrag sitzt derzeit falsch. */
   coordinates: { lat: 48.350443, lng: 11.767121 },
   /**
+   * Google Place ID des Unternehmensprofils (Google Business Profile).
+   * Über `GOOGLE_PLACE_ID` / `NEXT_PUBLIC_GOOGLE_PLACE_ID` setzen, sobald der
+   * korrekte Places-Eintrag klaimt und die Koordinaten stimmen. Ohne Wert
+   * verlinken wir nur über Koordinaten (hasMap) — besser als ein falscher Pin.
+   */
+  googlePlaceId:
+    process.env.GOOGLE_PLACE_ID?.trim() ||
+    process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim() ||
+    "",
+  /**
    * Bürozeiten für die Live-Statusanzeige („Jetzt geöffnet" / „Geschlossen").
    * Werktags mo–fr; Wochenende geschlossen. Zeitzone Europe/Berlin.
    *
@@ -63,6 +73,14 @@ const { lat, lng } = COMPANY.coordinates;
 export const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${lat}%2C${lng}`;
 
 export const MAPS_EMBED = `https://maps.google.com/maps?q=${lat},${lng}&z=17&hl=de&ie=UTF8&iwloc=&output=embed`;
+
+/**
+ * Google-Maps-URL mit Place ID — für schema.org `hasMap` / `sameAs`.
+ * Ohne Place ID fällt auf die Koordinaten-URL zurück.
+ */
+export const MAPS_PLACE_URL = COMPANY.googlePlaceId
+  ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.legalName)}&query_place_id=${encodeURIComponent(COMPANY.googlePlaceId)}`
+  : MAPS_LINK;
 
 export const FOOTER_NAV = [
   { label: "Unternehmen", href: "/unternehmen" },
