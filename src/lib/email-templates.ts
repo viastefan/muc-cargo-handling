@@ -178,3 +178,46 @@ ${adminButton}`;
   ].join("\n");
   return { subject, html: shell(subject, inner), text };
 }
+
+/* --------------------------------------------------------- Panel-Antwort --- */
+
+export function customerReplyEmail(data: {
+  reference: string;
+  name: string;
+  body: string;
+  actorName: string;
+}): { subject: string; html: string; text: string } {
+  const subject = `Ihre Anfrage ${data.reference} — ${COMPANY.brandName}`;
+  const inner = `
+<tr><td style="padding:30px 32px 8px;">
+<h1 style="margin:0 0 12px;font-size:20px;font-weight:600;color:${INK};letter-spacing:-.01em;">Antwort zu Ihrer Anfrage</h1>
+<p style="margin:0 0 6px;font-size:14px;line-height:1.65;color:${MUTED};">
+Guten Tag ${esc(data.name)}, hier die Rückmeldung zu Ihrer Anfrage
+<span style="color:${INK};font-weight:500;">${esc(data.reference)}</span>.
+</p>
+</td></tr>
+<tr><td style="padding:12px 32px 6px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fafafa;border:1px solid ${BORDER};border-radius:10px;">
+<tr><td style="padding:18px 20px;font-size:14px;line-height:1.7;color:${INK};white-space:pre-wrap;">${esc(data.body)}</td></tr>
+</table>
+</td></tr>
+<tr><td style="padding:22px 32px 30px;">
+<p style="margin:0;font-size:13px;line-height:1.65;color:${MUTED};">
+${esc(data.actorName)} · ${esc(COMPANY.legalName)}<br>
+Bei Rückfragen antworten Sie einfach auf diese E-Mail oder rufen Sie uns an unter
+<a href="tel:${COMPANY.phoneTel}" style="color:${INK};font-weight:500;">${esc(COMPANY.phoneDisplay)}</a>.
+</p>
+</td></tr>`;
+  const text = [
+    `Antwort zu Ihrer Anfrage ${data.reference}`,
+    ``,
+    `Guten Tag ${data.name},`,
+    ``,
+    data.body,
+    ``,
+    `—`,
+    `${data.actorName} · ${COMPANY.legalName}`,
+    `Tel. ${COMPANY.phoneDisplay} · ${COMPANY.email}`,
+  ].join("\n");
+  return { subject, html: shell(subject, inner), text };
+}

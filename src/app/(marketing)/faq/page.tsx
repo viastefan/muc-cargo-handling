@@ -2,19 +2,29 @@ import type { Metadata } from "next";
 import { FaqDirectory } from "@/components/FaqDirectory";
 import { FooterCta } from "@/components/Footer";
 import { PageSection, SectionHeader } from "@/components/PageSection";
-import { FaqStructuredData } from "@/components/StructuredData";
+import {
+  BreadcrumbStructuredData,
+  FaqStructuredData,
+} from "@/components/StructuredData";
 import { FAQ_CATEGORIES } from "@/lib/faq";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/faq" },
+export const metadata: Metadata = pageMeta({
+  path: "/faq",
   title: "FAQ",
   description:
     "Häufige Fragen zu Luftfracht, Airline Handling und Sicherheitskontrollen am Flughafen München – Antworten von MUC Cargohandling.",
-};
+});
 
 export default function FaqPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "FAQ", path: "/faq" },
+        ]}
+      />
       <FaqStructuredData
         items={FAQ_CATEGORIES.flatMap((category) => category.items)}
       />
