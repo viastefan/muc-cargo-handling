@@ -52,9 +52,9 @@
   --icon-tile-border: #dedede;
   --icon-tile-ink: #3d3d3d;
   --page-x: 1.5rem;
-  --hero-inset-x: 6px;
-  --hero-inset-top: 12px;
-  --radius-hero: 16px;
+  --hero-inset-x: 0;
+  --hero-inset-top: 0;
+  --radius-hero: 0;
   --radius-container: 14px;
   --section-y: 4rem;
   --section-header-gap: 2.75rem;
