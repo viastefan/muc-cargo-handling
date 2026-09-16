@@ -103,6 +103,11 @@ export default function UnternehmenPage() {
     <>
       <Hero
         image="/images/unternehmen/hero.jpg"
+        images={[
+          "/images/unternehmen/hero.jpg",
+          "/images/home/team-band.jpg",
+          "/images/airline-handling/warehouse-check.jpg",
+        ]}
         title="Über MUC Cargohandling"
         subtitle="Mit Erfahrung, strukturierten Abläufen und höchsten Qualitätsstandards sorgen wir für eine sichere, effiziente und transparente Abwicklung Ihrer Sendungen am Flughafen München."
       />

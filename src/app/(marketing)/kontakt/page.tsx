@@ -66,6 +66,11 @@ export default function KontaktPage() {
     <>
       <Hero
         image="/images/kontakt/hero.jpg"
+        images={[
+          "/images/kontakt/hero.jpg",
+          "/images/unternehmen/hero.jpg",
+          "/images/home/team-band.jpg",
+        ]}
         title="Schreiben Sie uns"
         subtitle="Schildern Sie kurz Ihr Anliegen – wir melden uns zeitnah mit den nächsten Schritten für Ihre Luftfracht am Flughafen München."
         ctaHref="#anfrage"

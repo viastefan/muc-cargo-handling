@@ -56,7 +56,7 @@ export function LocationPeek() {
 
   useEffect(() => {
     if (!mounted) return;
-    if (pathname === "/kontakt" || pathname.startsWith("/admin")) return;
+    if (pathname === "/kontakt" || pathname === "/neu" || pathname.startsWith("/admin")) return;
 
     let dismissed = false;
     try {

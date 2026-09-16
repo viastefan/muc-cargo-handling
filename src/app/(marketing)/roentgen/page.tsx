@@ -43,6 +43,12 @@ export default function RoentgenPage() {
     <>
       <Hero
         image="/images/roentgen/cargo-hold.jpg"
+        images={[
+          "/images/roentgen/cargo-hold.jpg",
+          "/images/roentgen/security-checkpoint.jpg",
+          "/images/roentgen/tag-check.jpg",
+          "/images/roentgen/trace-verification.jpg",
+        ]}
         title="Sichere Luftfracht nach höchsten Sicherheitsstandards."
         subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für die sichere und regelkonforme Abfertigung Ihrer Sendungen am Flughafen München."
       />

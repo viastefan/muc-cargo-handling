@@ -17,6 +17,12 @@ export default function AirlineHandlingPage() {
     <>
       <Hero
         image="/images/airline-handling/hero.jpg"
+        images={[
+          "/images/airline-handling/hero.jpg",
+          "/images/airline-handling/aircraft-loading.jpg",
+          "/images/airline-handling/cargo-tarmac.jpg",
+          "/images/airline-handling/warehouse-check.jpg",
+        ]}
         title={
           <>
             Die Schnittstelle zwischen Airline,

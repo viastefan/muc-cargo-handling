@@ -36,6 +36,12 @@ export default function LuftfrachtPage() {
       <Hero
         image="/images/luftfracht/service-1.jpg"
         imageAlt="Lagerung und Erfassung von Luftfracht am Standort München"
+        images={[
+          "/images/luftfracht/service-1.jpg",
+          "/images/luftfracht/documentation-desk.jpg",
+          "/images/luftfracht/service-4.jpg",
+          "/images/luftfracht/security-checkpoint.jpg",
+        ]}
         title="Luftfracht Import und Export"
         subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
       />

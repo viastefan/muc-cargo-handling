@@ -36,6 +36,12 @@ export default function HomePage() {
     <>
       <Hero
         image="/images/home/hero.jpg"
+        images={[
+          "/images/home/hero.jpg",
+          "/images/airline-handling/cargo-tarmac.jpg",
+          "/images/home/team-band.jpg",
+          "/images/airline-handling/aircraft-loading.jpg",
+        ]}
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
