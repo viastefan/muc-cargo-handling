@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Button } from "@/components/Button";
 import { FlowTracks, FlowTracksIntro } from "@/components/FlowTracks";
 import { FooterCta } from "@/components/Footer";
-import { PageLead } from "@/components/PageLead";
+import { Hero } from "@/components/Hero";
+import { MetricRow } from "@/components/MetricRow";
 import {
   FeatureCard,
   PageSection,
@@ -33,20 +33,28 @@ export const metadata: Metadata = {
 export default function LuftfrachtPage() {
   return (
     <>
-      <PageLead
-        brand="MUC Cargo Handling"
-        title={
-          <>
-            Luftfracht
-            <br />
-            Import und Export
-          </>
-        }
-        subtitle="Annahme, Dokumentation, Sicherung und Übergabe unter einem Dach – abgestimmt auf Ihr Zeitfenster am Flughafen München."
-        metrics={LUFTFRACHT_METRICS}
+      <Hero
+        image="/images/luftfracht/service-1.jpg"
+        imageAlt="Lagerung und Erfassung von Luftfracht am Standort München"
+        title="Luftfracht Import und Export"
+        subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
       />
 
-      <PageSection borderTop>
+      <PageSection>
+        <ScrollReveal duration={1100}>
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <SectionHeader
+              eyebrow="Luftfracht"
+              dark="Professionelle Abwicklung"
+              light="für Import und Export"
+              description="Von der Annahme bis zur termingerechten Übergabe – mit klaren Verantwortlichkeiten und kurzen Wegen."
+            />
+            <MetricRow items={LUFTFRACHT_METRICS} />
+          </div>
+        </ScrollReveal>
+      </PageSection>
+
+      <PageSection muted borderTop>
         <FlowTracksIntro
           titleMuted="Effiziente Prozesse"
           titleDark="für Import und Export."
@@ -66,38 +74,6 @@ export default function LuftfrachtPage() {
             }}
           />
         </div>
-      </PageSection>
-
-      <PageSection muted borderTop>
-        <ScrollReveal duration={1100}>
-          <div className="luftfracht-editorial">
-            <div className="luftfracht-editorial__copy">
-              <SectionHeader
-                eyebrow="Am Standort"
-                dark="Direkt am"
-                light="Cargo-Drehkreuz MUC"
-                description="Kurze Wege zwischen Annahme, Dokumentation und Freigabe – ohne Umwege über externe Lager."
-              />
-              <div className="luftfracht-editorial__actions">
-                <Button href="/kontakt" variant="primary" size="md">
-                  Anfrage stellen
-                </Button>
-                <Button href="/unternehmen" variant="white" size="md">
-                  Über uns
-                </Button>
-              </div>
-            </div>
-            <div className="luftfracht-editorial__media">
-              <Image
-                src="/images/luftfracht/service-1.jpg"
-                alt="Lagerung und Erfassung von Luftfracht am Standort München"
-                fill
-                className="object-cover"
-                sizes="(max-width: 900px) 100vw, 48vw"
-              />
-            </div>
-          </div>
-        </ScrollReveal>
       </PageSection>
 
       <PageSection borderTop>
