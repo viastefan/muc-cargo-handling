@@ -10,18 +10,15 @@ export type HeroSlide = {
 
 type Props = {
   slides: HeroSlide[];
-  /** First slide loads with priority. */
   priority?: boolean;
+  className?: string;
 };
 
 const INTERVAL_MS = 6500;
 const SWIPE_PX = 48;
 
-/**
- * Crossfading hero background with slow Ken-Burns drift.
- * Auto-advances; swipe / buttons / dots for manual control.
- */
-export function HeroMedia({ slides, priority = true }: Props) {
+/** Standalone movable hero media for alternate layouts (e.g. `/neu`). */
+export function HeroMedia({ slides, priority = true, className = "" }: Props) {
   const count = slides.length;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -37,9 +34,7 @@ export function HeroMedia({ slides, priority = true }: Props) {
 
   useEffect(() => {
     if (count < 2 || paused) return;
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     const id = window.setInterval(() => go(index + 1), INTERVAL_MS);
     return () => window.clearInterval(id);
@@ -49,7 +44,7 @@ export function HeroMedia({ slides, priority = true }: Props) {
 
   return (
     <div
-      className="hero-media"
+      className={`hero-media${className ? ` ${className}` : ""}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={(e) => setTouchX(e.changedTouches[0]?.clientX ?? null)}
@@ -60,22 +55,23 @@ export function HeroMedia({ slides, priority = true }: Props) {
         setTouchX(null);
       }}
     >
-      {slides.map((slide, i) => (
-        <div
-          key={slide.src}
-          className={`hero-media__slide${i === index ? " is-active" : ""}`}
-          aria-hidden={i !== index}
-        >
-          <Image
-            src={slide.src}
-            alt={slide.alt ?? ""}
-            fill
-            priority={priority && i === 0}
-            className="hero-image object-cover object-[center_32%] lg:object-center"
-            sizes="100vw"
-          />
-        </div>
-      ))}
+      <div className="hero-media__stage" aria-hidden="true">
+        {slides.map((slide, i) => (
+          <div
+            key={slide.src}
+            className={`hero-media__slide${i === index ? " is-active" : ""}`}
+          >
+            <Image
+              src={slide.src}
+              alt={slide.alt ?? ""}
+              fill
+              priority={priority && i === 0}
+              className="hero-image object-cover object-[center_32%] lg:object-center"
+              sizes="100vw"
+            />
+          </div>
+        ))}
+      </div>
 
       {count > 1 ? (
         <div className="hero-media__controls" role="group" aria-label="Hero-Bilder">

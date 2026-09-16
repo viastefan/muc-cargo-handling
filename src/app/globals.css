@@ -814,6 +814,14 @@ a {
   position: absolute;
   inset: 0;
   z-index: 0;
+  pointer-events: none;
+}
+
+.hero-media__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
 }
 
 .hero-media__slide {
@@ -821,7 +829,6 @@ a {
   inset: 0;
   opacity: 0;
   transition: opacity 1.1s var(--ease-out);
-  pointer-events: none;
 }
 
 .hero-media__slide.is-active {
@@ -857,7 +864,7 @@ a {
   position: absolute;
   left: 50%;
   bottom: 1.15rem;
-  z-index: 4;
+  z-index: 6;
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -867,6 +874,7 @@ a {
   background: rgb(8 6 10 / 0.42);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  pointer-events: auto;
 }
 
 .hero-media__dots {
@@ -6734,6 +6742,14 @@ textarea.field__control {
   color: #fff;
 }
 
+.clean-home__hero .hero-media {
+  pointer-events: auto;
+}
+
+.clean-home__hero .hero-media__controls {
+  z-index: 6;
+}
+
 .clean-home__hero-veil {
   position: absolute;
   inset: 0;
@@ -6754,6 +6770,13 @@ textarea.field__control {
   min-height: inherit;
   padding: 5rem 1.5rem 4.5rem;
   text-align: center;
+  pointer-events: none;
+}
+
+.clean-home__hero-copy a,
+.clean-home__hero-copy button,
+.clean-home__hero-actions {
+  pointer-events: auto;
 }
 
 .clean-home__eyebrow {
