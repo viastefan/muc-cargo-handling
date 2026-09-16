@@ -1370,6 +1370,10 @@
   line-height: 1.5;
 }
 
+.admin-hint--err {
+  color: #c62828;
+}
+
 .admin-note-meta {
   margin: 0.6rem 1rem 0.9rem;
   font-size: 12px;

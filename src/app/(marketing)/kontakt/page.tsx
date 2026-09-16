@@ -6,14 +6,21 @@ import { LocationMap } from "@/components/LocationMap";
 import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
+import {
+  BreadcrumbStructuredData,
+  ContactPageStructuredData,
+} from "@/components/StructuredData";
 import { COMPANY, MAPS_EMBED } from "@/lib/company";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/kontakt" },
+const DESCRIPTION =
+  "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/kontakt",
   title: "Kontakt",
-  description:
-    "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
-};
+  description: DESCRIPTION,
+});
 
 const CONTACT = [
   {
@@ -64,6 +71,13 @@ const CONTACT = [
 export default function KontaktPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Kontakt", path: "/kontakt" },
+        ]}
+      />
+      <ContactPageStructuredData />
       <Hero
         image="/images/kontakt/hero.jpg"
         images={[

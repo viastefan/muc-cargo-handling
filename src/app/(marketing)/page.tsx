@@ -13,6 +13,7 @@ import { SecurityOverview } from "@/components/SecurityOverview";
 import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
 import { COMPANY, MAPS_EMBED } from "@/lib/company";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
@@ -23,17 +24,22 @@ import {
   HOME_TEAM_INTRO,
   SECURITY_METHODS,
 } from "@/lib/home";
+import { pageMeta } from "@/lib/seo";
 
-// Titel kommt aus dem `default` in app/layout.tsx – hier nicht wiederholen.
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+export const metadata: Metadata = pageMeta({
+  path: "/",
+  bareTitle: true,
+  title: "MUC Cargohandling | Luftfracht am Flughafen München",
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
-};
+});
 
 export default function HomePage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[{ name: "Startseite", path: "/" }]}
+      />
       <Hero
         image="/images/home/hero.jpg"
         images={[

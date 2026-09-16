@@ -10,15 +10,17 @@ import { SectionTitle, StatCard } from "@/components/SectionTitle";
 import { Timeline } from "@/components/Timeline";
 import { ValuePillars } from "@/components/ValuePillars";
 import { MailIcon, PhoneIcon } from "@/components/ArrowIcon";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
 import { COMPANY } from "@/lib/company";
 import { COMPANY_VALUES } from "@/lib/content";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/unternehmen" },
+export const metadata: Metadata = pageMeta({
+  path: "/unternehmen",
   title: "Unternehmen",
   description:
     "Über MUC Cargohandling – Erfahrung, Team und Prozesse für professionelle Luftfracht am Flughafen München seit 2003.",
-};
+});
 
 const TIMELINE = [
   { year: "2003", text: "Gründung ALD – Airport Lagerdienste e.K." },
@@ -101,6 +103,12 @@ function initials(name: string) {
 export default function UnternehmenPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Unternehmen", path: "/unternehmen" },
+        ]}
+      />
       <Hero
         image="/images/unternehmen/hero.jpg"
         images={[

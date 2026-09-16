@@ -9,6 +9,7 @@ import {
 import { requireAdmin } from "@/lib/admin-session";
 import { listUsers } from "@/lib/admin-users";
 import { COMPANY } from "@/lib/company";
+import { emailReady } from "@/lib/notify";
 import { StatusBadge } from "../StatusBadge";
 import { StatusPicker } from "../StatusPicker";
 import { DeleteInquiryButton } from "../DeleteInquiryButton";
@@ -105,6 +106,7 @@ export default async function InquiryDetail({
               <ReplyForm
                 reference={inquiry.reference}
                 to={inquiry.email}
+                canSendEmail={emailReady}
                 defaultBody={`Sehr geehrte(r) ${inquiry.firstName} ${inquiry.lastName},\n\nvielen Dank für Ihre Anfrage.\n\n\n\nMit freundlichen Grüßen\n${COMPANY.legalName}`}
               />
             </div>
