@@ -1,6 +1,7 @@
 import { COMPANY } from "@/lib/company";
 import { SITE_URL } from "@/lib/site";
 import {
+  customerClosedEmail,
   customerConfirmationEmail,
   customerReplyEmail,
   teamNotificationEmail,
@@ -168,6 +169,31 @@ export async function sendCustomerReply(params: {
     name: params.name,
     body: params.body,
     actorName: params.actorName,
+  });
+
+  const result = await sendEmail({
+    to: [params.to],
+    subject: mail.subject,
+    html: mail.html,
+    text: mail.text,
+    replyTo: MAIL_REPLY_TO || COMPANY.email,
+  });
+
+  if (result === "sent") return { ok: true };
+  return { ok: false, reason: "failed" };
+}
+
+/** Kurze Abschluss-Mail, wenn eine Anfrage im Panel auf „Erledigt“ gesetzt wird. */
+export async function sendInquiryClosedNotice(params: {
+  to: string;
+  reference: string;
+  name: string;
+}): Promise<ReplySendResult> {
+  if (!emailReady) return { ok: false, reason: "not_configured" };
+
+  const mail = customerClosedEmail({
+    reference: params.reference,
+    name: params.name,
   });
 
   const result = await sendEmail({

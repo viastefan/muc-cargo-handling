@@ -4,7 +4,7 @@
  * Nur serverseitig verwenden.
  */
 
-import { inquiriesStorageReady } from "@/lib/inquiries";
+import { inquiriesStorageReady, getLatestInquiryAt } from "@/lib/inquiries";
 import {
   emailReady,
   mailFromIsOnboarding,
@@ -139,14 +139,16 @@ async function countRows(table: string): Promise<number | null> {
 }
 
 export async function runSystemChecks(): Promise<Check[]> {
-  const [probe, inquiries, adminUsers, events, pushTable, deviceCount] = await Promise.all([
-    probeConnection(),
-    tableReachable("inquiries"),
-    tableReachable("admin_users"),
-    tableReachable("inquiry_events"),
-    tableReachable("push_subscriptions"),
-    countRows("push_subscriptions"),
-  ]);
+  const [probe, inquiries, adminUsers, events, pushTable, deviceCount, latestAt] =
+    await Promise.all([
+      probeConnection(),
+      tableReachable("inquiries"),
+      tableReachable("admin_users"),
+      tableReachable("inquiry_events"),
+      tableReachable("push_subscriptions"),
+      countRows("push_subscriptions"),
+      getLatestInquiryAt(),
+    ]);
 
   const vapidPublic = Boolean(process.env.VAPID_PUBLIC_KEY?.trim());
   const vapidPrivate = Boolean(process.env.VAPID_PRIVATE_KEY?.trim());
@@ -216,6 +218,20 @@ export async function runSystemChecks(): Promise<Check[]> {
       fix: emailReady
         ? "MAIL_FROM auf eine verifizierte Domain setzen, z. B. MUC Cargohandling <anfrage@muc-cargo.de>."
         : "RESEND_API_KEY und MAIL_FROM in Vercel setzen, Domain in Resend verifizieren, danach Redeploy.",
+    },
+    {
+      label: "Letzte Website-Anfrage",
+      state: latestAt ? "ok" : "info",
+      detail: latestAt
+        ? `Eingegangen ${new Intl.DateTimeFormat("de-DE", {
+            dateStyle: "medium",
+            timeStyle: "short",
+            timeZone: "Europe/Berlin",
+          }).format(new Date(latestAt))}`
+        : inquiries
+          ? "Noch keine Anfrage gespeichert."
+          : "Nicht ermittelbar (Tabelle fehlt).",
+      fix: "Kontaktformular auf der Website testen — danach erscheint der Eintrag hier und im Panel.",
     },
     {
       label: "SMS-Benachrichtigung",

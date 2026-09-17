@@ -15,6 +15,7 @@ import { InquiryListItem } from "./InquiryListItem";
 import { StatusBadge } from "./StatusBadge";
 import { Assignee } from "./Assignee";
 import { PushToggle } from "./PushToggle";
+import { InboxRefresh } from "./InboxRefresh";
 
 /**
  * Nie aus dem Cache bedienen: Anfragen treffen von aussen ein, ohne dass in
@@ -122,7 +123,10 @@ export default async function AdminDashboard({
 
   return (
     <>
-      <h1 className="admin-page-title">Anfragen</h1>
+      <div className="admin-page-head">
+        <h1 className="admin-page-title">Anfragen</h1>
+        <InboxRefresh />
+      </div>
 
       <div className="admin-widgets">
         {widgets.map((w) => (
@@ -198,11 +202,21 @@ export default async function AdminDashboard({
       <div className="admin-group">
         {rows.length === 0 ? (
           <div className="admin-empty">
-            <p className="admin-empty__title">Keine Anfragen</p>
-            <p className="admin-empty__text">
-              Für diese Auswahl liegt nichts vor. Filter zurücksetzen oder auf neue
-              Eingänge warten.
+            <p className="admin-empty__title">
+              {search || topic !== "all" || status !== "all" || mine
+                ? "Keine Treffer"
+                : "Noch keine Anfragen"}
             </p>
+            <p className="admin-empty__text">
+              {search || topic !== "all" || status !== "all" || mine
+                ? "Filter zurücksetzen oder andere Suche versuchen."
+                : "Sobald über die Website eine Anfrage eingeht, erscheint sie hier."}
+            </p>
+            {search || topic !== "all" || status !== "all" || mine ? (
+              <Link href="/admin" className="admin-btn admin-btn--sm" style={{ marginTop: "0.75rem" }}>
+                Alle anzeigen
+              </Link>
+            ) : null}
           </div>
         ) : (
           <>
