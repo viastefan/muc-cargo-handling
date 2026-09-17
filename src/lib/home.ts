@@ -14,7 +14,7 @@ export const HOME_TEAM_INTRO = {
   titleDark: "Ihr zuverlässiger Partner",
   titleLight: "für Luftfrachthandling am Münchner Flughafen.",
   description:
-    "Wir sind ein kompetentes Team mit langjähriger Erfahrung am Münchner Flughafen. Mit bewährtem Handling und klaren Prozessen garantieren wir eine für Sie optimale Lösung – von der Annahme bis zur sicheren Freigabe.",
+    "Erfahrenes Handling und klare Prozesse – von der Annahme bis zur sicheren Freigabe.",
 } as const;
 
 export const HOME_IMAGE_CTA = {
