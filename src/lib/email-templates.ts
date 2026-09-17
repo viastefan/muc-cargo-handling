@@ -221,3 +221,34 @@ Bei Rückfragen antworten Sie einfach auf diese E-Mail oder rufen Sie uns an unt
   ].join("\n");
   return { subject, html: shell(subject, inner), text };
 }
+
+/* -------------------------------------------------- Status abgeschlossen --- */
+
+export function customerClosedEmail(data: {
+  reference: string;
+  name: string;
+}): { subject: string; html: string; text: string } {
+  const subject = `Ihre Anfrage ${data.reference} ist abgeschlossen — ${COMPANY.brandName}`;
+  const inner = `
+<tr><td style="padding:30px 32px 8px;">
+<h1 style="margin:0 0 12px;font-size:20px;font-weight:600;color:${INK};letter-spacing:-.01em;">Anfrage abgeschlossen</h1>
+<p style="margin:0;font-size:14px;line-height:1.65;color:${MUTED};">
+Guten Tag ${esc(data.name)}, wir haben Ihre Anfrage
+<span style="color:${INK};font-weight:500;">${esc(data.reference)}</span>
+als erledigt markiert. Bei weiteren Fragen antworten Sie einfach auf diese E-Mail
+oder rufen Sie uns an unter
+<a href="tel:${COMPANY.phoneTel}" style="color:${INK};font-weight:500;">${esc(COMPANY.phoneDisplay)}</a>.
+</p>
+</td></tr>`;
+  const text = [
+    `Anfrage ${data.reference} abgeschlossen`,
+    ``,
+    `Guten Tag ${data.name},`,
+    ``,
+    `Wir haben Ihre Anfrage als erledigt markiert.`,
+    `Bei weiteren Fragen: ${COMPANY.phoneDisplay} · ${COMPANY.email}`,
+    ``,
+    `${COMPANY.legalName}`,
+  ].join("\n");
+  return { subject, html: shell(subject, inner), text };
+}

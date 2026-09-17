@@ -219,6 +219,7 @@
   --color-brand-arrow: var(--brand-arrow);
   --color-brand-dark: var(--brand-dark);
   --font-sans:
+    var(--font-inter, "SF Pro Display"),
     "SF Pro Display",
     "SF Pro Text",
     -apple-system,
@@ -257,8 +258,8 @@ body {
   font-family: var(--font-sans);
   font-size: 15px;
   font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: -0.018em;
+  line-height: 1.65;
+  letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -999,10 +1000,10 @@ a {
   margin: 0;
   width: 85%;
   max-width: 85%;
-  font-size: clamp(2.15rem, 6.5vw, 3.5rem);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.038em;
+  font-size: clamp(2.25rem, 5.8vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.032em;
 }
 
 .hero-subtitle {
@@ -2421,7 +2422,7 @@ a {
   .hero-title {
     width: fit-content;
     max-width: 100%;
-    font-size: clamp(2.25rem, 3.6vw, 3.35rem);
+    font-size: clamp(2.125rem, 3.4vw, 3rem);
   }
 
   .hero-subtitle {
@@ -2484,8 +2485,8 @@ a {
      wuchtig und liefen an die Kopfzeile. */
   .hero-title {
     font-size: clamp(1.95rem, 8vw, 2.6rem);
-    line-height: 1.08;
-    letter-spacing: -0.036em;
+    line-height: 1.14;
+    letter-spacing: -0.028em;
   }
 }
 
@@ -3313,9 +3314,9 @@ body:has(.cookie-banner) .faq-toc-fab {
 }
 
 .heading-display {
-  font-weight: 600;
-  letter-spacing: -0.032em;
-  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 .link-underline {

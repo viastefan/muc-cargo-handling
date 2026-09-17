@@ -35,6 +35,21 @@ export async function setStatusAction(formData: FormData): Promise<void> {
     kind: "status",
     detail: `${STATUS_LABEL[before.status]} → ${STATUS_LABEL[status]}`,
   });
+
+  // Beim Wechsel auf „Erledigt“ optional kurze Abschluss-Mail.
+  if (status === "done" && before.status !== "done") {
+    const { sendInquiryClosedNotice, emailReady } = await import("@/lib/notify");
+    if (emailReady) {
+      await sendInquiryClosedNotice({
+        to: before.email,
+        reference: before.reference,
+        name: `${before.firstName} ${before.lastName}`.trim(),
+      }).catch((error) => {
+        console.error("[admin] closed notice failed", error);
+      });
+    }
+  }
+
   revalidatePath("/admin");
   revalidatePath(`/admin/${reference}`);
 }
@@ -98,11 +113,12 @@ export async function saveReplyAction(reference: string, message: string): Promi
 
 /**
  * Antwort direkt per Resend an den Kunden senden und im Verlauf speichern.
- * Bei Erfolg wird „Neu“ automatisch auf „In Bearbeitung“ gesetzt.
+ * Bei Erfolg wird „Neu“ auf „In Bearbeitung“ gesetzt; optional auf „Erledigt“.
  */
 export async function sendReplyEmailAction(
   reference: string,
   message: string,
+  markDone = false,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const principal = await requireAdmin();
   const ref = cleanRef(reference);
@@ -144,7 +160,14 @@ export async function sendReplyEmailAction(
     detail: text,
   });
 
-  if (inquiry.status === "new") {
+  if (markDone && inquiry.status !== "done") {
+    await updateInquiry(ref, { status: "done" });
+    await logInquiryEvent(ref, {
+      actorName: principal.name,
+      kind: "status",
+      detail: `${STATUS_LABEL[inquiry.status]} → ${STATUS_LABEL.done}`,
+    });
+  } else if (inquiry.status === "new") {
     await updateInquiry(ref, { status: "in_progress" });
     await logInquiryEvent(ref, {
       actorName: principal.name,

@@ -107,6 +107,7 @@ export default async function InquiryDetail({
                 reference={inquiry.reference}
                 to={inquiry.email}
                 canSendEmail={emailReady}
+                firstName={inquiry.firstName}
                 defaultBody={`Sehr geehrte(r) ${inquiry.firstName} ${inquiry.lastName},\n\nvielen Dank für Ihre Anfrage.\n\n\n\nMit freundlichen Grüßen\n${COMPANY.legalName}`}
               />
             </div>
