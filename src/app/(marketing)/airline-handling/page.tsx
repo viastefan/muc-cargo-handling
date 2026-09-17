@@ -4,19 +4,44 @@ import { Hero } from "@/components/Hero";
 import { MetricRow } from "@/components/MetricRow";
 import { FeatureCard, PageSection, SectionHeader } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
+import {
+  BreadcrumbStructuredData,
+  ServiceStructuredData,
+} from "@/components/StructuredData";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/airline-handling" },
+const DESCRIPTION =
+  "Airline Handling am Flughafen München – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/airline-handling",
   title: "Airline Handling",
-  description:
-    "Airline Handling am Flughafen München – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle.",
-};
+  description: DESCRIPTION,
+});
 
 export default function AirlineHandlingPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Airline Handling", path: "/airline-handling" },
+        ]}
+      />
+      <ServiceStructuredData
+        name="Airline Handling"
+        description={DESCRIPTION}
+        path="/airline-handling"
+        serviceType="Airline ground handling"
+      />
       <Hero
         image="/images/airline-handling/hero.jpg"
+        images={[
+          "/images/airline-handling/hero.jpg",
+          "/images/airline-handling/aircraft-loading.jpg",
+          "/images/airline-handling/cargo-tarmac.jpg",
+          "/images/airline-handling/warehouse-check.jpg",
+        ]}
         title={
           <>
             Die Schnittstelle zwischen Airline,

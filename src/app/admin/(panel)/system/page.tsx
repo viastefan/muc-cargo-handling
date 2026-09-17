@@ -70,6 +70,9 @@ export default async function SystemPage() {
                 {check.state === "missing" && check.fix ? (
                   <p className="admin-check__fix">{check.fix}</p>
                 ) : null}
+                {check.state === "info" && check.fix ? (
+                  <p className="admin-check__fix">{check.fix}</p>
+                ) : null}
               </div>
             </li>
           ))}

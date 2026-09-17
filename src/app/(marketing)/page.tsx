@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { FaqList } from "@/components/FaqList";
 import { FooterCta } from "@/components/Footer";
 import { Button } from "@/components/Button";
@@ -10,55 +9,60 @@ import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { SecurityOverview } from "@/components/SecurityOverview";
-import { ServiceCapabilityGrid } from "@/components/ServiceCapabilityGrid";
 import { ServiceNav } from "@/components/ServiceNav";
 import { SectionTitle, StatCard } from "@/components/SectionTitle";
-import { COMPANY, MAPS_EMBED } from "@/lib/company";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
+import { MAPS_EMBED } from "@/lib/company";
 import { SERVICES } from "@/lib/content";
 import { FAQ_HOME } from "@/lib/faq";
 import {
-  HOME_CAPABILITY_AREAS,
   HOME_IMAGE_CTA,
   HOME_STORY,
   HOME_TEAM_INTRO,
   SECURITY_METHODS,
 } from "@/lib/home";
+import { pageMeta } from "@/lib/seo";
 
-// Titel kommt aus dem `default` in app/layout.tsx – hier nicht wiederholen.
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
+export const metadata: Metadata = pageMeta({
+  path: "/",
+  bareTitle: true,
+  title: "MUC Cargohandling | Luftfracht am Flughafen München",
   description:
     "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
-};
+});
 
 export default function HomePage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[{ name: "Startseite", path: "/" }]}
+      />
       <Hero
         image="/images/home/hero.jpg"
+        images={[
+          "/images/home/hero.jpg",
+          "/images/airline-handling/cargo-tarmac.jpg",
+          "/images/home/team-band.jpg",
+          "/images/airline-handling/aircraft-loading.jpg",
+        ]}
         title={
           <>
             Präzise Abwicklung und Sicherheit für Ihre
             <br className="max-lg:hidden" /> Luftfracht am Flughafen München
           </>
         }
-        subtitle="Mit strukturierten Abläufen, erfahrenem Personal und hohen Qualitätsstandards begleiten wir Ihre Sendungen – von der Annahme bis zur Sicherheitskontrolle."
+        subtitle="Strukturierte Abläufe und erfahrenes Personal – von der Annahme bis zur Sicherheitskontrolle."
       />
 
       <PageSection>
         <ScrollReveal duration={1100}>
           <SectionTitle dark={HOME_STORY.titleDark} light={HOME_STORY.titleLight} />
-          <p className="prose-lead mt-5 max-w-3xl">{HOME_STORY.subtitle}</p>
         </ScrollReveal>
 
         <ScrollReveal delay={100} duration={1100}>
-          <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2 lg:gap-10">
-            {HOME_STORY.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 32)} className="prose-muted text-[15px] leading-[1.75]">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          <p className="prose-muted mt-6 max-w-3xl text-[15px] leading-[1.7]">
+            {HOME_STORY.paragraphs[0]}
+          </p>
         </ScrollReveal>
 
         <ScrollRevealStagger
@@ -80,14 +84,7 @@ export default function HomePage() {
           <StatCard
             value="MUC"
             label="Standort"
-            footer={
-              <>
-                Direkt am Cargo-Drehkreuz München.{" "}
-                <Link href="/kontakt" className="link-underline">
-                  {COMPANY.office.line1}, {COMPANY.office.line2}.
-                </Link>
-              </>
-            }
+            footer="Direkt am Cargo-Drehkreuz München."
           />
         </ScrollRevealStagger>
       </PageSection>
@@ -113,14 +110,6 @@ export default function HomePage() {
         <ScrollReveal delay={120} duration={1100}>
           <div className="section-header-gap">
             <ServiceNav items={SERVICES} />
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={150} duration={1000}>
-          <div className="capability-grid-wrap">
-            <p className="capability-grid__intro prose-muted">
-              Darüber hinaus unterstützen wir Sie in weiteren Bereichen entlang der Cargo-Kette:
-            </p>
-            <ServiceCapabilityGrid items={HOME_CAPABILITY_AREAS} />
           </div>
         </ScrollReveal>
       </PageSection>

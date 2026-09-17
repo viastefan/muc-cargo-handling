@@ -96,6 +96,68 @@ export async function saveReplyAction(reference: string, message: string): Promi
   revalidatePath(`/admin/${ref}`);
 }
 
+/**
+ * Antwort direkt per Resend an den Kunden senden und im Verlauf speichern.
+ * Bei Erfolg wird „Neu“ automatisch auf „In Bearbeitung“ gesetzt.
+ */
+export async function sendReplyEmailAction(
+  reference: string,
+  message: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const principal = await requireAdmin();
+  const ref = cleanRef(reference);
+  const text = message.trim().slice(0, 4000);
+  if (!ref || !text) {
+    return { ok: false, error: "Bitte einen Antworttext eingeben." };
+  }
+
+  const inquiry = await getInquiry(ref);
+  if (!inquiry) {
+    return { ok: false, error: "Anfrage nicht gefunden." };
+  }
+
+  const { sendCustomerReply } = await import("@/lib/notify");
+  const result = await sendCustomerReply({
+    to: inquiry.email,
+    reference: inquiry.reference,
+    name: `${inquiry.firstName} ${inquiry.lastName}`.trim(),
+    body: text,
+    actorName: principal.name,
+  });
+
+  if (!result.ok) {
+    if (result.reason === "not_configured") {
+      return {
+        ok: false,
+        error: "E-Mail-Versand ist nicht eingerichtet (RESEND_API_KEY fehlt).",
+      };
+    }
+    return {
+      ok: false,
+      error: "Versand fehlgeschlagen. Bitte Absender und Resend-Konto prüfen.",
+    };
+  }
+
+  await logInquiryEvent(ref, {
+    actorName: principal.name,
+    kind: "reply",
+    detail: text,
+  });
+
+  if (inquiry.status === "new") {
+    await updateInquiry(ref, { status: "in_progress" });
+    await logInquiryEvent(ref, {
+      actorName: principal.name,
+      kind: "status",
+      detail: `${STATUS_LABEL.new} → ${STATUS_LABEL.in_progress}`,
+    });
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/${ref}`);
+  return { ok: true };
+}
+
 export async function deleteInquiryAction(formData: FormData): Promise<void> {
   await requireAdmin();
   const reference = cleanRef(formData.get("reference"));

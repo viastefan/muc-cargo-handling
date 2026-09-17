@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { COMPANY } from "@/lib/company";
+import { LOCAL_GEO_META } from "@/lib/seo";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/theme";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
 const TITLE = "MUC Cargohandling | Luftfracht am Flughafen München";
 const DESCRIPTION =
   "Präzise Abwicklung und Sicherheit für Ihre Luftfracht am Flughafen München. Import, Export, Airline Handling und Röntgenkontrolle.";
+
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -21,8 +18,20 @@ export const metadata: Metadata = {
     template: "%s | MUC Cargohandling",
   },
   description: DESCRIPTION,
-  applicationName: "MUC Cargohandling",
-  authors: [{ name: "MUC Cargohandling GmbH" }],
+  applicationName: COMPANY.brandName,
+  authors: [{ name: COMPANY.legalName }],
+  creator: COMPANY.legalName,
+  publisher: COMPANY.legalName,
+  category: "business",
+  keywords: [
+    "Luftfracht München",
+    "Flughafen München Cargo",
+    "Airline Handling MUC",
+    "Röntgenkontrolle Luftfracht",
+    "Reglementierter Beauftragter",
+    "MUC Cargohandling",
+    "Import Export Luftfracht",
+  ],
   // Vorschaukarte beim Teilen in WhatsApp, LinkedIn, Slack & Co. Ohne diese
   // Angaben zeigen die Dienste nur die nackte URL.
   // Titel und Beschreibung bewusst NICHT hier setzen: Next.js uebernimmt sonst
@@ -31,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "de_DE",
-    siteName: "MUC Cargohandling",
+    siteName: COMPANY.brandName,
   },
   twitter: {
     card: "summary_large_image",
@@ -39,8 +48,18 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
+  ...(googleVerification
+    ? { verification: { google: googleVerification } }
+    : {}),
+  other: { ...LOCAL_GEO_META },
 };
 
 export default function RootLayout({
@@ -49,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="de" className="h-full antialiased" suppressHydrationWarning>
       <head>
         {/* Setzt data-theme vor dem ersten Paint (Standard: dunkel, siehe
             src/lib/theme.ts) — verhindert einen hell/dunkel-Flash. */}

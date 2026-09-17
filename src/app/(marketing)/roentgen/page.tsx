@@ -8,13 +8,20 @@ import {
   SectionHeader,
 } from "@/components/PageSection";
 import { ServiceCard } from "@/components/ServiceCard";
+import {
+  BreadcrumbStructuredData,
+  ServiceStructuredData,
+} from "@/components/StructuredData";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/roentgen" },
+const DESCRIPTION =
+  "Röntgen- und Sicherheitskontrollen am Flughafen München – LBA-konform, modern und als reglementierter Beauftragter.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/roentgen",
   title: "Röntgen",
-  description:
-    "Röntgen- und Sicherheitskontrollen am Flughafen München – LBA-konform, modern und als reglementierter Beauftragter.",
-};
+  description: DESCRIPTION,
+});
 
 const HIGHLIGHTS = [
   { title: "LBA-konforme Prozesse", text: "Verfahren nach geltenden Luftsicherheitsvorgaben.", icon: "compliance" as const },
@@ -41,8 +48,26 @@ const FAQ = [
 export default function RoentgenPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Röntgen", path: "/roentgen" },
+        ]}
+      />
+      <ServiceStructuredData
+        name="Röntgen & Sicherheitskontrollen"
+        description={DESCRIPTION}
+        path="/roentgen"
+        serviceType="Air cargo security screening"
+      />
       <Hero
         image="/images/roentgen/cargo-hold.jpg"
+        images={[
+          "/images/roentgen/cargo-hold.jpg",
+          "/images/roentgen/security-checkpoint.jpg",
+          "/images/roentgen/tag-check.jpg",
+          "/images/roentgen/trace-verification.jpg",
+        ]}
         title="Sichere Luftfracht nach höchsten Sicherheitsstandards."
         subtitle="Röntgen- und Sicherheitskontrollen nach aktuellen Vorgaben – für die sichere und regelkonforme Abfertigung Ihrer Sendungen am Flughafen München."
       />

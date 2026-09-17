@@ -40,13 +40,13 @@ export function FooterCta({
         <ScrollReveal className="footer-cta__copy" duration={1150}>
           <h2
             id="footer-cta-heading"
-            className="footer-cta__title heading-display"
+            className="footer-cta__title heading-display text-white"
           >
             {title}
           </h2>
           <p className="footer-cta__description">{description}</p>
           <div className="footer-cta__action">
-            <Button href={ctaHref} variant="primary" size="hero">
+            <Button href={ctaHref} variant="white" size="hero">
               {ctaLabel}
             </Button>
           </div>

@@ -5,6 +5,13 @@
  */
 
 import { inquiriesStorageReady } from "@/lib/inquiries";
+import {
+  emailReady,
+  mailFromIsOnboarding,
+  smsReady,
+  webhookReady,
+} from "@/lib/notify";
+import { COMPANY } from "@/lib/company";
 import { SITE_URL } from "@/lib/site";
 
 const RAW_URL = process.env.SUPABASE_URL?.trim().replace(/\/+$/, "") ?? "";
@@ -144,6 +151,8 @@ export async function runSystemChecks(): Promise<Check[]> {
   const vapidPublic = Boolean(process.env.VAPID_PUBLIC_KEY?.trim());
   const vapidPrivate = Boolean(process.env.VAPID_PRIVATE_KEY?.trim());
   const siteUrlIsLocal = /localhost|127\.0\.0\.1/.test(SITE_URL);
+  const googleVerification = Boolean(process.env.GOOGLE_SITE_VERIFICATION?.trim());
+  const googlePlaceId = Boolean(COMPANY.googlePlaceId);
 
   const checks: Check[] = [
     {
@@ -197,10 +206,54 @@ export async function runSystemChecks(): Promise<Check[]> {
       fix: "Auf der Übersicht „Auf diesem Gerät aktivieren\" antippen. Auf dem iPhone zuvor die Seite zum Home-Bildschirm hinzufügen.",
     },
     {
+      label: "E-Mail-Versand (Resend)",
+      state: emailReady ? (mailFromIsOnboarding ? "info" : "ok") : "missing",
+      detail: emailReady
+        ? mailFromIsOnboarding
+          ? "API-Key gesetzt, Absender noch Resend-Testadresse (onboarding@resend.dev)."
+          : "Resend bereit — Panel kann Antworten direkt senden."
+        : "RESEND_API_KEY fehlt.",
+      fix: emailReady
+        ? "MAIL_FROM auf eine verifizierte Domain setzen, z. B. MUC Cargohandling <anfrage@muc-cargo.de>."
+        : "RESEND_API_KEY und MAIL_FROM in Vercel setzen, Domain in Resend verifizieren, danach Redeploy.",
+    },
+    {
+      label: "SMS-Benachrichtigung",
+      state: smsReady ? "ok" : "info",
+      detail: smsReady
+        ? "Twilio konfiguriert."
+        : "Optional — Twilio nicht eingerichtet.",
+      fix: "TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM und INQUIRY_SMS_TO setzen.",
+    },
+    {
+      label: "Webhook",
+      state: webhookReady ? "ok" : "info",
+      detail: webhookReady
+        ? "Zusätzlicher Webhook aktiv."
+        : "Optional — kein CONTACT_WEBHOOK_URL.",
+      fix: "CONTACT_WEBHOOK_URL setzen, wenn Anfragen zusätzlich an ein externes System sollen.",
+    },
+    {
       label: "Adresse der Website",
       state: siteUrlIsLocal ? "missing" : "ok",
       detail: SITE_URL,
       fix: "SITE_URL in Vercel auf die öffentliche Adresse setzen — sie steckt in Links aus E-Mails und Benachrichtigungen.",
+    },
+    {
+      label: "Google Search Console",
+      state: googleVerification ? "ok" : "info",
+      detail: googleVerification
+        ? "Bestätigungscode hinterlegt (meta verification)."
+        : "Noch kein GOOGLE_SITE_VERIFICATION.",
+      fix: "In der Search Console eine Property anlegen, HTML-Tag-Code kopieren und als GOOGLE_SITE_VERIFICATION in Vercel setzen.",
+    },
+    {
+      label: "Google Standort (Place ID)",
+      state: googlePlaceId ? "ok" : "info",
+      detail: googlePlaceId
+        ? `Place ID verknüpft · ${COMPANY.googlePlaceId}`
+        : "Keine Place ID — Schema nutzt Koordinaten + hasMap.",
+      fix: "Google Business Profile klaimen, korrekten Pin setzen, Place ID kopieren und als GOOGLE_PLACE_ID in Vercel setzen.",
     },
   ];
 

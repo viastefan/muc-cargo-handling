@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
 import { PageSection, SectionHeader } from "@/components/PageSection";
+import { BreadcrumbStructuredData } from "@/components/StructuredData";
 import { COMPANY } from "@/lib/company";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/impressum" },
+export const metadata: Metadata = pageMeta({
+  path: "/impressum",
   title: "Impressum",
   description: "Impressum der MUC Cargohandling GmbH am Flughafen München.",
-};
+});
 
 export default function ImpressumPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Impressum", path: "/impressum" },
+        ]}
+      />
       <PageSection className="!pt-10 sm:!pt-14 md:!pt-20">
         <div className="mx-auto max-w-3xl">
           <SectionHeader
