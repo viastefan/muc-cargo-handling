@@ -9,16 +9,14 @@ type Props = {
   titleDark: string;
   titleLight?: string;
   description?: string;
-  eyebrow?: string;
   items: readonly Step[];
 };
 
-export function ProcessTimeline({ titleDark, titleLight, description, eyebrow, items }: Props) {
+export function ProcessTimeline({ titleDark, titleLight, description, items }: Props) {
   return (
     <div className="process-timeline-wrap">
       <ScrollReveal duration={1100}>
         <div className="process-timeline__header">
-          {eyebrow && <p className="process-timeline__eyebrow">{eyebrow}</p>}
           <h2 className="process-timeline__title heading-display">
             {titleLight ? (
               <>

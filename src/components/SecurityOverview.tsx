@@ -9,7 +9,7 @@ export function SecurityOverview({ items }: { items: readonly Item[] }) {
       <div className="security-band__inner page-container">
         <div className="security-band__header">
           <div className="security-band__intro">
-            <p className="security-band__eyebrow">Luftsicherheit</p>
+            <p className="section-eyebrow">Luftsicherheit</p>
             <h2 id="security-band-title" className="security-band__title heading-display">
               Sicherheit und Kontrolle für Ihre Luftfracht
             </h2>

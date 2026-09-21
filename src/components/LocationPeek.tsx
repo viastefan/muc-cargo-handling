@@ -154,7 +154,6 @@ export function LocationPeek() {
       </div>
 
       <div className="location-peek__body">
-        <p className="location-peek__eyebrow">Standort</p>
         <p className="location-peek__title">Am Flughafen München</p>
         <p className="location-peek__addr">
           {COMPANY.office.line1}

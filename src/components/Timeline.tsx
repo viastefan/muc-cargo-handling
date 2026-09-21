@@ -12,7 +12,7 @@ export function Timeline({
             {index < items.length - 1 && <span className="timeline-line" />}
           </div>
           <div className="timeline-body">
-            <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+            <p className="text-[15px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
               {item.year}
             </p>
             <p className="mt-1.5 text-[15px] leading-snug text-[var(--foreground)]">

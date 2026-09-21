@@ -42,7 +42,7 @@ export function InternationalGlobeSection() {
                 key={item.label}
                 className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-4"
               >
-                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-white/55">
+                <p className="text-[15px] font-normal tracking-[-0.01em] text-white">
                   {item.label}
                 </p>
                 <p className="mt-1.5 text-[13.5px] leading-snug text-white/80">

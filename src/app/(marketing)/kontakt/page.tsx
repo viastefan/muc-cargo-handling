@@ -104,7 +104,7 @@ export default function KontaktPage() {
           <aside className="lg:pt-2" id="standort">
             <div className="sticky top-24 space-y-4">
               <div className="surface-card p-6 md:p-8">
-                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+                <p className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
                   Direktkontakt
                 </p>
                 <ul className="mt-6 space-y-6">
@@ -114,7 +114,7 @@ export default function KontaktPage() {
                         <item.icon className="h-4 w-4" />
                       </span>
                       <div>
-                        <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
+                        <p className="text-[13px] font-normal text-[var(--muted)]">
                           {item.label}
                         </p>
                         <p className="mt-1 text-[14px] leading-relaxed text-[var(--muted)]">{item.content}</p>
@@ -134,7 +134,7 @@ export default function KontaktPage() {
               </div>
 
               <div className="surface-card surface-card--raised p-6 md:p-8">
-                <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
+                <p className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
                   Zertifizierung
                 </p>
                 <p className="mt-3 text-[15px] text-[var(--foreground)]">
