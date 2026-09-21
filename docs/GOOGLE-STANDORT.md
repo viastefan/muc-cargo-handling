@@ -52,7 +52,7 @@ die beiden Firmen trennt, kann CHI bei ungenauen Suchen noch mitlaufen.
 | Feld | Wert |
 |---|---|
 | Name | MUC Cargohandling GmbH |
-| Kategorie | Frachtspeditionsdienst (im Feld „Fracht“ oder „Spedition“ tippen; zusätzlich Spedition, Logistikdienst) |
+| Kategorie | Frachtspeditionsdienst (ganzen Namen ins Feld tippen; nur „Fracht“ gibt es nicht. Fallback: auf Logistik klicken → Logistikdienst) |
 | Straße | Südallee |
 | Adresszusatz | Frachtzentrum, Modul H, Pavillon |
 | PLZ / Ort | 85356 München-Flughafen |

@@ -76,7 +76,7 @@ export const GOOGLE_LISTING_FIELDS: readonly ListingField[] = [
   {
     label: "Kategorie",
     value: GOOGLE_LISTING.categoryPrimary,
-    hint: "Ins Feld tippen, nicht die Liste durchscrollen: „Fracht“ oder „Spedition“. Hauptkategorie Frachtspeditionsdienst (so steht CHI da). Danach ggf. Spedition und Logistikdienst als weitere Kategorien.",
+    hint: "Ins Feld den ganzen Namen tippen: Frachtspeditionsdienst. Nur „Fracht“ steht nicht in der Liste. Alternativ Logistik antippen und Logistikdienst wählen.",
   },
   {
     label: "Straße",
