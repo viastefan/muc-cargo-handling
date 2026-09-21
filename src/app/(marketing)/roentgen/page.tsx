@@ -10,16 +10,17 @@ import {
 import { ServiceCard } from "@/components/ServiceCard";
 import {
   BreadcrumbStructuredData,
+  FaqStructuredData,
   ServiceStructuredData,
 } from "@/components/StructuredData";
 import { pageMeta } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Röntgen- und Sicherheitskontrollen am Flughafen München – LBA-konform, modern und als reglementierter Beauftragter.";
+  "Röntgenkontrolle und Sicherheitsprüfung für Luftfracht am Flughafen München (MUC) – LBA-konform, reglementierter Beauftragter, kurze Wege im Frachtzentrum.";
 
 export const metadata: Metadata = pageMeta({
   path: "/roentgen",
-  title: "Röntgen",
+  title: "Röntgen & Sicherheitskontrolle Luftfracht München",
   description: DESCRIPTION,
 });
 
@@ -60,6 +61,7 @@ export default function RoentgenPage() {
         path="/roentgen"
         serviceType="Air cargo security screening"
       />
+      <FaqStructuredData items={FAQ} />
       <Hero
         image="/images/roentgen/cargo-hold.jpg"
         images={[
@@ -140,7 +142,7 @@ export default function RoentgenPage() {
           description="Enge Zusammenarbeit mit erfahrenen Partnern am Cargo-Standort München – kurze Wege, klare Verantwortlichkeiten."
         />
 
-        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="section-header-gap feature-card-grid">
           {HIGHLIGHTS.map((h) => (
             <FeatureCard key={h.title} title={h.title} icon={h.icon}>
               {h.text}

@@ -29,11 +29,11 @@ import {
 import { pageMeta } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Import- und Export-Handling am Flughafen München – Annahme, Dokumentation, Sicherheit und Übergabe mit klaren Prozessen.";
+  "Luftfracht Import und Export am Flughafen München – Annahme, Dokumentation, Sicherheit und Übergabe mit klaren Prozessen im Cargo-Standort MUC.";
 
 export const metadata: Metadata = pageMeta({
   path: "/luftfracht",
-  title: "Luftfracht Import Export",
+  title: "Luftfracht Import Export Flughafen München",
   description: DESCRIPTION,
 });
 

@@ -48,7 +48,7 @@ export function StructuredData() {
     },
     image: [`${SITE_URL}/opengraph-image`, `${SITE_URL}/images/home/hero.jpg`],
     description:
-      "Luftfrachtabwicklung am Flughafen München: Import und Export, Airline Handling sowie Röntgen- und Sicherheitskontrollen als reglementierter Beauftragter.",
+      "Luftfracht-Handling am Flughafen München (MUC): Import, Export, Airline Handling sowie Röntgen- und Sicherheitskontrollen als reglementierter Beauftragter DE/RA/01278-01 – direkt im Frachtzentrum.",
     telephone: COMPANY.phone,
     email: COMPANY.email,
     vatID: COMPANY.vatId,
@@ -69,7 +69,8 @@ export function StructuredData() {
     },
     hasMap: MAPS_PLACE_URL,
     areaServed: [
-      { "@type": "Place", name: "Flughafen München (MUC)" },
+      { "@type": "Airport", name: "Flughafen München", iataCode: "MUC" },
+      { "@type": "Place", name: "Cargo-Standort München" },
       { "@type": "AdministrativeArea", name: "Bayern" },
       { "@type": "Country", name: "Deutschland" },
     ],
@@ -84,12 +85,16 @@ export function StructuredData() {
       },
     ],
     knowsAbout: [
-      "Luftfracht Import",
-      "Luftfracht Export",
-      "Airline Handling",
-      "Röntgenkontrolle",
+      "Luftfracht Flughafen München",
+      "Luftfracht Import München",
+      "Luftfracht Export München",
+      "Airline Handling MUC",
+      "Cargo Handling München Airport",
+      "Röntgenkontrolle Luftfracht",
+      "Sicherheitskontrolle Fracht München",
       "Reglementierter Beauftragter",
       "Luftsicherheit",
+      "ULD Handling",
     ],
     identifier: [
       {
