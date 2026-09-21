@@ -52,18 +52,31 @@ export const GOOGLE_LISTING = {
 } as const;
 
 /**
- * Nachbar am Frachtzentrum. Google zeigt deren Wissenspanel bei der Suche
- * „muc cargo handling", weil unser eigenes Unternehmensprofil fehlt.
- * Deren Eintrag nicht klaimen — anderer Inhaber, anderes Modul, andere Nummer.
+ * Nachbarn am Frachtzentrum. Google hängt die Suche „muc cargo handling"
+ * und den Pin 48.3504/11.7671 oft an deren bestehende Einträge.
+ * Nicht klaimen, nicht deren Adresse übernehmen.
  */
-export const CHI_NEIGHBOR = {
-  name: "CHI MUC Cargo Handling GmbH",
-  address: "Modul F, Zimmer 325-333, Südallee 1, 85356 Hallbergmoos",
-  phone: "089 97596170",
-  mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    "CHI MUC Cargo Handling GmbH Hallbergmoos",
-  )}`,
-} as const;
+export const CARGO_NEIGHBORS = [
+  {
+    name: "CHI MUC Cargo Handling GmbH",
+    address: "Modul F, Zimmer 325-333, Südallee 1, 85356 Hallbergmoos",
+    phone: "089 97596170",
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      "CHI MUC Cargo Handling GmbH Hallbergmoos",
+    )}`,
+  },
+  {
+    name: "transmaritim international",
+    address: "Südallee 1, Modul G, Raum 333 + 335, 85399 Hallbergmoos",
+    phone: "089 238878980",
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      "transmaritim international Hallbergmoos",
+    )}`,
+  },
+] as const;
+
+/** @deprecated Alias — CHI bleibt der Such-Treffer rechts. */
+export const CHI_NEIGHBOR = CARGO_NEIGHBORS[0];
 
 export type ListingField = {
   label: string;
@@ -111,7 +124,7 @@ export const GOOGLE_LISTING_FIELDS: readonly ListingField[] = [
   {
     label: "Pin-Koordinaten",
     value: GOOGLE_LISTING.coordinates,
-    hint: "Nach der Adresseingabe „Standort auf der Karte anpassen“ und genau hierhin ziehen. Nicht den automatischen Pin übernehmen, falls er versetzt sitzt.",
+    hint: "Nach der Adresseingabe „Standort auf der Karte anpassen“. Den Pin auf diese Koordinaten ziehen. Wenn Google transmaritim (Modul G) oder CHI (Modul F) vorschlägt: nicht übernehmen, neues Unternehmen, Adresse Modul H.",
   },
   {
     label: "Beschreibung",

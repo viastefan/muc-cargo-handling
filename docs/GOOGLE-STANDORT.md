@@ -12,18 +12,17 @@ Die Felder zum Abschreiben stehen auch im Admin-Panel unter
 
 ---
 
-## 0. CHI ist nicht wir
+## 0. CHI und transmaritim sind nicht wir
 
 Bei der Suche „muc cargo handling“ zeigt Google das Wissenspanel von
-**CHI MUC Cargo Handling GmbH** (Modul F, Zimmer 325-333, Südallee 1,
-85356 Hallbergmoos, Tel. 089 97596170). Das ist ein Nachbar am
-Frachtzentrum, nicht MUC Cargohandling.
+**CHI MUC Cargo Handling GmbH** (Modul F). Der Pin an unseren Koordinaten
+trifft oft **transmaritim international** (Modul G, Raum 333+335,
+85399 Hallbergmoos). Beides Nachbarn am Frachtzentrum.
 
 - Links in den Treffern steht bereits muc-cargo.de — das ist korrekt.
-- Rechts (Karte, Sterne, „Route“, „Anrufen“) gehört CHI, weil nur CHI ein
-  bestätigtes Unternehmensprofil hat.
-- **Nicht** auf „Inhaber dieses Unternehmens?“ klicken. Das würde den
-  CHI-Eintrag klaimen.
+- **Nicht** „Inhaber dieses Unternehmens?“ und nicht „Änderung vorschlagen“
+  bei CHI oder transmaritim klicken.
+- Adresse im eigenen Profil: Modul H, Pavillon — nicht Modul F, nicht Modul G.
 
 ## 1. Eigenes Profil anlegen
 

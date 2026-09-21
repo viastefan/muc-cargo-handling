@@ -15,11 +15,11 @@ export function GoogleListingKit() {
       <div className="admin-card__body admin-listing">
         <p className="admin-listing__warn">
           Bei der Suche „muc cargo handling“ zeigt Google rechts{" "}
-          <strong>{CHI_NEIGHBOR.name}</strong> — das ist ein anderes
-          Unternehmen ({CHI_NEIGHBOR.address}, Tel. {CHI_NEIGHBOR.phone}).
-          Deren Karte, Sterne und den Button „Inhaber dieses Unternehmens?“
-          nicht verwenden. Unser Profil muss neu angelegt werden, damit rechts
-          MUC Cargohandling GmbH steht.
+          <strong>{CHI_NEIGHBOR.name}</strong> (Modul F). Der Pin bei unseren
+          Koordinaten hängt oft an <strong>transmaritim international</strong>{" "}
+          (Modul G, Raum 333+335). Beides andere Firmen. Deren Adresse nicht
+          übernehmen, nicht „Änderung vorschlagen“ und nicht „Inhaber dieses
+          Unternehmens?“ klicken. Eigenes Profil mit Adresse Modul H, Pavillon.
         </p>
 
         {linked ? (
