@@ -1,10 +1,33 @@
 import { COMPANY } from "@/lib/company";
 import {
   CHI_NEIGHBOR,
+  GOOGLE_HOURS_FIELDS,
   GOOGLE_LISTING,
   GOOGLE_LISTING_FIELDS,
+  GOOGLE_PHOTOS,
+  GOOGLE_POST,
+  GOOGLE_QA_FIELDS,
+  GOOGLE_SERVICE_FIELDS,
+  type ListingField,
 } from "@/lib/google-listing";
 import { CopyButton } from "./CopyButton";
+
+function FieldList({ fields }: { fields: readonly ListingField[] }) {
+  return (
+    <div className="admin-listing__fields">
+      {fields.map((field) => (
+        <div key={field.label} className="admin-copyrow">
+          <div>
+            <p className="admin-copyrow__label">{field.label}</p>
+            <p className="admin-copyrow__value">{field.value}</p>
+            {field.hint ? <p className="admin-copyrow__hint">{field.hint}</p> : null}
+          </div>
+          <CopyButton value={field.value} />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export function GoogleListingKit() {
   const linked = Boolean(COMPANY.googlePlaceId);
@@ -29,10 +52,10 @@ export function GoogleListingKit() {
           </p>
         ) : (
           <p className="admin-listing__lead">
-            Links in der Suche erscheint schon muc-cargo.de. Rechts (Wissenspanel
-            / Maps-Pin) fehlt unser Eintrag, deshalb rückt Google CHI nach.
-            Anlegen kann nur der Inhaber oder eine bevollmächtigte Person
-            (Postkarte, Anruf oder Video).
+            Das Profil ist angelegt, aber noch <strong>nicht öffentlich sichtbar</strong>.
+            Google prüft die Angaben (kann ein paar Tage dauern). Solange kannst du
+            alles andere ausfüllen: Zeiten, Beschreibung, Leistungen, Fotos.
+            „Produkte“, „Buchungen“ und „Werben“ bleiben leer.
           </p>
         )}
 
@@ -51,13 +74,13 @@ export function GoogleListingKit() {
           <li>
             Eigenes Profil unter{" "}
             <a
-              href={GOOGLE_LISTING.createUrl}
+              href="https://business.google.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              business.google.com/create
+              business.google.com
             </a>{" "}
-            anlegen. Name genau <strong>{COMPANY.legalName}</strong> (ein Wort
+            öffnen. Name genau <strong>{COMPANY.legalName}</strong> (ein Wort
             Cargohandling). Felder unten übernehmen.
           </li>
           <li>
@@ -93,20 +116,31 @@ export function GoogleListingKit() {
           </p>
         ) : null}
 
-        <div className="admin-listing__fields">
-          {GOOGLE_LISTING_FIELDS.map((field) => (
-            <div key={field.label} className="admin-copyrow">
-              <div>
-                <p className="admin-copyrow__label">{field.label}</p>
-                <p className="admin-copyrow__value">{field.value}</p>
-                {field.hint ? (
-                  <p className="admin-copyrow__hint">{field.hint}</p>
-                ) : null}
-              </div>
-              <CopyButton value={field.value} />
-            </div>
-          ))}
-        </div>
+        <h3 className="admin-listing__section">1. Profil bearbeiten</h3>
+        <FieldList fields={GOOGLE_LISTING_FIELDS} />
+
+        <h3 className="admin-listing__section">2. Öffnungszeiten hinzufügen</h3>
+        <FieldList fields={GOOGLE_HOURS_FIELDS} />
+
+        <h3 className="admin-listing__section">3. Dienstleistungen</h3>
+        <p className="admin-listing__lead">
+          Nicht unter „Produkte“. Jede Zeile: Name kopieren, dann Beschreibung.
+        </p>
+        <FieldList fields={GOOGLE_SERVICE_FIELDS} />
+
+        <h3 className="admin-listing__section">4. Fotos</h3>
+        <p className="admin-listing__lead">
+          Dateien liegen im Repo unter den angegebenen Pfaden. Logo und Titelbild
+          zuerst, danach die Betriebsfotos. Keine Weltkugel, keine Grafiken mit
+          Schrift.
+        </p>
+        <FieldList fields={GOOGLE_PHOTOS} />
+
+        <h3 className="admin-listing__section">5. Erster Beitrag</h3>
+        <FieldList fields={[GOOGLE_POST]} />
+
+        <h3 className="admin-listing__section">6. Fragen und Antworten</h3>
+        <FieldList fields={GOOGLE_QA_FIELDS} />
       </div>
     </div>
   );

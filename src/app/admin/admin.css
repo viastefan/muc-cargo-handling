@@ -1449,10 +1449,26 @@
   overflow-wrap: anywhere;
 }
 
+.admin-listing__section {
+  margin: 1.35rem 0 0.55rem;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
 .admin-listing__fields {
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
+}
+
+.admin-listing__section + .admin-listing__lead {
+  margin-bottom: 0.55rem;
+}
+
+.admin-listing__fields + .admin-listing__section {
+  margin-top: 1.5rem;
 }
 
 .admin-copyrow {
@@ -1483,6 +1499,7 @@
   line-height: 1.5;
   color: var(--foreground);
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
 .admin-copyrow__hint {
