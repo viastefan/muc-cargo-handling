@@ -159,6 +159,8 @@ export function SiteFooter() {
             <p>{COMPANY.legalName}</p>
             <p>{COMPANY.office.line1}</p>
             <p>{COMPANY.office.line2}</p>
+            <p>{COMPANY.hours.display}</p>
+            <p className="site-footer-meta">{COMPANY.hours.note}</p>
             <p className="site-footer-meta">{COMPANY.regAgent}</p>
           </address>
         </div>

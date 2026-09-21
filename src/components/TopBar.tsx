@@ -1,8 +1,8 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { COMPANY } from "@/lib/company";
-import { MailIcon, PhoneIcon } from "./ArrowIcon";
+import { COMPANY, MAPS_PLACE_URL } from "@/lib/company";
+import { MailIcon, PhoneIcon, PinIcon } from "./ArrowIcon";
 
 const STORAGE_KEY = "muc-top-bar-dismissed";
 const listeners = new Set<() => void>();
@@ -65,6 +65,22 @@ export function TopBar() {
               <p className="top-bar__value">{COMPANY.regAgent}</p>
             </div>
 
+            <div className="top-bar__item top-bar__item--place">
+              <a
+                href={MAPS_PLACE_URL}
+                className="top-bar__place"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Standort Modul H, Flughafen München – Route in Google Maps"
+              >
+                {COMPANY.office.short}
+              </a>
+              <span className="top-bar__hours-dot" aria-hidden="true">
+                ·
+              </span>
+              <span className="top-bar__hours">{COMPANY.hours.displayShort}</span>
+            </div>
+
             <div className="top-bar__contact-row">
               <div className="top-bar__item">
                 <p className="top-bar__label">Telefon</p>
@@ -91,6 +107,15 @@ export function TopBar() {
           <div className="top-bar__mobile-row">
             <span className="top-bar__mobile-cert">{COMPANY.regAgent}</span>
             <div className="top-bar__mobile-actions">
+              <a
+                href={MAPS_PLACE_URL}
+                className="top-bar__mobile-action"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Standort ${COMPANY.office.short}: ${COMPANY.office.line1}`}
+              >
+                <PinIcon />
+              </a>
               <a
                 href={`tel:${COMPANY.phoneTel}`}
                 className="top-bar__mobile-action"

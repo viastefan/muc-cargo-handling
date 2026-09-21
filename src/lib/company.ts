@@ -24,8 +24,10 @@ export const COMPANY = {
   office: {
     line1: "Frachtzentrum, Modul H, Pavillon",
     line2: "85356 München-Flughafen",
+    /** Kompakt für die Infoleiste, Apple-artig kurz. */
+    short: "Modul H, MUC",
   },
-  /** Exakte Bürokoordinaten – der Google-Places-Eintrag sitzt derzeit falsch. */
+  /** Bürokoordinaten. Bei der Suche „muc cargo handling" zeigt Google derzeit CHI (Modul F) — eigenes Profil fehlt. */
   coordinates: { lat: 48.350443, lng: 11.767121 },
   /**
    * Google Place ID des Unternehmensprofils (Google Business Profile).
@@ -38,17 +40,14 @@ export const COMPANY = {
     process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim() ||
     "",
   /**
-   * Bürozeiten für die Live-Statusanzeige („Jetzt geöffnet" / „Geschlossen").
+   * Bürozeiten für Anzeige und Live-Status („Jetzt geöffnet" / „Geschlossen").
    * Werktags mo–fr; Wochenende geschlossen. Zeitzone Europe/Berlin.
-   *
-   * `confirmed` steuert, ob die Anzeige überhaupt erscheint: Solange die Zeiten
-   * nicht vom Auftraggeber bestätigt sind, bleibt sie aus — eine falsche
-   * Öffnungszeit auf der Live-Seite wäre schlimmer als gar keine. Nach der
-   * Bestätigung hier die echten Werte eintragen und `confirmed: true` setzen.
    */
   hours: {
-    confirmed: false,
+    confirmed: true,
     weekdays: { open: "08:00", close: "17:00" },
+    display: "Mo–Fr 08:00–17:00",
+    displayShort: "Mo–Fr 08–17",
     note: "Für zeitkritische Sendungen 24/7 erreichbar",
   },
   /** Schwesterunternehmen am selben Standort, volle Firmierung laut Auftraggeber. */
@@ -68,11 +67,19 @@ export const COMPANY = {
 } as const;
 
 const { lat, lng } = COMPANY.coordinates;
+const pinLabel = encodeURIComponent(COMPANY.legalName);
 
 /** Pin exakt auf den Bürokoordinaten statt auf dem falschen Google-Places-Eintrag. */
 export const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${lat}%2C${lng}`;
 
-export const MAPS_EMBED = `https://maps.google.com/maps?q=${lat},${lng}&z=17&hl=de&ie=UTF8&iwloc=&output=embed`;
+/**
+ * Embed mit Firmennamen am Pin. `iwloc` bleibt weg — ein leerer Wert hat den
+ * Marker in der Kartenansicht verschluckt. Sobald die Place ID gesetzt ist,
+ * binden wir den echten Places-Eintrag ein.
+ */
+export const MAPS_EMBED = COMPANY.googlePlaceId
+  ? `https://maps.google.com/maps?q=place_id:${encodeURIComponent(COMPANY.googlePlaceId)}&z=17&hl=de&output=embed`
+  : `https://maps.google.com/maps?q=${lat},${lng}+(${pinLabel})&z=17&hl=de&output=embed`;
 
 /**
  * Google-Maps-URL mit Place ID — für schema.org `hasMap` / `sameAs`.

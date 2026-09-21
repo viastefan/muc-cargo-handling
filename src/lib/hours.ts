@@ -35,8 +35,8 @@ function berlinNow(): { day: number; minutes: number } {
 }
 
 /**
- * Live-Öffnungsstatus des Büros (Mo–Fr). `null`, solange die Zeiten nicht
- * bestätigt sind — die Anzeige entfällt dann ersatzlos.
+ * Live-Öffnungsstatus des Büros (Mo–Fr). `null` nur, wenn die Zeiten
+ * bewusst deaktiviert sind (`confirmed: false`).
  */
 export function getOpenStatus(): OpenStatus | null {
   if (!COMPANY.hours.confirmed) return null;

@@ -77,9 +77,26 @@ setzen.
 
 ### Öffnungszeiten
 
-Die Live-Statusanzeige („Jetzt geöffnet · schließt 17:00") ist bewusst
-abgeschaltet, weil die Zeiten nicht bestätigt sind. Zum Aktivieren in
-`src/lib/company.ts` die echten Zeiten eintragen und `confirmed: true` setzen.
+Bürozeiten Mo–Fr 08:00–17:00, plus Hinweis 24/7 für zeitkritische Sendungen.
+Live-Status und JSON-LD hängen an `COMPANY.hours` in `src/lib/company.ts`.
+
+### Google Maps Pin
+
+Bei der Suche „muc cargo handling“ zeigt Google rechts **CHI MUC Cargo
+Handling GmbH** (Modul F, Hallbergmoos). Das ist ein anderes Unternehmen.
+Links stehen bereits die Treffer von muc-cargo.de.
+
+Damit rechts MUC Cargohandling erscheint:
+
+1. Eigenes Google Unternehmensprofil **neu anlegen** — CHI nicht klaimen
+   (nicht auf „Inhaber dieses Unternehmens?“ klicken)
+2. Name genau `MUC Cargohandling GmbH`, Pin auf `48.350443, 11.767121`
+   (Modul H). Felder unter `/admin/system` und in `docs/GOOGLE-STANDORT.md`
+3. Nach der Freischaltung Place ID als `GOOGLE_PLACE_ID` in Vercel setzen
+   und redeployen
+
+Die Bestätigung (Postkarte / Anruf / Video) muss der Inhaber oder eine
+bevollmächtigte Person mit dem Google-Konto der Firma machen.
 
 ### E-Mail-Versand
 
@@ -116,3 +133,4 @@ Formel-Injektion abgesichert, strenge Content-Security-Policy.
 4. Supabase Secret Key neu erzeugen und in Vercel tauschen — der aktuelle
    wurde während der Entwicklung im Klartext übertragen
 5. Domain verbinden, danach `SITE_URL` anpassen
+6. Google Unternehmensprofil anlegen (`docs/GOOGLE-STANDORT.md` bzw. `/admin/system`), danach `GOOGLE_PLACE_ID` setzen

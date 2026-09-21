@@ -100,7 +100,7 @@ export function FaqDirectory({ categories }: Props) {
             className="faq-section"
             aria-labelledby={`${baseId}-${category.id}`}
           >
-            <h2 id={`${baseId}-${category.id}`} className="faq-section__title">
+            <h2 id={`${baseId}-${category.id}`} className="faq-section__title heading-display">
               {category.title}
             </h2>
 
@@ -191,8 +191,7 @@ export function FaqDirectory({ categories }: Props) {
 
             <div className="faq-toc-sheet__header">
               <div>
-                <p className="faq-toc-sheet__eyebrow">FAQ</p>
-                <h2 id={menuTitleId} className="faq-toc-sheet__title">
+                <h2 id={menuTitleId} className="faq-toc-sheet__title heading-display">
                   Verzeichnis
                 </h2>
               </div>

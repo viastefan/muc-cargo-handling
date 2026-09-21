@@ -88,12 +88,10 @@ export default function LuftfrachtPage() {
         <div className="section-header-gap">
           <FlowTracks
             importTrack={{
-              eyebrow: "Eingehend",
               label: "Import",
               steps: LUFTFRACHT_IMPORT_FLOW,
             }}
             exportTrack={{
-              eyebrow: "Ausgehend",
               label: "Export",
               steps: LUFTFRACHT_EXPORT_FLOW,
             }}
@@ -103,7 +101,6 @@ export default function LuftfrachtPage() {
 
       <PageSection borderTop>
         <ProcessTimeline
-          eyebrow="End-to-End"
           titleDark="Vom Eingang"
           titleLight="bis zur Freigabe."
           description="Unabhängig von Richtung und Sendungsart folgen alle Aufträge einem klaren Qualitätsrahmen – mit dokumentierten Übergaben in jedem Schritt."
