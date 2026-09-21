@@ -56,7 +56,7 @@ export function LocationMap({ embedSrc }: { embedSrc: string }) {
           <div className="location-map__consent">
             <div className="location-map__consent-grid" aria-hidden="true" />
             <span className="location-map__consent-pin" aria-hidden="true">
-              <PinIcon className="h-8 w-8" />
+              <PinIcon className="h-9 w-9" />
             </span>
             <p className="location-map__consent-title">Kartenansicht (Google Maps)</p>
             <p className="location-map__consent-text">

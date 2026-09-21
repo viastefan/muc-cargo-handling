@@ -12,7 +12,12 @@ import { SITE_URL } from "@/lib/site";
  */
 const isPreviewHost = (() => {
   try {
-    return /(^|\.)vercel\.app$/i.test(new URL(SITE_URL).hostname);
+    const host = new URL(SITE_URL).hostname;
+    return (
+      /(^|\.)vercel\.app$/i.test(host) ||
+      host === "localhost" ||
+      host === "127.0.0.1"
+    );
   } catch {
     return false;
   }

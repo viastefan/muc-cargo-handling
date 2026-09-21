@@ -6140,7 +6140,7 @@ textarea.field__control {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.55rem;
   padding: 1.25rem;
   text-align: center;
   background: var(--surface-2);
@@ -6160,11 +6160,8 @@ textarea.field__control {
 }
 
 .location-map__consent-pin {
-  position: absolute;
-  left: 50%;
-  top: 38%;
-  z-index: 0;
-  transform: translate(-50%, -80%);
+  position: relative;
+  z-index: 1;
   color: var(--brand);
   pointer-events: none;
   filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--brand) 35%, transparent));
