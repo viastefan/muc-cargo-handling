@@ -6159,8 +6159,20 @@ textarea.field__control {
   mask-image: radial-gradient(ellipse at center, #000 40%, transparent 78%);
 }
 
+.location-map__consent-pin {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  z-index: 0;
+  transform: translate(-50%, -80%);
+  color: var(--brand);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--brand) 35%, transparent));
+}
+
 .location-map__consent-title {
   position: relative;
+  z-index: 1;
   margin: 0;
   font-size: 14px;
   font-weight: 500;
@@ -6169,6 +6181,7 @@ textarea.field__control {
 
 .location-map__consent-text {
   position: relative;
+  z-index: 1;
   margin: 0;
   max-width: min(22rem, 100%);
   font-size: 12.5px;
@@ -6185,6 +6198,7 @@ textarea.field__control {
 
 .location-map__consent-btn {
   position: relative;
+  z-index: 1;
   margin-top: 0.5rem;
   padding: 0.55rem 1.1rem;
   border: none;

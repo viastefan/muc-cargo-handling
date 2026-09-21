@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { COMPANY, MAPS_EMBED, MAPS_LINK } from "@/lib/company";
+import { COMPANY, MAPS_EMBED, MAPS_PLACE_URL } from "@/lib/company";
 import {
   CONSENT_COOKIE,
   CONSENT_EVENT,
@@ -172,7 +172,7 @@ export function LocationPeek() {
           </p>
         ) : null}
 
-        <ExternalLink href={MAPS_LINK} className="location-peek__cta">
+        <ExternalLink href={MAPS_PLACE_URL} className="location-peek__cta">
           Route öffnen
         </ExternalLink>
       </div>

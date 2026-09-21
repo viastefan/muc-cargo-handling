@@ -81,6 +81,24 @@ Die Live-Statusanzeige („Jetzt geöffnet · schließt 17:00") ist bewusst
 abgeschaltet, weil die Zeiten nicht bestätigt sind. Zum Aktivieren in
 `src/lib/company.ts` die echten Zeiten eintragen und `confirmed: true` setzen.
 
+### Google Maps Pin
+
+In Google Maps gibt es noch keinen Eintrag unter dem Firmennamen — deshalb
+kein benannter Pin bei der Suche. Die Website zeigt den Standort bereits über
+die Bürokoordinaten (Modul H, Pavillon).
+
+Damit der Pin in Maps erscheint:
+
+1. Google Unternehmensprofil anlegen oder klaimen — Felder und Schritte stehen
+   unter `/admin/system` und in `docs/GOOGLE-STANDORT.md`
+2. Pin manuell auf `48.350443, 11.767121` setzen (nicht den automatischen
+   versetzten Places-Pin übernehmen)
+3. Nach der Freischaltung Place ID als `GOOGLE_PLACE_ID` in Vercel setzen und
+   redeployen
+
+Die Bestätigung (Postkarte / Anruf / Video) muss der Inhaber oder eine
+bevollmächtigte Person mit dem Google-Konto der Firma machen.
+
 ### E-Mail-Versand
 
 Antworten werden derzeit im eigenen Mailprogramm des Bearbeiters geöffnet
@@ -116,3 +134,4 @@ Formel-Injektion abgesichert, strenge Content-Security-Policy.
 4. Supabase Secret Key neu erzeugen und in Vercel tauschen — der aktuelle
    wurde während der Entwicklung im Klartext übertragen
 5. Domain verbinden, danach `SITE_URL` anpassen
+6. Google Unternehmensprofil anlegen (`docs/GOOGLE-STANDORT.md` bzw. `/admin/system`), danach `GOOGLE_PLACE_ID` setzen

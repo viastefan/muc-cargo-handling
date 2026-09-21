@@ -269,7 +269,7 @@ export async function runSystemChecks(): Promise<Check[]> {
       detail: googlePlaceId
         ? `Place ID verknüpft · ${COMPANY.googlePlaceId}`
         : "Keine Place ID — Schema nutzt Koordinaten + hasMap.",
-      fix: "Google Business Profile klaimen, korrekten Pin setzen, Place ID kopieren und als GOOGLE_PLACE_ID in Vercel setzen.",
+      fix: "Oben das Google-Maps-Paket nutzen: Profil anlegen oder klaimen, Pin auf die Bürokoordinaten setzen, Place ID kopieren und als GOOGLE_PLACE_ID in Vercel setzen.",
     },
   ];
 

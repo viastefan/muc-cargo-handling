@@ -68,11 +68,19 @@ export const COMPANY = {
 } as const;
 
 const { lat, lng } = COMPANY.coordinates;
+const pinLabel = encodeURIComponent(COMPANY.legalName);
 
 /** Pin exakt auf den Bürokoordinaten statt auf dem falschen Google-Places-Eintrag. */
 export const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${lat}%2C${lng}`;
 
-export const MAPS_EMBED = `https://maps.google.com/maps?q=${lat},${lng}&z=17&hl=de&ie=UTF8&iwloc=&output=embed`;
+/**
+ * Embed mit Firmennamen am Pin. `iwloc` bleibt weg — ein leerer Wert hat den
+ * Marker in der Kartenansicht verschluckt. Sobald die Place ID gesetzt ist,
+ * binden wir den echten Places-Eintrag ein.
+ */
+export const MAPS_EMBED = COMPANY.googlePlaceId
+  ? `https://maps.google.com/maps?q=place_id:${encodeURIComponent(COMPANY.googlePlaceId)}&z=17&hl=de&output=embed`
+  : `https://maps.google.com/maps?q=${lat},${lng}+(${pinLabel})&z=17&hl=de&output=embed`;
 
 /**
  * Google-Maps-URL mit Place ID — für schema.org `hasMap` / `sameAs`.

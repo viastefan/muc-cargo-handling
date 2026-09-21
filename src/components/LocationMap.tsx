@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { PinIcon } from "@/components/ArrowIcon";
 import { ExternalLink } from "@/components/ExternalLink";
-import { COMPANY, MAPS_LINK } from "@/lib/company";
+import { COMPANY, MAPS_PLACE_URL } from "@/lib/company";
 import {
   CONSENT_EVENT,
   hasMarketingConsent,
@@ -55,6 +55,9 @@ export function LocationMap({ embedSrc }: { embedSrc: string }) {
         ) : (
           <div className="location-map__consent">
             <div className="location-map__consent-grid" aria-hidden="true" />
+            <span className="location-map__consent-pin" aria-hidden="true">
+              <PinIcon className="h-8 w-8" />
+            </span>
             <p className="location-map__consent-title">Kartenansicht (Google Maps)</p>
             <p className="location-map__consent-text">
               Beim Laden werden Daten an Google übertragen. Details in der{" "}
@@ -94,7 +97,7 @@ export function LocationMap({ embedSrc }: { embedSrc: string }) {
               </span>
             </p>
           ) : null}
-          <ExternalLink href={MAPS_LINK} className="location-map__directions">
+          <ExternalLink href={MAPS_PLACE_URL} className="location-map__directions">
             Anfahrt in Google Maps
           </ExternalLink>
         </div>
