@@ -3680,6 +3680,72 @@ body:has(.cookie-banner) .faq-toc-fab {
     transform var(--duration-normal) var(--ease-out);
 }
 
+.mobile-nav-link {
+  display: block;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.mobile-nav-link:last-of-type {
+  border-bottom: none;
+}
+
+.mobile-nav-link.is-active {
+  color: var(--brand-text);
+}
+
+.mobile-nav-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1.1rem;
+  padding-bottom: 0.5rem;
+}
+
+.mobile-nav-contact {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.mobile-nav-contact__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.mobile-nav-contact__link:active {
+  background: var(--surface-2);
+}
+
+.mobile-nav-contact__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-light);
+}
+
+.mobile-nav-contact__value {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  word-break: break-word;
+}
+
 .mobile-nav-panel[data-open="true"] .mobile-nav-item {
   opacity: 1;
   transform: translateY(0);
@@ -4343,8 +4409,8 @@ textarea.field__control {
 
 .spec-grid-item {
   background: transparent;
-  border-top: 1.5px solid var(--foreground);
-  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 0 0;
 }
 
 @media (min-width: 768px) {
@@ -4370,8 +4436,8 @@ textarea.field__control {
 
 .metric-row-item {
   background: transparent;
-  border-top: 1.5px solid var(--foreground);
-  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 0 0;
   text-align: left;
 }
 
@@ -4381,31 +4447,35 @@ textarea.field__control {
   }
 }
 
-/* Feature cards — equal-height surface tiles, no red accent bar */
+/*
+ * Feature-Highlights — immer 2×2, offen (keine Surface-Karten, keine
+ * Deko-Oberkanten). Dicht und uebersichtlich auf Unterseiten; Hero bleibt
+ * unberuehrt.
+ */
 .feature-card-grid {
   display: grid;
-  gap: 0.75rem;
-  align-items: stretch;
+  gap: 1.25rem 1.5rem;
+  align-items: start;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 480px) {
   .feature-card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .feature-card-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.875rem;
+    gap: 1.75rem 2.5rem;
   }
 }
 
 .feature-card-grid > .scroll-reveal {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 100%;
+  height: auto;
+  min-height: 0;
 }
 
 /*
@@ -4454,29 +4524,25 @@ textarea.field__control {
 }
 
 .feature-card {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 0.75rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem 0.7rem;
   width: 100%;
   height: auto;
   min-height: 0;
+  margin: 0;
   border: none;
-  border-top: 1px solid var(--border);
   border-radius: 0;
   background: transparent;
-  padding: 1.25rem 0 0;
+  padding: 0;
   box-shadow: none;
   transition: color var(--duration-fast) var(--ease-out);
 }
 
-@media (min-width: 768px) {
-  .feature-card {
-    min-height: 0;
-    padding: 1.35rem 0 0;
-    gap: 0.85rem;
-  }
+.feature-card--icon {
+  grid-template-columns: 2rem minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
 }
 
 .feature-card:hover {
@@ -4485,61 +4551,69 @@ textarea.field__control {
   transform: none;
 }
 
-/*
- * War nur 1.35rem freischwebendes Icon ohne eigene Flaeche, oben links auf
- * einer grossen dunklen Karte — dadurch wirkte es verloren und zu klein.
- * Jetzt eine erkennbare Kachel mit Kante und Flaeche (--icon-tile-*, bisher
- * ungenutzte Tokens), Icon selbst deutlich groesser. Radius auf 12px an
- * die weichere "Squircle"-Rundung der umgebenden Karte angeglichen.
- */
 .feature-card__icon {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  grid-row: 1;
+  grid-column: 1;
+  width: 2rem;
+  height: 2rem;
   border: 1px solid var(--icon-tile-border);
-  border-radius: 11px;
+  border-radius: 9px;
   background: var(--icon-tile-bg);
   color: var(--icon-tile-ink);
-  transition: transform var(--duration-normal) var(--ease-out);
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .feature-card:hover .feature-card__icon {
-  transform: scale(1.05);
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--icon-tile-border));
+  transform: none;
 }
 
 .feature-card__icon-svg {
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.1rem;
+  height: 1.1rem;
   display: block;
-}
-
-.feature-card__copy {
-  margin-top: auto;
-  min-width: 0;
 }
 
 .feature-card__title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.3;
+  grid-row: 1;
+  grid-column: 1;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
   color: var(--foreground);
 }
 
+.feature-card--icon .feature-card__title {
+  grid-column: 2;
+}
+
 .feature-card__text {
-  margin: 0.55rem 0 0;
-  font-size: 14px;
-  line-height: 1.6;
+  margin: 0;
+  grid-row: 2;
+  grid-column: 1;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--muted);
+}
+
+.feature-card--icon .feature-card__text {
+  grid-column: 2;
 }
 
 @media (min-width: 768px) {
   .feature-card__title {
-    font-size: 17px;
+    font-size: 15px;
+  }
+
+  .feature-card__text {
+    font-size: 13.5px;
+    line-height: 1.55;
   }
 }
 

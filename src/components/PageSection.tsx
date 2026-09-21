@@ -97,16 +97,14 @@ export function FeatureCard({
   icon?: IconName;
 }) {
   return (
-    <article className="feature-card">
+    <article className={`feature-card${icon ? " feature-card--icon" : ""}`}>
       {icon ? (
         <span className="feature-card__icon" aria-hidden="true">
           <FeatureIcon name={icon} className="feature-card__icon-svg" />
         </span>
       ) : null}
-      <div className="feature-card__copy">
-        <h3 className="feature-card__title">{title}</h3>
-        <p className="feature-card__text">{children}</p>
-      </div>
+      <h3 className="feature-card__title">{title}</h3>
+      <p className="feature-card__text">{children}</p>
     </article>
   );
 }

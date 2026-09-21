@@ -25,106 +25,131 @@ export function Header() {
     return () => document.body.classList.remove("menu-open");
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
     <>
       <header className="site-header-wrap">
-      <div className="site-header hidden lg:grid">
-        <div className="site-header-cell site-header-logo">
-          <Link
-            href="/"
-            className="site-header-logo-link transition-opacity duration-300 hover:opacity-80"
-          >
-            <BrandLogo priority className="site-header-logo-img" />
-            <span className="site-header-cert">
-              <span className="site-header-cert__label">Reglementierter Beauftragter</span>
-              <span className="site-header-cert__value">{COMPANY.regAgent}</span>
-            </span>
-          </Link>
-        </div>
-
-        {NAV.map((item) => {
-          const active =
-            pathname === item.href || pathname.startsWith(`${item.href}/`);
-          return (
-            <div
-              key={item.href}
-              className={`site-header-cell site-header-cell--nav ${active ? "is-active" : ""}`}
+        <div className="site-header hidden lg:grid">
+          <div className="site-header-cell site-header-logo">
+            <Link
+              href="/"
+              className="site-header-logo-link transition-opacity duration-300 hover:opacity-80"
             >
-              <Link href={item.href} className="site-header-link">
-                {item.label}
-              </Link>
-            </div>
-          );
-        })}
+              <BrandLogo priority className="site-header-logo-img" />
+              <span className="site-header-cert">
+                <span className="site-header-cert__label">Reglementierter Beauftragter</span>
+                <span className="site-header-cert__value">{COMPANY.regAgent}</span>
+              </span>
+            </Link>
+          </div>
 
-        <div className="site-header-cell site-header-cta p-0">
-          <HeaderContactMenu />
-        </div>
-      </div>
-
-      <div className="flex h-[60px] items-center justify-between gap-3 px-3.5 sm:h-[64px] lg:hidden">
-        <Link href="/" className="shrink-0 transition-opacity duration-300 hover:opacity-80" onClick={() => setOpen(false)}>
-          <BrandLogo priority />
-        </Link>
-
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-label={open ? "Menü schließen" : "Menü öffnen"}
-          aria-expanded={open}
-          aria-controls="mobile-nav-panel"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="sr-only">Menü</span>
-          <span className="menu-toggle__box" aria-hidden="true">
-            <span className="menu-toggle-line" />
-            <span className="menu-toggle-line" />
-          </span>
-        </button>
-      </div>
-
-      <div id="mobile-nav-panel" className="mobile-nav-panel bg-[var(--background)] lg:hidden" data-open={open}>
-        <div className="mobile-nav-inner">
-          <nav className="page-container flex flex-col py-3">
-            {NAV.map((item) => {
-              const active = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  className={`mobile-nav-item border-b border-[var(--border)] py-3.5 text-[13px] font-normal uppercase tracking-[0.07em] transition-colors last:border-b-0 ${
-                    active ? "text-[var(--brand-text)]" : "text-[var(--foreground)]"
-                  }`}
-                >
+          {NAV.map((item) => {
+            const active =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <div
+                key={item.href}
+                className={`site-header-cell site-header-cell--nav ${active ? "is-active" : ""}`}
+              >
+                <Link href={item.href} className="site-header-link">
                   {item.label}
                 </Link>
-              );
-            })}
-            <div className="mobile-nav-item flex flex-col gap-2.5 pt-4">
-              <Button
-                href="/kontakt"
-                fullWidth
-                onClick={(event) => {
-                  setOpen(false);
-                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                  event.preventDefault();
-                  openInquiry();
-                }}
-              >
-                Anfrage stellen
-              </Button>
-              <Link
-                href="/kontakt"
-                onClick={() => setOpen(false)}
-                className="text-center text-[13px] text-[var(--muted)] underline underline-offset-4 transition-colors hover:text-[var(--foreground)]"
-              >
-                Zum Kontaktformular
-              </Link>
-            </div>
-          </nav>
+              </div>
+            );
+          })}
+
+          <div className="site-header-cell site-header-cta p-0">
+            <HeaderContactMenu />
+          </div>
         </div>
-      </div>
+
+        <div className="flex h-[60px] items-center justify-between gap-3 px-3.5 sm:h-[64px] lg:hidden">
+          <Link
+            href="/"
+            className="shrink-0 transition-opacity duration-300 hover:opacity-80"
+            onClick={() => setOpen(false)}
+          >
+            <BrandLogo priority />
+          </Link>
+
+          <button
+            type="button"
+            className="menu-toggle"
+            aria-label={open ? "Menü schließen" : "Menü öffnen"}
+            aria-expanded={open}
+            aria-controls="mobile-nav-panel"
+            onClick={() => setOpen((v) => !v)}
+          >
+            <span className="sr-only">Menü</span>
+            <span className="menu-toggle__box" aria-hidden="true">
+              <span className="menu-toggle-line" />
+              <span className="menu-toggle-line" />
+            </span>
+          </button>
+        </div>
+
+        <div
+          id="mobile-nav-panel"
+          className="mobile-nav-panel bg-[var(--background)] lg:hidden"
+          data-open={open}
+        >
+          <div className="mobile-nav-inner">
+            <nav className="page-container flex flex-col py-2" aria-label="Mobile Navigation">
+              {NAV.map((item) => {
+                const active =
+                  pathname === item.href || pathname.startsWith(`${item.href}/`);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className={`mobile-nav-item mobile-nav-link ${active ? "is-active" : ""}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+
+              <div className="mobile-nav-item mobile-nav-actions">
+                <Button
+                  href="/kontakt"
+                  fullWidth
+                  onClick={(event) => {
+                    setOpen(false);
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                    event.preventDefault();
+                    openInquiry();
+                  }}
+                >
+                  Anfrage stellen
+                </Button>
+
+                <div className="mobile-nav-contact">
+                  <a href={`tel:${COMPANY.phoneTel}`} className="mobile-nav-contact__link">
+                    <span className="mobile-nav-contact__label">Telefon</span>
+                    <span className="mobile-nav-contact__value">{COMPANY.phoneDisplay}</span>
+                  </a>
+                  <a href={`mailto:${COMPANY.email}`} className="mobile-nav-contact__link">
+                    <span className="mobile-nav-contact__label">E-Mail</span>
+                    <span className="mobile-nav-contact__value">{COMPANY.email}</span>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
       </header>
 
       <button

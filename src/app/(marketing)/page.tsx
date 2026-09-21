@@ -26,9 +26,9 @@ import { pageMeta } from "@/lib/seo";
 export const metadata: Metadata = pageMeta({
   path: "/",
   bareTitle: true,
-  title: "MUC Cargohandling | Luftfracht am Flughafen München",
+  title: "MUC Cargohandling | Luftfracht Handling Flughafen München",
   description:
-    "Professionelle Luftfrachtabwicklung am Flughafen München – Import, Export, Airline Handling und Sicherheitskontrollen seit 2003.",
+    "Luftfracht-Handling am Flughafen München: Import, Export, Airline Handling und Röntgenkontrolle – reglementierter Beauftragter im Frachtzentrum MUC seit 2003.",
 });
 
 export default function HomePage() {

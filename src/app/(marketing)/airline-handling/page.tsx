@@ -11,11 +11,11 @@ import {
 import { pageMeta } from "@/lib/seo";
 
 const DESCRIPTION =
-  "Airline Handling am Flughafen München – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle.";
+  "Airline Handling am Flughafen München (MUC) – Import, Export, Dokumentation, Zoll und ULD-Prozesse als operative Schnittstelle im Frachtzentrum.";
 
 export const metadata: Metadata = pageMeta({
   path: "/airline-handling",
-  title: "Airline Handling",
+  title: "Airline Handling Flughafen München",
   description: DESCRIPTION,
 });
 
@@ -117,7 +117,7 @@ export default function AirlineHandlingPage() {
           dark="Operative Airline-Prozesse"
           description="Wir steuern die Übergänge zwischen Airline, Frachtführer und Warehouse – für stabile Durchlaufzeiten und weniger Rückfragen."
         />
-        <div className="section-header-gap grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="section-header-gap feature-card-grid">
           <FeatureCard title="Schnittstelle" icon="link">Airline ↔ Spedition ↔ Warehouse</FeatureCard>
           <FeatureCard title="Dokumentation" icon="docs">Vollständige Übergabeprotokolle</FeatureCard>
           <FeatureCard title="Compliance" icon="compliance">Regelkonforme Abläufe</FeatureCard>
