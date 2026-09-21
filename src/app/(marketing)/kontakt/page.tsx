@@ -57,7 +57,9 @@ const CONTACT = [
     label: "Erreichbarkeit",
     content: (
       <>
-        Mo–Fr, Bürozeiten
+        {COMPANY.hours.display}
+        <br />
+        {COMPANY.hours.note}
         <br />
         Mobil:{" "}
         <a href={`tel:${COMPANY.mobileTel}`} className="hover:text-[var(--foreground)]">

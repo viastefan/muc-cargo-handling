@@ -17,10 +17,6 @@ function JsonLd({ data }: { data: Record<string, unknown> | Record<string, unkno
  * schema.org-Auszeichnung für Google. Liefert die Grundlage für Wissenspanel
  * und lokale Treffer („Luftfracht Flughafen München").
  *
- * Bewusst ohne `openingHours`: die Zeiten sind nicht bestätigt (siehe
- * COMPANY.hours.confirmed). Eine falsche Angabe hier landet direkt in den
- * Google-Ergebnissen und wäre schlimmer als gar keine.
- *
  * Standort-Verknüpfung: `geo` + `hasMap` (Koordinaten) und optional Place ID
  * über `GOOGLE_PLACE_ID` → `sameAs` / PropertyValue — verbindet die Website
  * mit dem Google-Business-Profil, sobald der Eintrag korrekt klaimt ist.
@@ -54,6 +50,25 @@ export function StructuredData() {
       "Luftfrachtabwicklung am Flughafen München: Import und Export, Airline Handling sowie Röntgen- und Sicherheitskontrollen als reglementierter Beauftragter.",
     telephone: COMPANY.phoneTel,
     email: COMPANY.email,
+    ...(COMPANY.hours.confirmed
+      ? {
+          openingHours: "Mo-Fr 08:00-17:00",
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+              ],
+              opens: COMPANY.hours.weekdays.open,
+              closes: COMPANY.hours.weekdays.close,
+            },
+          ],
+        }
+      : {}),
     vatID: COMPANY.vatId,
     foundingDate: "2003",
     slogan: "Präzise Abwicklung und Sicherheit für Ihre Luftfracht",

@@ -24,6 +24,8 @@ export const COMPANY = {
   office: {
     line1: "Frachtzentrum, Modul H, Pavillon",
     line2: "85356 München-Flughafen",
+    /** Kompakt für die Infoleiste, Apple-artig kurz. */
+    short: "Modul H, MUC",
   },
   /** Bürokoordinaten. Bei der Suche „muc cargo handling" zeigt Google derzeit CHI (Modul F) — eigenes Profil fehlt. */
   coordinates: { lat: 48.350443, lng: 11.767121 },
@@ -38,17 +40,14 @@ export const COMPANY = {
     process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID?.trim() ||
     "",
   /**
-   * Bürozeiten für die Live-Statusanzeige („Jetzt geöffnet" / „Geschlossen").
+   * Bürozeiten für Anzeige und Live-Status („Jetzt geöffnet" / „Geschlossen").
    * Werktags mo–fr; Wochenende geschlossen. Zeitzone Europe/Berlin.
-   *
-   * `confirmed` steuert, ob die Anzeige überhaupt erscheint: Solange die Zeiten
-   * nicht vom Auftraggeber bestätigt sind, bleibt sie aus — eine falsche
-   * Öffnungszeit auf der Live-Seite wäre schlimmer als gar keine. Nach der
-   * Bestätigung hier die echten Werte eintragen und `confirmed: true` setzen.
    */
   hours: {
-    confirmed: false,
+    confirmed: true,
     weekdays: { open: "08:00", close: "17:00" },
+    display: "Mo–Fr 08:00–17:00",
+    displayShort: "Mo–Fr 08–17",
     note: "Für zeitkritische Sendungen 24/7 erreichbar",
   },
   /** Schwesterunternehmen am selben Standort, volle Firmierung laut Auftraggeber. */

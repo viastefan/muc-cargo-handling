@@ -77,9 +77,8 @@ setzen.
 
 ### Öffnungszeiten
 
-Die Live-Statusanzeige („Jetzt geöffnet · schließt 17:00") ist bewusst
-abgeschaltet, weil die Zeiten nicht bestätigt sind. Zum Aktivieren in
-`src/lib/company.ts` die echten Zeiten eintragen und `confirmed: true` setzen.
+Bürozeiten Mo–Fr 08:00–17:00, plus Hinweis 24/7 für zeitkritische Sendungen.
+Live-Status und JSON-LD hängen an `COMPANY.hours` in `src/lib/company.ts`.
 
 ### Google Maps Pin
 
