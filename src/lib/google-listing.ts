@@ -37,8 +37,8 @@ export const GOOGLE_LISTING = {
   phoneE164: COMPANY.phoneTel,
   email: COMPANY.email,
   website: isPreviewHost ? "https://www.muc-cargo.de" : SITE_URL,
-  categoryPrimary: "Spedition",
-  categoryAdditional: ["Logistikdienst", "Luftfrachtunternehmen"] as const,
+  categoryPrimary: "Frachtspeditionsdienst",
+  categoryAdditional: ["Spedition", "Logistikdienst"] as const,
   coordinates: `${COMPANY.coordinates.lat}, ${COMPANY.coordinates.lng}`,
   pinUrl: MAPS_LINK,
   createUrl: "https://business.google.com/create",
@@ -76,7 +76,7 @@ export const GOOGLE_LISTING_FIELDS: readonly ListingField[] = [
   {
     label: "Kategorie",
     value: GOOGLE_LISTING.categoryPrimary,
-    hint: `Zusätzlich: ${GOOGLE_LISTING.categoryAdditional.join(", ")}`,
+    hint: "Ins Feld tippen, nicht die Liste durchscrollen: „Fracht“ oder „Spedition“. Hauptkategorie Frachtspeditionsdienst (so steht CHI da). Danach ggf. Spedition und Logistikdienst als weitere Kategorien.",
   },
   {
     label: "Straße",
