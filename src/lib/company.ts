@@ -25,7 +25,7 @@ export const COMPANY = {
     line1: "Frachtzentrum, Modul H, Pavillon",
     line2: "85356 München-Flughafen",
   },
-  /** Exakte Bürokoordinaten – der Google-Places-Eintrag sitzt derzeit falsch. */
+  /** Bürokoordinaten. Bei der Suche „muc cargo handling" zeigt Google derzeit CHI (Modul F) — eigenes Profil fehlt. */
   coordinates: { lat: 48.350443, lng: 11.767121 },
   /**
    * Google Place ID des Unternehmensprofils (Google Business Profile).

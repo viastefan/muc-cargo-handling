@@ -39,8 +39,11 @@ export function StructuredData() {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "Organization"],
     "@id": orgId,
-    name: COMPANY.brandName,
+    name: COMPANY.legalName,
     legalName: COMPANY.legalName,
+    alternateName: COMPANY.brandName,
+    disambiguatingDescription:
+      "Luftfracht-Handling im Frachtzentrum München, Modul H, Pavillon. Nicht identisch mit CHI MUC Cargo Handling GmbH (Modul F, Hallbergmoos).",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
@@ -49,7 +52,7 @@ export function StructuredData() {
     image: [`${SITE_URL}/opengraph-image`, `${SITE_URL}/images/home/hero.jpg`],
     description:
       "Luftfrachtabwicklung am Flughafen München: Import und Export, Airline Handling sowie Röntgen- und Sicherheitskontrollen als reglementierter Beauftragter.",
-    telephone: COMPANY.phone,
+    telephone: COMPANY.phoneTel,
     email: COMPANY.email,
     vatID: COMPANY.vatId,
     foundingDate: "2003",
@@ -77,7 +80,7 @@ export function StructuredData() {
       {
         "@type": "ContactPoint",
         contactType: "customer service",
-        telephone: COMPANY.phone,
+        telephone: COMPANY.phoneTel,
         email: COMPANY.email,
         availableLanguage: ["German", "English"],
         areaServed: "DE",

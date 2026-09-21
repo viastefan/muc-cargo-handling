@@ -1,5 +1,6 @@
 import { COMPANY } from "@/lib/company";
 import {
+  CHI_NEIGHBOR,
   GOOGLE_LISTING,
   GOOGLE_LISTING_FIELDS,
 } from "@/lib/google-listing";
@@ -12,6 +13,15 @@ export function GoogleListingKit() {
     <div className="admin-card">
       <p className="admin-card__title">Google Maps Pin</p>
       <div className="admin-card__body admin-listing">
+        <p className="admin-listing__warn">
+          Bei der Suche „muc cargo handling“ zeigt Google rechts{" "}
+          <strong>{CHI_NEIGHBOR.name}</strong> — das ist ein anderes
+          Unternehmen ({CHI_NEIGHBOR.address}, Tel. {CHI_NEIGHBOR.phone}).
+          Deren Karte, Sterne und den Button „Inhaber dieses Unternehmens?“
+          nicht verwenden. Unser Profil muss neu angelegt werden, damit rechts
+          MUC Cargohandling GmbH steht.
+        </p>
+
         {linked ? (
           <p className="admin-listing__lead">
             Place ID ist verknüpft. Der öffentliche Pin hängt am bestätigten
@@ -19,29 +29,27 @@ export function GoogleListingKit() {
           </p>
         ) : (
           <p className="admin-listing__lead">
-            In Google Maps gibt es noch keinen Eintrag unter dem Firmennamen.
-            Die Website zeigt den Standort über Koordinaten; den benannten Pin
-            legt nur ein bestätigtes{" "}
-            <strong>Google Unternehmensprofil</strong> an. Das muss der
-            Inhaber oder eine bevollmächtigte Person mit einem Google-Konto
-            bestätigen (Postkarte, Anruf oder Video).
+            Links in der Suche erscheint schon muc-cargo.de. Rechts (Wissenspanel
+            / Maps-Pin) fehlt unser Eintrag, deshalb rückt Google CHI nach.
+            Anlegen kann nur der Inhaber oder eine bevollmächtigte Person
+            (Postkarte, Anruf oder Video).
           </p>
         )}
 
         <ol className="admin-listing__steps">
           <li>
-            Zuerst prüfen, ob schon ein Eintrag existiert:{" "}
+            CHI-Profil nur zur Kontrolle öffnen:{" "}
             <a
-              href={GOOGLE_LISTING.searchExistingUrl}
+              href={CHI_NEIGHBOR.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
-              „{COMPANY.legalName}“ in Maps suchen
+              {CHI_NEIGHBOR.name}
             </a>
-            . Falls ja: Anspruch erheben statt neu anlegen.
+            . Nicht klaimen.
           </li>
           <li>
-            Sonst unter{" "}
+            Eigenes Profil unter{" "}
             <a
               href={GOOGLE_LISTING.createUrl}
               target="_blank"
@@ -49,7 +57,8 @@ export function GoogleListingKit() {
             >
               business.google.com/create
             </a>{" "}
-            ein Profil anlegen und die Felder unten eins zu eins übernehmen.
+            anlegen. Name genau <strong>{COMPANY.legalName}</strong> (ein Wort
+            Cargohandling). Felder unten übernehmen.
           </li>
           <li>
             Standort auf der Karte anpassen und den Pin auf{" "}
@@ -60,7 +69,8 @@ export function GoogleListingKit() {
             >
               {GOOGLE_LISTING.coordinates}
             </a>{" "}
-            setzen (Büro Modul H, nicht die Warenannahme).
+            setzen — Büro Modul H, nicht CHI in Modul F und nicht die
+            Warenannahme.
           </li>
           <li>
             Profil bestätigen. Sobald es live ist, Place ID im{" "}

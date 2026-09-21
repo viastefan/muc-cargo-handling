@@ -1392,6 +1392,21 @@
   color: var(--muted);
 }
 
+.admin-listing__warn {
+  margin: 0 0 0.9rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--a-amber) 45%, var(--border));
+  background: color-mix(in srgb, var(--a-amber) 14%, var(--surface-2));
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--foreground);
+}
+
+.admin-listing__warn strong {
+  font-weight: 650;
+}
+
 .admin-listing__lead strong {
   color: var(--foreground);
   font-weight: 600;

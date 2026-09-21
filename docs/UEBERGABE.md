@@ -83,18 +83,18 @@ abgeschaltet, weil die Zeiten nicht bestätigt sind. Zum Aktivieren in
 
 ### Google Maps Pin
 
-In Google Maps gibt es noch keinen Eintrag unter dem Firmennamen — deshalb
-kein benannter Pin bei der Suche. Die Website zeigt den Standort bereits über
-die Bürokoordinaten (Modul H, Pavillon).
+Bei der Suche „muc cargo handling“ zeigt Google rechts **CHI MUC Cargo
+Handling GmbH** (Modul F, Hallbergmoos). Das ist ein anderes Unternehmen.
+Links stehen bereits die Treffer von muc-cargo.de.
 
-Damit der Pin in Maps erscheint:
+Damit rechts MUC Cargohandling erscheint:
 
-1. Google Unternehmensprofil anlegen oder klaimen — Felder und Schritte stehen
-   unter `/admin/system` und in `docs/GOOGLE-STANDORT.md`
-2. Pin manuell auf `48.350443, 11.767121` setzen (nicht den automatischen
-   versetzten Places-Pin übernehmen)
-3. Nach der Freischaltung Place ID als `GOOGLE_PLACE_ID` in Vercel setzen und
-   redeployen
+1. Eigenes Google Unternehmensprofil **neu anlegen** — CHI nicht klaimen
+   (nicht auf „Inhaber dieses Unternehmens?“ klicken)
+2. Name genau `MUC Cargohandling GmbH`, Pin auf `48.350443, 11.767121`
+   (Modul H). Felder unter `/admin/system` und in `docs/GOOGLE-STANDORT.md`
+3. Nach der Freischaltung Place ID als `GOOGLE_PLACE_ID` in Vercel setzen
+   und redeployen
 
 Die Bestätigung (Postkarte / Anruf / Video) muss der Inhaber oder eine
 bevollmächtigte Person mit dem Google-Konto der Firma machen.

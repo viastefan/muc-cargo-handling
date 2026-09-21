@@ -51,6 +51,20 @@ export const GOOGLE_LISTING = {
     "Luftfracht-Handling am Flughafen München: Import und Export, Airline Handling sowie Röntgen- und Sicherheitskontrollen. MUC Cargohandling GmbH ist reglementierter Beauftragter (DE/RA/01278-01). Büro im Frachtzentrum, Modul H, Pavillon; Warenannahme Modul E, E48, Rampe 51. Persönliche Ansprechpartner, kurze Wege zum Cargo-Drehkreuz.",
 } as const;
 
+/**
+ * Nachbar am Frachtzentrum. Google zeigt deren Wissenspanel bei der Suche
+ * „muc cargo handling", weil unser eigenes Unternehmensprofil fehlt.
+ * Deren Eintrag nicht klaimen — anderer Inhaber, anderes Modul, andere Nummer.
+ */
+export const CHI_NEIGHBOR = {
+  name: "CHI MUC Cargo Handling GmbH",
+  address: "Modul F, Zimmer 325-333, Südallee 1, 85356 Hallbergmoos",
+  phone: "089 97596170",
+  mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    "CHI MUC Cargo Handling GmbH Hallbergmoos",
+  )}`,
+} as const;
+
 export type ListingField = {
   label: string;
   value: string;
@@ -58,7 +72,7 @@ export type ListingField = {
 };
 
 export const GOOGLE_LISTING_FIELDS: readonly ListingField[] = [
-  { label: "Unternehmensname", value: GOOGLE_LISTING.name },
+  { label: "Unternehmensname", value: GOOGLE_LISTING.name, hint: "Genau so, ein Wort: Cargohandling. Nicht „MUC Cargo Handling“ — das ist CHI in Modul F." },
   {
     label: "Kategorie",
     value: GOOGLE_LISTING.categoryPrimary,

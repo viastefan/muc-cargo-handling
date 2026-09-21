@@ -4,41 +4,50 @@ Stand: 21.09.2026
 
 Ein benannter Pin in Google Maps entsteht **nicht** über die Website. Die
 Seite zeigt den Standort bereits über Koordinaten (Büro Modul H). Damit
-„MUC Cargohandling“ als eigener Ort in Maps und der Google-Suche erscheint,
-braucht es ein bestätigtes **Google Unternehmensprofil**.
+rechts in der Google-Suche **MUC Cargohandling GmbH** statt CHI erscheint,
+braucht es ein eigenes bestätigtes **Google Unternehmensprofil**.
 
 Die Felder zum Abschreiben stehen auch im Admin-Panel unter
 `/admin/system` (Karte „Google Maps Pin“).
 
 ---
 
-## 1. Prüfen, ob schon ein Eintrag existiert
+## 0. CHI ist nicht wir
 
-In Google Maps nach `MUC Cargohandling GmbH München-Flughafen` suchen.
+Bei der Suche „muc cargo handling“ zeigt Google das Wissenspanel von
+**CHI MUC Cargo Handling GmbH** (Modul F, Zimmer 325-333, Südallee 1,
+85356 Hallbergmoos, Tel. 089 97596170). Das ist ein Nachbar am
+Frachtzentrum, nicht MUC Cargohandling.
 
-- **Eintrag vorhanden:** nicht neu anlegen. Oben rechts „Anspruch auf diesen
-  Eintrag erheben“ und den Pin danach auf die Bürokoordinaten ziehen.
-- **Kein Eintrag:** weiter mit Schritt 2.
+- Links in den Treffern steht bereits muc-cargo.de — das ist korrekt.
+- Rechts (Karte, Sterne, „Route“, „Anrufen“) gehört CHI, weil nur CHI ein
+  bestätigtes Unternehmensprofil hat.
+- **Nicht** auf „Inhaber dieses Unternehmens?“ klicken. Das würde den
+  CHI-Eintrag klaimen.
 
-Der frühere Places-Eintrag saß versetzt. Nicht den automatisch gesetzten Pin
-übernehmen, wenn er nicht auf dem Pavillon in Modul H liegt.
+## 1. Eigenes Profil anlegen
 
-## 2. Profil anlegen
+Es gibt noch keinen eigenen Places-Eintrag. Neu anlegen, nicht klaimen.
 
 1. Mit einem Google-Konto des Inhabers oder einer bevollmächtigten Person auf
    [business.google.com/create](https://business.google.com/create) gehen.
-2. Felder aus der Tabelle unten eins zu eins übernehmen.
-3. Bei der Karte **Standort anpassen** wählen und den Pin auf
-   `48.350443, 11.767121` setzen.
-4. Website: die öffentliche Domain (`https://www.muc-cargo.de`), nicht die
+2. Name genau `MUC Cargohandling GmbH` (ein Wort Cargohandling). Nicht
+   „MUC Cargo Handling“ — das ist CHI.
+3. Felder aus der Tabelle unten eins zu eins übernehmen.
+4. Bei der Karte **Standort anpassen** wählen und den Pin auf
+   `48.350443, 11.767121` setzen (Modul H, Pavillon — nicht Modul F).
+5. Website: die öffentliche Domain (`https://www.muc-cargo.de`), nicht die
    Vercel-Vorschau — die ist für Suchmaschinen gesperrt.
-5. Öffnungszeiten **nicht** eintragen, solange sie nicht bestätigt sind
+6. Öffnungszeiten **nicht** eintragen, solange sie nicht bestätigt sind
    (`COMPANY.hours.confirmed` in `src/lib/company.ts` ist noch `false`).
-6. Profil zur Bestätigung einreichen (Postkarte, Anruf oder Video). Am
+7. Profil zur Bestätigung einreichen (Postkarte, Anruf oder Video). Am
    Flughafen kommt die Postkarte oft nicht zuverlässig an — Video oder Anruf
    sind praxisnäher.
 
-## 3. Felder
+Nach der Freischaltung erscheint das eigene Wissenspanel rechts. Bis Google
+die beiden Firmen trennt, kann CHI bei ungenauen Suchen noch mitlaufen.
+
+## 2. Felder
 
 | Feld | Wert |
 |---|---|
@@ -65,7 +74,7 @@ die Büroadresse unverändert (Korrekturliste vom 18.08.2026).
 > Modul H, Pavillon; Warenannahme Modul E, E48, Rampe 51. Persönliche
 > Ansprechpartner, kurze Wege zum Cargo-Drehkreuz.
 
-## 4. Place ID mit der Website verbinden
+## 3. Place ID mit der Website verbinden
 
 Sobald der Eintrag live ist:
 
