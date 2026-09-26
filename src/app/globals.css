@@ -3677,14 +3677,25 @@ body.menu-open :is(.lead-fab, .lead-teaser, .location-peek, .faq-toc-fab) {
 
 /* Material icon base — positioning handled by .btn-corner-icon */
 
-/* Mobile Kopfzeile */
+/* Mobile Kopfzeile — display:none per Default und erst unter 1024px auf
+   flex geschaltet: das eigene display hier haette sonst dieselbe
+   Spezifitaet wie Tailwinds `lg:hidden` und wuerde es ab 1024px per
+   Quellreihenfolge (@import "tailwindcss" liegt vor dieser Regel)
+   ueberstimmen — die Kopfzeile bliebe zusaetzlich zur Desktop-Navigation
+   sichtbar. */
 .mobile-bar {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   height: 4rem;
   padding-inline: var(--page-x);
+}
+
+@media (max-width: 1023px) {
+  .mobile-bar {
+    display: flex;
+  }
 }
 
 .mobile-bar__logo {
