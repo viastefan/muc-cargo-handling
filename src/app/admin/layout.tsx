@@ -1,12 +1,28 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./admin.css";
 
 export const metadata: Metadata = {
-  title: "Admin",
+  title: "Anfragen",
+  applicationName: "MUC Anfragen",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "MUC Anfragen",
+  },
   robots: { index: false, follow: false, nocache: true },
   // Eigene App-Identitaet fuers "Zum Home-Bildschirm hinzufuegen" — sonst
   // erbt das Panel das oeffentliche Marketing-Manifest (app/manifest.ts).
   manifest: "/admin/manifest.webmanifest",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F2F2F7" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
 };
 
 // Immer frisch rendern — nie statisch cachen.

@@ -6,7 +6,6 @@ type Step = { step: string; title: string; text: string };
 
 type Track = {
   label: string;
-  eyebrow: string;
   steps: readonly Step[];
 };
 
@@ -30,11 +29,10 @@ function FlowStep({ step, title, text, isLast }: Step & { isLast: boolean }) {
   );
 }
 
-function FlowTrack({ label, eyebrow, steps }: Track) {
+function FlowTrack({ label, steps }: Track) {
   return (
     <div className="flow-track">
       <div className="flow-track__header">
-        <p className="flow-track__eyebrow">{eyebrow}</p>
         <h3 className="flow-track__label heading-display">{label}</h3>
       </div>
       <ol className="flow-track__list">

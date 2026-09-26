@@ -11,9 +11,11 @@ import {
 import { requireAdmin } from "@/lib/admin-session";
 import { listUsers } from "@/lib/admin-users";
 import { InquiryRow } from "./InquiryRow";
+import { InquiryListItem } from "./InquiryListItem";
 import { StatusBadge } from "./StatusBadge";
 import { Assignee } from "./Assignee";
 import { PushToggle } from "./PushToggle";
+import { InboxRefresh } from "./InboxRefresh";
 
 /**
  * Nie aus dem Cache bedienen: Anfragen treffen von aussen ein, ohne dass in
@@ -33,6 +35,21 @@ function dateFmt(iso: string) {
     hour: "2-digit",
     minute: "2-digit",
   }).format(new Date(iso));
+}
+
+function compactDate(iso: string) {
+  const date = new Date(iso);
+  const now = new Date();
+  const sameDay =
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate();
+  return new Intl.DateTimeFormat(
+    "de-DE",
+    sameDay
+      ? { hour: "2-digit", minute: "2-digit" }
+      : { day: "numeric", month: "short" },
+  ).format(date);
 }
 
 type SP = { status?: string; topic?: string; q?: string; page?: string; mine?: string };
@@ -106,7 +123,10 @@ export default async function AdminDashboard({
 
   return (
     <>
-      <h1 className="admin-page-title">Anfragen</h1>
+      <div className="admin-page-head">
+        <h1 className="admin-page-title">Anfragen</h1>
+        <InboxRefresh />
+      </div>
 
       <div className="admin-widgets">
         {widgets.map((w) => (
@@ -181,70 +201,106 @@ export default async function AdminDashboard({
 
       <div className="admin-group">
         {rows.length === 0 ? (
-          <p className="admin-empty">Keine Anfragen für diese Auswahl.</p>
-        ) : (
-          <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Referenz</th>
-                  <th>Eingang</th>
-                  <th>Thema</th>
-                  <th>Absender</th>
-                  <th>Zugewiesen</th>
-                  <th>Status</th>
-                  <th aria-hidden="true" />
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => {
-                  const u = row.assignedTo ? userMap.get(row.assignedTo) : null;
-                  return (
-                    <InquiryRow key={row.id} reference={row.reference}>
-                      <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
-                        {dateFmt(row.createdAt)}
-                      </td>
-                      <td>{TOPIC_LABEL[row.topic]}</td>
-                      <td>
-                        <div style={{ fontWeight: 550 }}>
-                          {row.firstName} {row.lastName}
-                        </div>
-                        <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
-                          {row.company || row.email}
-                        </div>
-                      </td>
-                      <td>
-                        {u ? (
-                          <Assignee name={u.name} />
-                        ) : (
-                          <span style={{ color: "var(--muted-light)" }}>—</span>
-                        )}
-                      </td>
-                      <td>
-                        <StatusBadge status={row.status} />
-                      </td>
-                      <td>
-                        <svg
-                          className="admin-table__chev"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M6 3.5 10.5 8 6 12.5"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </td>
-                    </InquiryRow>
-                  );
-                })}
-              </tbody>
-            </table>
+          <div className="admin-empty">
+            <p className="admin-empty__title">
+              {search || topic !== "all" || status !== "all" || mine
+                ? "Keine Treffer"
+                : "Noch keine Anfragen"}
+            </p>
+            <p className="admin-empty__text">
+              {search || topic !== "all" || status !== "all" || mine
+                ? "Filter zurücksetzen oder andere Suche versuchen."
+                : "Sobald über die Website eine Anfrage eingeht, erscheint sie hier."}
+            </p>
+            {search || topic !== "all" || status !== "all" || mine ? (
+              <Link href="/admin" className="admin-btn admin-btn--sm" style={{ marginTop: "0.75rem" }}>
+                Alle anzeigen
+              </Link>
+            ) : null}
           </div>
+        ) : (
+          <>
+            <div className="admin-inbox">
+              {rows.map((row) => {
+                const u = row.assignedTo ? userMap.get(row.assignedTo) : null;
+                return (
+                  <InquiryListItem
+                    key={row.id}
+                    reference={row.reference}
+                    name={`${row.firstName} ${row.lastName}`}
+                    subtitle={row.company || row.email}
+                    topic={TOPIC_LABEL[row.topic]}
+                    whenIso={row.createdAt}
+                    whenLabel={compactDate(row.createdAt)}
+                    status={row.status}
+                    assignee={u?.name}
+                  />
+                );
+              })}
+            </div>
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Referenz</th>
+                    <th>Eingang</th>
+                    <th>Thema</th>
+                    <th>Absender</th>
+                    <th>Zugewiesen</th>
+                    <th>Status</th>
+                    <th aria-hidden="true" />
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
+                    const u = row.assignedTo ? userMap.get(row.assignedTo) : null;
+                    return (
+                      <InquiryRow key={row.id} reference={row.reference}>
+                        <td style={{ whiteSpace: "nowrap", color: "var(--muted)" }}>
+                          {dateFmt(row.createdAt)}
+                        </td>
+                        <td>{TOPIC_LABEL[row.topic]}</td>
+                        <td>
+                          <div style={{ fontWeight: 550 }}>
+                            {row.firstName} {row.lastName}
+                          </div>
+                          <div style={{ color: "var(--muted)", fontSize: "12.5px" }}>
+                            {row.company || row.email}
+                          </div>
+                        </td>
+                        <td>
+                          {u ? (
+                            <Assignee name={u.name} />
+                          ) : (
+                            <span style={{ color: "var(--muted-light)" }}>—</span>
+                          )}
+                        </td>
+                        <td>
+                          <StatusBadge status={row.status} />
+                        </td>
+                        <td>
+                          <svg
+                            className="admin-table__chev"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M6 3.5 10.5 8 6 12.5"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </td>
+                      </InquiryRow>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 

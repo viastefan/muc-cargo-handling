@@ -426,7 +426,7 @@ export function InquiryFlow() {
         </div>
 
         <div className="inq__head">
-          <p className="inq__eyebrow">Anfrage stellen</p>
+          <p className="inq__title heading-display">Anfrage stellen</p>
           <button type="button" className="inq__close" aria-label="Schließen" onClick={close}>
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path

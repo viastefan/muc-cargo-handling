@@ -13,12 +13,12 @@ export default async function AdminLoginPage({
 
   return (
     <div className="admin-login">
-      <div className="admin-login__card">
+      <div className="admin-login__hero">
         <p className="admin-login__eyebrow">MUC Cargohandling</p>
-        <p className="admin-login__title">Anfragen</p>
-        <p className="admin-login__hint">
-          Bitte mit Ihren Zugangsdaten anmelden.
-        </p>
+        <h1 className="admin-login__title">Anfragen</h1>
+        <p className="admin-login__hint">Mit Ihren Zugangsdaten anmelden.</p>
+      </div>
+      <div className="admin-login__card">
         <LoginForm configError={config === "1" || !adminConfigured} />
       </div>
       <p className="admin-login__foot">Interner Bereich · Zugriff protokolliert</p>

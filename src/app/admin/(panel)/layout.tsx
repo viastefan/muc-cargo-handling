@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/admin-session";
-import { inquiriesStorageReady } from "@/lib/inquiries";
+import { probeConnection } from "@/lib/system-check";
 import { logoutAction } from "./actions";
 import { AccountMenu } from "./AccountMenu";
+import { AdminTabBar } from "./AdminTabBar";
+import { ConnectionBanner } from "./ConnectionBanner";
 
 export default async function PanelLayout({
   children,
@@ -10,6 +12,8 @@ export default async function PanelLayout({
   children: React.ReactNode;
 }) {
   const principal = await requireAdmin();
+  const isAdmin = principal.role === "admin";
+  const probe = await probeConnection();
 
   return (
     <div className="admin-shell">
@@ -17,12 +21,14 @@ export default async function PanelLayout({
         <div className="admin-bar__left">
           <Link href="/admin" className="admin-bar__brand">
             <span className="admin-bar__brand-full">MUC Cargohandling</span>
-            <span className="admin-bar__brand-short" aria-hidden="true">MUC</span>
+            <span className="admin-bar__brand-short" aria-hidden="true">
+              Anfragen
+            </span>
             <span className="admin-bar__brand-tag">Anfragen</span>
           </Link>
           <nav className="admin-nav">
             <Link href="/admin">Anfragen</Link>
-            {principal.role === "admin" ? (
+            {isAdmin ? (
               <>
                 <Link href="/admin/team">Team</Link>
                 <Link href="/admin/system">Einrichtung</Link>
@@ -31,7 +37,32 @@ export default async function PanelLayout({
           </nav>
         </div>
         <div className="admin-bar__actions">
-          <a href="/api/admin/export" className="admin-btn admin-btn--sm" download>
+          <span
+            className="admin-bar__conn"
+            title={probe.detail}
+            aria-label={
+              probe.state === "ok"
+                ? `Datenbank verbunden${probe.latencyMs != null ? `, ${probe.latencyMs} Millisekunden` : ""}`
+                : "Verbindung gestört"
+            }
+          >
+            <span
+              className={`admin-bar__pulse${probe.state === "ok" ? " is-ok" : " is-bad"}`}
+              aria-hidden="true"
+            />
+            <span className="admin-bar__conn-label" aria-hidden="true">
+              {probe.state === "ok"
+                ? probe.latencyMs != null
+                  ? `${probe.latencyMs} ms`
+                  : "Online"
+                : "Offline"}
+            </span>
+          </span>
+          <a
+            href="/api/admin/export"
+            className="admin-btn admin-btn--sm admin-bar__export"
+            download
+          >
             CSV
           </a>
           <AccountMenu
@@ -44,12 +75,8 @@ export default async function PanelLayout({
       </header>
 
       <main className="admin-main">
-        {!inquiriesStorageReady ? (
-          <p className="admin-error" style={{ marginBottom: "1.5rem" }}>
-            Kein Datenspeicher verbunden — <code>SUPABASE_URL</code> /{" "}
-            <code>SUPABASE_SERVICE_ROLE_KEY</code> setzen und die Migrationen
-            ausführen. Bis dahin bleibt die Liste leer.
-          </p>
+        {probe.state === "missing" ? (
+          <ConnectionBanner probe={probe} showSetupLink={isAdmin} />
         ) : null}
 
         {principal.mustChangePw ? (
@@ -63,6 +90,8 @@ export default async function PanelLayout({
 
         {children}
       </main>
+
+      <AdminTabBar isAdmin={isAdmin} />
     </div>
   );
 }

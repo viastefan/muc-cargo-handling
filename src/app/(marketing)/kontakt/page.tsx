@@ -6,14 +6,21 @@ import { LocationMap } from "@/components/LocationMap";
 import { MetricRow } from "@/components/MetricRow";
 import { PageSection, SectionHeader } from "@/components/PageSection";
 import { ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/ArrowIcon";
+import {
+  BreadcrumbStructuredData,
+  ContactPageStructuredData,
+} from "@/components/StructuredData";
 import { COMPANY, MAPS_EMBED } from "@/lib/company";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/kontakt" },
+const DESCRIPTION =
+  "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/kontakt",
   title: "Kontakt",
-  description:
-    "Kontakt zu MUC Cargohandling – Anfrage stellen, Adresse und Telefon am Flughafen München.",
-};
+  description: DESCRIPTION,
+});
 
 const CONTACT = [
   {
@@ -50,7 +57,9 @@ const CONTACT = [
     label: "Erreichbarkeit",
     content: (
       <>
-        Mo–Fr, Bürozeiten
+        {COMPANY.hours.display}
+        <br />
+        {COMPANY.hours.note}
         <br />
         Mobil:{" "}
         <a href={`tel:${COMPANY.mobileTel}`} className="hover:text-[var(--foreground)]">
@@ -64,8 +73,20 @@ const CONTACT = [
 export default function KontaktPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Kontakt", path: "/kontakt" },
+        ]}
+      />
+      <ContactPageStructuredData />
       <Hero
         image="/images/kontakt/hero.jpg"
+        images={[
+          "/images/kontakt/hero.jpg",
+          "/images/unternehmen/hero.jpg",
+          "/images/home/team-band.jpg",
+        ]}
         title="Schreiben Sie uns"
         subtitle="Schildern Sie kurz Ihr Anliegen – wir melden uns zeitnah mit den nächsten Schritten für Ihre Luftfracht am Flughafen München."
         ctaHref="#anfrage"
@@ -84,8 +105,8 @@ export default function KontaktPage() {
 
           <aside className="lg:pt-2" id="standort">
             <div className="sticky top-24 space-y-4">
-              <div className="border border-[var(--border)] bg-[var(--surface)] p-6 md:p-8">
-                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-[var(--muted-light)]">
+              <div className="surface-card p-6 md:p-8">
+                <p className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
                   Direktkontakt
                 </p>
                 <ul className="mt-6 space-y-6">
@@ -95,7 +116,7 @@ export default function KontaktPage() {
                         <item.icon className="h-4 w-4" />
                       </span>
                       <div>
-                        <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
+                        <p className="text-[13px] font-normal text-[var(--muted)]">
                           {item.label}
                         </p>
                         <p className="mt-1 text-[14px] leading-relaxed text-[var(--muted)]">{item.content}</p>
@@ -114,8 +135,8 @@ export default function KontaktPage() {
                 </p>
               </div>
 
-              <div className="border border-[var(--border)] bg-[var(--card)] p-6 md:p-8">
-                <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[var(--muted-light)]">
+              <div className="surface-card surface-card--raised p-6 md:p-8">
+                <p className="text-[17px] font-normal tracking-[-0.01em] text-[var(--foreground)]">
                   Zertifizierung
                 </p>
                 <p className="mt-3 text-[15px] text-[var(--foreground)]">

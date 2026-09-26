@@ -84,6 +84,8 @@ Kosten: ~1 €/Monat je Nummer + ~0,08 €/SMS. In DE ggf. A2P-Registrierung nö
 | Env-Variable | Zweck |
 |---|---|
 | `SITE_URL` | `https://www.muc-cargo.de` — absolute Links in E-Mails, Sitemap, robots |
+| `GOOGLE_SITE_VERIFICATION` | HTML-Tag-Token aus der Search Console |
+| `GOOGLE_PLACE_ID` | Place ID des bestätigten Maps-Eintrags — siehe `docs/GOOGLE-STANDORT.md` |
 | `CONTACT_WEBHOOK_URL` | optionaler zusätzlicher JSON-Webhook |
 
 ## 6. In Vercel eintragen

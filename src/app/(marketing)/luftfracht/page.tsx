@@ -3,7 +3,6 @@ import { Button } from "@/components/Button";
 import { FlowTracks, FlowTracksIntro } from "@/components/FlowTracks";
 import { FooterCta } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { IntroSplitBand } from "@/components/IntroSplitBand";
 import { MetricRow } from "@/components/MetricRow";
 import {
   FeatureCard,
@@ -15,6 +14,10 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { ScrollRevealStagger } from "@/components/ScrollRevealStagger";
 import { ServiceCard } from "@/components/ServiceCard";
 import {
+  BreadcrumbStructuredData,
+  ServiceStructuredData,
+} from "@/components/StructuredData";
+import {
   LUFTFRACHT_END_TO_END,
   LUFTFRACHT_EXPORT_FLOW,
   LUFTFRACHT_FAQ,
@@ -23,29 +26,43 @@ import {
   LUFTFRACHT_METRICS,
   LUFTFRACHT_SERVICES,
 } from "@/lib/luftfracht";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/luftfracht" },
+const DESCRIPTION =
+  "Import- und Export-Handling am Flughafen München – Annahme, Dokumentation, Sicherheit und Übergabe mit klaren Prozessen.";
+
+export const metadata: Metadata = pageMeta({
+  path: "/luftfracht",
   title: "Luftfracht Import Export",
-  description:
-    "Import- und Export-Handling am Flughafen München – Annahme, Dokumentation, Sicherheit und Übergabe mit klaren Prozessen.",
-};
+  description: DESCRIPTION,
+});
 
 export default function LuftfrachtPage() {
   return (
     <>
+      <BreadcrumbStructuredData
+        items={[
+          { name: "Startseite", path: "/" },
+          { name: "Luftfracht", path: "/luftfracht" },
+        ]}
+      />
+      <ServiceStructuredData
+        name="Luftfracht Import & Export"
+        description={DESCRIPTION}
+        path="/luftfracht"
+        serviceType="Air freight handling"
+      />
       <Hero
-        image="/images/luftfracht/hero.jpg"
+        image="/images/luftfracht/service-1.jpg"
+        imageAlt="Lagerung und Erfassung von Luftfracht am Standort München"
+        images={[
+          "/images/luftfracht/service-1.jpg",
+          "/images/luftfracht/documentation-desk.jpg",
+          "/images/luftfracht/service-4.jpg",
+          "/images/luftfracht/security-checkpoint.jpg",
+        ]}
         title="Luftfracht Import und Export"
         subtitle="Import und Export unter einem Dach – Annahme, Dokumentation, Sicherung und Übergabe, abgestimmt auf Ihr Zeitfenster."
-      />
-
-      <IntroSplitBand
-        titleDark="Zwei Prozesse."
-        titleLight="Ein hoher Qualitätsanspruch."
-        description="Ob eingehend oder ausgehend – jeder Auftrag läuft nach klar definierten Prozessen. In enger Abstimmung mit Airlines, Behörden und Logistikpartnern."
-        image="/images/luftfracht/intro-band.jpg"
-        imageAlt="Luftfracht-Handling am Flughafen München"
       />
 
       <PageSection>
@@ -71,12 +88,10 @@ export default function LuftfrachtPage() {
         <div className="section-header-gap">
           <FlowTracks
             importTrack={{
-              eyebrow: "Eingehend",
               label: "Import",
               steps: LUFTFRACHT_IMPORT_FLOW,
             }}
             exportTrack={{
-              eyebrow: "Ausgehend",
               label: "Export",
               steps: LUFTFRACHT_EXPORT_FLOW,
             }}
@@ -86,7 +101,6 @@ export default function LuftfrachtPage() {
 
       <PageSection borderTop>
         <ProcessTimeline
-          eyebrow="End-to-End"
           titleDark="Vom Eingang"
           titleLight="bis zur Freigabe."
           description="Unabhängig von Richtung und Sendungsart folgen alle Aufträge einem klaren Qualitätsrahmen – mit dokumentierten Übergaben in jedem Schritt."

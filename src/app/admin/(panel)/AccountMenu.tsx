@@ -45,6 +45,7 @@ export function AccountMenu({
         className="admin-account__trigger"
         aria-haspopup="menu"
         aria-expanded={open}
+        aria-label="Konto"
         onClick={() => setOpen((v) => !v)}
       >
         <span className="admin-account__avatar">{initials(name)}</span>
@@ -58,7 +59,12 @@ export function AccountMenu({
           </p>
         </div>
         {!isRoot ? (
-          <Link href="/admin/konto" className="admin-account__item" role="menuitem" onClick={() => setOpen(false)}>
+          <Link
+            href="/admin/konto"
+            className="admin-account__item"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+          >
             Passwort ändern
           </Link>
         ) : null}
@@ -66,8 +72,21 @@ export function AccountMenu({
           <span className="admin-account__row-label">Darstellung</span>
           <ThemeToggle className="theme-toggle--admin" />
         </div>
+        <a
+          href="/api/admin/export"
+          className="admin-account__item admin-account__export"
+          role="menuitem"
+          download
+          onClick={() => setOpen(false)}
+        >
+          CSV exportieren
+        </a>
         <form action={logoutAction}>
-          <button type="submit" className="admin-account__item admin-account__item--danger" role="menuitem">
+          <button
+            type="submit"
+            className="admin-account__item admin-account__item--danger"
+            role="menuitem"
+          >
             Abmelden
           </button>
         </form>

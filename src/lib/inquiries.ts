@@ -444,3 +444,17 @@ async function inquiryStatsUnsafe(): Promise<InquiryStats> {
   ]);
   return { total, new: newCount, inProgress, done, archived, last7Days };
 }
+
+/** Zeitpunkt der neuesten Anfrage — für System-Checks und Panel-Hinweise. */
+export async function getLatestInquiryAt(): Promise<string | null> {
+  if (!inquiriesStorageReady) return null;
+  try {
+    const res = await rest(
+      "/inquiries?select=created_at&order=created_at.desc&limit=1",
+    );
+    const rows = (await res.json()) as { created_at: string }[];
+    return rows[0]?.created_at ?? null;
+  } catch {
+    return null;
+  }
+}

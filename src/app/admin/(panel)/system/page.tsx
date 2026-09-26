@@ -1,5 +1,6 @@
 import { requireAdminRole } from "@/lib/admin-session";
 import { runSystemChecks, type Check } from "@/lib/system-check";
+import { GoogleListingKit } from "./GoogleListingKit";
 
 export const dynamic = "force-dynamic";
 
@@ -58,6 +59,8 @@ export default async function SystemPage() {
           : `${open.length} ${open.length === 1 ? "Punkt" : "Punkte"} offen — darunter steht jeweils, was zu tun ist.`}
       </p>
 
+      <GoogleListingKit />
+
       <div className="admin-card">
         <p className="admin-card__title">Status</p>
         <ul className="admin-checklist">
@@ -68,6 +71,9 @@ export default async function SystemPage() {
                 <p className="admin-check__label">{check.label}</p>
                 <p className="admin-check__detail">{check.detail}</p>
                 {check.state === "missing" && check.fix ? (
+                  <p className="admin-check__fix">{check.fix}</p>
+                ) : null}
+                {check.state === "info" && check.fix ? (
                   <p className="admin-check__fix">{check.fix}</p>
                 ) : null}
               </div>

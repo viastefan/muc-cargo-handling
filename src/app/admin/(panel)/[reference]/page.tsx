@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
-  INQUIRY_STATUSES,
-  STATUS_LABEL,
   TOPIC_LABEL,
   getInquiry,
   listInquiryEvents,
@@ -11,11 +9,13 @@ import {
 import { requireAdmin } from "@/lib/admin-session";
 import { listUsers } from "@/lib/admin-users";
 import { COMPANY } from "@/lib/company";
+import { emailReady } from "@/lib/notify";
 import { StatusBadge } from "../StatusBadge";
+import { StatusPicker } from "../StatusPicker";
 import { DeleteInquiryButton } from "../DeleteInquiryButton";
 import { Assignee } from "../Assignee";
 import { ReplyForm } from "../ReplyForm";
-import { setStatusAction, saveNoteAction, assignInquiryAction } from "../actions";
+import { saveNoteAction, assignInquiryAction } from "../actions";
 import { AdminSubmitButton } from "../AdminSubmitButton";
 
 /** Status, Notiz und Verlauf aendern sich laufend — nie aus dem Cache. */
@@ -76,7 +76,7 @@ export default async function InquiryDetail({
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M10 3.5 5.5 8 10 12.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        Alle Anfragen
+        Anfragen
       </Link>
 
       <div className="admin-detail-head">
@@ -107,6 +107,8 @@ export default async function InquiryDetail({
               <ReplyForm
                 reference={inquiry.reference}
                 to={inquiry.email}
+                canSendEmail={emailReady}
+                firstName={inquiry.firstName}
                 defaultBody={`Sehr geehrte(r) ${inquiry.firstName} ${inquiry.lastName},\n\nvielen Dank für Ihre Anfrage.\n\n\n\nMit freundlichen Grüßen\n${COMPANY.legalName}`}
               />
             </div>
@@ -166,22 +168,7 @@ export default async function InquiryDetail({
           <div className="admin-card">
             <p className="admin-card__title">Status</p>
             <div className="admin-card__body">
-              <form action={setStatusAction} className="admin-inline-form" key={inquiry.status}>
-                <input type="hidden" name="reference" value={inquiry.reference} />
-                <select
-                  name="status"
-                  className="admin-select"
-                  defaultValue={inquiry.status}
-                  style={{ flex: "1 1 auto" }}
-                >
-                  {INQUIRY_STATUSES.map((s) => (
-                    <option key={s} value={s}>
-                      {STATUS_LABEL[s]}
-                    </option>
-                  ))}
-                </select>
-                <AdminSubmitButton pendingLabel="Wird gesetzt …">Setzen</AdminSubmitButton>
-              </form>
+              <StatusPicker reference={inquiry.reference} current={inquiry.status} />
             </div>
           </div>
 
